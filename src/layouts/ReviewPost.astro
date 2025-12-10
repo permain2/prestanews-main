@@ -1,0 +1,111 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import MainLayout from './MainLayout.astro';
+
+type Props = CollectionEntry<'reviews'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, rating, pros, cons, affiliateLink } = Astro.props;
+---
+
+<MainLayout title={title} description={description}>
+    <article class="bg-[#F7F8FA] pb-12">
+        <!-- Header Section -->
+        <header class="bg-[#0D2C4B] text-white pt-12 pb-24">
+            <div class="max-w-5xl mx-auto px-4 md:px-8 text-center">
+                <span class="inline-block bg-[#3B82F6] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-4">Review</span>
+                <h1 class="text-3xl md:text-5xl font-sora font-bold mb-6 leading-tight">{title}</h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">{description}</p>
+                <div class="flex justify-center items-center gap-4 text-sm font-medium text-gray-300">
+                    <FormattedDate date={pubDate} />
+                    {rating && (
+                        <div class="flex items-center gap-1 bg-white/10 px-3 py-1 rounded-lg">
+                            <span class="text-yellow-400 text-lg">★</span>
+                            <span class="text-white font-bold">{rating}/5</span>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-6xl mx-auto px-4 md:px-8 -mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+            <!-- Left Content -->
+            <div class="lg:col-span-8 space-y-8">
+                <!-- Main Image Card -->
+                {heroImage && (
+                    <div class="bg-white p-2 rounded-xl shadow-lg">
+                        <img src={heroImage} alt={title} class="w-full h-auto rounded-lg" />
+                    </div>
+                )}
+
+                <!-- Pros & Cons Verdict Box -->
+                {(pros || cons) && (
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                        <div class="bg-[#162433] text-white p-4 font-sora font-bold text-lg">The Verdict</div>
+                        <div class="grid md:grid-cols-2 gap-0 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                            {pros && (
+                                <div class="p-6">
+                                    <h3 class="text-green-600 font-bold mb-4 flex items-center gap-2 uppercase text-sm tracking-wide">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        Pros
+                                    </h3>
+                                    <ul class="space-y-3">
+                                        {pros.map((pro) => (
+                                            <li class="flex items-start gap-2 text-sm text-[#68727C]">
+                                                <span class="text-green-500 mt-1">•</span> {pro}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            {cons && (
+                                <div class="p-6">
+                                    <h3 class="text-red-500 font-bold mb-4 flex items-center gap-2 uppercase text-sm tracking-wide">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        Cons
+                                    </h3>
+                                    <ul class="space-y-3">
+                                        {cons.map((con) => (
+                                            <li class="flex items-start gap-2 text-sm text-[#68727C]">
+                                                <span class="text-red-400 mt-1">•</span> {con}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                <!-- Article Body -->
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 prose prose-lg prose-headings:font-sora prose-p:font-poppins prose-a:text-[#3B82F6] prose-a:no-underline hover:prose-a:text-[#0D2C4B] max-w-none">
+                    <slot />
+                </div>
+            </div>
+
+            <!-- Sticky Sidebar -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 sticky top-24">
+                    <h3 class="font-sora font-bold text-xl mb-2 text-[#162433]">Quick Summary</h3>
+                    <p class="text-[#68727C] text-sm mb-6">Based on our in-depth analysis of this product.</p>
+
+                    {rating && (
+                        <div class="flex items-center justify-between mb-6 p-4 bg-[#F7F8FA] rounded-lg">
+                            <span class="font-bold text-[#162433]">Our Rating</span>
+                            <div class="flex text-yellow-400">
+                                {'★'.repeat(Math.floor(rating))}{'☆'.repeat(5 - Math.floor(rating))}
+                            </div>
+                        </div>
+                    )}
+
+                    {affiliateLink && (
+                        <a href={affiliateLink} target="_blank" rel="noopener noreferrer" class="block w-full bg-[#3B82F6] hover:bg-[#0D2C4B] text-white text-center font-bold py-4 rounded-lg shadow-lg transition-transform transform hover:-translate-y-1 mb-4 uppercase tracking-wide text-sm">
+                            Apply Now
+                        </a>
+                    )}
+                    <p class="text-xs text-[#A2A9B1] text-center">Terms apply to offers listed on this page.</p>
+                </div>
+            </div>
+        </div>
+    </article>
+</MainLayout>

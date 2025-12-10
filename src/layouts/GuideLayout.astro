@@ -1,0 +1,394 @@
+---
+import MainLayout from './MainLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  author?: string;
+  authorRole?: string;
+  publishedDate?: string;
+  updatedDate?: string;
+  heroImage?: string;
+}
+
+const { 
+  title, 
+  description, 
+  category, 
+  author = "PrestaNews Team",
+  authorRole = "Editorial Team",
+  publishedDate,
+  updatedDate,
+  heroImage
+} = Astro.props;
+---
+
+<MainLayout title={title} description={description}>
+  <!-- Hero Header -->
+  <article class="guide-article">
+    <header class="guide-header">
+      <div class="header-container">
+        <a href="/guides" class="category-link">{category}</a>
+        <h1 class="guide-title">{title}</h1>
+        
+        <div class="author-info">
+          <div class="author-avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg>
+          </div>
+          <div class="author-details">
+            <span class="author-name">{author}</span>
+            <span class="author-role">{authorRole}</span>
+          </div>
+        </div>
+        
+        <div class="meta-info">
+          {publishedDate && <span class="date">Published {publishedDate}</span>}
+          {updatedDate && (
+            <>
+              <span class="separator">•</span>
+              <span class="date">Updated {updatedDate}</span>
+            </>
+          )}
+        </div>
+
+        <!-- Share Buttons -->
+        <div class="share-buttons">
+          <button class="share-btn" title="Share on Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </button>
+          <button class="share-btn" title="Share on Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </button>
+          <button class="share-btn" title="Copy Link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </button>
+          <button class="share-btn" title="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Image -->
+    {heroImage && (
+      <div class="hero-image">
+        <img src={heroImage} alt={title} />
+      </div>
+    )}
+
+    <!-- Content -->
+    <div class="guide-content">
+      <div class="content-container">
+        <div class="content-main">
+          <slot />
+        </div>
+        
+        <!-- Sidebar -->
+        <aside class="content-sidebar">
+          <div class="sidebar-card">
+            <h3>Newsletter</h3>
+            <p>Get the latest guides and tips delivered to your inbox.</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Enter your email" required />
+              <button type="submit" class="btn-primary">Subscribe</button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+</MainLayout>
+
+<style>
+  .guide-article {
+    background: #ffffff;
+  }
+
+  .guide-header {
+    background: #EEF2F6;
+    padding: 3rem 0 2.5rem;
+  }
+
+  .header-container {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .category-link {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #006056;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .category-link:hover {
+    color: #004940;
+  }
+
+  .guide-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: #162433;
+    margin-bottom: 1.5rem;
+  }
+
+  .author-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .author-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: #0D2C4B;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .author-avatar svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .author-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .author-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #162433;
+  }
+
+  .author-role {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    color: #68727C;
+  }
+
+  .meta-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    color: #68727C;
+    margin-bottom: 1.5rem;
+  }
+
+  .separator {
+    color: #D5D9DD;
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .share-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid #D5D9DD;
+    background: white;
+    color: #162433;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .share-btn:hover {
+    border-color: #0D2C4B;
+    color: #0D2C4B;
+  }
+
+  .share-btn svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .hero-image {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .hero-image img {
+    width: 100%;
+    border-radius: 0.75rem;
+    margin-top: -2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .guide-content {
+    padding: 3rem 0 4rem;
+  }
+
+  .content-container {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 3rem;
+  }
+
+  .content-main {
+    min-width: 0;
+  }
+
+  .content-main :global(h2) {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 2rem 0 1rem;
+  }
+
+  .content-main :global(h3) {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .content-main :global(p) {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4A5568;
+    margin-bottom: 1.25rem;
+  }
+
+  .content-main :global(ul),
+  .content-main :global(ol) {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4A5568;
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+
+  .content-main :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .content-main :global(blockquote) {
+    border-left: 4px solid #0D2C4B;
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #68727C;
+  }
+
+  .content-main :global(strong) {
+    font-weight: 600;
+    color: #162433;
+  }
+
+  .content-main :global(a) {
+    color: #3B82F6;
+    text-decoration: underline;
+  }
+
+  .content-main :global(a:hover) {
+    color: #1D4ED8;
+  }
+
+  .content-sidebar {
+    position: sticky;
+    top: 6rem;
+    height: fit-content;
+  }
+
+  .sidebar-card {
+    background: #F7F8FA;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid #E6E8EB;
+  }
+
+  .sidebar-card h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+
+  .sidebar-card p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    color: #68727C;
+    margin-bottom: 1rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .newsletter-form input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #E6E8EB;
+    border-radius: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+  }
+
+  .newsletter-form input:focus {
+    outline: none;
+    border-color: #3B82F6;
+  }
+
+  @media (max-width: 900px) {
+    .content-container {
+      grid-template-columns: 1fr;
+    }
+
+    .content-sidebar {
+      position: static;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .guide-header {
+      padding: 2rem 0;
+    }
+
+    .header-container,
+    .hero-image,
+    .content-container {
+      padding: 0 1.25rem;
+    }
+
+    .guide-title {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+

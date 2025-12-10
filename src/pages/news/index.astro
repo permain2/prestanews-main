@@ -1,0 +1,157 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+// News posts (placeholder articles)
+const newsPosts = [
+  {
+    title: "American Airlines Unveils New Flagship Suites",
+    description: "American Airlines announces a major upgrade to its international business class experience with new Flagship Suites featuring privacy doors and lie-flat seats.",
+    href: "/blog/american-airlines-brings-new-flagship-suites-to-jfk",
+    category: "Airlines",
+    author: "PrestaNews Team",
+    date: "Dec 10, 2025"
+  },
+  {
+    title: "Chase Sapphire Reserve Adds New Travel Benefits",
+    description: "Chase announces new perks for Sapphire Reserve cardholders including expanded lounge access and increased travel credits.",
+    href: "/news/chase-sapphire-new-benefits",
+    category: "Credit Cards",
+    author: "PrestaNews Team",
+    date: "Dec 9, 2025"
+  },
+  {
+    title: "Marriott Bonvoy Elite Status Changes for 2026",
+    description: "Marriott announces changes to its Bonvoy loyalty program, including new elite tier requirements and updated benefits for members.",
+    href: "/news/marriott-bonvoy-changes-2026",
+    category: "Hotels",
+    author: "PrestaNews Team",
+    date: "Dec 8, 2025"
+  },
+  {
+    title: "Delta SkyMiles Announces Award Chart Updates",
+    description: "Delta reveals changes to award pricing for 2026, with some routes seeing increases while others remain competitive.",
+    href: "/news/delta-skymiles-award-chart",
+    category: "Airlines",
+    author: "PrestaNews Team",
+    date: "Dec 7, 2025"
+  },
+  {
+    title: "Amex Platinum Annual Fee Increase Coming",
+    description: "American Express confirms annual fee changes for the Platinum Card, along with new benefits to offset the cost.",
+    href: "/news/amex-platinum-fee-increase",
+    category: "Credit Cards",
+    author: "PrestaNews Team",
+    date: "Dec 6, 2025"
+  },
+  {
+    title: "Hilton Honors Devaluation: What You Need to Know",
+    description: "Hilton adjusts point values across properties. Here's how the changes affect your redemption strategy.",
+    href: "/news/hilton-honors-devaluation",
+    category: "Hotels",
+    author: "PrestaNews Team",
+    date: "Dec 5, 2025"
+  }
+];
+---
+
+<MainLayout title="News" description="Breaking news on credit cards, travel, airlines, hotels, and rewards programs.">
+  <!-- Header -->
+  <section class="collection-header">
+    <div class="header-container">
+      <h1 class="collection-title">News</h1>
+      <p class="collection-description">
+        Stay updated with the latest news on credit cards, travel, airlines, hotels, 
+        and loyalty programs. Breaking stories and expert analysis.
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts Grid -->
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {newsPosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            author={post.author}
+            date={post.date}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .collection-header {
+    background: #EEF2F6;
+    padding: 3.5rem 0;
+  }
+
+  .header-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+
+  .collection-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 1rem;
+  }
+
+  .collection-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #68727C;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 1024px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collection-header {
+      padding: 2rem 0;
+    }
+
+    .header-container,
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

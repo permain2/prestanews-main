@@ -1,0 +1,236 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// Renters insurance providers data
+const providers = [
+  {
+    name: "Lemonade",
+    bestFor: "Quick & Easy Sign-Up",
+    monthlyAvg: "$12",
+    coverage: "$30,000+",
+    rating: 4.9,
+    pros: ["Sign up in 90 seconds", "AI-powered claims", "Giveback program", "Affordable premiums"],
+    cons: ["Limited customization", "Not available everywhere"],
+    description: "Lemonade revolutionized renters insurance with instant quotes, AI-powered claims processing, and donations to charity.",
+    amBest: "A-"
+  },
+  {
+    name: "State Farm",
+    bestFor: "Bundling Options",
+    monthlyAvg: "$18",
+    coverage: "$20,000+",
+    rating: 4.7,
+    pros: ["Local agent support", "Great bundling discounts", "Identity theft coverage", "Extensive coverage options"],
+    cons: ["Higher average cost", "Slower claims process"],
+    description: "State Farm offers reliable coverage with the added benefit of personal agent relationships and excellent bundling discounts.",
+    amBest: "A++"
+  },
+  {
+    name: "Allstate",
+    bestFor: "Coverage Customization",
+    monthlyAvg: "$20",
+    coverage: "$25,000+",
+    rating: 4.5,
+    pros: ["Extensive add-ons", "Easy online management", "Claim-free rewards", "Equipment breakdown coverage"],
+    cons: ["Pricier than competitors", "App could be better"],
+    description: "Allstate provides comprehensive customization options and rewards customers who don't file claims.",
+    amBest: "A+"
+  },
+  {
+    name: "Progressive",
+    bestFor: "Multi-Policy Discounts",
+    monthlyAvg: "$15",
+    coverage: "$20,000+",
+    rating: 4.6,
+    pros: ["Bundle with auto", "24/7 online service", "Competitive pricing", "Pet liability included"],
+    cons: ["Limited agent network", "Basic online experience"],
+    description: "Progressive offers solid renters coverage with significant savings when bundled with auto insurance.",
+    amBest: "A+"
+  },
+  {
+    name: "USAA",
+    bestFor: "Military Members",
+    monthlyAvg: "$10",
+    coverage: "$25,000+",
+    rating: 4.9,
+    pros: ["Lowest average rates", "Exceptional service", "Replacement cost coverage", "No claims needed for military moves"],
+    cons: ["Military members only", "Limited accessibility"],
+    description: "USAA provides the most affordable renters insurance with outstanding service for military families.",
+    amBest: "A++"
+  },
+  {
+    name: "Toggle (Farmers)",
+    bestFor: "Customizable Coverage",
+    monthlyAvg: "$14",
+    coverage: "$15,000+",
+    rating: 4.4,
+    pros: ["Itemized coverage", "Easy to customize", "Quick online quotes", "Backed by Farmers"],
+    cons: ["Limited track record", "Fewer coverage options"],
+    description: "Toggle lets you build custom coverage piece by piece, ideal for renters with specific protection needs.",
+    amBest: "A"
+  }
+];
+---
+
+<MainLayout title="Best Renters Insurance" description="Expert reviews of the best renters insurance providers for affordable coverage and easy claims.">
+  <!-- Header -->
+  <section class="bg-[#0D2C4B] py-12 md:py-16">
+    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center">
+      <span class="inline-block text-[#3B82F6] font-bold uppercase text-sm tracking-wide mb-4">RENTERS INSURANCE</span>
+      <h1 class="font-sora text-4xl md:text-5xl font-bold mb-4" style="color: #FFFFFF !important;">Best Renters Insurance of December 2025</h1>
+      <p class="text-xl max-w-3xl mx-auto mb-6" style="color: rgba(255,255,255,0.8) !important;">
+        Our experts have reviewed the top renters insurance providers to help you protect your belongings at an affordable price.
+      </p>
+      <div class="flex items-center justify-center gap-4 text-sm" style="color: rgba(255,255,255,0.6) !important;">
+        <span>By PrestaNews Insurance Team</span>
+        <span>•</span>
+        <span>Updated Dec. 10, 2025</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- Providers List -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      
+      {providers.map((provider, index) => (
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
+          <div class="grid md:grid-cols-[300px_1fr]">
+            <!-- Left Panel - Logo & CTA -->
+            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
+              <!-- Provider Visual -->
+              <div class="w-48 h-32 rounded-xl shadow-lg mb-6 relative overflow-hidden flex items-center justify-center" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);">
+                <span class="text-white font-bold text-2xl font-sora">{provider.name}</span>
+              </div>
+              
+              <!-- Apply Button -->
+              <a href="#" class="btn-apply">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s Website</p>
+            </div>
+
+            <!-- Right Panel - Provider Details -->
+            <div class="p-6 md:p-8">
+              <div class="flex items-start justify-between mb-2">
+                <h2 class="font-sora font-bold text-xl md:text-2xl text-[#162433]">{provider.name}</h2>
+                <span class="bg-[#0D2C4B] text-white text-xs font-bold px-3 py-1 rounded-full">#{index + 1}</span>
+              </div>
+              
+              <div class="flex items-center gap-4 mb-4">
+                <div class="flex text-yellow-400 text-sm">
+                  {'★'.repeat(Math.floor(provider.rating))}{'☆'.repeat(5 - Math.floor(provider.rating))}
+                </div>
+                <span class="font-bold text-[#0D2C4B]">{provider.rating}/5</span>
+                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">AM Best: {provider.amBest}</span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4 mb-4 text-sm">
+                <div>
+                  <span class="text-[#68727C]">Best for:</span>
+                  <span class="font-bold text-[#162433] block">{provider.bestFor}</span>
+                </div>
+                <div>
+                  <span class="text-[#68727C]">Monthly:</span>
+                  <span class="font-bold text-[#162433] block">{provider.monthlyAvg}</span>
+                </div>
+                <div>
+                  <span class="text-[#68727C]">Coverage:</span>
+                  <span class="font-bold text-[#162433] block">{provider.coverage}</span>
+                </div>
+              </div>
+
+              <p class="text-[#68727C] mb-6 text-sm">{provider.description}</p>
+              
+              <!-- Verdict Box -->
+              <div class="bg-[#F7F8FA] rounded-lg p-4 md:p-6">
+                <h3 class="font-lexend font-bold text-sm uppercase tracking-wide text-[#162433] mb-4">Our Verdict</h3>
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                  <div>
+                    <h4 class="text-[#0D2C4B] font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                      <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      Pros
+                    </h4>
+                    <ul class="space-y-2 text-sm text-[#68727C]">
+                      {provider.pros.map(pro => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-green-500 mt-1">•</span> {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="text-red-500 font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                      Cons
+                    </h4>
+                    <ul class="space-y-2 text-sm text-[#68727C]">
+                      {provider.cons.map(con => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-red-400 mt-1">•</span> {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-12 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8">Renters Insurance FAQ</h2>
+      
+      <div class="space-y-6">
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            Do I really need renters insurance?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Yes! Your landlord's insurance only covers the building, not your belongings. Renters insurance protects your possessions, provides liability coverage, and covers additional living expenses if you're displaced.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            How much renters insurance coverage do I need?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Create a home inventory to estimate your belongings' value. Most renters need $20,000-$50,000 in personal property coverage. Also consider $100,000+ in liability coverage.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            What's the difference between actual cash value and replacement cost?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Actual cash value pays what your items are worth today (depreciated). Replacement cost pays to replace items with new ones of similar quality. Replacement cost coverage is slightly more expensive but worth it.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            Does renters insurance cover my roommate's stuff?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Typically no, unless they're listed on your policy. Each roommate should have their own policy or be explicitly added as a named insured to your policy.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+

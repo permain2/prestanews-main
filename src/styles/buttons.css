@@ -1,0 +1,156 @@
+/* 
+ * PrestaNews Button System
+ * Only TWO button styles allowed on the entire site:
+ * 1. btn-primary - Dark blue, used for Subscribe, navigation CTAs
+ * 2. btn-apply - Blue, used for Apply Now, affiliate CTAs
+ */
+
+/* ===========================================
+   PRIMARY BUTTON (Subscribe, Menu CTAs)
+   Dark navy blue, rounded pill, uppercase
+   =========================================== */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: #0D2C4B;
+    color: #FFFFFF !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1a3d5c;
+}
+
+.btn-primary-sm {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.75rem;
+}
+
+.btn-primary-lg {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
+
+/* ===========================================
+   APPLY BUTTON (Apply Now, Affiliate CTAs)
+   Solid blue, rounded rectangle, with arrow
+   =========================================== */
+.btn-apply {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: #146aff;
+    color: #FFFFFF !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: 100%;
+}
+
+.btn-apply:hover {
+    background-color: #0040B1;
+}
+
+.btn-apply-sm {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.75rem;
+}
+
+.btn-apply-lg {
+    padding: 1.25rem 2rem;
+    font-size: 1rem;
+}
+
+/* Arrow icon for Apply button */
+.btn-apply svg,
+.btn-apply .arrow-icon {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.btn-apply:hover svg,
+.btn-apply:hover .arrow-icon {
+    transform: translateX(4px);
+}
+
+/* ===========================================
+   BUTTON VARIATIONS (use sparingly)
+   =========================================== */
+
+/* Outline version of primary */
+.btn-primary-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    color: #0D2C4B !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    border: 2px solid #0D2C4B;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary-outline:hover {
+    background-color: #0D2C4B;
+    color: #FFFFFF !important;
+}
+
+/* Filter/Tab buttons */
+.btn-filter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: #162433;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    border: 1px solid #E6E8EB;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-filter:hover {
+    border-color: #0D2C4B;
+    color: #0D2C4B;
+}
+
+.btn-filter.active {
+    background-color: #0D2C4B;
+    color: #FFFFFF;
+    border-color: #0D2C4B;
+}
+

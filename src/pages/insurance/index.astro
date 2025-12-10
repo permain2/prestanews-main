@@ -1,0 +1,130 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+// Insurance category posts
+const insurancePosts = [
+  {
+    title: "Best Car Insurance",
+    description: "Compare top auto insurance providers to find the best coverage and rates for your vehicle. Expert reviews of GEICO, Progressive, State Farm, and more.",
+    href: "/insurance/car",
+    category: "Auto Insurance",
+    image: "/blog-placeholder-1.jpg"
+  },
+  {
+    title: "Best Home Insurance",
+    description: "Protect your most valuable asset with comprehensive homeowners insurance. Compare coverage options, rates, and discounts from top providers.",
+    href: "/insurance/home",
+    category: "Homeowners Insurance",
+    image: "/blog-placeholder-2.jpg"
+  },
+  {
+    title: "Best Renters Insurance",
+    description: "Affordable protection for your belongings. Find the best renters insurance with easy sign-up, great coverage, and competitive monthly rates.",
+    href: "/insurance/renters",
+    category: "Renters Insurance",
+    image: "/blog-placeholder-3.jpg"
+  },
+  {
+    title: "Best Life Insurance",
+    description: "Secure your family's financial future with the right life insurance policy. Compare term, whole, and universal life options from trusted providers.",
+    href: "/insurance/life",
+    category: "Life Insurance",
+    image: "/blog-placeholder-4.jpg"
+  }
+];
+---
+
+<MainLayout title="Insurance" description="Find the best insurance providers for car, home, renters, and life insurance.">
+  <!-- Header -->
+  <section class="collection-header">
+    <div class="header-container">
+      <h1 class="collection-title">Insurance</h1>
+      <p class="collection-description">
+        Find the right insurance coverage for your needs. Our experts review and compare 
+        the best providers for auto, home, renters, and life insurance.
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts Grid -->
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {insurancePosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            image={post.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .collection-header {
+    background: #EEF2F6;
+    padding: 3.5rem 0;
+  }
+
+  .header-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+
+  .collection-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 1rem;
+  }
+
+  .collection-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #68727C;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .collection-header {
+      padding: 2rem 0;
+    }
+
+    .header-container,
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

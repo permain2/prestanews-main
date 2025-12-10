@@ -1,0 +1,192 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+// Credit card category posts
+const creditCardPosts = [
+  {
+    title: "Best Travel Credit Cards",
+    description: "Maximize your travel rewards with these top-rated cards featuring bonus points, lounge access, and premium travel benefits.",
+    href: "/credit-cards/best-travel-cards",
+    category: "Travel Rewards",
+    image: "/blog-placeholder-1.jpg"
+  },
+  {
+    title: "Best Cash Back Credit Cards",
+    description: "Earn cash back on everyday purchases with these excellent cash back cards offering competitive rates and flexible redemption.",
+    href: "/credit-cards/best-cashback",
+    category: "Cash Back",
+    image: "/blog-placeholder-2.jpg"
+  },
+  {
+    title: "Best Business Credit Cards",
+    description: "Power your business with cards designed for entrepreneurs, featuring expense tracking, employee cards, and business rewards.",
+    href: "/credit-cards/business",
+    category: "Business",
+    image: "/blog-placeholder-3.jpg"
+  },
+  {
+    title: "Best No Annual Fee Cards",
+    description: "Great rewards without the yearly cost. These cards prove you don't need to pay an annual fee to earn valuable perks.",
+    href: "/credit-cards/no-annual-fee",
+    category: "No Annual Fee",
+    image: "/blog-placeholder-4.jpg"
+  },
+  {
+    title: "Best Balance Transfer Cards",
+    description: "Pay down debt faster with 0% intro APR offers. These cards help you save on interest and consolidate your balances.",
+    href: "/credit-cards/balance-transfer",
+    category: "Balance Transfer",
+    image: "/blog-placeholder-5.jpg"
+  }
+];
+
+// Filter categories for navigation
+const categories = [
+  { name: "All Cards", href: "/credit-cards", active: true },
+  { name: "Travel", href: "/credit-cards/best-travel-cards" },
+  { name: "Cash Back", href: "/credit-cards/best-cashback" },
+  { name: "Business", href: "/credit-cards/business" },
+  { name: "No Annual Fee", href: "/credit-cards/no-annual-fee" }
+];
+---
+
+<MainLayout title="Credit Cards" description="Find the best credit cards for travel rewards, cash back, business, and more.">
+  <!-- Header -->
+  <section class="collection-header">
+    <div class="header-container">
+      <h1 class="collection-title">Credit Cards</h1>
+      <p class="collection-description">
+        Find the perfect credit card for your spending habits. Our experts review and compare 
+        the best options for travel rewards, cash back, business, and more.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter Pills -->
+  <section class="filters-section">
+    <div class="filters-container">
+      <nav class="filters-nav">
+        {categories.map(cat => (
+          <a href={cat.href} class:list={["btn-filter", { active: cat.active }]}>
+            {cat.name}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <!-- Posts Grid -->
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {creditCardPosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            image={post.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .collection-header {
+    background: #EEF2F6;
+    padding: 3.5rem 0;
+  }
+
+  .header-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+
+  .collection-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 1rem;
+  }
+
+  .collection-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #68727C;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .filters-section {
+    background: #ffffff;
+    border-bottom: 1px solid #E6E8EB;
+    padding: 1rem 0;
+    position: sticky;
+    top: 4.5rem;
+    z-index: 40;
+  }
+
+  .filters-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .filters-nav {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 1024px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collection-header {
+      padding: 2rem 0;
+    }
+
+    .header-container,
+    .filters-container,
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .filters-nav {
+      gap: 0.5rem;
+    }
+  }
+</style>

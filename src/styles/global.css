@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* Import Button System */
+@import "./buttons.css";
+
+@theme {
+  /* PrestaNews Brand Colors */
+  --color-primary: #0D2C4B;      /* Dark Navy Blue - main brand color */
+  --color-secondary: #162433;    /* Dark text color */
+  --color-accent: #146aff;       /* Blue for Apply buttons */
+  --color-teal: #006056;         /* Teal for category labels */
+  --color-text: #162433;         /* Main text */
+  --color-muted: #68727C;        /* Muted gray */
+  --color-light: #F7F8FA;        /* Light background */
+  --color-cream: #FFF0E2;        /* Cream background for headers */
+  --color-border: #E6E8EB;       /* Border gray */
+  
+  /* Typography */
+  --font-sora: 'Sora', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-lexend: 'Lexend', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+}
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+/* Base Styles */
+body {
+  font-family: var(--font-poppins);
+  color: var(--color-text);
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sora);
+  color: var(--color-secondary);
+  font-weight: 700;
+}
+
+/* Category Label - Teal color, uppercase */
+.category-label {
+  font-family: var(--font-sora);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-teal);
+}
+
+/* Card Styles */
+.card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Backgrounds */
+.section-white {
+  background: #ffffff;
+}
+
+.section-light {
+  background: var(--color-light);
+}
+
+.section-cream {
+  background: var(--color-cream);
+}
+
+.section-dark {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+/* Force white text on dark backgrounds */
+.section-dark h1,
+.section-dark h2,
+.section-dark h3,
+.section-dark h4,
+.section-dark h5,
+.section-dark h6,
+.section-dark p,
+.section-dark span,
+[class*="bg-[#0D2C4B]"] h1,
+[class*="bg-[#0D2C4B]"] h2,
+[class*="bg-[#0D2C4B]"] h3,
+[class*="from-[#0D2C4B]"] h1,
+[class*="from-[#0D2C4B]"] h2,
+[class*="from-[#0D2C4B]"] h3 {
+  color: #ffffff !important;
+}
+
+/* Container */
+.container-main {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .container-main {
+    padding: 0 1.25rem;
+  }
+}
+
+/* Link styles - NO default styling, buttons use classes */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Article content links get special styling */
+.prose a {
+  color: var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
+}
+
+.prose a:hover {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}

@@ -1,0 +1,201 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+// Guides posts - broader financial topics
+const guidesPosts = [
+  {
+    title: "Complete Guide to Credit Card Points",
+    description: "Everything you need to know about earning, redeeming, and maximizing credit card points. From beginner basics to advanced strategies.",
+    href: "/guides/credit-card-points",
+    category: "Credit Cards",
+    author: "PrestaNews Team",
+    date: "Dec 10, 2025",
+    icon: "credit-card",
+    gradient: "from-blue-500 to-blue-700"
+  },
+  {
+    title: "How to Choose the Right Credit Card",
+    description: "A step-by-step guide to selecting the perfect credit card based on your spending habits, credit score, and financial goals.",
+    href: "/guides/choose-credit-card",
+    category: "Credit Cards",
+    author: "PrestaNews Team",
+    date: "Dec 8, 2025",
+    icon: "cards",
+    gradient: "from-indigo-500 to-indigo-700"
+  },
+  {
+    title: "Understanding Car Insurance Coverage",
+    description: "Learn about liability, collision, comprehensive, and other coverage types to make sure you're properly protected on the road.",
+    href: "/guides/car-insurance-coverage",
+    category: "Insurance",
+    author: "PrestaNews Team",
+    date: "Dec 6, 2025",
+    icon: "car",
+    gradient: "from-red-500 to-red-700"
+  },
+  {
+    title: "Home Insurance: What's Covered?",
+    description: "A comprehensive guide to homeowners insurance coverage, including what's included, exclusions, and how to file claims.",
+    href: "/guides/home-insurance-coverage",
+    category: "Insurance",
+    author: "PrestaNews Team",
+    date: "Dec 4, 2025",
+    icon: "house",
+    gradient: "from-orange-500 to-orange-700"
+  },
+  {
+    title: "Credit Score 101: What You Need to Know",
+    description: "Understanding credit scores, how they're calculated, and proven tips to improve your score for better approvals and rates.",
+    href: "/guides/credit-score-101",
+    category: "Personal Finance",
+    author: "PrestaNews Team",
+    date: "Dec 2, 2025",
+    icon: "chart",
+    gradient: "from-green-500 to-green-700"
+  },
+  {
+    title: "Life Insurance Explained",
+    description: "Term vs. whole life, how much coverage you need, and tips for finding affordable life insurance to protect your family.",
+    href: "/guides/life-insurance-explained",
+    category: "Insurance",
+    author: "PrestaNews Team",
+    date: "Nov 30, 2025",
+    icon: "heart",
+    gradient: "from-purple-500 to-purple-700"
+  },
+  {
+    title: "Maximizing Cash Back Rewards",
+    description: "Strategies to earn more cash back on everyday purchases, including stacking rewards and category bonuses.",
+    href: "/guides/maximize-cashback",
+    category: "Credit Cards",
+    author: "PrestaNews Team",
+    date: "Nov 28, 2025",
+    icon: "dollar",
+    gradient: "from-emerald-500 to-emerald-700"
+  },
+  {
+    title: "Renters Insurance Guide",
+    description: "Why renters insurance matters, what it covers, and how to find affordable coverage for your apartment or rental home.",
+    href: "/guides/renters-insurance",
+    category: "Insurance",
+    author: "PrestaNews Team",
+    date: "Nov 26, 2025",
+    icon: "building",
+    gradient: "from-cyan-500 to-cyan-700"
+  },
+  {
+    title: "Building Credit From Scratch",
+    description: "A beginner's guide to establishing credit history, from secured cards to becoming an authorized user.",
+    href: "/guides/building-credit",
+    category: "Personal Finance",
+    author: "PrestaNews Team",
+    date: "Nov 24, 2025",
+    icon: "trending",
+    gradient: "from-teal-500 to-teal-700"
+  }
+];
+---
+
+<MainLayout title="Guides" description="Expert guides for credit cards, insurance, and personal finance.">
+  <!-- Header -->
+  <section class="collection-header">
+    <div class="header-container">
+      <h1 class="collection-title">Guides</h1>
+      <p class="collection-description">
+        In-depth guides to help you master credit cards, understand insurance, 
+        and make smarter financial decisions.
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts Grid -->
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {guidesPosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            author={post.author}
+            date={post.date}
+            icon={post.icon}
+            gradient={post.gradient}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .collection-header {
+    background: #EEF2F6;
+    padding: 3.5rem 0;
+  }
+
+  .header-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+
+  .collection-title {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 1rem;
+  }
+
+  .collection-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #68727C;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 1024px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collection-header {
+      padding: 2rem 0;
+    }
+
+    .header-container,
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

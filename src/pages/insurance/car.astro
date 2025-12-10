@@ -1,0 +1,226 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// Car insurance providers data
+const providers = [
+  {
+    name: "GEICO",
+    bestFor: "Budget-Conscious Drivers",
+    monthlyAvg: "$120",
+    rating: 4.8,
+    pros: ["Competitive rates", "Strong mobile app", "24/7 customer service", "Military discounts"],
+    cons: ["Limited local agents", "No gap coverage"],
+    description: "GEICO offers some of the most competitive rates in the industry with excellent digital tools and customer service.",
+    amBest: "A++"
+  },
+  {
+    name: "Progressive",
+    bestFor: "High-Risk Drivers",
+    monthlyAvg: "$140",
+    rating: 4.6,
+    pros: ["Name Your Price tool", "Snapshot discount program", "Comprehensive coverage options", "Pet injury coverage"],
+    cons: ["Higher rates for some", "Customer service varies"],
+    description: "Progressive is known for accepting high-risk drivers and offering innovative tools like the Snapshot program for safe driver discounts.",
+    amBest: "A+"
+  },
+  {
+    name: "State Farm",
+    bestFor: "Full-Service Experience",
+    monthlyAvg: "$135",
+    rating: 4.7,
+    pros: ["Largest network of agents", "Drive Safe & Save program", "Excellent bundling discounts", "Rideshare coverage"],
+    cons: ["Rates vary by state", "App needs improvement"],
+    description: "State Farm combines personal agent service with competitive rates and extensive coverage options for a well-rounded experience.",
+    amBest: "A++"
+  },
+  {
+    name: "USAA",
+    bestFor: "Military Members",
+    monthlyAvg: "$95",
+    rating: 4.9,
+    pros: ["Lowest average rates", "Exceptional customer service", "Military-specific benefits", "Accident forgiveness"],
+    cons: ["Limited to military/family", "Few physical locations"],
+    description: "USAA consistently ranks highest in customer satisfaction and offers the lowest rates—available exclusively to military members and their families.",
+    amBest: "A++"
+  },
+  {
+    name: "Allstate",
+    bestFor: "Accident Forgiveness",
+    monthlyAvg: "$155",
+    rating: 4.5,
+    pros: ["Drivewise safe driver program", "Deductible rewards", "New car replacement", "Roadside assistance"],
+    cons: ["Higher average rates", "Complex policy options"],
+    description: "Allstate offers robust coverage with unique features like accident forgiveness and deductible rewards for loyal customers.",
+    amBest: "A+"
+  },
+  {
+    name: "Liberty Mutual",
+    bestFor: "Customizable Coverage",
+    monthlyAvg: "$150",
+    rating: 4.4,
+    pros: ["RightTrack discount program", "New car replacement", "Better car replacement", "Lifetime repair guarantee"],
+    cons: ["Higher baseline rates", "Mixed reviews on claims"],
+    description: "Liberty Mutual excels in customizable coverage options and unique benefits like lifetime repair guarantees.",
+    amBest: "A"
+  }
+];
+---
+
+<MainLayout title="Best Car Insurance" description="Expert reviews of the best car insurance providers to help you find affordable coverage with great service.">
+  <!-- Header -->
+  <section class="bg-[#0D2C4B] py-12 md:py-16">
+    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center">
+      <span class="inline-block text-[#3B82F6] font-bold uppercase text-sm tracking-wide mb-4">CAR INSURANCE</span>
+      <h1 class="font-sora text-4xl md:text-5xl font-bold mb-4" style="color: #FFFFFF !important;">Best Car Insurance of December 2025</h1>
+      <p class="text-xl max-w-3xl mx-auto mb-6" style="color: rgba(255,255,255,0.8) !important;">
+        Our experts have reviewed the top auto insurance providers to help you find the right coverage at the best price.
+      </p>
+      <div class="flex items-center justify-center gap-4 text-sm" style="color: rgba(255,255,255,0.6) !important;">
+        <span>By PrestaNews Insurance Team</span>
+        <span>•</span>
+        <span>Updated Dec. 10, 2025</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- Providers List -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      
+      {providers.map((provider, index) => (
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
+          <div class="grid md:grid-cols-[300px_1fr]">
+            <!-- Left Panel - Logo & CTA -->
+            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
+              <!-- Provider Visual -->
+              <div class="w-48 h-32 rounded-xl shadow-lg mb-6 relative overflow-hidden flex items-center justify-center" style="background: linear-gradient(135deg, #0D2C4B 0%, #1a3d5c 100%);">
+                <span class="text-white font-bold text-2xl font-sora">{provider.name}</span>
+              </div>
+              
+              <!-- Apply Button -->
+              <a href="#" class="btn-apply">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s Website</p>
+            </div>
+
+            <!-- Right Panel - Provider Details -->
+            <div class="p-6 md:p-8">
+              <div class="flex items-start justify-between mb-2">
+                <h2 class="font-sora font-bold text-xl md:text-2xl text-[#162433]">{provider.name}</h2>
+                <span class="bg-[#0D2C4B] text-white text-xs font-bold px-3 py-1 rounded-full">#{index + 1}</span>
+              </div>
+              
+              <div class="flex items-center gap-4 mb-4">
+                <div class="flex text-yellow-400 text-sm">
+                  {'★'.repeat(Math.floor(provider.rating))}{'☆'.repeat(5 - Math.floor(provider.rating))}
+                </div>
+                <span class="font-bold text-[#0D2C4B]">{provider.rating}/5</span>
+                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">AM Best: {provider.amBest}</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                <div>
+                  <span class="text-[#68727C]">Best for:</span>
+                  <span class="font-bold text-[#162433] ml-1">{provider.bestFor}</span>
+                </div>
+                <div>
+                  <span class="text-[#68727C]">Avg. Monthly:</span>
+                  <span class="font-bold text-[#162433] ml-1">{provider.monthlyAvg}</span>
+                </div>
+              </div>
+
+              <p class="text-[#68727C] mb-6 text-sm">{provider.description}</p>
+              
+              <!-- Verdict Box -->
+              <div class="bg-[#F7F8FA] rounded-lg p-4 md:p-6">
+                <h3 class="font-lexend font-bold text-sm uppercase tracking-wide text-[#162433] mb-4">Our Verdict</h3>
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                  <div>
+                    <h4 class="text-[#0D2C4B] font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                      <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      Pros
+                    </h4>
+                    <ul class="space-y-2 text-sm text-[#68727C]">
+                      {provider.pros.map(pro => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-green-500 mt-1">•</span> {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="text-red-500 font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                      Cons
+                    </h4>
+                    <ul class="space-y-2 text-sm text-[#68727C]">
+                      {provider.cons.map(con => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-red-400 mt-1">•</span> {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-12 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8">Car Insurance FAQ</h2>
+      
+      <div class="space-y-6">
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            What factors affect my car insurance rates?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Key factors include your driving history, age, location, credit score, vehicle type, coverage levels, and annual mileage. Discounts may be available for bundling, safe driving, and good student status.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            How much car insurance do I need?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">At minimum, you need your state's required liability coverage. However, experts recommend at least 100/300/100 liability limits plus comprehensive and collision if your car is financed or worth more than a few thousand dollars.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            Should I choose a higher deductible?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">A higher deductible lowers your premium but means more out-of-pocket costs if you file a claim. Choose a deductible you could comfortably afford in an emergency—typically $500-$1,000.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            What is gap insurance?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Gap insurance covers the difference between what you owe on your car loan and what your car is worth if it's totaled. It's particularly valuable for new cars or those with long loan terms.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+

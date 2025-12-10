@@ -1,0 +1,199 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Contact Us" description="Get in touch with the PrestaNews team.">
+  <!-- Header -->
+  <section class="page-header">
+    <div class="container-main">
+      <h1>Contact Us</h1>
+      <p>Have a question or feedback? We'd love to hear from you.</p>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="section-white py-16 md:py-24">
+    <div class="container-main">
+      <div class="grid md:grid-cols-2 gap-16 max-w-5xl mx-auto">
+        <!-- Form -->
+        <div>
+          <h2 class="text-2xl font-sora font-bold text-[#162433] mb-6">Send Us a Message</h2>
+          <form class="contact-form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <select id="subject" name="subject" required>
+                <option value="">Select a topic</option>
+                <option value="general">General Inquiry</option>
+                <option value="editorial">Editorial/Content</option>
+                <option value="advertising">Advertising</option>
+                <option value="partnerships">Partnerships</option>
+                <option value="technical">Technical Issue</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="How can we help you?" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Send Message</button>
+          </form>
+        </div>
+
+        <!-- Contact Info -->
+        <div>
+          <h2 class="text-2xl font-sora font-bold text-[#162433] mb-6">Other Ways to Reach Us</h2>
+          
+          <div class="contact-info">
+            <div class="info-item">
+              <h3>Email</h3>
+              <p><a href="mailto:hello@prestanews.com">hello@prestanews.com</a></p>
+            </div>
+            
+            <div class="info-item">
+              <h3>Press Inquiries</h3>
+              <p><a href="mailto:press@prestanews.com">press@prestanews.com</a></p>
+            </div>
+            
+            <div class="info-item">
+              <h3>Advertising</h3>
+              <p><a href="mailto:ads@prestanews.com">ads@prestanews.com</a></p>
+            </div>
+            
+            <div class="info-item">
+              <h3>Follow Us</h3>
+              <div class="social-links">
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">Facebook</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .page-header {
+    background: #EEF2F6;
+    padding: 3.5rem 0;
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-header p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    color: #68727C;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #162433;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.875rem 1rem;
+    border: 1px solid #E6E8EB;
+    border-radius: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #162433;
+    background: #ffffff;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #146aff;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .info-item h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+
+  .info-item p,
+  .info-item a {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #68727C;
+  }
+
+  .info-item a:hover {
+    color: #146aff;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    color: #68727C;
+    padding: 0.5rem 1rem;
+    border: 1px solid #E6E8EB;
+    border-radius: 9999px;
+    transition: all 0.2s;
+  }
+
+  .social-link:hover {
+    background: #0D2C4B;
+    color: #ffffff;
+    border-color: #0D2C4B;
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      padding: 2rem 0;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
