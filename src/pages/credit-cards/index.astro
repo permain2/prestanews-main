@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import PostCard from '../../components/PostCard.astro';
+import CursorTrailCreditCards from '../../components/CursorTrailCreditCards.tsx';
 
 // Credit card category posts
 const creditCardPosts = [
@@ -52,16 +53,8 @@ const categories = [
 ---
 
 <MainLayout title="Credit Cards" description="Find the best credit cards for travel rewards, cash back, business, and more.">
-  <!-- Header -->
-  <section class="collection-header">
-    <div class="header-container">
-      <h1 class="collection-title">Credit Cards</h1>
-      <p class="collection-description">
-        Find the perfect credit card for your spending habits. Our experts review and compare 
-        the best options for travel rewards, cash back, business, and more.
-      </p>
-    </div>
-  </section>
+  <!-- Interactive Header with Cursor Trail -->
+  <CursorTrailCreditCards client:load />
 
   <!-- Filter Pills -->
   <section class="filters-section">
