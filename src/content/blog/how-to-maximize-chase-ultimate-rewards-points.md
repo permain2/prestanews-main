@@ -2,7 +2,7 @@
 title: "How to Maximize Chase Ultimate Rewards Points: The Complete 2025 Strategy Guide"
 description: "Master Chase Ultimate Rewards with expert strategies to earn, transfer, and redeem points for maximum value. Unlock premium travel at fraction of cost."
 pubDate: 2025-12-10
-heroImage: "/blog-placeholder-3.jpg"
+heroImage: "/blog-images/chase-rewards.jpg"
 tags: ["credit-cards","guide"]
 ---
 

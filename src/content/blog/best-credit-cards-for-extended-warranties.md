@@ -2,7 +2,7 @@
 title: "Best Credit Cards for Extended Warranties: Complete 2025 Guide"
 description: "Discover top credit cards offering extended warranty protection. Save thousands on electronics, appliances, and more with these premium benefits."
 pubDate: 2025-12-10
-heroImage: "/blog-placeholder-3.jpg"
+heroImage: "/blog-images/extended-warranty.jpg"
 tags: ["credit-cards","guide"]
 ---
 
