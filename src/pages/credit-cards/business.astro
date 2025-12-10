@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
 
 // Business credit cards
 const creditCards = [
@@ -57,21 +58,15 @@ const creditCards = [
 ---
 
 <MainLayout title="Best Business Credit Cards" description="Expert reviews of the best American Express business credit cards for entrepreneurs and companies.">
-  <!-- Header -->
-  <section class="bg-[#0D2C4B] py-12 md:py-16">
-    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center">
-      <span class="inline-block text-[#3B82F6] font-bold uppercase text-sm tracking-wide mb-4">BUSINESS CARDS</span>
-      <h1 class="font-sora text-4xl md:text-5xl font-bold text-white mb-4" style="color: white !important;">Best Business Credit Cards of December 2025</h1>
-      <p class="text-xl max-w-3xl mx-auto mb-6" style="color: #CBD5E1;">
-        Power your business with the right American Express card for rewards, cash back, and growth.
-      </p>
-      <div class="flex items-center justify-center gap-4 text-sm" style="color: #94A3B8;">
-        <span>By PrestaNews Editorial Team</span>
-        <span>•</span>
-        <span>Updated Dec. 10, 2025</span>
-      </div>
-    </div>
-  </section>
+  <!-- Interactive Header with Cursor Trail -->
+  <CursorTrailDark 
+    client:load
+    title="Best Business Credit Cards of December 2025"
+    kicker="BUSINESS CARDS"
+    subtitle="Power your business with the right American Express card for rewards, cash back, and growth."
+    author="PrestaNews Editorial Team"
+    date="Dec. 10, 2025"
+  />
 
   <!-- Disclosure -->
   <section class="bg-[#F7F8FA] py-4">
