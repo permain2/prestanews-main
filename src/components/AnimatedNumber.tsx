@@ -99,3 +99,4 @@ export function AnimatedStat({
     </div>
   );
 }
+

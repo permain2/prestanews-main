@@ -226,5 +226,3 @@ export default function CursorTrailInsurance({
         </div>
     )
 }
-
-

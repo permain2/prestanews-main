@@ -213,3 +213,4 @@ export default companyLogos;
 
 // Run the script
 downloadLogos().catch(console.error);
+

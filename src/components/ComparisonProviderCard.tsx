@@ -41,6 +41,7 @@ export default function ComparisonProviderCard({
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   // Generate star rating display
   const fullStars = Math.floor(provider.rating);
@@ -81,13 +82,20 @@ export default function ComparisonProviderCard({
             {/* Logo Container */}
             <div className="logo-container">
               <div className="logo-wrapper">
-                <img
-                  src={provider.logo}
-                  alt={`${provider.name} logo`}
-                  className="provider-logo"
-                  onLoad={() => setImageLoaded(true)}
-                  style={{ opacity: imageLoaded ? 1 : 0 }}
-                />
+                {imageError ? (
+                  <div className="logo-fallback">
+                    <span className="logo-initial">{provider.name.charAt(0)}</span>
+                  </div>
+                ) : (
+                  <img
+                    src={provider.logo}
+                    alt={`${provider.name} logo`}
+                    className="provider-logo"
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => setImageError(true)}
+                    style={{ opacity: imageLoaded ? 1 : 0 }}
+                  />
+                )}
               </div>
             </div>
 
@@ -341,6 +349,23 @@ export default function ComparisonProviderCard({
           transition: opacity 0.3s ease;
         }
 
+        .logo-fallback {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #0D2C4B 0%, #1a3a5c 100%);
+          border-radius: 12px;
+        }
+
+        .logo-initial {
+          font-family: 'Sora', sans-serif;
+          font-size: 2rem;
+          font-weight: 700;
+          color: #ffffff;
+          text-transform: uppercase;
+        }
 
         /* CTA Button */
         .cta-button {

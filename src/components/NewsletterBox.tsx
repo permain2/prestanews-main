@@ -905,5 +905,3 @@ const variants: Record<NewsletterVariant, {
     socialProof: "8,234 protected readers"
   }
 }
-
-

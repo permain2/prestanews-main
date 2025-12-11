@@ -197,3 +197,4 @@ export default function ComparisonTOCToggle({ items, category }: ComparisonTOCTo
         </nav>
     )
 }
+
