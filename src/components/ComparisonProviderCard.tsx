@@ -333,7 +333,8 @@ export default function ComparisonProviderCard({
           position: relative;
           width: 160px;
           height: 80px;
-          background: white;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
           border-radius: 8px;
           display: flex;
           align-items: center;

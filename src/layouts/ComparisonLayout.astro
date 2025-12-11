@@ -26,6 +26,12 @@ import AggregateRatingSchema from '../components/seo/AggregateRatingSchema.astro
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 import { marked } from 'marked';
 
+// Configure marked for proper table rendering
+marked.setOptions({
+  gfm: true,
+  breaks: true
+});
+
 interface Provider {
   name: string;
   logo: string;
@@ -360,19 +366,38 @@ const breadcrumbItems = [
       border-collapse: collapse;
       margin: 1.5rem 0;
       font-size: 0.9375rem;
+      display: table;
+      table-layout: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .premium-content thead {
+      background: #f8fafc;
     }
 
     .premium-content th,
     .premium-content td {
       padding: 0.75rem 1rem;
       text-align: left;
-      border-bottom: 1px solid #e5e7eb;
+      border: 1px solid #e5e7eb;
+      vertical-align: top;
     }
 
     .premium-content th {
       font-weight: 600;
       color: #1e293b;
-      background: #f8fafc;
+      background: #f1f5f9;
+      white-space: nowrap;
+    }
+
+    .premium-content tbody tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    .premium-content tbody tr:hover {
+      background: #f0f9ff;
     }
 
     .premium-content blockquote {
@@ -489,11 +514,15 @@ const breadcrumbItems = [
 
       .premium-content table {
         font-size: 0.8125rem;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .premium-content th,
       .premium-content td {
         padding: 0.5rem 0.75rem;
+        min-width: 100px;
       }
     }
 
