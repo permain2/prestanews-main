@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import PostCard from '../../components/PostCard.astro';
+import CursorTrailGuides from '../../components/CursorTrailGuides.tsx';
 
 // Guides posts - broader financial topics
 const guidesPosts = [
@@ -98,16 +99,8 @@ const guidesPosts = [
 ---
 
 <MainLayout title="Guides" description="Expert guides for credit cards, insurance, and personal finance.">
-  <!-- Header -->
-  <section class="collection-header">
-    <div class="header-container">
-      <h1 class="collection-title">Guides</h1>
-      <p class="collection-description">
-        In-depth guides to help you master credit cards, understand insurance, 
-        and make smarter financial decisions.
-      </p>
-    </div>
-  </section>
+  <!-- Interactive Header with Cursor Trail -->
+  <CursorTrailGuides client:load />
 
   <!-- Posts Grid -->
   <section class="posts-section">

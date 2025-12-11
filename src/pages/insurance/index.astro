@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import PostCard from '../../components/PostCard.astro';
+import CursorTrailInsurance from '../../components/CursorTrailInsurance.tsx';
 
 // Insurance category posts
 const insurancePosts = [
@@ -36,16 +37,8 @@ const insurancePosts = [
 ---
 
 <MainLayout title="Insurance" description="Find the best insurance providers for car, home, renters, and life insurance.">
-  <!-- Header -->
-  <section class="collection-header">
-    <div class="header-container">
-      <h1 class="collection-title">Insurance</h1>
-      <p class="collection-description">
-        Find the right insurance coverage for your needs. Our experts review and compare 
-        the best providers for auto, home, renters, and life insurance.
-      </p>
-    </div>
-  </section>
+  <!-- Interactive Header with Cursor Trail -->
+  <CursorTrailInsurance client:load />
 
   <!-- Posts Grid -->
   <section class="posts-section">
