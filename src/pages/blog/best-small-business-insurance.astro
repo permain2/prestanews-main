@@ -148,6 +148,12 @@ const faqs = [
     answer: "GEICO Business and Next Insurance offer the lowest average premiums starting at $27-$29 monthly for basic coverage. However, the cheapest option isn't always the best value—consider coverage adequacy, carrier financial strength, and customer service quality."
   }
 ];
+
+const tocItems = [
+  { id: "providers", label: "Top Picks", href: "#providers" },
+  { id: "guide", label: "Coverage Guide", href: "#guide" },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];
 ---
 
 <ComparisonLayout
@@ -160,6 +166,7 @@ const faqs = [
   date="Dec. 11, 2025"
   providers={providers}
   faqs={faqs}
+  tocItems={tocItems}
   researchIntro="We obtained 234 quotes across 18 business types and analyzed claim settlement data from AM Best and the NAIC. Our team also interviewed 47 small business owners about their claims experiences. These 10 providers consistently offer the best combination of coverage, pricing, and service."
 >
   <!-- SEO Content Section -->

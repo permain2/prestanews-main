@@ -148,6 +148,12 @@ const faqs = [
     answer: "American Home Shield and Choice Home Warranty offer the most comprehensive appliance coverage, including refrigerators, ranges, dishwashers, washers, dryers, microwaves, and garbage disposals in their standard plans."
   }
 ];
+
+const tocItems = [
+  { id: "providers", label: "Top Picks", href: "#providers" },
+  { id: "guide", label: "Coverage Guide", href: "#guide" },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];
 ---
 
 <ComparisonLayout
@@ -160,6 +166,7 @@ const faqs = [
   date="Dec. 11, 2025"
   providers={providers}
   faqs={faqs}
+  tocItems={tocItems}
   researchIntro="Our team analyzed 847 customer claims, interviewed 12 HVAC contractors, and mystery-shopped each provider's service process. After 6 weeks of testing—including filing actual claims with 3 companies—we identified the 10 home warranty providers that consistently deliver on their promises."
 >
   <!-- SEO Content Section -->
