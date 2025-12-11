@@ -216,14 +216,16 @@ export default function CursorTrailDark({
 
             {/* Content - On top */}
             <div className="content-layer">
-                <motion.span 
-                    className="trail-kicker"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.4 }}
-                >
-                    {kicker}
-                </motion.span>
+                {kicker && (
+                    <motion.span 
+                        className="trail-kicker"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1, duration: 0.4 }}
+                    >
+                        {kicker}
+                    </motion.span>
+                )}
                 <h1 
                     ref={titleRef}
                     className={`trail-dark-title ${animateTitle ? 'animated' : ''}`}

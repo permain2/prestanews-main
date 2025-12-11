@@ -111,9 +111,9 @@ export default function TOCToggleGroup() {
                 }
 
                 .toc-toggle-group {
-                    display: inline-flex;
+                    display: flex;
+                    width: 100%;
                     padding: 6px;
-                    min-width: max-content;
                     background: linear-gradient(135deg, #0D2C4B 0%, #1a3a5c 100%);
                     border-radius: 12px;
                     gap: 4px;
@@ -123,9 +123,9 @@ export default function TOCToggleGroup() {
                 }
 
                 .toggle-item {
-                    flex: 0 0 auto;
+                    flex: 1 1 0;
                     color: rgba(255, 255, 255, 0.7);
-                    padding: 10px 16px;
+                    padding: 12px 8px;
                     border-radius: 8px;
                     display: inline-flex;
                     font-size: 0.8125rem;
@@ -172,8 +172,8 @@ export default function TOCToggleGroup() {
                     }
 
                     .toggle-item {
-                        padding: 8px 12px;
-                        font-size: 0.75rem;
+                        padding: 10px 6px;
+                        font-size: 0.6875rem;
                         border-radius: 6px;
                     }
 
@@ -184,8 +184,8 @@ export default function TOCToggleGroup() {
 
                 @media (max-width: 480px) {
                     .toggle-item {
-                        padding: 7px 10px;
-                        font-size: 0.6875rem;
+                        padding: 8px 4px;
+                        font-size: 0.625rem;
                     }
                 }
             `}</style>
