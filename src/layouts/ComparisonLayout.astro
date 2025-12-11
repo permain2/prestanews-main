@@ -1,0 +1,428 @@
+---
+/**
+ * ComparisonLayout - Reusable template for comparison/review pages
+ * Features:
+ * - Hero section with background image
+ * - Provider comparison cards
+ * - SEO content section with smooth animations
+ * - FAQ section with accordions
+ * 
+ * Usage: Import and pass providers[], seoContent (markdown/HTML), faqs[]
+ */
+import MainLayout from './MainLayout.astro';
+
+interface Provider {
+  name: string;
+  logo: string;
+  bestFor: string;
+  monthlyAvg: string;
+  serviceFee?: string;
+  rating: number;
+  amBest?: string;
+  pros: string[];
+  cons: string[];
+  description: string;
+  affiliateUrl?: string;
+}
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  categoryLabel: string;
+  heroImage: string;
+  author?: string;
+  date?: string;
+  providers: Provider[];
+  faqs?: FAQ[];
+}
+
+const { 
+  title, 
+  description, 
+  category,
+  categoryLabel,
+  heroImage, 
+  author = "Screened Editorial Team",
+  date = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+  providers,
+  faqs = []
+} = Astro.props;
+---
+
+<MainLayout title={title} description={description}>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <img src={heroImage} alt={title} class="hero-image" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center relative z-10 py-16 md:py-24">
+      <span class="inline-block text-[#60A5FA] font-bold uppercase text-sm tracking-wide mb-4 animate-fade-in">{categoryLabel}</span>
+      <h1 class="font-sora text-4xl md:text-5xl font-bold mb-4 animate-slide-up" style="color: #FFFFFF !important;">{title}</h1>
+      <p class="text-xl max-w-3xl mx-auto mb-6 animate-slide-up-delay" style="color: rgba(255,255,255,0.9) !important;">
+        {description}
+      </p>
+      <div class="flex items-center justify-center gap-4 text-sm animate-fade-in-delay" style="color: rgba(255,255,255,0.7) !important;">
+        <span>By {author}</span>
+        <span>•</span>
+        <span>Updated {date}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
+      </p>
+    </div>
+  </section>
+
+  <!-- Providers Comparison Cards -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      {providers.map((provider, index) => (
+        <div class="provider-card bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-xl transition-all duration-300" style={`animation-delay: ${index * 100}ms`}>
+          <div class="grid md:grid-cols-[300px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
+              <div class="w-48 h-32 rounded-xl shadow-lg mb-6 relative overflow-hidden flex items-center justify-center bg-white p-4 group">
+                <img src={provider.logo} alt={`${provider.name} logo`} class="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105" />
+              </div>
+              
+              <a href={provider.affiliateUrl || "#"} class="btn-apply group">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s Website</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              <div class="flex items-start justify-between mb-2">
+                <h2 class="font-sora font-bold text-xl md:text-2xl text-[#162433]">{provider.name}</h2>
+                <span class="bg-[#0D2C4B] text-white text-xs font-bold px-3 py-1 rounded-full">#{index + 1}</span>
+              </div>
+              
+              <div class="flex items-center flex-wrap gap-3 mb-4">
+                <div class="flex text-yellow-400 text-sm">
+                  {'★'.repeat(Math.floor(provider.rating))}{'☆'.repeat(5 - Math.floor(provider.rating))}
+                </div>
+                <span class="font-bold text-[#0D2C4B]">{provider.rating}/5</span>
+                {provider.amBest && (
+                  <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded font-medium">AM Best: {provider.amBest}</span>
+                )}
+              </div>
+
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 text-sm">
+                <div>
+                  <span class="text-[#68727C]">Best for:</span>
+                  <span class="font-bold text-[#162433] ml-1">{provider.bestFor}</span>
+                </div>
+                <div>
+                  <span class="text-[#68727C]">Monthly:</span>
+                  <span class="font-bold text-[#162433] ml-1">{provider.monthlyAvg}</span>
+                </div>
+                {provider.serviceFee && (
+                  <div>
+                    <span class="text-[#68727C]">Service Fee:</span>
+                    <span class="font-bold text-[#162433] ml-1">{provider.serviceFee}</span>
+                  </div>
+                )}
+              </div>
+
+              <p class="text-[#68727C] mb-6 text-sm leading-relaxed">{provider.description}</p>
+              
+              <!-- Verdict Box -->
+              <div class="bg-[#F7F8FA] rounded-lg p-4 md:p-6">
+                <h3 class="font-lexend font-bold text-sm uppercase tracking-wide text-[#162433] mb-4">Our Verdict</h3>
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                  <div>
+                    <h4 class="text-[#0D2C4B] font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                      <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      Pros
+                    </h4>
+                    <ul class="space-y-2 text-sm text-[#68727C]">
+                      {provider.pros.map(pro => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-green-500 mt-0.5">•</span> {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="text-red-500 font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                      Cons
+                    </h4>
+                    <ul class="space-y-2 text-sm text-[#68727C]">
+                      {provider.cons.map(con => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-red-400 mt-0.5">•</span> {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- SEO Content Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content prose prose-lg max-w-none">
+        <slot />
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  {faqs.length > 0 && (
+    <section class="py-16 bg-[#F7F8FA]">
+      <div class="max-w-4xl mx-auto px-4 md:px-8">
+        <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Frequently Asked Questions</h2>
+        
+        <div class="space-y-4">
+          {faqs.map((faq, index) => (
+            <details class="faq-item border border-gray-200 rounded-xl bg-white overflow-hidden group" style={`animation-delay: ${index * 50}ms`}>
+              <summary class="font-bold text-[#162433] cursor-pointer p-6 list-none flex justify-between items-center hover:bg-gray-50 transition-colors">
+                <span class="pr-4">{faq.question}</span>
+                <svg class="w-5 h-5 text-[#68727C] flex-shrink-0 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </summary>
+              <div class="px-6 pb-6 text-[#68727C] leading-relaxed border-t border-gray-100 pt-4">
+                {faq.answer}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <style>
+    /* Hero Animations */
+    .hero-section {
+      position: relative;
+      min-height: 320px;
+    }
+    .hero-background {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13, 44, 75, 0.88) 0%, rgba(22, 36, 51, 0.78) 100%);
+    }
+
+    /* Entrance Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    .animate-fade-in-delay {
+      animation: fadeIn 0.6s ease-out 0.4s forwards;
+      opacity: 0;
+    }
+    .animate-slide-up {
+      animation: slideUp 0.6s ease-out 0.1s forwards;
+      opacity: 0;
+    }
+    .animate-slide-up-delay {
+      animation: slideUp 0.6s ease-out 0.2s forwards;
+      opacity: 0;
+    }
+
+    /* Provider Cards */
+    .provider-card {
+      animation: slideUp 0.5s ease-out forwards;
+      opacity: 0;
+    }
+
+    /* FAQ Items */
+    .faq-item {
+      animation: slideUp 0.4s ease-out forwards;
+      opacity: 0;
+    }
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* SEO Content Styling */
+    .seo-content {
+      color: #374151;
+    }
+    .seo-content h2 {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: #162433;
+      margin-top: 3rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #E5E7EB;
+    }
+    .seo-content h3 {
+      font-family: 'Lexend', sans-serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #0D2C4B;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    .seo-content h4 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #374151;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .seo-content p {
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+    .seo-content ul, .seo-content ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+    .seo-content li {
+      margin-bottom: 0.5rem;
+      line-height: 1.7;
+    }
+    .seo-content strong {
+      color: #162433;
+      font-weight: 600;
+    }
+    .seo-content a {
+      color: #3B82F6;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .seo-content a:hover {
+      border-bottom-color: #3B82F6;
+    }
+    .seo-content blockquote {
+      border-left: 4px solid #3B82F6;
+      background: #F7F8FA;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: #4B5563;
+    }
+    .seo-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 0.95rem;
+    }
+    .seo-content th {
+      background: #0D2C4B;
+      color: white;
+      padding: 0.875rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .seo-content td {
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .seo-content tr:hover td {
+      background: #F9FAFB;
+    }
+    .seo-content code {
+      background: #F3F4F6;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    /* Info Boxes */
+    .seo-content .info-box {
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+      border: 1px solid #BFDBFE;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .seo-content .info-box h4 {
+      color: #1D4ED8;
+      margin-top: 0;
+    }
+    .seo-content .warning-box {
+      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 1px solid #FDE68A;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .seo-content .warning-box h4 {
+      color: #B45309;
+      margin-top: 0;
+    }
+    .seo-content .success-box {
+      background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+      border: 1px solid #A7F3D0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+    .seo-content .success-box h4 {
+      color: #047857;
+      margin-top: 0;
+    }
+
+    /* Key Takeaways Box */
+    .seo-content .key-takeaways {
+      background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+      border: 2px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    .seo-content .key-takeaways h3 {
+      color: #0D2C4B;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .seo-content .key-takeaways ul {
+      margin-bottom: 0;
+    }
+    .seo-content .key-takeaways li {
+      position: relative;
+      padding-left: 0.5rem;
+    }
+    .seo-content .key-takeaways li::marker {
+      color: #3B82F6;
+      font-weight: bold;
+    }
+  </style>
+</MainLayout>

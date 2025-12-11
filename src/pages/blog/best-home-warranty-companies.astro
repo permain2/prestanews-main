@@ -1,5 +1,5 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
+import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
 
 const providers = [
   {
@@ -113,190 +113,303 @@ const providers = [
     description: "AHS ProConnect caters to handy homeowners with diagnostic services and parts coverage for DIY repairs."
   }
 ];
+
+const faqs = [
+  {
+    question: "What does a home warranty cover?",
+    answer: "Standard home warranty plans cover HVAC systems, plumbing, electrical systems, water heaters, and major appliances like refrigerators, dishwashers, and washers/dryers. Premium plans may include pools, spas, and additional appliances."
+  },
+  {
+    question: "How much do home warranty plans cost?",
+    answer: "Monthly premiums range from $35-$79 depending on coverage level and provider. Service call fees add $60-$125 per repair visit. Total annual costs typically range from $500-$1,200."
+  },
+  {
+    question: "Home warranty vs home insurance: What's the difference?",
+    answer: "Home warranties cover mechanical failures and normal wear and tear of systems and appliances. Home insurance protects against sudden, accidental damage from covered perils like fire, theft, or weather events. Most homeowners benefit from both types of coverage."
+  },
+  {
+    question: "Are home warranty companies worth it?",
+    answer: "Home warranties provide value for homeowners with aging systems and appliances. The average homeowner saves $1,200-$2,400 annually on major repairs. However, newer homes with reliable systems may not benefit enough to justify the cost."
+  },
+  {
+    question: "Which home warranty company has the best reviews?",
+    answer: "American Home Shield consistently receives the highest ratings across multiple review platforms, with a 4.7/5 customer satisfaction score and A+ Better Business Bureau rating. Cinch Home Services also scores highly for customer service quality."
+  },
+  {
+    question: "Do home warranty companies actually pay claims?",
+    answer: "Reputable home warranty companies approve 85-90% of valid claims. However, coverage exclusions and pre-existing condition clauses can lead to denials. Read contracts carefully and choose providers with transparent policies."
+  },
+  {
+    question: "Can I buy a home warranty after something breaks?",
+    answer: "Most companies impose waiting periods of 30 days before coverage begins, preventing immediate claims for existing problems. Some providers offer same-day coverage for new customers without recent issues."
+  },
+  {
+    question: "Which home warranty company covers the most appliances?",
+    answer: "American Home Shield and Choice Home Warranty offer the most comprehensive appliance coverage, including refrigerators, ranges, dishwashers, washers, dryers, microwaves, and garbage disposals in their standard plans."
+  }
+];
 ---
 
-<MainLayout title="Best Home Warranty Companies 2024" description="Compare the best home warranty companies of 2024. Expert reviews, pricing, coverage options & customer ratings.">
-  <!-- Header with Hero Image -->
-  <section class="hero-section">
-    <div class="hero-background">
-      <img src="/insurance-heroes/home-warranty.jpeg" alt="Home Warranty" class="hero-image" />
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center relative z-10 py-16 md:py-24">
-      <span class="inline-block text-[#60A5FA] font-bold uppercase text-sm tracking-wide mb-4">HOME WARRANTY</span>
-      <h1 class="font-sora text-4xl md:text-5xl font-bold mb-4" style="color: #FFFFFF !important;">Best Home Warranty Companies 2024</h1>
-      <p class="text-xl max-w-3xl mx-auto mb-6" style="color: rgba(255,255,255,0.9) !important;">
-        Protect your home from unexpected repair costs. We reviewed 25 providers to find the best coverage, pricing, and service.
-      </p>
-      <div class="flex items-center justify-center gap-4 text-sm" style="color: rgba(255,255,255,0.7) !important;">
-        <span>By Screened Editorial Team</span>
-        <span>•</span>
-        <span>Updated Dec. 11, 2025</span>
-      </div>
-    </div>
-  </section>
+<ComparisonLayout
+  title="Best Home Warranty Companies 2024: Top 10 Providers Ranked"
+  description="Protect your home from unexpected repair costs. We reviewed 25 providers to find the best coverage, pricing, and service."
+  category="home"
+  categoryLabel="HOME WARRANTY"
+  heroImage="/insurance-heroes/home-warranty.jpeg"
+  author="Screened Editorial Team"
+  date="Dec. 11, 2025"
+  providers={providers}
+  faqs={faqs}
+>
+  <!-- SEO Content Section -->
+  <div class="key-takeaways">
+    <h3>📋 Key Takeaways</h3>
+    <ul>
+      <li><strong>Top Pick:</strong> American Home Shield leads with comprehensive coverage and nationwide service network</li>
+      <li><strong>Budget Choice:</strong> Select Home Warranty offers plans starting at $35/month</li>
+      <li><strong>Best HVAC Coverage:</strong> Choice Home Warranty provides unlimited repair costs for heating and cooling</li>
+      <li><strong>Average Cost:</strong> Most home warranty plans range from $35-$75 monthly plus $75-$125 service fees</li>
+      <li><strong>Coverage Essentials:</strong> Look for plans covering major systems (HVAC, plumbing, electrical) and appliances</li>
+    </ul>
+  </div>
 
-  <style>
-    .hero-section {
-      position: relative;
-      min-height: 320px;
-    }
-    .hero-background {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-    .hero-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(13, 44, 75, 0.85) 0%, rgba(22, 36, 51, 0.75) 100%);
-    }
-  </style>
+  <p>When your water heater fails on a Sunday morning or your air conditioner dies during a heat wave, repair costs can easily exceed <strong>$2,000</strong>. The best home warranty companies provide financial protection against these unexpected expenses, covering repairs and replacements for major home systems and appliances.</p>
 
-  <!-- Disclosure -->
-  <section class="bg-[#F7F8FA] py-4">
-    <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <p class="text-xs text-[#68727C] leading-relaxed">
-        We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
-      </p>
-    </div>
-  </section>
+  <p>Our comprehensive analysis evaluated 25 providers based on coverage options, pricing, customer satisfaction, and claims processing to identify the top performers in 2024.</p>
 
-  <!-- Providers List -->
-  <section class="py-12 bg-[#F7F8FA]">
-    <div class="max-w-5xl mx-auto px-4 md:px-8">
-      
-      {providers.map((provider, index) => (
-        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
-          <div class="grid md:grid-cols-[300px_1fr]">
-            <!-- Left Panel - Logo & CTA -->
-            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
-              <!-- Provider Logo -->
-              <div class="w-48 h-32 rounded-xl shadow-lg mb-6 relative overflow-hidden flex items-center justify-center bg-white p-4">
-                <img src={provider.logo} alt={`${provider.name} logo`} class="max-w-full max-h-full object-contain" />
-              </div>
-              
-              <!-- Apply Button -->
-              <a href="#" class="btn-apply">
-                <span>Get Quote</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-              </a>
-              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s Website</p>
-            </div>
+  <h2>How We Ranked the Best Home Warranty Providers</h2>
 
-            <!-- Right Panel - Provider Details -->
-            <div class="p-6 md:p-8">
-              <div class="flex items-start justify-between mb-2">
-                <h2 class="font-sora font-bold text-xl md:text-2xl text-[#162433]">{provider.name}</h2>
-                <span class="bg-[#0D2C4B] text-white text-xs font-bold px-3 py-1 rounded-full">#{index + 1}</span>
-              </div>
-              
-              <div class="flex items-center gap-4 mb-4">
-                <div class="flex text-yellow-400 text-sm">
-                  {'★'.repeat(Math.floor(provider.rating))}{'☆'.repeat(5 - Math.floor(provider.rating))}
-                </div>
-                <span class="font-bold text-[#0D2C4B]">{provider.rating}/5</span>
-              </div>
+  <p>Our data-driven methodology evaluated home warranty companies across eight critical factors:</p>
 
-              <div class="grid grid-cols-3 gap-4 mb-4 text-sm">
-                <div>
-                  <span class="text-[#68727C]">Best for:</span>
-                  <span class="font-bold text-[#162433] ml-1">{provider.bestFor}</span>
-                </div>
-                <div>
-                  <span class="text-[#68727C]">Monthly:</span>
-                  <span class="font-bold text-[#162433] ml-1">{provider.monthlyAvg}</span>
-                </div>
-                <div>
-                  <span class="text-[#68727C]">Service Fee:</span>
-                  <span class="font-bold text-[#162433] ml-1">{provider.serviceFee}</span>
-                </div>
-              </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Factor</th>
+        <th>Weight</th>
+        <th>What We Evaluated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Coverage Quality</td>
+        <td>25%</td>
+        <td>Plan options, covered items, coverage limits</td>
+      </tr>
+      <tr>
+        <td>Pricing Value</td>
+        <td>20%</td>
+        <td>Monthly premiums, service fees, deductibles</td>
+      </tr>
+      <tr>
+        <td>Customer Satisfaction</td>
+        <td>20%</td>
+        <td>J.D. Power, BBB, Trustpilot ratings</td>
+      </tr>
+      <tr>
+        <td>Claims Processing</td>
+        <td>15%</td>
+        <td>Response times, contractor quality, approval rates</td>
+      </tr>
+      <tr>
+        <td>Contract Terms</td>
+        <td>10%</td>
+        <td>Flexibility, cancellation policies, renewal terms</td>
+      </tr>
+      <tr>
+        <td>Geographic Coverage</td>
+        <td>5%</td>
+        <td>Service availability, contractor density</td>
+      </tr>
+      <tr>
+        <td>Financial Stability</td>
+        <td>3%</td>
+        <td>Company ratings, years in business</td>
+      </tr>
+      <tr>
+        <td>Additional Benefits</td>
+        <td>2%</td>
+        <td>Online management, mobile apps, preventive maintenance</td>
+      </tr>
+    </tbody>
+  </table>
 
-              <p class="text-[#68727C] mb-6 text-sm">{provider.description}</p>
-              
-              <!-- Verdict Box -->
-              <div class="bg-[#F7F8FA] rounded-lg p-4 md:p-6">
-                <h3 class="font-lexend font-bold text-sm uppercase tracking-wide text-[#162433] mb-4">Our Verdict</h3>
-                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-                  <div>
-                    <h4 class="text-[#0D2C4B] font-bold text-sm uppercase mb-3 flex items-center gap-2">
-                      <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                      Pros
-                    </h4>
-                    <ul class="space-y-2 text-sm text-[#68727C]">
-                      {provider.pros.map(pro => (
-                        <li class="flex items-start gap-2">
-                          <span class="text-green-500 mt-1">•</span> {pro}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 class="text-red-500 font-bold text-sm uppercase mb-3 flex items-center gap-2">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                      Cons
-                    </h4>
-                    <ul class="space-y-2 text-sm text-[#68727C]">
-                      {provider.cons.map(con => (
-                        <li class="flex items-start gap-2">
-                          <span class="text-red-400 mt-1">•</span> {con}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
+  <h2>Best Overall Home Warranty Company</h2>
 
-  <!-- FAQ Section -->
-  <section class="py-12 bg-white">
-    <div class="max-w-4xl mx-auto px-4 md:px-8">
-      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8">Home Warranty FAQ</h2>
-      
-      <div class="space-y-6">
-        <details class="border border-gray-200 rounded-lg p-6 group">
-          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
-            What does a home warranty cover?
-            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-          </summary>
-          <p class="text-[#68727C] mt-4">Standard home warranty plans cover HVAC systems, plumbing, electrical systems, water heaters, and major appliances like refrigerators, dishwashers, and washers/dryers. Premium plans may include pools, spas, and additional appliances.</p>
-        </details>
+  <p><strong>American Home Shield</strong> earns our top recommendation based on comprehensive coverage, extensive contractor network, and proven track record. With 45 years in business and over 2 million customers, AHS provides the reliability and service quality most homeowners need.</p>
 
-        <details class="border border-gray-200 rounded-lg p-6 group">
-          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
-            How much do home warranty plans cost?
-            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-          </summary>
-          <p class="text-[#68727C] mt-4">Monthly premiums range from $35-$79 depending on coverage level and provider. Service call fees add $60-$125 per repair visit. Total annual costs typically range from $500-$1,200.</p>
-        </details>
+  <p>Their ShieldSilver plan covers all essential systems and appliances for $49.99 monthly. The $125 service fee is higher than competitors, but their 17,000+ contractor network ensures faster service and better repair quality.</p>
 
-        <details class="border border-gray-200 rounded-lg p-6 group">
-          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
-            Home warranty vs home insurance: What's the difference?
-            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-          </summary>
-          <p class="text-[#68727C] mt-4">Home warranties cover mechanical failures and normal wear and tear of systems and appliances. Home insurance protects against sudden, accidental damage from covered perils like fire, theft, or weather events. Most homeowners benefit from both types of coverage.</p>
-        </details>
+  <div class="success-box">
+    <h4>✅ Why American Home Shield Wins</h4>
+    <ul>
+      <li>24/7 customer service and online claims management</li>
+      <li>A+ Better Business Bureau rating</li>
+      <li>Optional coverage for pools, spas, and additional systems</li>
+      <li>4.7/5 customer satisfaction score</li>
+    </ul>
+  </div>
 
-        <details class="border border-gray-200 rounded-lg p-6 group">
-          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
-            Are home warranty companies worth it?
-            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-          </summary>
-          <p class="text-[#68727C] mt-4">Home warranties provide value for homeowners with aging systems and appliances. The average homeowner saves $1,200-$2,400 annually on major repairs. However, newer homes with reliable systems may not benefit enough to justify the cost.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-</MainLayout>
+  <h2>Best Budget Home Warranty Plans</h2>
+
+  <p><strong>Select Home Warranty</strong> provides the most affordable coverage without sacrificing essential protection. Their Basic plan covers major systems and appliances for just <strong>$35 monthly</strong> plus a $75 service fee.</p>
+
+  <p>Budget-conscious homeowners save $180 annually compared to premium providers while maintaining coverage for HVAC, plumbing, electrical, and major appliances. The month-to-month contract option provides flexibility without long-term commitments.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Provider</th>
+        <th>Monthly Premium</th>
+        <th>Service Fee</th>
+        <th>Annual Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Select Home Warranty</td>
+        <td>$35</td>
+        <td>$75</td>
+        <td>$420</td>
+      </tr>
+      <tr>
+        <td>Total Home Protection</td>
+        <td>$39</td>
+        <td>$70</td>
+        <td>$468</td>
+      </tr>
+      <tr>
+        <td>AFC Home Club</td>
+        <td>$38</td>
+        <td>$65</td>
+        <td>$456</td>
+      </tr>
+      <tr>
+        <td>Liberty Home Guard</td>
+        <td>$42</td>
+        <td>$60</td>
+        <td>$504</td>
+      </tr>
+      <tr>
+        <td>American Home Shield</td>
+        <td>$50</td>
+        <td>$125</td>
+        <td>$600</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Best Coverage for HVAC Systems</h2>
+
+  <p><strong>Choice Home Warranty</strong> leads in HVAC protection with unlimited repair costs and comprehensive coverage for heating and cooling systems. Their no-cap policy means expensive HVAC repairs won't exceed coverage limits.</p>
+
+  <p>HVAC systems represent the highest repair costs for homeowners, with replacement units ranging from <strong>$3,000-$8,000</strong>. Choice Home Warranty covers:</p>
+
+  <ul>
+    <li>Central air conditioning units</li>
+    <li>Heat pumps and ductwork</li>
+    <li>Furnaces and boilers</li>
+    <li>Thermostats and controls</li>
+    <li>Ductwork repairs and cleaning</li>
+  </ul>
+
+  <div class="info-box">
+    <h4>💡 Why HVAC Coverage Matters</h4>
+    <p>The 180-day workmanship guarantee ensures quality repairs, while same-day service availability minimizes discomfort during extreme weather. At $59.99 monthly for comprehensive coverage, the value proposition is strong for homes with aging HVAC systems.</p>
+  </div>
+
+  <h2>Best Customer Service Home Warranty</h2>
+
+  <p><strong>Cinch Home Services</strong> excels in customer experience with 24/7 support, live chat, and an industry-leading mobile app. Their technology-first approach provides real-time updates on service appointments and repair status.</p>
+
+  <p>Customer service features include:</p>
+  <ul>
+    <li>24/7 phone and chat support</li>
+    <li>Mobile app with appointment tracking</li>
+    <li>Email and text notifications</li>
+    <li>Online account management</li>
+    <li>Digital claims filing</li>
+  </ul>
+
+  <p>The 4.6/5 customer satisfaction rating reflects their commitment to service quality. While monthly premiums are higher at $54-$79, the enhanced customer experience justifies the premium for many homeowners.</p>
+
+  <h2>Home Warranty Companies to Avoid</h2>
+
+  <div class="warning-box">
+    <h4>⚠️ Red Flags to Watch For</h4>
+    <p>Our analysis identified several patterns that homeowners should avoid:</p>
+    <ul>
+      <li><strong>Poor BBB Ratings:</strong> Companies with F ratings or numerous unresolved complaints</li>
+      <li><strong>Excessive Exclusions:</strong> Policies excluding normal wear and tear or lack of maintenance</li>
+      <li><strong>Hidden Fees:</strong> Additional charges for diagnostics, parts markup, or administrative costs</li>
+      <li><strong>Limited Contractor Networks:</strong> Sparse coverage leading to longer wait times</li>
+      <li><strong>Inflexible Contracts:</strong> Requiring annual commitments without trial periods</li>
+    </ul>
+  </div>
+
+  <h2>How to Choose the Right Home Warranty Company</h2>
+
+  <p>Selecting the best home warranty provider requires evaluating your specific needs and comparing key factors:</p>
+
+  <h3>Assess Your Coverage Needs</h3>
+  <p>Identify your most valuable and vulnerable systems. Homes with aging HVAC systems need unlimited repair coverage, while newer homes may only require basic protection.</p>
+
+  <h3>Calculate Total Annual Costs</h3>
+  <p>Compare monthly premiums plus estimated service calls. Most homeowners file 2-3 claims annually, so factor service fees into your budget.</p>
+
+  <h3>Review Coverage Exclusions</h3>
+  <p>Read contracts carefully to understand what's not covered. Excessive exclusions can render policies worthless when you need them most.</p>
+
+  <h3>Check Contractor Networks</h3>
+  <p>Verify provider coverage in your area and read contractor reviews. Poor contractor quality leads to repeated repairs and frustration.</p>
+
+  <h2>Home Warranty vs Home Insurance: Key Differences</h2>
+
+  <p>Understanding the distinction between home warranties and homeowners insurance prevents coverage gaps and duplicate protection:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Home Warranty</th>
+        <th>Home Insurance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Covers</td>
+        <td>Mechanical failures, wear and tear</td>
+        <td>Sudden, accidental damage</td>
+      </tr>
+      <tr>
+        <td>Examples</td>
+        <td>HVAC breakdowns, appliance failures</td>
+        <td>Fire, theft, weather damage</td>
+      </tr>
+      <tr>
+        <td>Cost Structure</td>
+        <td>Monthly premiums + service fees</td>
+        <td>Annual premiums + deductibles</td>
+      </tr>
+      <tr>
+        <td>Required?</td>
+        <td>Optional</td>
+        <td>Required by mortgage lenders</td>
+      </tr>
+      <tr>
+        <td>Claims Process</td>
+        <td>Company arranges repairs</td>
+        <td>Homeowner reimburse after assessment</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Most homeowners benefit from <strong>both types of coverage</strong> for comprehensive protection against different risk categories.</p>
+
+  <h2>Conclusion</h2>
+
+  <p>The <strong>best home warranty companies</strong> provide essential financial protection against unexpected repair costs while offering peace of mind for homeowners. American Home Shield leads our rankings with comprehensive coverage and reliable service, while Select Home Warranty offers excellent value for budget-conscious consumers.</p>
+
+  <p>When choosing a provider, prioritize coverage for your most vulnerable systems, compare total annual costs including service fees, and verify contractor quality in your area. The right home warranty can save thousands annually while eliminating the stress of finding qualified repair technicians during emergencies.</p>
+
+  <p><strong>Ready to protect your home?</strong> Get free quotes from our top-rated providers and compare coverage options tailored to your specific needs. Most companies offer online quotes within minutes, making it easy to find the perfect protection plan for your home.</p>
+</ComparisonLayout>
