@@ -272,6 +272,91 @@
       "source": "/:slug/cast/(.*)",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/chat",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/chat/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/quotes",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/quotes/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/character-quotes",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/character-quotes/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/movie-stills",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/movie-stills/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/107-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/107-:id/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/27-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/27-:id/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/worse-or-worser-(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/remake-rematch-(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/trailer-(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/233-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/233-:id/(.*)",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
