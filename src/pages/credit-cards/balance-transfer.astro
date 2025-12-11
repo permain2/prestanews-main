@@ -1,245 +1,593 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
 import { getCardImage } from '../../utils/cardImageMap';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
-// Balance transfer credit cards
+// Best balance transfer credit cards - 10 cards
 const creditCards = [
   {
     name: "Citi® Diamond Preferred® Card",
-    bestFor: "Long 0% APR",
+    slug: "citi-diamond-preferred",
+    bestFor: "Longest 0% APR",
     annualFee: "$0",
-    bonus: "0% intro APR for 21 months on balance transfers",
-    rating: 4.7,
-    pros: ["21 months 0% APR on transfers", "No annual fee", "Fast balance transfer", "Citi Entertainment access"],
-    cons: ["No rewards program", "3% balance transfer fee", "Foreign transaction fees"],
-    description: "One of the longest 0% intro APR periods available, perfect for paying down existing debt.",
-    introApr: "0% for 21 months",
-    transferFee: "3% or $5 minimum"
+    bonus: "0% intro APR for 21 months",
+    bonusValue: "21 Months",
+    rating: 4.8,
+    rewardsRate: "N/A",
+    foreignFee: "3%",
+    introAPR: "0% for 21 months",
+    regularAPR: "17.24% - 27.99% Variable",
+    transferFee: "5% or $5 minimum",
+    pros: ["Industry-leading 21 months 0% APR", "No annual fee", "0% APR on purchases for 12 months", "Citi Entertainment® access"],
+    cons: ["No rewards program", "5% balance transfer fee", "Foreign transaction fees"],
+    description: "The gold standard for balance transfers with the longest 0% intro APR period available. Perfect for those with significant debt to pay off over time.",
+    bottomLine: "The Citi® Diamond Preferred® Card offers the longest 0% intro APR period in the market at 21 months. For a $7,500 balance (U.S. average), this can save you over $2,600 in interest compared to the average 24% APR. While there's no rewards program, the singular focus on debt payoff makes it the best choice for serious debt elimination.",
+    cardDetails: [
+      "0% intro APR on balance transfers for 21 months from date of first transfer",
+      "0% intro APR on purchases for 12 months",
+      "Balance transfers must be completed within 4 months of account opening",
+      "5% balance transfer fee ($5 minimum)",
+      "No annual fee",
+      "Citi Entertainment® access for presale tickets",
+      "Citi® Identity Theft Solutions",
+      "24/7 customer service",
+      "Free FICO® Score access"
+    ],
+    category: "balance-transfer",
+    editorChoice: true
   },
   {
     name: "Wells Fargo Reflect® Card",
+    slug: "wells-fargo-reflect",
     bestFor: "Extended 0% Period",
     annualFee: "$0",
     bonus: "0% intro APR for up to 21 months",
-    rating: 4.6,
-    pros: ["Up to 21 months 0% APR", "No annual fee", "Cell phone protection", "My Wells Fargo Deals"],
-    cons: ["No rewards", "Intro period requires on-time payments", "Variable APR after intro"],
-    description: "Get up to 21 months of 0% APR with on-time payments, ideal for large balance transfers.",
-    introApr: "0% for up to 21 months",
-    transferFee: "3% intro, then 5%"
-  },
-  {
-    name: "BankAmericard® Credit Card",
-    bestFor: "Simple Balance Transfer",
-    annualFee: "$0",
-    bonus: "0% intro APR for 18 billing cycles",
-    rating: 4.5,
-    pros: ["18 months 0% APR", "No annual fee", "No penalty APR", "Access to Bank of America benefits"],
-    cons: ["No rewards program", "Shorter intro period than competitors", "3% transfer fee"],
-    description: "A straightforward balance transfer card with solid 0% APR period and no penalty APR.",
-    introApr: "0% for 18 months",
-    transferFee: "3% or $10 minimum"
-  },
-  {
-    name: "Discover it® Balance Transfer",
-    bestFor: "Transfer + Rewards",
-    annualFee: "$0",
-    bonus: "0% intro APR for 18 months + Cash back rewards",
-    rating: 4.8,
-    pros: ["18 months 0% APR", "5% rotating categories", "Cash back match first year", "No annual fee"],
-    cons: ["3% transfer fee", "Must activate rotating categories", "Discover acceptance"],
-    description: "The rare balance transfer card that also earns rewards, with cashback match doubling your first year.",
-    introApr: "0% for 18 months",
-    transferFee: "3%"
+    bonusValue: "Up to 21 Mo",
+    rating: 4.7,
+    rewardsRate: "N/A",
+    foreignFee: "3%",
+    introAPR: "0% for up to 21 months",
+    regularAPR: "17.24% - 28.99% Variable",
+    transferFee: "5% intro, then 5%",
+    pros: ["Up to 21 months 0% APR with on-time payments", "No annual fee", "Cell phone protection ($600)", "My Wells Fargo Deals"],
+    cons: ["Requires on-time payments for full 21 months", "No rewards program", "5% transfer fee"],
+    description: "Get up to 21 months of 0% APR when you make on-time minimum payments. Includes valuable cell phone protection worth up to $600 per claim.",
+    bottomLine: "The Wells Fargo Reflect® Card matches Citi Diamond Preferred's 21-month timeline but requires on-time payments to earn the full period (starts at 18 months, extends to 21). The $600 cell phone protection is a rare bonus for balance transfer cards, making this a smart choice if you want debt payoff plus a valuable ongoing perk.",
+    cardDetails: [
+      "0% intro APR for 18 months on purchases and qualifying balance transfers",
+      "Extends to 21 months with on-time minimum payments during intro period",
+      "5% balance transfer fee ($5 minimum) for transfers within first 120 days",
+      "Cell phone protection up to $600 per claim ($25 deductible)",
+      "No annual fee",
+      "Access to My Wells Fargo Deals for savings",
+      "Zero Liability protection",
+      "Contactless payments enabled"
+    ],
+    category: "balance-transfer"
   },
   {
     name: "U.S. Bank Visa® Platinum Card",
+    slug: "us-bank-platinum",
     bestFor: "Purchases & Transfers",
     annualFee: "$0",
-    bonus: "0% intro APR on both purchases and transfers",
-    rating: 4.4,
-    pros: ["20 billing cycles 0% APR", "Cell phone protection", "No annual fee", "Visa benefits"],
-    cons: ["No rewards", "3% transfer fee", "Limited perks"],
-    description: "Long 0% intro period on both purchases and balance transfers with useful cell phone protection.",
-    introApr: "0% for 20 billing cycles",
-    transferFee: "3% or $5 minimum"
+    bonus: "0% intro APR for 21 billing cycles",
+    bonusValue: "21 Cycles",
+    rating: 4.6,
+    rewardsRate: "N/A",
+    foreignFee: "3%",
+    introAPR: "0% for 21 billing cycles",
+    regularAPR: "18.74% - 29.74% Variable",
+    transferFee: "3% or $5 minimum",
+    pros: ["21 billing cycles 0% on both purchases AND transfers", "Lower 3% transfer fee", "Cell phone protection ($600)", "No annual fee"],
+    cons: ["No rewards program", "Foreign transaction fees", "Limited additional perks"],
+    description: "One of the longest 0% periods available on BOTH purchases and balance transfers, with a competitive 3% transfer fee that saves you money upfront.",
+    bottomLine: "The U.S. Bank Visa® Platinum Card stands out by offering 21 billing cycles of 0% APR on both purchases AND balance transfers—most cards only offer long periods on one or the other. The 3% transfer fee (vs. typical 5%) saves $150 on a $7,500 transfer. It's ideal if you need financing flexibility for both existing debt and upcoming purchases.",
+    cardDetails: [
+      "0% intro APR for 21 billing cycles on purchases",
+      "0% intro APR for 21 billing cycles on balance transfers",
+      "3% balance transfer fee ($5 minimum)",
+      "Cell phone protection up to $600 per claim",
+      "No annual fee",
+      "Zero Fraud Liability",
+      "Visa Platinum benefits including auto rental collision damage waiver",
+      "Free TransUnion credit score access"
+    ],
+    category: "balance-transfer"
+  },
+  {
+    name: "BankAmericard® Credit Card",
+    slug: "bankamericard",
+    bestFor: "Simple Balance Transfer",
+    annualFee: "$0",
+    bonus: "0% intro APR for 21 billing cycles",
+    bonusValue: "21 Cycles",
+    rating: 4.5,
+    rewardsRate: "N/A",
+    foreignFee: "3%",
+    introAPR: "0% for 21 billing cycles",
+    regularAPR: "16.24% - 26.24% Variable",
+    transferFee: "3% or $10 minimum",
+    pros: ["21 billing cycles 0% APR", "Lower 3% transfer fee", "No penalty APR ever", "Lower ongoing APR range"],
+    cons: ["No rewards program", "Foreign transaction fees", "Fewer perks"],
+    description: "A straightforward balance transfer card with an impressive 21 billing cycles of 0% APR, low 3% transfer fee, and notably no penalty APR for late payments.",
+    bottomLine: "The BankAmericard® Credit Card offers peace of mind with its no-penalty-APR policy—even if you miss a payment, your rate won't skyrocket. Combined with 21 billing cycles of 0% APR and a low 3% transfer fee, it's a safe, simple choice for debt payoff. The lower ongoing APR range (16.24%-26.24%) is also favorable if you don't pay off completely.",
+    cardDetails: [
+      "0% intro APR for 21 billing cycles on purchases and balance transfers",
+      "3% balance transfer fee ($10 minimum)",
+      "No penalty APR for late payments (rate won't increase due to late payment)",
+      "Lower ongoing APR: 16.24% - 26.24% Variable",
+      "No annual fee",
+      "Bank of America Preferred Rewards eligible",
+      "FICO Score access for free",
+      "Zero Liability protection for unauthorized purchases"
+    ],
+    category: "balance-transfer"
+  },
+  {
+    name: "Discover it® Balance Transfer",
+    slug: "discover-it-balance-transfer",
+    bestFor: "Transfer + Rewards",
+    annualFee: "$0",
+    bonus: "0% intro APR + Cashback Match",
+    bonusValue: "$150+",
+    rating: 4.7,
+    rewardsRate: "5%/1%",
+    foreignFee: "$0",
+    introAPR: "0% for 18 months",
+    regularAPR: "18.24% - 28.24% Variable",
+    transferFee: "3% intro, then 5%",
+    pros: ["Earns rewards unlike most BT cards", "First year cashback matched (doubled)", "No foreign transaction fees", "5% rotating categories"],
+    cons: ["Shorter 18-month 0% period", "Must activate rotating categories"],
+    description: "The rare balance transfer card that ALSO earns solid rewards. Get 0% for 18 months plus 5% rotating cashback categories—with all first-year rewards doubled.",
+    bottomLine: "The Discover it® Balance Transfer is unique because it combines a solid 18-month 0% APR with a legitimate rewards program. The first-year Cashback Match effectively doubles your rewards to 10% on rotating categories and 2% on everything else. If you want to pay off debt AND earn rewards on new purchases, this is the only choice.",
+    cardDetails: [
+      "0% intro APR for 18 months on balance transfers",
+      "0% intro APR for 6 months on purchases",
+      "3% balance transfer fee intro, then 5%",
+      "5% cash back in rotating quarterly categories (up to $1,500/quarter)",
+      "1% unlimited cash back on all other purchases",
+      "Cashback Match: All cash back earned in first year automatically doubled",
+      "No annual fee",
+      "No foreign transaction fees",
+      "Free FICO® Credit Score"
+    ],
+    category: "balance-transfer"
+  },
+  {
+    name: "Citi Simplicity® Card",
+    slug: "citi-simplicity",
+    bestFor: "No Late Fees Ever",
+    annualFee: "$0",
+    bonus: "0% intro APR for 21 months",
+    bonusValue: "21 Months",
+    rating: 4.5,
+    rewardsRate: "N/A",
+    foreignFee: "3%",
+    introAPR: "0% for 21 months",
+    regularAPR: "19.24% - 29.99% Variable",
+    transferFee: "5% or $5 minimum",
+    pros: ["21 months 0% on transfers", "No late fees EVER", "No penalty rate EVER", "Simple, no-complexity card"],
+    cons: ["No rewards program", "5% transfer fee", "Higher ongoing APR"],
+    description: "True to its name, this card keeps things simple: 21 months of 0% APR with no late fees or penalty rates ever. Perfect for those who want peace of mind.",
+    bottomLine: "The Citi Simplicity® Card is designed for stress-free debt payoff. You get the full 21 months 0% APR without worrying about late fees or penalty rates—even if you miss a payment, you won't be penalized. This forgiveness makes it ideal for those who want a safety net while paying down debt.",
+    cardDetails: [
+      "0% intro APR for 21 months on balance transfers",
+      "0% intro APR for 12 months on purchases",
+      "5% balance transfer fee ($5 minimum)",
+      "No late fees ever",
+      "No penalty rate ever (rate won't increase for late payments)",
+      "No annual fee",
+      "Citi Entertainment® access",
+      "Free FICO® Score access"
+    ],
+    category: "balance-transfer"
   },
   {
     name: "Chase Slate Edge℠",
-    bestFor: "Low Ongoing APR",
+    slug: "chase-slate-edge",
+    bestFor: "Lower Ongoing APR",
     annualFee: "$0",
     bonus: "0% intro APR for 18 months",
+    bonusValue: "18 Months",
     rating: 4.3,
-    pros: ["Intro APR on purchases & transfers", "Automatic APR reduction", "No annual fee", "Chase benefits"],
-    cons: ["No rewards", "5% transfer fee", "Limited bonus features"],
-    description: "Solid intro APR with the unique perk of automatic APR reduction when you pay on time.",
-    introApr: "0% for 18 months",
-    transferFee: "5% or $5 minimum"
+    rewardsRate: "N/A",
+    foreignFee: "3%",
+    introAPR: "0% for 18 months",
+    regularAPR: "21.49% - 29.24% Variable",
+    transferFee: "3% or $5 minimum",
+    pros: ["Automatic APR reduction feature", "Lower 3% transfer fee", "18 months 0% APR", "My Chase Plan for purchases"],
+    cons: ["No rewards program", "Shorter intro period", "Must pay on time for APR reduction"],
+    description: "The only card that automatically lowers your APR over time when you pay on time. Great for those who may carry a balance after the intro period ends.",
+    bottomLine: "The Chase Slate Edge℠ has a unique feature: your APR automatically decreases by 2% after 12 months of on-time payments, then can decrease more each year you pay on time. This is valuable if you anticipate carrying some balance after the intro period. The lower 3% transfer fee is also a plus.",
+    cardDetails: [
+      "0% intro APR for 18 months on purchases and balance transfers",
+      "3% balance transfer fee ($5 minimum)",
+      "Automatic APR reduction: 2% decrease after 12 on-time payments",
+      "Potential for further APR decreases in subsequent years",
+      "No annual fee",
+      "My Chase Plan® to split purchases into payments",
+      "Free credit score and insights via Chase Credit Journey®",
+      "Zero Liability protection"
+    ],
+    category: "balance-transfer"
+  },
+  {
+    name: "Capital One Quicksilver Cash Rewards",
+    slug: "capital-one-quicksilver-bt",
+    bestFor: "Rewards + Balance Transfer",
+    annualFee: "$0",
+    bonus: "$200 + 0% APR for 15 months",
+    bonusValue: "$200+",
+    rating: 4.4,
+    rewardsRate: "1.5%",
+    foreignFee: "$0",
+    introAPR: "0% for 15 months",
+    regularAPR: "19.99% - 29.99% Variable",
+    transferFee: "3%",
+    pros: ["Unlimited 1.5% cash back", "$0 foreign transaction fees", "$200 welcome bonus", "Solid 15 months 0% APR"],
+    cons: ["Shorter intro period", "3% transfer fee"],
+    description: "Combines debt payoff with everyday rewards: 15 months 0% APR, unlimited 1.5% cash back on everything, and no foreign transaction fees for travelers.",
+    bottomLine: "The Capital One Quicksilver Cash Rewards offers the best combination of balance transfer capability and ongoing rewards. While the 15-month 0% period is shorter than competitors, you get unlimited 1.5% cash back on all purchases forever, plus a $200 bonus and no foreign transaction fees. Great for those who want one card to do both.",
+    cardDetails: [
+      "0% intro APR for 15 months on purchases and balance transfers",
+      "3% balance transfer fee",
+      "$200 cash bonus after spending $500 in first 3 months",
+      "Unlimited 1.5% cash back on every purchase",
+      "No foreign transaction fees",
+      "No annual fee",
+      "Travel accident insurance",
+      "Extended warranty protection"
+    ],
+    category: "balance-transfer"
+  },
+  {
+    name: "Navy Federal Credit Union® Platinum",
+    slug: "navy-federal-platinum",
+    bestFor: "Military Families",
+    annualFee: "$0",
+    bonus: "0% intro APR for 12 months",
+    bonusValue: "12 Months",
+    rating: 4.4,
+    rewardsRate: "N/A",
+    foreignFee: "$0",
+    introAPR: "0% for 12 months",
+    regularAPR: "11.24% - 18% Variable",
+    transferFee: "$0",
+    pros: ["$0 balance transfer fee (!)", "Lowest ongoing APR (11.24-18%)", "No foreign transaction fees", "Navy Federal member benefits"],
+    cons: ["Only 12 months 0% APR", "Must be eligible for NFCU membership", "No rewards program"],
+    description: "The only card with $0 balance transfer fee. Combined with the lowest ongoing APR in the industry, it's unmatched for military families and eligible members.",
+    bottomLine: "For Navy Federal members, the Platinum card is exceptional. It's the ONLY card with a $0 balance transfer fee—saving $375 on a $7,500 transfer. The ongoing APR of 11.24%-18% is also far below industry average. While the 12-month intro period is shorter, the fee savings and low ongoing rate make up for it.",
+    cardDetails: [
+      "0% intro APR for 12 months on balance transfers and purchases",
+      "$0 balance transfer fee (no fee!)",
+      "Lowest variable APR in industry: 11.24% - 18%",
+      "No foreign transaction fees",
+      "No annual fee",
+      "No penalty APR",
+      "Access to Navy Federal financial services",
+      "Must be eligible for Navy Federal Credit Union membership"
+    ],
+    category: "balance-transfer"
+  },
+  {
+    name: "HSBC Gold Mastercard® Credit Card",
+    slug: "hsbc-gold",
+    bestFor: "No Transfer Fee",
+    annualFee: "$0",
+    bonus: "0% intro APR for 18 months + $0 BT fee",
+    bonusValue: "$0 Fee",
+    rating: 4.2,
+    rewardsRate: "N/A",
+    foreignFee: "3%",
+    introAPR: "0% for 18 months",
+    regularAPR: "19.24% - 29.24% Variable",
+    transferFee: "$0 (intro)",
+    pros: ["$0 balance transfer fee intro period", "18 months 0% APR", "No annual fee", "HSBC global benefits"],
+    cons: ["$0 BT fee only during intro period", "No rewards program", "Limited branch access"],
+    description: "Offers $0 balance transfer fee during the intro period combined with 18 months 0% APR—saving you hundreds in upfront fees compared to typical 3-5% fees.",
+    bottomLine: "The HSBC Gold Mastercard® stands out for its $0 balance transfer fee during the promotional period. On a $7,500 transfer, that's $225-$375 in savings compared to typical 3-5% fees. Combined with 18 months 0% APR, it's one of the most cost-effective balance transfer options available for consumers.",
+    cardDetails: [
+      "0% intro APR for 18 months on purchases and balance transfers",
+      "$0 balance transfer fee during intro period",
+      "Regular BT fee: 4% ($10 minimum)",
+      "No annual fee",
+      "Access to HSBC Premier benefits if eligible",
+      "Mastercard ID Theft Protection",
+      "Zero Liability protection",
+      "Contactless payments enabled"
+    ],
+    category: "balance-transfer"
+  }
+];
+
+// FAQ data
+const faqs = [
+  {
+    question: "What is the best balance transfer credit card for 2025?",
+    answer: "The <strong>Citi® Diamond Preferred® Card</strong> is our top pick with an industry-leading 21 months of 0% intro APR on balance transfers. For those who want to earn rewards while paying off debt, the <strong>Discover it® Balance Transfer</strong> offers 18 months 0% APR plus cash back with first-year doubling."
+  },
+  {
+    question: "How much can I save with a balance transfer?",
+    answer: "Significant savings are possible. On a $7,500 balance at 24% APR, transferring to a 0% card for 21 months saves you approximately <strong>$2,650 in interest</strong>. Even after a typical 3-5% transfer fee ($225-$375), you're still saving over $2,200. The key is paying off the balance before the intro period ends."
+  },
+  {
+    question: "What is a balance transfer fee?",
+    answer: "A balance transfer fee is a one-time charge (typically <strong>3-5% of the transferred amount</strong>) to move your debt. For a $5,000 transfer at 3%, that's $150. Most cards charge 3-5%, but some like Navy Federal Platinum and HSBC Gold offer $0 fees. The fee is almost always worth paying versus continued high interest."
+  },
+  {
+    question: "How long does a balance transfer take?",
+    answer: "Balance transfers typically take <strong>5-7 business days</strong> to process, though some can take up to 14-21 days. Continue making minimum payments on your old card until you confirm the transfer is complete. Most cards require transfers within the first 60-120 days of account opening to qualify for intro rates."
+  },
+  {
+    question: "Will a balance transfer hurt my credit score?",
+    answer: "A balance transfer can <strong>temporarily lower your score</strong> by 5-10 points due to the hard inquiry and new account. However, if the transfer significantly lowers your credit utilization ratio (say, from 80% to 40%), your score may actually improve within 1-2 months. Long-term, paying off debt always helps your score."
+  },
+  {
+    question: "Can I transfer balances between cards from the same bank?",
+    answer: "<strong>No</strong>—most banks don't allow balance transfers between their own cards. You cannot transfer a Chase balance to another Chase card, or a Citi balance to another Citi card. You'll need to apply for a card from a different issuer to move debt from your current bank."
+  },
+  {
+    question: "What happens when the 0% APR period ends?",
+    answer: "When the intro period ends, the card's <strong>regular variable APR kicks in</strong> (typically 17-29% depending on creditworthiness). Any remaining balance will start accruing interest at this higher rate. The goal is to pay off your transferred balance completely before the intro period expires."
+  },
+  {
+    question: "Should I close my old credit card after a balance transfer?",
+    answer: "<strong>Usually no.</strong> Closing old cards can hurt your credit score by reducing total available credit (increasing utilization) and shortening credit history. Keep old cards open with zero balance, and make a small purchase occasionally to prevent closure. Only close if the card has an annual fee you won't use."
+  },
+  {
+    question: "Can I make purchases on a balance transfer card?",
+    answer: "Technically yes, but <strong>it's often not recommended</strong>. Many cards apply payments to the lowest-APR balance first, meaning new purchases might accrue interest while your transfer stays at 0%. Some cards (like U.S. Bank Platinum) offer 0% on both transfers AND purchases, which is ideal if you need to make new purchases."
+  },
+  {
+    question: "What credit score do I need for a balance transfer card?",
+    answer: "Most balance transfer cards with good 0% APR offers require <strong>good to excellent credit (670+ FICO)</strong>. The longest intro periods (18-21 months) typically require 700+ scores. If your credit is fair (580-669), you may still qualify for shorter intro periods or secured balance transfer options."
   }
 ];
 ---
 
-<MainLayout title="Best Balance Transfer Credit Cards" description="Compare the best balance transfer credit cards with 0% intro APR to pay off debt faster.">
-  <!-- Interactive Header with Cursor Trail -->
+<MainLayout title="10 Best Balance Transfer Credit Cards of December 2025 | Expert Reviews" description="Compare the best balance transfer credit cards for 2025. Up to 21 months 0% APR to pay off debt faster. Expert reviews of Citi Diamond Preferred, Wells Fargo Reflect & more.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="10 Best Balance Transfer Credit Cards of December 2025"
+    description="Compare the best balance transfer credit cards for 2025. Up to 21 months 0% APR to pay off debt faster."
+    url="/credit-cards/balance-transfer"
+    image="/category-images/balance-transfer-cards.jpeg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Jennifer Walsh"
+    section="Credit Cards"
+    tags={['balance transfer credit cards', '0% APR', 'debt payoff', 'Citi Diamond Preferred', 'credit card debt']}
+    wordCount={4300}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Credit Cards', url: '/credit-cards' },
+    { name: 'Balance Transfer Cards' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
   <CursorTrailDark 
     client:load
     title="Best Balance Transfer Cards of December 2025"
     kicker=""
     subtitle="Eliminate high-interest debt with cards offering up to 21 months of 0% APR."
-    author="Screened Editorial Team"
-    date="Dec. 10, 2025"
+    author="Jennifer Walsh"
+    date="Dec. 11, 2025"
     compact={true}
     animateTitle={true}
   />
 
-  <!-- Research Intro -->
-  <section class="bg-[#F7F8FA] py-8">
-    <div class="max-w-3xl mx-auto px-4 md:px-8 text-center">
-      <p class="text-[#68727C] leading-relaxed">We analyzed 24 balance transfer offers, comparing intro APR lengths, transfer fees, and post-intro rates. For a $7,500 balance (the U.S. average), these cards can save you $1,847-$2,340 in interest compared to paying the national average 20.7% APR.</p>
-    </div>
-  </section>
-
-  <!-- Key Benefits -->
-  <section class="bg-white py-8 border-b border-gray-200">
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="text-center p-4">
-          <div class="w-12 h-12 bg-[#EBF5FF] rounded-full flex items-center justify-center mx-auto mb-3">
-            <svg class="w-6 h-6 text-[#0066B2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-[#162433] mb-1">Save on Interest</h3>
-          <p class="text-sm text-[#68727C]">0% APR means every payment goes toward your balance</p>
-        </div>
-        <div class="text-center p-4">
-          <div class="w-12 h-12 bg-[#DCFCE7] rounded-full flex items-center justify-center mx-auto mb-3">
-            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-[#162433] mb-1">Pay Off Faster</h3>
-          <p class="text-sm text-[#68727C]">Clear your debt in 18-21 months interest-free</p>
-        </div>
-        <div class="text-center p-4">
-          <div class="w-12 h-12 bg-[#FEF3C7] rounded-full flex items-center justify-center mx-auto mb-3">
-            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-            </svg>
-          </div>
-          <h3 class="font-bold text-[#162433] mb-1">Improve Credit</h3>
-          <p class="text-sm text-[#68727C]">Lower utilization can boost your credit score</p>
-        </div>
-      </div>
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the card offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings, ratings, or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
+      </p>
     </div>
   </section>
 
-  <!-- Category Pills -->
-  <section class="bg-white border-b border-gray-200 py-4 sticky top-16 z-40">
-    <div class="max-w-[90rem] mx-auto px-4 md:px-8">
-      <div class="flex gap-4 overflow-x-auto pb-2">
-        <a href="/credit-cards" class="filter-btn">All Cards</a>
-        <a href="/credit-cards/best-travel-cards" class="filter-btn">Travel Cards</a>
-        <a href="/credit-cards/best-cashback" class="filter-btn">Cash Back</a>
-        <a href="/credit-cards/business" class="filter-btn">Business</a>
-        <a href="/credit-cards/no-annual-fee" class="filter-btn">No Annual Fee</a>
-        <a href="/credit-cards/balance-transfer" class="filter-btn active" style="color: #FFFFFF !important;">Balance Transfer</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cards List -->
-  <section class="py-12 bg-[#F7F8FA]">
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <!-- Cards Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We analyzed 24 balance transfer offers, comparing intro APR lengths, transfer fees, and post-intro rates. For a $7,500 balance (the U.S. average), these cards can save you $1,847-$2,650 in interest compared to paying the national average 24% APR.</p>
+      </div>
       
       {creditCards.map((card, index) => (
-        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
-          <div class="grid md:grid-cols-[300px_1fr]">
-            <!-- Left Panel - Card Image & CTA -->
-            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
-              {getCardImage(card.name) ? (
-                <img 
-                  src={getCardImage(card.name)} 
-                  alt={card.name}
-                  class="w-64 h-auto rounded-xl shadow-xl mb-6 hover:scale-105 hover:shadow-2xl transition-all duration-300"
-                />
-              ) : (
-                <div class="w-64 h-40 rounded-xl shadow-xl mb-6 relative overflow-hidden" style={`background: linear-gradient(135deg, ${index % 4 === 0 ? '#1E40AF 0%, #3B82F6 50%, #1E40AF 100%' : index % 4 === 1 ? '#065F46 0%, #10B981 50%, #065F46 100%' : index % 4 === 2 ? '#7C3AED 0%, #A78BFA 50%, #7C3AED 100%' : '#DC2626 0%, #EF4444 50%, #DC2626 100%'});`}>
-                  <div class="absolute top-6 left-6 w-10 h-8 rounded bg-gradient-to-br from-yellow-300 to-yellow-500 opacity-90"></div>
-                  <div class="absolute top-4 right-4">
-                    <div class="text-white font-bold text-sm tracking-tight opacity-90">0% APR</div>
-                  </div>
-                  <div class="absolute bottom-4 left-4 right-4">
-                    <div class="text-white text-xs font-medium opacity-80 leading-tight">{card.name}</div>
-                  </div>
-                </div>
-              )}
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {card.editorChoice && (
+            <div class="bg-gradient-to-r from-[#7C3AED] to-[#5B21B6] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Balance Transfer Card
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
               
-              <!-- Key Stats -->
-              <div class="w-full grid grid-cols-2 gap-2 mb-4">
-                <div class="bg-white p-2 rounded-lg text-center">
-                  <div class="text-xs text-[#68727C]">Intro APR</div>
-                  <div class="text-sm font-bold text-green-600">{card.introApr}</div>
-                </div>
-                <div class="bg-white p-2 rounded-lg text-center">
-                  <div class="text-xs text-[#68727C]">Transfer Fee</div>
-                  <div class="text-sm font-bold text-[#162433]">{card.transferFee}</div>
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#7C3AED] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Card Image */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                {getCardImage(card.name) ? (
+                  <img 
+                    src={getCardImage(card.name)} 
+                    alt={`${card.name} credit card`}
+                    class="w-72 h-auto rounded-xl shadow-2xl group-hover:scale-105 group-hover:shadow-3xl transition-all duration-500"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                ) : (
+                  <div class={`w-72 h-44 rounded-xl shadow-2xl relative overflow-hidden group-hover:scale-105 transition-all duration-500 ${
+                    card.slug.includes('citi') ? 'bg-gradient-to-br from-[#003DA5] via-[#0052CC] to-[#003DA5]' :
+                    card.slug.includes('wells') ? 'bg-gradient-to-br from-[#BB0000] via-[#CC0000] to-[#BB0000]' :
+                    card.slug.includes('us-bank') ? 'bg-gradient-to-br from-[#002868] via-[#003A8C] to-[#002868]' :
+                    card.slug.includes('bankamericard') ? 'bg-gradient-to-br from-[#C41230] via-[#E31B23] to-[#C41230]' :
+                    card.slug.includes('discover') ? 'bg-gradient-to-br from-[#FF6600] via-[#FF8833] to-[#FF6600]' :
+                    card.slug.includes('chase') ? 'bg-gradient-to-br from-[#003087] via-[#0047AB] to-[#003087]' :
+                    card.slug.includes('capital') ? 'bg-gradient-to-br from-[#004C4C] via-[#006666] to-[#004C4C]' :
+                    card.slug.includes('navy') ? 'bg-gradient-to-br from-[#003366] via-[#004488] to-[#003366]' :
+                    card.slug.includes('hsbc') ? 'bg-gradient-to-br from-[#DB0011] via-[#EE0022] to-[#DB0011]' :
+                    'bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#1a1a1a]'
+                  }`}>
+                    <div class="absolute top-5 left-5 w-12 h-9 rounded bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 opacity-90"></div>
+                    <div class="absolute top-4 right-4">
+                      <div class="text-white font-bold text-sm tracking-tight opacity-90">0% APR</div>
+                    </div>
+                    <div class="absolute bottom-4 left-5 right-5">
+                      <div class="text-white/90 text-xs font-medium leading-tight truncate">{card.name}</div>
+                    </div>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent"></div>
+                  </div>
+                )}
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{card.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
                 </div>
               </div>
               
-              <a href="#" class="apply-btn group w-full bg-[#E68A00] hover:bg-[#B87400] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide mb-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-white">
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
                 <span>Apply Now</span>
                 <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
-              <p class="text-xs text-[#68727C] text-center">On issuer's secure website</p>
+              <p class="text-xs text-[#68727C] text-center mt-2">On issuer's secure website</p>
             </div>
 
-            <!-- Right Panel - Card Details -->
+            <!-- Right Panel -->
             <div class="p-6 md:p-8">
-              <div class="flex items-start justify-between mb-4">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
-                  <span class="inline-block bg-[#DCFCE7] text-green-700 text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">{card.bestFor}</span>
-                  <h2 class="font-sora text-xl md:text-2xl font-bold text-[#162433]">{card.name}</h2>
-                </div>
-                <div class="flex items-center gap-1 bg-[#F7F8FA] px-3 py-2 rounded-lg">
-                  <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                  <span class="font-bold text-[#162433]">{card.rating}</span>
+                  <span class="inline-block bg-gradient-to-r from-[#EDE9FE] to-[#DDD6FE] text-[#7C3AED] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {card.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{card.name}</h3>
                 </div>
               </div>
               
-              <p class="text-[#68727C] mb-6">{card.description}</p>
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{card.description}</p>
 
-              <div class="grid md:grid-cols-2 gap-6 mb-6">
-                <div class="bg-[#F7F8FA] p-4 rounded-lg">
-                  <div class="text-xs text-[#68727C] uppercase font-bold mb-1">Annual Fee</div>
-                  <div class="text-lg font-bold text-green-600">{card.annualFee}</div>
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Intro APR</div>
+                  <div class="stat-value text-[#7C3AED] text-sm">{card.introAPR}</div>
                 </div>
-                <div class="bg-[#DCFCE7] p-4 rounded-lg">
-                  <div class="text-xs text-green-700 uppercase font-bold mb-1">Intro Offer</div>
-                  <div class="text-lg font-bold text-green-700">{card.bonus}</div>
+                <div class="stat-box">
+                  <div class="stat-label">Transfer Fee</div>
+                  <div class="stat-value text-sm">{card.transferFee}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Annual Fee</div>
+                  <div class="stat-value text-green-600">{card.annualFee}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Regular APR</div>
+                  <div class="stat-value text-xs">{card.regularAPR.split(' ')[0]}</div>
                 </div>
               </div>
 
-              <div class="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 class="font-bold text-[#162433] mb-2 flex items-center gap-2">
-                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                    Pros
-                  </h4>
-                  <ul class="text-sm text-[#68727C] space-y-1">
-                    {card.pros.map(pro => <li>• {pro}</li>)}
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-bold text-[#162433] mb-2 flex items-center gap-2">
-                    <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
-                    Cons
-                  </h4>
-                  <ul class="text-sm text-[#68727C] space-y-1">
-                    {card.cons.map(con => <li>• {con}</li>)}
-                  </ul>
-                </div>
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {card.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{card.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {card.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {card.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Card Details Accordion */}
+                {card.cardDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Card Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {card.cardDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#7C3AED] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
               </div>
             </div>
           </div>
@@ -248,55 +596,877 @@ const creditCards = [
     </div>
   </section>
 
-  <!-- FAQ Section -->
-  <section class="py-12 bg-white">
-    <div class="max-w-3xl mx-auto px-4 md:px-8">
-      <h2 class="font-sora text-3xl font-bold text-[#162433] text-center mb-8">Frequently Asked Questions</h2>
+  <!-- Quick Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison Table</h2>
       
-      <div class="space-y-6">
-        <div class="border border-gray-200 rounded-xl p-6">
-          <h3 class="font-bold text-[#162433] mb-2">What is a balance transfer?</h3>
-          <p class="text-[#68727C]">A balance transfer moves existing credit card debt to a new card, typically one with a 0% intro APR. This allows you to pay down your balance without accruing interest during the promotional period.</p>
-        </div>
+      <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table class="comparison-table w-full">
+          <thead>
+            <tr>
+              <th class="text-left">Card</th>
+              <th>0% APR Period</th>
+              <th>Transfer Fee</th>
+              <th>Annual Fee</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {creditCards.map((card, index) => (
+              <tr class={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <td class="font-medium text-[#162433]">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-[#68727C]">#{index + 1}</span>
+                    {card.name.replace('®', '').replace('℠', '').replace('™', '').substring(0, 25)}{card.name.length > 25 ? '...' : ''}
+                  </div>
+                </td>
+                <td class="text-center text-[#7C3AED] font-medium">{card.introAPR}</td>
+                <td class="text-center">{card.transferFee}</td>
+                <td class="text-center text-green-600">{card.annualFee}</td>
+                <td class="text-center">
+                  <span class="inline-flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {card.rating}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
         
-        <div class="border border-gray-200 rounded-xl p-6">
-          <h3 class="font-bold text-[#162433] mb-2">How much can I save with a balance transfer?</h3>
-          <p class="text-[#68727C]">If you have $5,000 in credit card debt at 20% APR, transferring to a 0% APR card for 18 months could save you over $1,500 in interest, assuming you pay off the balance during the intro period.</p>
+        <!-- How Balance Transfers Work -->
+        <div id="how-rewards-work" class="scroll-mt-24">
+          <h2>How Balance Transfers Work</h2>
+          
+          <p>A balance transfer moves existing credit card debt from one card to another—typically to a card with a <strong>0% intro APR</strong>. This lets you pay down your balance without accruing interest during the promotional period.</p>
+
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> How Much Can You Save?</h4>
+            <p>On $7,500 at 24% APR, you'd pay <strong>$2,650+ in interest</strong> over 21 months with minimum payments. A 0% balance transfer card eliminates that interest entirely. Even with a 3-5% transfer fee ($225-$375), you save over $2,200.</p>
+          </div>
+
+          <h3>The Balance Transfer Process</h3>
+          
+          <ol>
+            <li><strong>Apply for a new card</strong> with a 0% intro APR on balance transfers</li>
+            <li><strong>Request the transfer</strong> (online or by phone) with your old account details</li>
+            <li><strong>Wait 5-14 days</strong> for the transfer to process</li>
+            <li><strong>Continue paying</strong> your old card until transfer confirms</li>
+            <li><strong>Pay off the transferred balance</strong> before the intro period ends</li>
+          </ol>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Key Strategy</h4>
+            <p>Divide your balance by the intro period months to find your required monthly payment. For $7,500 over 21 months, you need to pay <strong>$357/month</strong> to be debt-free before the 0% rate expires.</p>
+          </div>
         </div>
-        
-        <div class="border border-gray-200 rounded-xl p-6">
-          <h3 class="font-bold text-[#162433] mb-2">What's a balance transfer fee?</h3>
-          <p class="text-[#68727C]">Most cards charge 3-5% of the transferred amount as a fee. For a $5,000 transfer at 3%, that's $150. This is usually much less than the interest you'd pay without transferring.</p>
+
+        <!-- How to Choose -->
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose a Balance Transfer Card</h2>
+
+          <p>The best balance transfer card depends on your debt amount, payoff timeline, and whether you want additional features. Here's a framework:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Your Situation</th>
+                <th>Priority</th>
+                <th>Best Card</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Large debt, need max time</td>
+                <td>Longest 0% APR period</td>
+                <td>Citi Diamond Preferred (21 mo)</td>
+              </tr>
+              <tr>
+                <td>Want to save on fees</td>
+                <td>$0 or low transfer fee</td>
+                <td>Navy Federal Platinum ($0 fee)</td>
+              </tr>
+              <tr>
+                <td>May carry balance after intro</td>
+                <td>Lowest ongoing APR</td>
+                <td>Navy Federal (11-18% APR)</td>
+              </tr>
+              <tr>
+                <td>Want rewards too</td>
+                <td>BT + cash back</td>
+                <td>Discover it Balance Transfer</td>
+              </tr>
+              <tr>
+                <td>Worried about late payments</td>
+                <td>No penalty APR</td>
+                <td>Citi Simplicity (no late fees ever)</td>
+              </tr>
+              <tr>
+                <td>Need for purchases too</td>
+                <td>0% on both BT and purchases</td>
+                <td>U.S. Bank Platinum (21 cycles both)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Transfer Fee Math</h3>
+
+          <div class="comparison-boxes">
+            <div class="fee-breakdown">
+              <h4>5% Transfer Fee</h4>
+              <ul>
+                <li>On $5,000: <strong>$250 fee</strong></li>
+                <li>On $7,500: <strong>$375 fee</strong></li>
+                <li>On $10,000: <strong>$500 fee</strong></li>
+              </ul>
+              <p class="net-value">Cards: <strong>Citi Diamond, Wells Fargo</strong></p>
+            </div>
+            
+            <div class="fee-breakdown">
+              <h4>3% Transfer Fee</h4>
+              <ul>
+                <li>On $5,000: <strong>$150 fee</strong></li>
+                <li>On $7,500: <strong>$225 fee</strong></li>
+                <li>On $10,000: <strong>$300 fee</strong></li>
+              </ul>
+              <p class="net-value">Cards: <strong>U.S. Bank, BankAmericard</strong></p>
+            </div>
+          </div>
+
+          <div class="warning-box">
+            <h4>Don't Make This Mistake</h4>
+            <p>Avoid making new purchases on your balance transfer card. Most cards apply payments to the lowest-APR balance first, meaning new purchases could accrue interest while your transferred balance stays at 0%. If you need to make purchases, choose a card like U.S. Bank Platinum that offers 0% on both.</p>
+          </div>
         </div>
-        
-        <div class="border border-gray-200 rounded-xl p-6">
-          <h3 class="font-bold text-[#162433] mb-2">Will a balance transfer hurt my credit?</h3>
-          <p class="text-[#68727C]">Opening a new card causes a small, temporary dip. However, if the transfer lowers your credit utilization ratio, your score may actually improve over time.</p>
+
+        <!-- Best by Category -->
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best Balance Transfer Cards by Category</h2>
+
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+              <h3>Longest 0% APR</h3>
+              <p class="card-name">Citi® Diamond Preferred®</p>
+              <p>Industry-leading 21 months of 0% intro APR on balance transfers. The gold standard for debt payoff.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5a1.5 1.5 0 0 1 0 3H9"/></svg></span>
+              <h3>Lowest Fees</h3>
+              <p class="card-name">Navy Federal Platinum</p>
+              <p>$0 balance transfer fee—the only card with no fee. Save $225-$500 on a typical transfer.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span>
+              <h3>No Late Fees Ever</h3>
+              <p class="card-name">Citi Simplicity®</p>
+              <p>21 months 0% APR with the unique benefit of no late fees or penalty rates—ever.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+              <h3>Best for Rewards</h3>
+              <p class="card-name">Discover it® Balance Transfer</p>
+              <p>18 months 0% APR plus 5% rotating categories with first-year cashback doubled.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+              <h3>Lowest Ongoing APR</h3>
+              <p class="card-name">Navy Federal Platinum</p>
+              <p>11.24%-18% variable APR—far below industry average of 24%. Great if you don't pay off fully.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+              <h3>Best All-Around</h3>
+              <p class="card-name">U.S. Bank Visa® Platinum</p>
+              <p>21 cycles 0% on both purchases AND transfers with lower 3% fee. Maximum flexibility.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Methodology -->
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Ranking Methodology</h2>
+
+          <p>Our editorial team evaluates balance transfer credit cards based on seven weighted factors:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What We Evaluate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Intro APR Length</td>
+                <td>35%</td>
+                <td>Duration of 0% period on balance transfers</td>
+              </tr>
+              <tr>
+                <td>Transfer Fee</td>
+                <td>20%</td>
+                <td>Percentage fee and any promotional reductions</td>
+              </tr>
+              <tr>
+                <td>Ongoing APR</td>
+                <td>15%</td>
+                <td>Regular APR after intro period ends</td>
+              </tr>
+              <tr>
+                <td>Purchase APR</td>
+                <td>10%</td>
+                <td>Intro APR on new purchases (for flexibility)</td>
+              </tr>
+              <tr>
+                <td>Additional Benefits</td>
+                <td>10%</td>
+                <td>Rewards, cell phone protection, no penalty APR</td>
+              </tr>
+              <tr>
+                <td>Annual Fee</td>
+                <td>5%</td>
+                <td>Must be $0 for top ratings</td>
+              </tr>
+              <tr>
+                <td>Approval Accessibility</td>
+                <td>5%</td>
+                <td>Credit score requirements and approval odds</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>We prioritize cards that maximize interest savings while minimizing fees. Rankings are updated monthly. Last updated: <strong>December 11, 2025</strong>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about balance transfer credit cards.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Credit Card Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/credit-cards/no-annual-fee" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h3>No Annual Fee Cards</h3>
+          <p>Great rewards without yearly costs</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/credit-cards/best-cashback" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5a1.5 1.5 0 0 1 0 3H9"/></svg></div>
+          <h3>Best Cash Back Cards</h3>
+          <p>Earn up to 6% back on purchases</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/credit-cards/best-travel-cards" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+          <h3>Best Travel Cards</h3>
+          <p>Points for flights, hotels & more</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/jennifer-walsh.jpg" alt="Jennifer Walsh, Credit Card Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#7C3AED] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Jennifer Walsh</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Jennifer is a debt management specialist at Screened with over 10 years of experience helping consumers eliminate credit card debt. She has personally used balance transfer strategies to pay off over $25,000 in debt and now shares her expertise with readers.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 11, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              13 min read
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
 </MainLayout>
 
 <style>
-  .filter-btn {
-    white-space: nowrap;
-    padding: 0.625rem 1.5rem;
-    border-radius: 9999px;
-    background-color: #F3F4F6;
-    color: #162433 !important;
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  /* Apply Button */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+    color: white;
     font-weight: 700;
     font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Comparison Table */
+  .comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .comparison-table th {
+    background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .comparison-table th:first-child {
+    text-align: left;
+    padding-left: 1.5rem;
+  }
+  .comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .comparison-table td:first-child {
+    padding-left: 1.5rem;
+  }
+  .comparison-table tbody tr:hover td {
+    background: #EDE9FE;
+  }
+
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #0D2C4B;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #F9FAFB; }
+
+  .info-box, .warning-box, .key-takeaway {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .info-box {
+    background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%);
+    border: 1px solid #C4B5FD;
+  }
+  .info-box h4 { color: #5B21B6; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #6D28D9; }
+
+  .warning-box {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 
+      0 0 0 1px rgba(245, 158, 11, 0.15),
+      0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box h4::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01'/%3E%3C/svg%3E");
+    background-size: contain;
+    flex-shrink: 0;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+  }
+  .key-takeaway h4 { color: #047857; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #065F46; }
+
+  /* Category Picks */
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .category-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
     transition: all 0.3s ease;
   }
   
-  .filter-btn:hover {
-    background-color: #E5E7EB;
+  .category-card:hover {
+    border-color: #7C3AED;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
+    transform: translateY(-2px);
   }
   
-  .filter-btn.active {
-    background-color: #0D2C4B !important;
-    color: #FFFFFF !important;
+  .category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%);
+    margin-bottom: 1rem;
+  }
+  
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #7C3AED;
+  }
+  
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+  
+  .category-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .category-card .card-name {
+    color: #7C3AED;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-card p:last-of-type {
+    color: #64748B;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Fee Breakdown */
+  .comparison-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .fee-breakdown {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  
+  .fee-breakdown h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #E2E8F0;
+  }
+  
+  .fee-breakdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+  }
+  
+  .fee-breakdown li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #E2E8F0;
+    font-size: 0.9rem;
+    color: #4B5563;
+  }
+  
+  .net-value {
+    text-align: center;
+    font-weight: 600;
+    color: #162433;
+    margin: 0;
+    padding-top: 0.5rem;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #C4B5FD;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #7C3AED;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #F8FAFC; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Related Cards */
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .related-card:hover {
+    border-color: #7C3AED;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  
+  .related-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #7C3AED;
+  }
+  
+  .related-card h3 {
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+  
+  .related-card p {
+    color: #64748B;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .related-link {
+    color: #7C3AED;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+  }
+  
+  .related-card:hover .related-link {
+    color: #5B21B6;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #7C3AED;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #7C3AED;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+    
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
   }
 </style>
 
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
