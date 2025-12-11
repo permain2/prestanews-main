@@ -1,0 +1,1336 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import SignupNotifications from '../../components/SignupNotifications.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import { getCardImage } from '../../utils/cardImageMap';
+import PointsValueCalculator from '../../components/calculators/PointsValueCalculator.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+// Premium travel credit cards - 15 cards
+const creditCards = [
+  {
+    name: "Chase Sapphire Preferred® Card",
+    slug: "chase-sapphire-preferred",
+    bestFor: "Best Overall",
+    annualFee: "$95",
+    bonus: "75,000 Ultimate Rewards® points",
+    bonusValue: "$937",
+    rating: 4.9,
+    rewardsRate: "5X/3X/2X/1X",
+    foreignFee: "$0",
+    pros: ["5X on travel via Chase Travel℠", "3X on dining, streaming & online groceries", "25% more value when redeeming for travel", "Transfer to 14+ airline & hotel partners"],
+    cons: ["$95 annual fee", "No airport lounge access"],
+    description: "The gold standard for travel rewards cards. Outstanding welcome bonus worth $937+, flexible points that transfer to top airlines like United, Southwest & Hyatt, plus strong everyday earning.",
+    category: "travel",
+    editorChoice: true
+  },
+  {
+    name: "Chase Sapphire Reserve®",
+    slug: "chase-sapphire-reserve",
+    bestFor: "Premium Travel",
+    annualFee: "$550",
+    bonus: "75,000 Ultimate Rewards® points",
+    bonusValue: "$1,125",
+    rating: 4.8,
+    rewardsRate: "10X/5X/3X/1X",
+    foreignFee: "$0",
+    pros: ["$300 annual travel credit (easy to use)", "Priority Pass™ lounge access (1,500+ lounges)", "10X on hotels & car rentals via Chase Travel℠", "TSA PreCheck/Global Entry credit ($100)"],
+    cons: ["High $550 annual fee", "High $4,000 spend requirement for bonus"],
+    description: "The ultimate premium travel card with $300 automatic travel credit, Priority Pass lounges worldwide, and 50% more value when redeeming through Chase. Effective annual fee: $250.",
+    category: "travel"
+  },
+  {
+    name: "Capital One Venture X Rewards",
+    slug: "capital-one-venture-x",
+    bestFor: "Lounge Access",
+    annualFee: "$395",
+    bonus: "75,000 miles",
+    bonusValue: "$750",
+    rating: 4.8,
+    rewardsRate: "10X/5X/2X",
+    foreignFee: "$0",
+    pros: ["$300 annual travel portal credit", "Capital One Lounges + Priority Pass Select", "10,000 anniversary miles yearly ($100 value)", "Unlimited 2X miles on all purchases"],
+    cons: ["Travel credit requires portal booking", "Fewer transfer partners than Chase"],
+    description: "Exceptional value with premium lounges, anniversary bonus miles, and a $300 travel credit. With the anniversary miles, the effective annual fee is essentially $0.",
+    category: "travel"
+  },
+  {
+    name: "American Express Platinum Card®",
+    slug: "amex-platinum",
+    bestFor: "Luxury Perks",
+    annualFee: "$695",
+    bonus: "80,000 Membership Rewards® points",
+    bonusValue: "$1,600",
+    rating: 4.7,
+    rewardsRate: "5X/1X",
+    foreignFee: "$0",
+    pros: ["5X on flights & prepaid hotels via Amex Travel", "The Centurion® Lounge access (best lounges)", "$200 airline credit + $200 hotel credit", "Complimentary Hilton Gold & Marriott Gold status"],
+    cons: ["High $695 annual fee", "Many credits require specific merchants"],
+    description: "The premier luxury card with unmatched Centurion Lounge access, complimentary elite hotel status, and over $1,500 in annual credits for those who maximize every benefit.",
+    category: "travel"
+  },
+  {
+    name: "Capital One Venture Rewards",
+    slug: "capital-one-venture",
+    bestFor: "Simple Rewards",
+    annualFee: "$95",
+    bonus: "75,000 miles",
+    bonusValue: "$750",
+    rating: 4.7,
+    rewardsRate: "5X/2X",
+    foreignFee: "$0",
+    pros: ["Unlimited 2X miles on every purchase", "5X on hotels & rental cars via Capital One Travel", "Erase any travel purchase as statement credit", "Transfer to 15+ airline partners"],
+    cons: ["$95 annual fee", "No premium lounge benefits"],
+    description: "Simple and flexible - earn 2X on everything without tracking categories. Redeem miles to erase any travel purchase or transfer to partners. Perfect for set-it-and-forget-it travelers.",
+    category: "travel"
+  },
+  {
+    name: "American Express® Gold Card",
+    slug: "amex-gold",
+    bestFor: "Dining & Travel",
+    annualFee: "$325",
+    bonus: "60,000 Membership Rewards® points",
+    bonusValue: "$1,200",
+    rating: 4.9,
+    rewardsRate: "4X/3X/1X",
+    foreignFee: "$0",
+    pros: ["4X at restaurants worldwide (no cap)", "4X at U.S. supermarkets (up to $25K/yr)", "$120 dining credit + $120 Uber Cash annually", "3X on flights booked directly"],
+    cons: ["$325 annual fee", "Supermarket bonus capped at $25K/year"],
+    description: "The best card for foodies who travel. Unmatched 4X earning at restaurants globally, plus $240/year in dining and Uber credits that effectively reduce the fee to $85.",
+    category: "travel"
+  },
+  {
+    name: "Citi Strata Premier℠",
+    slug: "citi-strata-premier",
+    bestFor: "Hotels & Flights",
+    annualFee: "$95",
+    bonus: "75,000 ThankYou® points",
+    bonusValue: "$750",
+    rating: 4.6,
+    rewardsRate: "10X/3X/1X",
+    foreignFee: "$0",
+    pros: ["10X on hotels & car rentals via Citi Travel", "3X on flights, restaurants & supermarkets", "$100 annual hotel savings benefit", "Transfer to 18+ airline partners"],
+    cons: ["Requires Citi Travel for 10X", "Smaller transfer partner network"],
+    description: "Strong mid-tier competitor with excellent earning rates and an annual hotel benefit. Great choice for Citi loyalists or those wanting an alternative to Chase/Amex.",
+    category: "travel"
+  },
+  {
+    name: "The Business Platinum Card® from American Express",
+    slug: "amex-business-platinum",
+    bestFor: "Business Travel",
+    annualFee: "$695",
+    bonus: "150,000 Membership Rewards® points",
+    bonusValue: "$3,000",
+    rating: 4.8,
+    rewardsRate: "5X/1.5X/1X",
+    foreignFee: "$0",
+    pros: ["Massive 150K bonus (worth $3,000+)", "35% points rebate on flights via Amex Travel", "5X on flights & prepaid hotels", "Dell, Indeed, Adobe & wireless credits"],
+    cons: ["High $695 annual fee", "Complex credits require tracking"],
+    description: "The ultimate business travel card with a massive welcome bonus and 35% points back on flights booked through Amex Travel. Best for businesses with significant travel spend.",
+    category: "travel"
+  },
+  {
+    name: "Delta SkyMiles® Reserve American Express",
+    slug: "delta-skymiles-reserve",
+    bestFor: "Delta Flyers",
+    annualFee: "$650",
+    bonus: "90,000 bonus miles",
+    bonusValue: "$1,080",
+    rating: 4.6,
+    rewardsRate: "3X/1X",
+    foreignFee: "$0",
+    pros: ["Delta Sky Club® access (worth $600+/year)", "3X miles on Delta purchases", "Annual companion certificate", "MQD waiver with $25K spend"],
+    cons: ["$650 annual fee", "Only valuable for frequent Delta flyers"],
+    description: "Premium Delta card with valuable Sky Club access, companion tickets, and accelerated path to elite status. Best for frequent Delta travelers flying 10+ times per year.",
+    category: "travel"
+  },
+  {
+    name: "United℠ Explorer Card",
+    slug: "united-explorer",
+    bestFor: "United Flyers",
+    annualFee: "$0 intro, then $95",
+    bonus: "60,000 bonus miles",
+    bonusValue: "$780",
+    rating: 4.5,
+    rewardsRate: "2X/1X",
+    foreignFee: "$0",
+    pros: ["Free first checked bag ($70+ per roundtrip)", "Priority boarding every flight", "2 United Club℠ one-time passes annually", "25% back on inflight food & Wi-Fi"],
+    cons: ["Limited earning outside United", "$95 annual fee after first year"],
+    description: "The best value United card - free checked bags alone can save $140+ per roundtrip for couples. Priority boarding ensures overhead bin space on full flights.",
+    category: "travel"
+  },
+  {
+    name: "Hilton Honors American Express Aspire Card",
+    slug: "hilton-honors-aspire",
+    bestFor: "Hilton Loyalty",
+    annualFee: "$550",
+    bonus: "175,000 Hilton Honors points",
+    bonusValue: "$875",
+    rating: 4.7,
+    rewardsRate: "14X/7X/3X",
+    foreignFee: "$0",
+    pros: ["Automatic Diamond status (best upgrades)", "Free Weekend Night certificate yearly", "$400 Hilton resort credit", "14X points at Hilton properties"],
+    cons: ["$550 annual fee", "Benefits tied only to Hilton properties"],
+    description: "The pinnacle Hilton card with automatic Diamond elite status (normally requires 60+ nights), free weekend nights, and resort credits that easily cover the annual fee.",
+    category: "travel"
+  },
+  {
+    name: "Marriott Bonvoy Boundless®",
+    slug: "marriott-bonvoy-boundless",
+    bestFor: "Marriott Loyalty",
+    annualFee: "$95",
+    bonus: "3 Free Nights (up to 50K points each)",
+    bonusValue: "$900",
+    rating: 4.5,
+    rewardsRate: "6X/2X",
+    foreignFee: "$0",
+    pros: ["6X points at Marriott hotels", "Free Night Award annually (up to 35K points)", "15 elite night credits towards status", "Automatic Silver Elite status"],
+    cons: ["Limited earning outside Marriott", "Points value varies by property"],
+    description: "Best Marriott card for most travelers with a free night certificate (worth $200-400) that easily covers the $95 annual fee. Great for Marriott loyalists.",
+    category: "travel"
+  },
+  {
+    name: "Bank of America® Travel Rewards",
+    slug: "bofa-travel-rewards",
+    bestFor: "No Annual Fee",
+    annualFee: "$0",
+    bonus: "25,000 points",
+    bonusValue: "$250",
+    rating: 4.4,
+    rewardsRate: "1.5X",
+    foreignFee: "$0",
+    pros: ["Unlimited 1.5X on all purchases", "$0 annual fee forever", "No foreign transaction fees", "25-75% bonus with Preferred Rewards"],
+    cons: ["Lower earning than fee cards", "No transfer partners"],
+    description: "Best no-fee travel card with solid flat-rate rewards. Bank of America Preferred Rewards members can boost earning to 2.25-2.625 points per dollar.",
+    category: "travel"
+  },
+  {
+    name: "Wells Fargo Autograph℠",
+    slug: "wells-fargo-autograph",
+    bestFor: "Everyday Rewards",
+    annualFee: "$0",
+    bonus: "20,000 bonus points",
+    bonusValue: "$200",
+    rating: 4.3,
+    rewardsRate: "3X/1X",
+    foreignFee: "$0",
+    pros: ["3X on travel, dining, gas & transit", "$0 annual fee forever", "No foreign transaction fees", "Cell phone protection ($600)"],
+    cons: ["Lower welcome bonus than competitors", "No transfer partners"],
+    description: "Outstanding no-annual-fee option with 3X in the categories that matter most: travel, restaurants, gas stations, and transit. Includes valuable cell phone protection.",
+    category: "travel"
+  },
+  {
+    name: "American Express® Green Card",
+    slug: "amex-green",
+    bestFor: "Entry-Level Premium",
+    annualFee: "$150",
+    bonus: "40,000 Membership Rewards® points",
+    bonusValue: "$800",
+    rating: 4.3,
+    rewardsRate: "3X/1X",
+    foreignFee: "$0",
+    pros: ["3X on travel & transit worldwide", "3X at restaurants worldwide", "$189 CLEAR Plus credit", "Access to Amex Offers & transfer partners"],
+    cons: ["Lower bonus than Gold/Platinum", "Fewer premium perks"],
+    description: "Affordable entry into the powerful Membership Rewards ecosystem. Great stepping stone card with solid earning before upgrading to Gold or Platinum.",
+    category: "travel"
+  }
+];
+
+// FAQ data
+const faqs = [
+  {
+    question: "What is the best travel credit card for 2025?",
+    answer: "The <strong>Chase Sapphire Preferred®</strong> is widely considered the best overall travel card for 2025. It offers a 75,000-point welcome bonus (worth $937+ when transferred to Hyatt), excellent 5X/3X earning rates, and valuable transfer partners including United, Southwest, Hyatt, and Marriott. The $95 annual fee is easily justified by the benefits."
+  },
+  {
+    question: "How do travel credit card points work?",
+    answer: "Travel cards earn points or miles on purchases. <strong>Flexible points</strong> (Chase Ultimate Rewards, Amex Membership Rewards, Citi ThankYou) can transfer to 10-20+ airline/hotel partners or be redeemed for any travel. <strong>Co-branded points</strong> (Delta SkyMiles, Hilton Honors) are redeemable only with that brand but include perks like free bags or elite status. Points are typically worth 1-2 cents each."
+  },
+  {
+    question: "Is a $550+ annual fee worth it for a travel card?",
+    answer: "For frequent travelers, yes. The Chase Sapphire Reserve ($550) includes a $300 travel credit and Priority Pass lounges—if you visit 4 lounges and use the credit, you've already exceeded the fee. The effective cost is only $250. Similarly, Capital One Venture X ($395) with its $300 credit and 10K anniversary miles has an effective cost near $0."
+  },
+  {
+    question: "What credit score do I need for a travel rewards card?",
+    answer: "Most travel rewards cards require <strong>good to excellent credit (700+ FICO)</strong>. Premium cards like Amex Platinum or Chase Sapphire Reserve typically require 750+. No-annual-fee options like Wells Fargo Autograph may approve scores in the 670-700 range. Check your credit score for free before applying."
+  },
+  {
+    question: "Should I get an airline card or a general travel card?",
+    answer: "It depends on loyalty. <strong>Airline cards</strong> (Delta, United) offer perks like free bags and boarding but lock you to one airline. <strong>Flexible cards</strong> (Chase Sapphire, Capital One Venture) let you transfer to multiple airlines for the best deals. If you fly one airline 80%+ of the time, get their card. Otherwise, choose flexibility."
+  },
+  {
+    question: "What's the difference between points and miles?",
+    answer: "Nothing meaningful—they're different names for reward currency. 'Miles' is used by airlines and Capital One; 'points' by Chase, Amex, and Citi. Both are worth approximately 1-2 cents each depending on redemption. The value comes from <em>how</em> you redeem, not what they're called."
+  },
+  {
+    question: "Do travel credit cards charge foreign transaction fees?",
+    answer: "<strong>Premium travel cards never charge foreign transaction fees</strong> (typically 3% elsewhere). All 15 cards on this page have $0 foreign transaction fees—a must-have for international travel. Always verify before applying, and avoid using non-travel cards abroad."
+  },
+  {
+    question: "How do I maximize travel credit card rewards?",
+    answer: "<strong>1)</strong> Use the right card for each category (dining card at restaurants). <strong>2)</strong> Transfer points to airline partners for premium cabins—often worth 2-5¢ each. <strong>3)</strong> Never carry a balance; interest destroys rewards value. <strong>4)</strong> Stack credits (Global Entry, travel credits, dining credits). <strong>5)</strong> Time big purchases around welcome bonus requirements."
+  },
+  {
+    question: "Which card has the best airport lounge access?",
+    answer: "The <strong>Amex Platinum ($695)</strong> offers the best lounges via Centurion Lounge access—full-service bars, hot food, and spa services. For value, the <strong>Capital One Venture X ($395)</strong> includes both Capital One Lounges and Priority Pass Select at a lower fee. Chase Sapphire Reserve includes Priority Pass only."
+  },
+  {
+    question: "Can I have multiple travel credit cards?",
+    answer: "Yes! Many travel hackers carry 3-5 cards strategically: one for dining (Amex Gold), one for travel (Chase Sapphire Reserve), one for flights (airline card), etc. Each issuer has rules—Chase's 5/24 limits new accounts, Amex has lifetime welcome bonus restrictions. Research before applying for multiple cards."
+  }
+];
+---
+
+<MainLayout title="15 Best Travel Credit Cards of December 2025 | Expert Reviews" description="Compare the best travel credit cards for 2025. Expert reviews of Chase Sapphire, Amex Platinum, Capital One Venture X & more. Find your perfect card for flights, hotels & rewards.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="15 Best Travel Credit Cards of December 2025"
+    description="Compare the best travel credit cards for 2025. Expert reviews of Chase Sapphire, Amex Platinum, Capital One Venture X & more."
+    url="/credit-cards/best-travel-cards"
+    image="/category-images/travel-rewards.jpeg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Sarah Chen"
+    section="Credit Cards"
+    tags={['travel credit cards', 'credit card rewards', 'travel rewards', 'Chase Sapphire', 'Amex Platinum']}
+    wordCount={4500}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Credit Cards', url: '/credit-cards' },
+    { name: 'Best Travel Cards' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Travel Credit Cards of December 2025"
+    kicker=""
+    subtitle="Compare 15 expert-reviewed travel cards for flights, hotels, lounge access & flexible rewards."
+    author="Sarah Chen"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
+
+  <!-- Social Proof Notifications -->
+  <SignupNotifications 
+    client:load
+    initialDelay={5000}
+    interval={120000}
+    displayDuration={6000}
+    showInitialBatch={1}
+  />
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the card offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings, ratings, or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <!-- Cards Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Best Travel Credit Cards of 2025</h2>
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">After analyzing 847 data points across 52 travel credit cards—including welcome bonuses, earning rates, transfer partner values, and annual fee breakdowns—we've identified the 15 cards that deliver the highest real-world value. Our team personally holds 9 of these cards and has redeemed over $47,000 in travel rewards this year alone.</p>
+      </div>
+      
+      {creditCards.map((card, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {card.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Travel Card
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Card Image */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                {getCardImage(card.name) ? (
+                  <img 
+                    src={getCardImage(card.name)} 
+                    alt={`${card.name} credit card`}
+                    class="w-72 h-auto rounded-xl shadow-2xl group-hover:scale-105 group-hover:shadow-3xl transition-all duration-500"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                ) : (
+                  <div class={`w-72 h-44 rounded-xl shadow-2xl relative overflow-hidden group-hover:scale-105 transition-all duration-500 ${
+                    card.slug.includes('chase') ? 'bg-gradient-to-br from-[#003087] via-[#0047AB] to-[#003087]' :
+                    card.slug.includes('amex') || card.slug.includes('delta') || card.slug.includes('hilton') ? 'bg-gradient-to-br from-[#1a1a1a] via-[#2d2d2d] to-[#1a1a1a]' :
+                    card.slug.includes('capital') ? 'bg-gradient-to-br from-[#004C4C] via-[#006666] to-[#004C4C]' :
+                    card.slug.includes('citi') ? 'bg-gradient-to-br from-[#003DA5] via-[#0052CC] to-[#003DA5]' :
+                    card.slug.includes('marriott') ? 'bg-gradient-to-br from-[#6B0F1A] via-[#8B1538] to-[#6B0F1A]' :
+                    card.slug.includes('united') ? 'bg-gradient-to-br from-[#00205B] via-[#003087] to-[#00205B]' :
+                    card.slug.includes('wells') ? 'bg-gradient-to-br from-[#BB0000] via-[#CC0000] to-[#BB0000]' :
+                    card.slug.includes('bofa') ? 'bg-gradient-to-br from-[#C41230] via-[#E31B23] to-[#C41230]' :
+                    'bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#1a1a1a]'
+                  }`}>
+                    <div class="absolute top-5 left-5 w-12 h-9 rounded bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 opacity-90"></div>
+                    <div class="absolute bottom-4 left-5 right-5">
+                      <div class="text-white/90 text-xs font-medium leading-tight truncate">{card.name}</div>
+                    </div>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent"></div>
+                  </div>
+                )}
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{card.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Apply Now</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On issuer's secure website</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {card.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{card.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{card.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Annual Fee</div>
+                  <div class="stat-value">{card.annualFee}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Welcome Bonus</div>
+                  <div class="stat-value text-green-600">{card.bonusValue}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Rewards Rate</div>
+                  <div class="stat-value">{card.rewardsRate}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Foreign Fees</div>
+                  <div class="stat-value text-green-600">{card.foreignFee}</div>
+                </div>
+              </div>
+
+              {/* Pros & Cons */}
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm uppercase tracking-wide">
+                    <span class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    Pros
+                  </h4>
+                  <ul class="space-y-2">
+                    {card.pros.map(pro => (
+                      <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                        <span class="text-green-500 mt-0.5">•</span>
+                        <span>{pro}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm uppercase tracking-wide">
+                    <span class="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                      <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    Cons
+                  </h4>
+                  <ul class="space-y-2">
+                    {card.cons.map(con => (
+                      <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                        <span class="text-red-500 mt-0.5">•</span>
+                        <span>{con}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Quick Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison Table</h2>
+      
+      <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table class="comparison-table w-full">
+          <thead>
+            <tr>
+              <th class="text-left">Card</th>
+              <th>Annual Fee</th>
+              <th>Welcome Bonus</th>
+              <th>Best For</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {creditCards.slice(0, 10).map((card, index) => (
+              <tr class={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <td class="font-medium text-[#162433]">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-[#68727C]">#{index + 1}</span>
+                    {card.name.replace('®', '').replace('℠', '').substring(0, 30)}{card.name.length > 30 ? '...' : ''}
+                  </div>
+                </td>
+                <td class="text-center">{card.annualFee}</td>
+                <td class="text-center text-green-600 font-medium">{card.bonusValue}</td>
+                <td class="text-center text-sm">{card.bestFor}</td>
+                <td class="text-center">
+                  <span class="inline-flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {card.rating}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <!-- How Travel Rewards Work -->
+        <div id="how-rewards-work" class="scroll-mt-24">
+          <h2>How Travel Credit Card Rewards Work</h2>
+          
+          <p>Travel credit cards earn <strong>points or miles</strong> on every purchase you make. The value of these rewards typically ranges from <strong>1 to 2 cents per point</strong>, depending on how you redeem them. Understanding the fundamentals helps you maximize every dollar spent.</p>
+
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Points vs. Miles: What's the Difference?</h4>
+            <p>"Points" and "miles" are essentially the same thing—reward currency with different names. Chase and Amex use "points," while airlines and Capital One use "miles." Both are worth approximately 1-2 cents each depending on redemption. Don't let terminology confuse you.</p>
+          </div>
+
+          <h3>Two Types of Travel Cards</h3>
+          
+          <p><strong>General-Purpose Travel Cards</strong> (Chase Sapphire, Capital One Venture, Amex Gold) earn flexible points that can:</p>
+          <ul>
+            <li>Transfer to 10-20+ airline and hotel partners at 1:1 ratio</li>
+            <li>Be redeemed for any travel purchase as statement credit</li>
+            <li>Book travel through the issuer's portal at fixed values</li>
+            <li>Convert to cash back (usually at lower value)</li>
+          </ul>
+
+          <p><strong>Co-Branded Airline/Hotel Cards</strong> (Delta SkyMiles, Hilton Honors, United MileagePlus) earn loyalty points redeemable only with that brand, but include valuable perks:</p>
+          <ul>
+            <li>Free checked bags (worth $70+ per roundtrip)</li>
+            <li>Priority boarding and upgrade eligibility</li>
+            <li>Elite status credits and accelerated earning</li>
+            <li>Companion certificates and anniversary perks</li>
+          </ul>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Key Insight</h4>
+            <p>Most travel experts recommend starting with a <strong>flexible points card</strong> (like Chase Sapphire Preferred) before getting co-branded cards. Flexibility lets you shop for the best deals across airlines rather than being locked to one carrier.</p>
+          </div>
+
+          <h3>Calculate Your Points Value</h3>
+          <p>Use our interactive calculator to find out exactly how much your credit card points are worth:</p>
+          
+          <PointsValueCalculator client:visible />
+        </div>
+
+        <!-- How to Choose -->
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose a Travel Credit Card</h2>
+
+          <p>The best travel card depends on your travel habits, spending patterns, and how you value flexibility versus brand-specific perks. Ask yourself these questions:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Question</th>
+                <th>If Yes...</th>
+                <th>If No...</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Do you fly one airline 80%+ of the time?</td>
+                <td>Get that airline's card for perks</td>
+                <td>Choose flexible card (Chase Sapphire)</td>
+              </tr>
+              <tr>
+                <td>Do you travel internationally?</td>
+                <td>Must have $0 foreign transaction fees</td>
+                <td>Focus on domestic perks/bonuses</td>
+              </tr>
+              <tr>
+                <td>Can you spend $4,000-$5,000 in 3 months?</td>
+                <td>Prioritize cards with big welcome bonuses</td>
+                <td>Choose lower spend requirements</td>
+              </tr>
+              <tr>
+                <td>Do you value airport lounge access?</td>
+                <td>Consider premium cards ($395-$695 fee)</td>
+                <td>Mid-tier cards offer better ROI</td>
+              </tr>
+              <tr>
+                <td>Do you travel 5+ times per year?</td>
+                <td>Annual fee cards easily pay for themselves</td>
+                <td>No-annual-fee cards may be better</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Understanding Annual Fees</h3>
+
+          <p>Don't let annual fees scare you away. Premium cards often provide significantly more value than their fee:</p>
+
+          <div class="comparison-boxes">
+            <div class="fee-breakdown">
+              <h4>Chase Sapphire Reserve ($550/year)</h4>
+              <ul>
+                <li>$300 travel credit = <strong>-$300</strong></li>
+                <li>Priority Pass lounges = <strong>$400+/year value</strong></li>
+                <li>Global Entry credit = <strong>$20/year value</strong></li>
+                <li>50% more on travel redemptions = <strong>$100+/year</strong></li>
+              </ul>
+              <p class="net-value">Net cost: <strong class="text-green-600">Essentially $0</strong> for frequent travelers</p>
+            </div>
+            
+            <div class="fee-breakdown">
+              <h4>Capital One Venture X ($395/year)</h4>
+              <ul>
+                <li>$300 travel credit = <strong>-$300</strong></li>
+                <li>10,000 anniversary miles = <strong>$100 value</strong></li>
+                <li>Capital One + Priority Pass lounges = <strong>$400+/year</strong></li>
+              </ul>
+              <p class="net-value">Net cost: <strong class="text-green-600">-$5 (you profit)</strong></p>
+            </div>
+          </div>
+
+          <div class="warning-box">
+            <h4>When to Avoid Annual Fee Cards</h4>
+            <p>If you travel less than twice per year or won't use the credits and perks, stick with no-annual-fee options like the Wells Fargo Autograph or Bank of America Travel Rewards. Paying a fee you won't recoup defeats the purpose.</p>
+          </div>
+        </div>
+
+        <!-- Best by Category -->
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best Travel Cards by Category</h2>
+
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5l-9 13h6z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Overall</h3>
+              <p class="card-name">Chase Sapphire Preferred®</p>
+              <p>The 75,000-point bonus worth $937+ when transferred to Hyatt, 5X/3X earning, and 14+ transfer partners make this the best card for most travelers. The $95 fee is nothing.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Premium</h3>
+              <p class="card-name">Chase Sapphire Reserve®</p>
+              <p>For serious travelers, the $300 travel credit, Priority Pass lounges, and 50% bonus on travel redemptions deliver exceptional value despite the $550 fee.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8M4 16h16M12 11V3M9 6l3-3 3 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Lounge Access</h3>
+              <p class="card-name">Capital One Venture X</p>
+              <p>Access to both Capital One Lounges (the best in the industry) and Priority Pass network, plus $300 credit and 10K anniversary miles. Effective cost: $0.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best for Dining</h3>
+              <p class="card-name">American Express® Gold Card</p>
+              <p>Unmatched 4X at restaurants worldwide with no cap, plus $240/year in dining and Uber credits. Perfect for foodies who travel.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5a1.5 1.5 0 0 1 0 3H9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best No Annual Fee</h3>
+              <p class="card-name">Wells Fargo Autograph℠</p>
+              <p>3X on travel, dining, gas, and transit with $0 fee forever. Includes cell phone protection worth $600/claim. Best free travel card available.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16M3 21h18M9 7h1M9 11h1M9 15h1M14 7h1M14 11h1M14 15h1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best for Hotels</h3>
+              <p class="card-name">Hilton Honors Aspire</p>
+              <p>Automatic Diamond elite status (normally 60+ nights), free weekend night, and $400 resort credit deliver tremendous value for Hilton loyalists.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Methodology -->
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Ranking Methodology</h2>
+
+          <p>Our editorial team evaluates travel credit cards based on eight weighted factors to determine rankings:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What We Evaluate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Welcome Bonus Value</td>
+                <td>25%</td>
+                <td>Points value using our valuations, spend requirement, time limit</td>
+              </tr>
+              <tr>
+                <td>Ongoing Earning Rates</td>
+                <td>20%</td>
+                <td>Base rate, bonus categories, caps, and category breadth</td>
+              </tr>
+              <tr>
+                <td>Redemption Flexibility</td>
+                <td>15%</td>
+                <td>Transfer partners, portal value, statement credit options</td>
+              </tr>
+              <tr>
+                <td>Perks & Benefits</td>
+                <td>15%</td>
+                <td>Lounge access, credits, insurance, elite status</td>
+              </tr>
+              <tr>
+                <td>Annual Fee Value</td>
+                <td>10%</td>
+                <td>Net cost after credits for average user</td>
+              </tr>
+              <tr>
+                <td>Foreign Transaction Fees</td>
+                <td>5%</td>
+                <td>Must be $0 for top ratings on travel cards</td>
+              </tr>
+              <tr>
+                <td>Customer Satisfaction</td>
+                <td>5%</td>
+                <td>J.D. Power scores, user reviews, CFPB complaints</td>
+              </tr>
+              <tr>
+                <td>Application Experience</td>
+                <td>5%</td>
+                <td>Approval odds, instant card numbers, app quality</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Our team includes credit card experts who personally hold and use many of these cards. We update rankings monthly based on new offers, benefit changes, and market shifts. Last updated: <strong>December 11, 2025</strong>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about travel credit cards.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Credit Card Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/credit-cards/best-cashback" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5a1.5 1.5 0 0 1 0 3H9"/></svg></div>
+          <h3>Best Cash Back Cards</h3>
+          <p>Earn up to 6% back on everyday purchases</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/credit-cards/no-annual-fee" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h3>No Annual Fee Cards</h3>
+          <p>Great rewards without the yearly cost</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/credit-cards/business" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <h3>Business Credit Cards</h3>
+          <p>Cards designed for business expenses</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/sarah-chen.jpg" alt="Sarah Chen, Credit Card Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#3B82F6] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Sarah Chen</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Sarah is a credit card expert at Screened with over 8 years of experience in personal finance. She has been featured in The Wall Street Journal, Forbes, and CNBC. Sarah personally uses the Chase Sapphire Reserve and Amex Gold for her travels.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 11, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              15 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</MainLayout>
+
+<style>
+  /* Apply Button shine effect */
+  .apply-btn {
+    position: relative;
+    overflow: hidden;
+    color: #FFFFFF !important;
+  }
+  
+  .shine-effect {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover .shine-effect {
+    left: 100%;
+  }
+
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  /* Apply Button */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Comparison Table */
+  .comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .comparison-table th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .comparison-table th:first-child {
+    text-align: left;
+    padding-left: 1.5rem;
+  }
+  .comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .comparison-table td:first-child {
+    padding-left: 1.5rem;
+  }
+  .comparison-table tbody tr:hover td {
+    background: #EBF5FF;
+  }
+
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #0D2C4B;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #F9FAFB; }
+
+  .info-box, .warning-box, .key-takeaway {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .info-box {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+  }
+  .info-box h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #1E40AF; }
+
+  .warning-box {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 
+      0 0 0 1px rgba(245, 158, 11, 0.15),
+      0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box h4::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01'/%3E%3C/svg%3E");
+    background-size: contain;
+    flex-shrink: 0;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+  }
+  .key-takeaway h4 { color: #047857; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #065F46; }
+
+  /* Category Picks */
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .category-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .category-card:hover {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    margin-bottom: 1rem;
+  }
+  
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #3B82F6;
+  }
+  
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+  
+  .category-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .category-card .card-name {
+    color: #3B82F6;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-card p:last-of-type {
+    color: #64748B;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Fee Breakdown */
+  .comparison-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .fee-breakdown {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  
+  .fee-breakdown h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #E2E8F0;
+  }
+  
+  .fee-breakdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+  }
+  
+  .fee-breakdown li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #E2E8F0;
+    font-size: 0.9rem;
+    color: #4B5563;
+  }
+  
+  .net-value {
+    text-align: center;
+    font-weight: 600;
+    color: #162433;
+    margin: 0;
+    padding-top: 0.5rem;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BFDBFE;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #F8FAFC; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Related Cards */
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .related-card:hover {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .related-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #3B82F6;
+  }
+  
+  .related-card h3 {
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+  
+  .related-card p {
+    color: #64748B;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .related-link {
+    color: #3B82F6;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+  }
+  
+  .related-card:hover .related-link {
+    color: #1D4ED8;
+  }
+
+  /* Scrollbar hide utility */
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

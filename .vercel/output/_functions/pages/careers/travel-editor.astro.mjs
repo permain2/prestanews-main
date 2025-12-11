@@ -1,0 +1,34 @@
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_DKBvgln8.mjs';
+import 'piccolore';
+import { $ as $$MainLayout } from '../../chunks/MainLayout_BztIZ2OU.mjs';
+/* empty css                                            */
+export { renderers } from '../../renderers.mjs';
+
+const $$TravelEditor = createComponent(($$result, $$props, $$slots) => {
+  const job = {
+    title: "Travel Editor",
+    department: "Editorial",
+    location: "Remote",
+    type: "Full-time",
+    salary: "$65,000 - $85,000"
+  };
+  return renderTemplate`${renderComponent($$result, "MainLayout", $$MainLayout, { "title": `${job.title} - Careers`, "description": `Join PrestaNews as a ${job.title}. ${job.location}, ${job.type}.`, "data-astro-cid-vebqbilt": true }, { "default": ($$result2) => renderTemplate`  ${maybeRenderHead()}<section class="job-header" data-astro-cid-vebqbilt> <div class="header-container" data-astro-cid-vebqbilt> <a href="/careers" class="back-link" data-astro-cid-vebqbilt> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" data-astro-cid-vebqbilt> <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" data-astro-cid-vebqbilt></path> </svg>
+Back to Careers
+</a> <h1 class="job-title" data-astro-cid-vebqbilt>${job.title}</h1> <div class="job-meta" data-astro-cid-vebqbilt> <span class="meta-item" data-astro-cid-vebqbilt> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-vebqbilt> <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" data-astro-cid-vebqbilt></path> </svg> ${job.department} </span> <span class="meta-item" data-astro-cid-vebqbilt> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-vebqbilt> <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" data-astro-cid-vebqbilt></path> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" data-astro-cid-vebqbilt></path> </svg> ${job.location} </span> <span class="meta-item" data-astro-cid-vebqbilt> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-vebqbilt> <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" data-astro-cid-vebqbilt></path> </svg> ${job.type} </span> <span class="meta-item salary" data-astro-cid-vebqbilt> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-vebqbilt> <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" data-astro-cid-vebqbilt></path> </svg> ${job.salary} </span> </div> </div> </section>  <section class="job-content" data-astro-cid-vebqbilt> <div class="content-container" data-astro-cid-vebqbilt> <div class="content-main" data-astro-cid-vebqbilt> <div class="section" data-astro-cid-vebqbilt> <h2 data-astro-cid-vebqbilt>About the Role</h2> <p data-astro-cid-vebqbilt>We're seeking a passionate Travel Editor to lead our travel content strategy. You'll curate and edit travel guides, destination reviews, and deals coverage while managing a team of travel writers.</p> </div> <div class="section" data-astro-cid-vebqbilt> <h2 data-astro-cid-vebqbilt>What You'll Do</h2> <ul data-astro-cid-vebqbilt> <li data-astro-cid-vebqbilt>Edit and curate travel content across airlines, hotels, and destinations</li> <li data-astro-cid-vebqbilt>Manage and mentor a team of travel writers</li> <li data-astro-cid-vebqbilt>Develop editorial calendars and content strategies</li> <li data-astro-cid-vebqbilt>Write feature stories and in-depth travel guides</li> <li data-astro-cid-vebqbilt>Coordinate with partners for exclusive travel deals</li> <li data-astro-cid-vebqbilt>Ensure accuracy and quality of all travel coverage</li> </ul> </div> <div class="section" data-astro-cid-vebqbilt> <h2 data-astro-cid-vebqbilt>What We're Looking For</h2> <ul data-astro-cid-vebqbilt> <li data-astro-cid-vebqbilt>5+ years of experience in travel journalism or editing</li> <li data-astro-cid-vebqbilt>Strong editorial judgment and attention to detail</li> <li data-astro-cid-vebqbilt>Experience managing writers or editorial teams</li> <li data-astro-cid-vebqbilt>Deep knowledge of travel rewards, airlines, and hotels</li> <li data-astro-cid-vebqbilt>Excellent communication and project management skills</li> <li data-astro-cid-vebqbilt>Passion for travel and personal travel experience</li> </ul> </div> <div class="section" data-astro-cid-vebqbilt> <h2 data-astro-cid-vebqbilt>Benefits</h2> <ul data-astro-cid-vebqbilt> <li data-astro-cid-vebqbilt>Competitive salary ($65,000 - $85,000)</li> <li data-astro-cid-vebqbilt>100% remote work with flexible hours</li> <li data-astro-cid-vebqbilt>Comprehensive health, dental, and vision insurance</li> <li data-astro-cid-vebqbilt>401(k) with company match</li> <li data-astro-cid-vebqbilt>$3,000 annual travel stipend</li> <li data-astro-cid-vebqbilt>$1,000 annual learning budget</li> <li data-astro-cid-vebqbilt>Unlimited PTO</li> </ul> </div> </div> <div class="content-sidebar" data-astro-cid-vebqbilt> <div class="apply-card" data-astro-cid-vebqbilt> <h3 data-astro-cid-vebqbilt>Interested?</h3> <p data-astro-cid-vebqbilt>Apply now and join our growing team.</p> <a href="mailto:careers@prestanews.com?subject=Application: Travel Editor" class="btn-primary" data-astro-cid-vebqbilt>
+Apply Now
+</a> <p class="apply-note" data-astro-cid-vebqbilt>Or email your resume to<br data-astro-cid-vebqbilt><a href="mailto:careers@prestanews.com" data-astro-cid-vebqbilt>careers@prestanews.com</a></p> </div> </div> </div> </section> ` })} `;
+}, "/Users/permain2/affiliatewebsite/src/pages/careers/travel-editor.astro", void 0);
+
+const $$file = "/Users/permain2/affiliatewebsite/src/pages/careers/travel-editor.astro";
+const $$url = "/careers/travel-editor";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$TravelEditor,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
-import SignupNotifications from '../../components/SignupNotifications.tsx';
 import ComparisonTOCToggle from '../../components/ComparisonTOCToggle.tsx';
 import AnimatedFAQ from '../../components/AnimatedFAQ.tsx';
 
@@ -121,15 +120,6 @@ const tocItems = [
     date="Dec. 11, 2025"
     compact={true}
     animateTitle={true}
-  />
-
-  <!-- Social Proof Notifications -->
-  <SignupNotifications 
-    client:load
-    initialDelay={5000}
-    interval={120000}
-    displayDuration={6000}
-    showInitialBatch={1}
   />
 
   <!-- Disclosure -->

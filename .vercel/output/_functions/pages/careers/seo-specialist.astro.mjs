@@ -1,0 +1,34 @@
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../../chunks/astro/server_DKBvgln8.mjs';
+import 'piccolore';
+import { $ as $$MainLayout } from '../../chunks/MainLayout_BztIZ2OU.mjs';
+/* empty css                                             */
+export { renderers } from '../../renderers.mjs';
+
+const $$SeoSpecialist = createComponent(($$result, $$props, $$slots) => {
+  const job = {
+    title: "SEO Specialist",
+    department: "Marketing",
+    location: "Remote",
+    type: "Full-time",
+    salary: "$60,000 - $80,000"
+  };
+  return renderTemplate`${renderComponent($$result, "MainLayout", $$MainLayout, { "title": `${job.title} - Careers`, "description": `Join PrestaNews as a ${job.title}. ${job.location}, ${job.type}.`, "data-astro-cid-bejclgua": true }, { "default": ($$result2) => renderTemplate`  ${maybeRenderHead()}<section class="job-header" data-astro-cid-bejclgua> <div class="header-container" data-astro-cid-bejclgua> <a href="/careers" class="back-link" data-astro-cid-bejclgua> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" data-astro-cid-bejclgua> <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" data-astro-cid-bejclgua></path> </svg>
+Back to Careers
+</a> <h1 class="job-title" data-astro-cid-bejclgua>${job.title}</h1> <div class="job-meta" data-astro-cid-bejclgua> <span class="meta-item" data-astro-cid-bejclgua> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-bejclgua> <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" data-astro-cid-bejclgua></path> </svg> ${job.department} </span> <span class="meta-item" data-astro-cid-bejclgua> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-bejclgua> <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" data-astro-cid-bejclgua></path> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" data-astro-cid-bejclgua></path> </svg> ${job.location} </span> <span class="meta-item" data-astro-cid-bejclgua> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-bejclgua> <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" data-astro-cid-bejclgua></path> </svg> ${job.type} </span> <span class="meta-item salary" data-astro-cid-bejclgua> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-bejclgua> <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" data-astro-cid-bejclgua></path> </svg> ${job.salary} </span> </div> </div> </section>  <section class="job-content" data-astro-cid-bejclgua> <div class="content-container" data-astro-cid-bejclgua> <div class="content-main" data-astro-cid-bejclgua> <div class="section" data-astro-cid-bejclgua> <h2 data-astro-cid-bejclgua>About the Role</h2> <p data-astro-cid-bejclgua>We're looking for an SEO Specialist to help grow our organic traffic and improve our search visibility. You'll work closely with our editorial team to optimize content and develop SEO strategies that drive results.</p> </div> <div class="section" data-astro-cid-bejclgua> <h2 data-astro-cid-bejclgua>What You'll Do</h2> <ul data-astro-cid-bejclgua> <li data-astro-cid-bejclgua>Conduct keyword research and competitive analysis</li> <li data-astro-cid-bejclgua>Optimize existing content for search performance</li> <li data-astro-cid-bejclgua>Develop and execute link building strategies</li> <li data-astro-cid-bejclgua>Monitor rankings, traffic, and SEO KPIs</li> <li data-astro-cid-bejclgua>Collaborate with writers on content optimization</li> <li data-astro-cid-bejclgua>Perform technical SEO audits and implementations</li> </ul> </div> <div class="section" data-astro-cid-bejclgua> <h2 data-astro-cid-bejclgua>What We're Looking For</h2> <ul data-astro-cid-bejclgua> <li data-astro-cid-bejclgua>2+ years of hands-on SEO experience</li> <li data-astro-cid-bejclgua>Proficiency with SEO tools (Ahrefs, SEMrush, Screaming Frog)</li> <li data-astro-cid-bejclgua>Understanding of technical SEO concepts</li> <li data-astro-cid-bejclgua>Experience with content optimization and on-page SEO</li> <li data-astro-cid-bejclgua>Strong analytical skills and data-driven mindset</li> <li data-astro-cid-bejclgua>Excellent communication skills</li> </ul> </div> <div class="section" data-astro-cid-bejclgua> <h2 data-astro-cid-bejclgua>Benefits</h2> <ul data-astro-cid-bejclgua> <li data-astro-cid-bejclgua>Competitive salary ($60,000 - $80,000)</li> <li data-astro-cid-bejclgua>100% remote work with flexible hours</li> <li data-astro-cid-bejclgua>Comprehensive health, dental, and vision insurance</li> <li data-astro-cid-bejclgua>401(k) with company match</li> <li data-astro-cid-bejclgua>$2,000 annual travel stipend</li> <li data-astro-cid-bejclgua>$1,500 annual learning budget</li> <li data-astro-cid-bejclgua>Unlimited PTO</li> </ul> </div> </div> <div class="content-sidebar" data-astro-cid-bejclgua> <div class="apply-card" data-astro-cid-bejclgua> <h3 data-astro-cid-bejclgua>Interested?</h3> <p data-astro-cid-bejclgua>Apply now and join our growing team.</p> <a href="mailto:careers@prestanews.com?subject=Application: SEO Specialist" class="btn-primary" data-astro-cid-bejclgua>
+Apply Now
+</a> <p class="apply-note" data-astro-cid-bejclgua>Or email your resume to<br data-astro-cid-bejclgua><a href="mailto:careers@prestanews.com" data-astro-cid-bejclgua>careers@prestanews.com</a></p> </div> </div> </div> </section> ` })} `;
+}, "/Users/permain2/affiliatewebsite/src/pages/careers/seo-specialist.astro", void 0);
+
+const $$file = "/Users/permain2/affiliatewebsite/src/pages/careers/seo-specialist.astro";
+const $$url = "/careers/seo-specialist";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$SeoSpecialist,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

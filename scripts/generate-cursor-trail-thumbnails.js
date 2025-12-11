@@ -87,3 +87,5 @@ async function generateThumbnails() {
 }
 
 generateThumbnails().catch(console.error);
+
+

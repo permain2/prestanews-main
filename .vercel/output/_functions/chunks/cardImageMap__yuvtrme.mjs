@@ -1,0 +1,187 @@
+const cardImages = {
+  // Amex Cards
+  "amex-platinum": "/credit-cards/amex-platinum.png",
+  "amex-gold": "/credit-cards/amex-gold.png",
+  "amex-green": "/credit-cards/amex-green.png",
+  "amex-everyday": "/credit-cards/amex-everyday.png",
+  "blue-cash-preferred": "/credit-cards/blue-cash-preferred.png",
+  "blue-cash-everyday": "/credit-cards/blue-cash-everyday.png",
+  "amex-business-platinum": "/credit-cards/amex-business-platinum.png",
+  "amex-business-gold": "/credit-cards/amex-business-gold.png",
+  "amex-blue-business-cash": "/credit-cards/amex-blue-business-cash.png",
+  "blue-business-plus": "/credit-cards/blue-business-plus.png",
+  "delta-skymiles-reserve": "/credit-cards/delta-skymiles-reserve.png",
+  "delta-skymiles-gold": "/credit-cards/delta-skymiles-gold.png",
+  "hilton-honors-aspire": "/credit-cards/hilton-honors-aspire.png",
+  // Chase Cards
+  "chase-sapphire-preferred": "/credit-cards/chase-sapphire-preferred.png",
+  "chase-slate-edge": "/credit-cards/chase-slate-edge.png",
+  "chase-sapphire-reserve": "/credit-cards/chase-sapphire-preferred.png",
+  // Use Preferred image as fallback
+  // Capital One Cards
+  "capital-one-venture-x": "/credit-cards/capital-one-venture-x.png",
+  "capital-one-venture": "/credit-cards/capital-one-venture-x.png",
+  // Use Venture X as fallback
+  "capital-one-savor": "/credit-cards/capital-one-venture-x.png",
+  // Use Venture X as fallback
+  // Citi Cards
+  "citi-double-cash": "/credit-cards/citi-double-cash.png",
+  "citi-diamond-preferred": "/credit-cards/citi-diamond-preferred.png",
+  "citi-premier": "/credit-cards/citi-diamond-preferred.png",
+  // Use Diamond as fallback
+  // Discover Cards
+  "discover-it-balance-transfer": "/credit-cards/discover-it-balance-transfer.png",
+  // Bank of America Cards
+  "bankamericard": "/credit-cards/bankamericard.png",
+  "bofa-travel-rewards": "/credit-cards/bankamericard.png",
+  // Wells Fargo Cards
+  "wells-fargo-reflect": "/credit-cards/wells-fargo-reflect.png",
+  "wells-fargo-autograph": "/credit-cards/wells-fargo-reflect.png",
+  // Use Reflect as fallback
+  // US Bank Cards
+  "us-bank-visa-platinum": "/credit-cards/us-bank-visa-platinum.png",
+  // Amazon Cards
+  "amazon-business-prime": "/credit-cards/amazon-business-prime.png",
+  // Marriott Cards - use Amex for co-brands
+  "marriott-bonvoy-brilliant": "/credit-cards/amex-platinum.png",
+  "marriott-bonvoy-boundless": "/credit-cards/chase-sapphire-preferred.png",
+  // United Cards - use Chase
+  "united-explorer": "/credit-cards/chase-sapphire-preferred.png",
+  "united-club-infinite": "/credit-cards/chase-sapphire-preferred.png"
+};
+const nameVariations = {
+  // Amex Platinum variations
+  "american express platinum": "amex-platinum",
+  "american express platinum card": "amex-platinum",
+  "amex platinum card": "amex-platinum",
+  "platinum card": "amex-platinum",
+  "the platinum card": "amex-platinum",
+  "platinum card from american express": "amex-platinum",
+  // Amex Gold variations
+  "american express gold": "amex-gold",
+  "amex gold card": "amex-gold",
+  "gold card": "amex-gold",
+  "american express gold card": "amex-gold",
+  "the gold card": "amex-gold",
+  // Amex Green variations
+  "american express green": "amex-green",
+  "amex green card": "amex-green",
+  "green card": "amex-green",
+  // Amex EveryDay
+  "amex everyday": "amex-everyday",
+  "american express everyday": "amex-everyday",
+  // Cash Magnet
+  "amex cash magnet": "amex-cash-magnet",
+  "cash magnet": "amex-cash-magnet",
+  "cash magnet card": "amex-cash-magnet",
+  // Blue Cash
+  "blue cash preferred": "blue-cash-preferred",
+  "amex blue cash preferred": "blue-cash-preferred",
+  "blue cash preferred card": "blue-cash-preferred",
+  "blue cash everyday": "blue-cash-everyday",
+  "amex blue cash everyday": "blue-cash-everyday",
+  "blue cash everyday card": "blue-cash-everyday",
+  // Business Amex
+  "amex business platinum": "amex-business-platinum",
+  "business platinum": "amex-business-platinum",
+  "amex business gold": "amex-business-gold",
+  "business gold": "amex-business-gold",
+  "business gold card": "amex-business-gold",
+  "amex blue business cash": "amex-blue-business-cash",
+  "blue business cash": "amex-blue-business-cash",
+  "blue business plus": "blue-business-plus",
+  "amex blue business plus": "blue-business-plus",
+  // Delta Cards
+  "delta skymiles reserve": "delta-skymiles-reserve",
+  "delta reserve": "delta-skymiles-reserve",
+  "delta skymiles gold": "delta-skymiles-gold",
+  "delta gold": "delta-skymiles-gold",
+  // Hilton Cards
+  "hilton honors aspire": "hilton-honors-aspire",
+  "hilton aspire": "hilton-honors-aspire",
+  "hilton aspire card": "hilton-honors-aspire",
+  "hilton honors american express aspire": "hilton-honors-aspire",
+  "hilton honors american express aspire card": "hilton-honors-aspire",
+  // Chase Cards
+  "chase sapphire preferred": "chase-sapphire-preferred",
+  "sapphire preferred": "chase-sapphire-preferred",
+  "chase sapphire preferred card": "chase-sapphire-preferred",
+  "csp": "chase-sapphire-preferred",
+  "chase sapphire reserve": "chase-sapphire-reserve",
+  "sapphire reserve": "chase-sapphire-reserve",
+  "chase sapphire reserve card": "chase-sapphire-reserve",
+  "csr": "chase-sapphire-reserve",
+  "chase slate edge": "chase-slate-edge",
+  "slate edge": "chase-slate-edge",
+  // Capital One
+  "capital one venture x": "capital-one-venture-x",
+  "venture x": "capital-one-venture-x",
+  "venture x rewards": "capital-one-venture-x",
+  "capital one venture x rewards": "capital-one-venture-x",
+  "capital one venture": "capital-one-venture",
+  "venture card": "capital-one-venture",
+  "capital one savor": "capital-one-savor",
+  "savor card": "capital-one-savor",
+  "capital one savor one": "capital-one-savor",
+  // Citi Cards
+  "citi double cash": "citi-double-cash",
+  "double cash": "citi-double-cash",
+  "citi double cash card": "citi-double-cash",
+  "citi diamond preferred": "citi-diamond-preferred",
+  "diamond preferred": "citi-diamond-preferred",
+  "citi premier": "citi-premier",
+  "citi premier card": "citi-premier",
+  // Wells Fargo
+  "wells fargo autograph": "wells-fargo-autograph",
+  "autograph card": "wells-fargo-autograph",
+  // Marriott
+  "marriott bonvoy brilliant": "marriott-bonvoy-brilliant",
+  "bonvoy brilliant": "marriott-bonvoy-brilliant",
+  "marriott bonvoy boundless": "marriott-bonvoy-boundless",
+  "bonvoy boundless": "marriott-bonvoy-boundless",
+  // United
+  "united explorer": "united-explorer",
+  "united explorer card": "united-explorer",
+  "united club infinite": "united-club-infinite",
+  "united club infinite card": "united-club-infinite",
+  // Bank of America
+  "bofa travel rewards": "bofa-travel-rewards",
+  "bank of america travel rewards": "bofa-travel-rewards",
+  // Discover
+  "discover it balance transfer": "discover-it-balance-transfer",
+  "discover it": "discover-it-balance-transfer",
+  // Bank of America
+  "bankamericard credit card": "bankamericard",
+  "bank of america credit card": "bankamericard",
+  // Wells Fargo
+  "wells fargo reflect": "wells-fargo-reflect",
+  "reflect card": "wells-fargo-reflect",
+  // US Bank
+  "us bank visa platinum": "us-bank-visa-platinum",
+  "us bank platinum": "us-bank-visa-platinum",
+  // Amazon
+  "amazon business prime": "amazon-business-prime",
+  "amazon prime business": "amazon-business-prime"
+};
+function normalizeCardName(name) {
+  return name.toLowerCase().replace(/[®™©]/g, "").replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, " ").trim();
+}
+function getCardImage(cardName) {
+  const normalized = normalizeCardName(cardName);
+  const slugified = normalized.replace(/\s+/g, "-");
+  if (cardImages[slugified]) {
+    return cardImages[slugified];
+  }
+  if (nameVariations[normalized]) {
+    const key = nameVariations[normalized];
+    return cardImages[key] || null;
+  }
+  for (const [variation, key] of Object.entries(nameVariations)) {
+    if (normalized.includes(variation) || variation.includes(normalized)) {
+      return cardImages[key] || null;
+    }
+  }
+  return null;
+}
+
+export { getCardImage as g };

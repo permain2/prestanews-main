@@ -50,62 +50,37 @@ export default function ComparisonProviderCard({
     <motion.article
       ref={ref}
       className="comparison-card"
-      initial={{ opacity: 0, y: 60 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        duration: 0.7,
-        delay: index * 0.12,
+        duration: 0.4,
+        delay: index * 0.05,
         ease: smoothEase,
       }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      layout
     >
       {/* Card Container with hover effects */}
       <motion.div
         className="comparison-card-inner"
         animate={{
           boxShadow: isHovered
-            ? "0 32px 64px -12px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(59, 130, 246, 0.1)"
-            : "0 4px 24px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04)",
-          y: isHovered ? -8 : 0,
+            ? "0 8px 30px rgba(0, 0, 0, 0.08)"
+            : "0 1px 3px rgba(0, 0, 0, 0.04)",
         }}
-        transition={springTransition}
+        transition={{ duration: 0.2 }}
       >
-        {/* Rank Badge - Floating */}
-        <motion.div
-          className="rank-badge"
-          initial={{ scale: 0, rotate: -180 }}
-          animate={isInView ? { scale: 1, rotate: 0 } : {}}
-          transition={{
-            delay: index * 0.12 + 0.3,
-            ...springTransition,
-          }}
-          whileHover={{ scale: 1.1, rotate: 5 }}
-        >
-          <span className="rank-number">#{rank}</span>
-        </motion.div>
+        {/* Rank indicator - subtle */}
+        <div className="rank-indicator">
+          <span className="rank-number">{rank}</span>
+        </div>
 
         <div className="card-layout">
           {/* Left Panel - Logo & CTA */}
           <div className="card-left-panel">
-            {/* Logo Container with shimmer effect */}
-            <motion.div
-              className="logo-container"
-              animate={{
-                scale: isHovered ? 1.03 : 1,
-              }}
-              transition={springTransition}
-            >
-              <motion.div
-                className="logo-wrapper"
-                style={{ perspective: 1000 }}
-                whileHover={{
-                  rotateY: 5,
-                  rotateX: -3,
-                }}
-                transition={springTransition}
-              >
+            {/* Logo Container */}
+            <div className="logo-container">
+              <div className="logo-wrapper">
                 <img
                   src={provider.logo}
                   alt={`${provider.name} logo`}
@@ -113,15 +88,8 @@ export default function ComparisonProviderCard({
                   onLoad={() => setImageLoaded(true)}
                   style={{ opacity: imageLoaded ? 1 : 0 }}
                 />
-                
-                {/* Premium shine effect on hover */}
-                <motion.div
-                  className="shine-overlay"
-                  animate={isHovered ? { x: ["100%", "-100%"] } : {}}
-                  transition={{ duration: 0.8, ease: "easeInOut" }}
-                />
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             {/* CTA Button */}
             <motion.a
@@ -148,13 +116,9 @@ export default function ComparisonProviderCard({
               </motion.svg>
             </motion.a>
 
-            <motion.p
-              className="cta-subtext"
-              animate={{ opacity: isHovered ? 1 : 0.6 }}
-              transition={{ duration: 0.2 }}
-            >
-              On {provider.name}'s Website
-            </motion.p>
+            <p className="cta-subtext">
+              {provider.name}'s site
+            </p>
           </div>
 
           {/* Right Panel - Details */}
@@ -162,54 +126,34 @@ export default function ComparisonProviderCard({
             {/* Header */}
             <div className="card-header">
               <div className="header-left">
-                <motion.span
-                  className="best-for-badge"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: index * 0.12 + 0.2 }}
-                >
-                  Best for: {provider.bestFor}
-                </motion.span>
+                <span className="best-for-badge">
+                  Best for {provider.bestFor}
+                </span>
                 <h3 className="provider-name">{provider.name}</h3>
               </div>
 
               {/* Rating */}
-              <motion.div
-                className="rating-container"
-                whileHover={{ scale: 1.05 }}
-                transition={springTransition}
-              >
+              <div className="rating-container">
                 <div className="stars-row">
                   {[...Array(5)].map((_, i) => (
-                    <motion.svg
+                    <svg
                       key={i}
                       className={`star ${i < fullStars ? "filled" : i === fullStars && hasHalfStar ? "half" : ""}`}
                       viewBox="0 0 20 20"
-                      initial={{ scale: 0, rotate: -180 }}
-                      animate={isInView ? { scale: 1, rotate: 0 } : {}}
-                      transition={{
-                        delay: index * 0.12 + 0.4 + i * 0.05,
-                        ...springTransition,
-                      }}
                     >
                       <path
                         d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
                         fill="currentColor"
                       />
-                    </motion.svg>
+                    </svg>
                   ))}
                 </div>
                 <span className="rating-number">{provider.rating}</span>
-              </motion.div>
+              </div>
             </div>
 
             {/* Stats Row */}
-            <motion.div
-              className="stats-row"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: index * 0.12 + 0.3 }}
-            >
+            <div className="stats-row">
               <div className="stat-item">
                 <span className="stat-label">Monthly</span>
                 <span className="stat-value">{provider.monthlyAvg}</span>
@@ -226,29 +170,20 @@ export default function ComparisonProviderCard({
                   <span className="stat-value badge-value">{provider.amBest}</span>
                 </div>
               )}
-            </motion.div>
+            </div>
 
             {/* Description */}
-            <motion.p
-              className="provider-description"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: index * 0.12 + 0.35 }}
-            >
-              {provider.description}
-            </motion.p>
+            <p className="provider-description">{provider.description}</p>
 
             {/* Expand/Collapse Verdict Section */}
-            <motion.button
+            <button
               className="verdict-toggle"
               onClick={() => setIsExpanded(!isExpanded)}
-              whileHover={{ backgroundColor: "rgba(59, 130, 246, 0.08)" }}
-              transition={{ duration: 0.2 }}
             >
-              <span>Our Verdict</span>
+              <span>{isExpanded ? "Hide details" : "Show details"}</span>
               <motion.svg
-                width="20"
-                height="20"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -256,11 +191,11 @@ export default function ComparisonProviderCard({
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 animate={{ rotate: isExpanded ? 180 : 0 }}
-                transition={springTransition}
+                transition={{ duration: 0.2 }}
               >
                 <path d="M6 9l6 6 6-6" />
               </motion.svg>
-            </motion.button>
+            </button>
 
             {/* Verdict Content */}
             <AnimatePresence initial={false}>
@@ -280,28 +215,14 @@ export default function ComparisonProviderCard({
                       {/* Pros */}
                       <div className="verdict-column pros">
                         <div className="verdict-header">
-                          <motion.div
-                            className="verdict-icon-container pros-icon"
-                            animate={isExpanded ? { scale: [0, 1.2, 1] } : {}}
-                            transition={{ delay: 0.1 }}
-                          >
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                              <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </motion.div>
                           <span>Pros</span>
                         </div>
                         <ul className="verdict-list">
                           {provider.pros.map((pro, i) => (
-                            <motion.li
-                              key={i}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.1 + i * 0.05 }}
-                            >
+                            <li key={i}>
                               <span className="list-bullet pros-bullet" />
                               {pro}
-                            </motion.li>
+                            </li>
                           ))}
                         </ul>
                       </div>
@@ -309,28 +230,14 @@ export default function ComparisonProviderCard({
                       {/* Cons */}
                       <div className="verdict-column cons">
                         <div className="verdict-header">
-                          <motion.div
-                            className="verdict-icon-container cons-icon"
-                            animate={isExpanded ? { scale: [0, 1.2, 1] } : {}}
-                            transition={{ delay: 0.15 }}
-                          >
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                              <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </motion.div>
                           <span>Cons</span>
                         </div>
                         <ul className="verdict-list">
                           {provider.cons.map((con, i) => (
-                            <motion.li
-                              key={i}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.15 + i * 0.05 }}
-                            >
+                            <li key={i}>
                               <span className="list-bullet cons-bullet" />
                               {con}
-                            </motion.li>
+                            </li>
                           ))}
                         </ul>
                       </div>
@@ -345,44 +252,43 @@ export default function ComparisonProviderCard({
 
       <style>{`
         .comparison-card {
-          margin-bottom: 1.5rem;
+          margin-bottom: 1rem;
         }
 
         .comparison-card-inner {
           position: relative;
           background: #ffffff;
-          border-radius: 20px;
-          overflow: visible;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid #e5e7eb;
         }
 
-        /* Rank Badge */
-        .rank-badge {
+        /* Rank indicator */
+        .rank-indicator {
           position: absolute;
-          top: -12px;
-          left: 24px;
+          top: 20px;
+          left: 20px;
           z-index: 10;
-          background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
-          color: white;
-          padding: 8px 16px;
-          border-radius: 100px;
-          font-family: 'Lexend', sans-serif;
-          font-weight: 700;
-          font-size: 0.875rem;
-          box-shadow: 0 4px 16px rgba(13, 44, 75, 0.3);
+          width: 28px;
+          height: 28px;
+          background: #0f172a;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .rank-number {
-          background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          font-family: 'Lexend', sans-serif;
+          font-weight: 700;
+          font-size: 0.75rem;
+          color: #ffffff;
         }
 
         /* Card Layout */
         .card-layout {
           display: grid;
-          grid-template-columns: 280px 1fr;
+          grid-template-columns: 220px 1fr;
         }
 
         @media (max-width: 768px) {
@@ -393,39 +299,38 @@ export default function ComparisonProviderCard({
 
         /* Left Panel */
         .card-left-panel {
-          padding: 2rem;
+          padding: 1.5rem;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-          border-right: 1px solid rgba(0, 0, 0, 0.06);
+          background: #fafafa;
+          border-right: 1px solid #f1f5f9;
         }
 
         @media (max-width: 768px) {
           .card-left-panel {
             border-right: none;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            padding: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 1.25rem;
           }
         }
 
         /* Logo Container */
         .logo-container {
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.25rem;
         }
 
         .logo-wrapper {
           position: relative;
-          width: 200px;
-          height: 100px;
+          width: 160px;
+          height: 80px;
           background: white;
-          border-radius: 16px;
+          border-radius: 8px;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 1rem;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          padding: 0.75rem;
           overflow: hidden;
         }
 
@@ -436,59 +341,46 @@ export default function ComparisonProviderCard({
           transition: opacity 0.3s ease;
         }
 
-        .shine-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            105deg,
-            transparent 40%,
-            rgba(255, 255, 255, 0.6) 45%,
-            transparent 50%
-          );
-          pointer-events: none;
-        }
 
         /* CTA Button */
         .cta-button {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
+          gap: 6px;
           width: 100%;
-          max-width: 200px;
-          padding: 14px 24px;
-          background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+          max-width: 180px;
+          padding: 12px 20px;
+          background: #0f172a;
           color: white;
-          font-family: 'Lexend', sans-serif;
           font-weight: 600;
-          font-size: 0.95rem;
+          font-size: 0.875rem;
           text-decoration: none;
-          border-radius: 12px;
+          border-radius: 8px;
           border: none;
           cursor: pointer;
-          box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
-          transition: box-shadow 0.3s ease;
+          transition: background 0.2s ease;
         }
 
         .cta-button:hover {
-          box-shadow: 0 8px 24px rgba(59, 130, 246, 0.45);
+          background: #1e293b;
         }
 
         .cta-subtext {
-          margin-top: 0.75rem;
-          font-size: 0.75rem;
-          color: #64748b;
+          margin-top: 0.5rem;
+          font-size: 0.7rem;
+          color: #94a3b8;
           text-align: center;
         }
 
         /* Right Panel */
         .card-right-panel {
-          padding: 2rem;
+          padding: 1.5rem;
         }
 
         @media (max-width: 768px) {
           .card-right-panel {
-            padding: 1.5rem;
+            padding: 1.25rem;
           }
         }
 
@@ -497,8 +389,7 @@ export default function ComparisonProviderCard({
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 1rem;
-          margin-top: 0.5rem;
+          margin-bottom: 0.75rem;
         }
 
         .header-left {
@@ -508,21 +399,15 @@ export default function ComparisonProviderCard({
 
         .best-for-badge {
           display: inline-block;
-          padding: 6px 14px;
-          background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-          color: #1d4ed8;
-          font-family: 'Lexend', sans-serif;
-          font-weight: 600;
-          font-size: 0.75rem;
-          border-radius: 100px;
-          margin-bottom: 0.5rem;
-          letter-spacing: 0.025em;
+          font-size: 0.8rem;
+          color: #64748b;
+          margin-bottom: 0.25rem;
+          font-weight: 500;
         }
 
         .provider-name {
-          font-family: 'Sora', sans-serif;
-          font-size: 1.375rem;
-          font-weight: 700;
+          font-size: 1.125rem;
+          font-weight: 600;
           color: #0f172a;
           margin: 0;
           line-height: 1.3;
@@ -530,7 +415,7 @@ export default function ComparisonProviderCard({
 
         @media (max-width: 768px) {
           .provider-name {
-            font-size: 1.125rem;
+            font-size: 1rem;
           }
         }
 
@@ -538,36 +423,33 @@ export default function ComparisonProviderCard({
         .rating-container {
           display: flex;
           align-items: center;
-          gap: 8px;
-          padding: 8px 14px;
-          background: #fefce8;
-          border-radius: 12px;
+          gap: 6px;
           flex-shrink: 0;
         }
 
         .stars-row {
           display: flex;
-          gap: 2px;
+          gap: 1px;
         }
 
         .star {
-          width: 16px;
-          height: 16px;
+          width: 14px;
+          height: 14px;
           color: #e5e7eb;
         }
 
         .star.filled {
-          color: #f59e0b;
+          color: #0f172a;
         }
 
         .star.half {
-          color: #fcd34d;
+          color: #94a3b8;
         }
 
         .rating-number {
-          font-family: 'Lexend', sans-serif;
-          font-weight: 700;
-          font-size: 0.95rem;
+          font-family: inherit;
+          font-weight: 600;
+          font-size: 0.9rem;
           color: #0f172a;
         }
 
@@ -575,40 +457,32 @@ export default function ComparisonProviderCard({
         .stats-row {
           display: flex;
           flex-wrap: wrap;
-          gap: 1rem;
+          gap: 1.5rem;
           margin-bottom: 1rem;
-          padding: 1rem;
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-          border-radius: 12px;
         }
 
         .stat-item {
           display: flex;
           flex-direction: column;
-          gap: 2px;
+          gap: 1px;
         }
 
         .stat-label {
           font-size: 0.7rem;
-          color: #64748b;
+          color: #94a3b8;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
-          font-weight: 500;
+          letter-spacing: 0.03em;
         }
 
         .stat-value {
-          font-family: 'Lexend', sans-serif;
-          font-weight: 700;
+          font-weight: 600;
           font-size: 0.95rem;
           color: #0f172a;
         }
 
         .stat-badge .badge-value {
           color: #059669;
-          background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-          padding: 2px 10px;
-          border-radius: 6px;
-          font-size: 0.85rem;
+          font-weight: 600;
         }
 
         /* Description */
@@ -623,22 +497,19 @@ export default function ComparisonProviderCard({
         .verdict-toggle {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          width: 100%;
-          padding: 1rem;
+          gap: 4px;
+          padding: 0;
           background: transparent;
-          border: 1px solid #e2e8f0;
-          border-radius: 12px;
+          border: none;
           cursor: pointer;
-          font-family: 'Lexend', sans-serif;
-          font-weight: 600;
-          font-size: 0.9rem;
-          color: #0f172a;
-          transition: all 0.2s ease;
+          font-weight: 500;
+          font-size: 0.85rem;
+          color: #64748b;
+          transition: color 0.2s ease;
         }
 
         .verdict-toggle:hover {
-          border-color: #3b82f6;
+          color: #0f172a;
         }
 
         /* Verdict Content */
@@ -664,61 +535,29 @@ export default function ComparisonProviderCard({
         }
 
         .verdict-column {
-          padding: 1rem;
-          border-radius: 12px;
+          padding: 0;
         }
 
         .verdict-column.pros {
-          background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+          /* clean */
         }
 
         .verdict-column.cons {
-          background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+          /* clean */
         }
 
         .verdict-header {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 6px;
           margin-bottom: 0.75rem;
-          font-family: 'Lexend', sans-serif;
-          font-weight: 700;
-          font-size: 0.85rem;
+          font-weight: 600;
+          font-size: 0.8rem;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.03em;
+          color: #64748b;
         }
 
-        .verdict-icon-container {
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .verdict-icon-container svg {
-          width: 14px;
-          height: 14px;
-        }
-
-        .pros-icon {
-          background: #22c55e;
-          color: white;
-        }
-
-        .pros .verdict-header {
-          color: #166534;
-        }
-
-        .cons-icon {
-          background: #ef4444;
-          color: white;
-        }
-
-        .cons .verdict-header {
-          color: #991b1b;
-        }
 
         .verdict-list {
           list-style: none;
@@ -737,19 +576,19 @@ export default function ComparisonProviderCard({
         }
 
         .list-bullet {
-          width: 6px;
-          height: 6px;
+          width: 4px;
+          height: 4px;
           border-radius: 50%;
           flex-shrink: 0;
-          margin-top: 7px;
+          margin-top: 8px;
         }
 
         .pros-bullet {
-          background: #22c55e;
+          background: #0f172a;
         }
 
         .cons-bullet {
-          background: #ef4444;
+          background: #94a3b8;
         }
       `}</style>
     </motion.article>

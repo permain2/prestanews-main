@@ -62,3 +62,5 @@ async function optimizeLogos() {
 }
 
 optimizeLogos().catch(console.error);
+
+

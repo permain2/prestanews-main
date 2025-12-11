@@ -1,0 +1,38 @@
+---
+// Disable server-side rendering for this route - Sanity Studio is client-only
+export const prerender = false
+
+import Studio from '../../components/admin/Studio'
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="referrer" content="same-origin" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Screened Admin | Content Management</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Custom fonts for branding -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style is:global>
+    html, body, #studio-root {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="studio-root">
+    <Studio client:only="react" />
+  </div>
+</body>
+</html>

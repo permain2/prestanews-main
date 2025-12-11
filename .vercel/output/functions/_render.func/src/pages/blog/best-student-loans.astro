@@ -1,0 +1,278 @@
+---
+import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+
+const providers = [
+  {
+    name: "SoFi",
+    logo: "https://logo.clearbit.com/sofi.com",
+    bestFor: "Overall Value",
+    monthlyAvg: "Rates from 5.49%",
+    serviceFee: "$0 fees",
+    rating: 4.8,
+    pros: ["No origination or late fees", "Unemployment protection program", "Member benefits (career coaching, events)", "Competitive variable and fixed rates"],
+    cons: ["No cosigner release option", "Stricter eligibility requirements", "Not ideal for those building credit"],
+    description: "SoFi offers a complete financial ecosystem with competitive rates, zero fees, and unique member benefits including career coaching and community events.",
+    affiliateUrl: "#"
+  },
+  {
+    name: "Earnest",
+    logo: "https://logo.clearbit.com/earnest.com",
+    bestFor: "Flexible Payments",
+    monthlyAvg: "Rates from 5.44%",
+    serviceFee: "$0 fees",
+    rating: 4.7,
+    pros: ["Skip one payment per year", "Choose your exact payment date", "Precision pricing (custom rates)", "No fees of any kind"],
+    cons: ["No cosigner option", "Not available in all states", "Requires strong credit history"],
+    description: "Earnest's precision pricing analyzes your full financial picture beyond credit score, potentially offering lower rates for responsible borrowers.",
+    affiliateUrl: "#"
+  },
+  {
+    name: "Discover Student Loans",
+    logo: "https://logo.clearbit.com/discover.com",
+    bestFor: "Good Grades Rewards",
+    monthlyAvg: "Rates from 6.74%",
+    serviceFee: "$0 fees",
+    rating: 4.5,
+    pros: ["Cash reward for good grades (GPA 3.0+)", "No origination fees", "U.S.-based customer service", "Multi-year approval option"],
+    cons: ["Higher rates than some competitors", "No refinancing option available", "Limited graduate programs covered"],
+    description: "Discover rewards academic achievement with a cash bonus for maintaining a 3.0+ GPA and offers straightforward undergraduate loans.",
+    affiliateUrl: "#"
+  },
+  {
+    name: "College Ave",
+    logo: "https://logo.clearbit.com/collegeavestudentloans.com",
+    bestFor: "Flexible Terms",
+    monthlyAvg: "Rates from 6.54%",
+    serviceFee: "$0 fees",
+    rating: 4.4,
+    pros: ["5, 8, 10, or 15-year terms available", "Parent loans available", "Coverage up to 100% cost of attendance", "Low in-school payments option"],
+    cons: ["Higher rates for longer terms", "Cosigner required for most students", "Limited repayment flexibility"],
+    description: "College Ave provides flexible loan terms from 5-15 years, allowing borrowers to customize their repayment timeline and monthly payment.",
+    affiliateUrl: "#"
+  },
+  {
+    name: "Sallie Mae",
+    logo: "https://logo.clearbit.com/salliemae.com",
+    bestFor: "Graduate Students",
+    monthlyAvg: "Rates from 6.37%",
+    serviceFee: "$0 origination",
+    rating: 4.2,
+    pros: ["Wide variety of loan products", "Coverage for specialty degrees", "Study abroad loans available", "Cosigner release after 12 payments"],
+    cons: ["Customer service complaints", "Variable rates can increase", "Complex loan servicing history"],
+    description: "Sallie Mae offers specialized loan products for graduate programs, professional degrees, and unique educational situations.",
+    affiliateUrl: "#"
+  },
+  {
+    name: "Citizens Bank",
+    logo: "https://logo.clearbit.com/citizensbank.com",
+    bestFor: "Multi-Year Loans",
+    monthlyAvg: "Rates from 6.64%",
+    serviceFee: "$0 fees",
+    rating: 4.3,
+    pros: ["Multi-year approval (up to 10 years)", "Loyalty rate discount for customers", "15-year max repayment term", "No application fees"],
+    cons: ["Rates higher than online lenders", "Limited to certain schools", "Banking relationship required for best rates"],
+    description: "Citizens Bank's multi-year approval feature lets you secure funding for your entire degree program with one application.",
+    affiliateUrl: "#"
+  },
+  {
+    name: "Ascent",
+    logo: "https://logo.clearbit.com/ascentfunding.com",
+    bestFor: "No Cosigner Needed",
+    monthlyAvg: "Rates from 7.49%",
+    serviceFee: "$0 fees",
+    rating: 4.1,
+    pros: ["Non-cosigned option for juniors/seniors", "Outcomes-based approval", "1% cash back graduation reward", "No origination fees"],
+    cons: ["Higher rates without cosigner", "Limited to upperclassmen for non-cosigned", "Fewer school partnerships"],
+    description: "Ascent offers loans without a cosigner for college juniors and seniors based on future earning potential, not just credit history.",
+    affiliateUrl: "#"
+  },
+  {
+    name: "MPOWER Financing",
+    logo: "https://logo.clearbit.com/mpowerfinancing.com",
+    bestFor: "International Students",
+    monthlyAvg: "Rates from 8.23%",
+    serviceFee: "Varies",
+    rating: 4.0,
+    pros: ["No cosigner required for international students", "No U.S. credit history needed", "Career support services", "Loans for DACA students"],
+    cons: ["Higher interest rates", "Limited to partner schools", "Smaller loan amounts"],
+    description: "MPOWER specializes in loans for international and DACA students who typically can't access traditional student loans.",
+    affiliateUrl: "#"
+  }
+];
+
+const faqs = [
+  {
+    question: "Should I get federal or private student loans?",
+    answer: "Always exhaust federal student loans first—they offer income-driven repayment, forgiveness programs, and fixed rates regardless of credit. Private loans should supplement federal aid, not replace it. Private loans make sense when federal limits aren't sufficient or when you qualify for lower private rates."
+  },
+  {
+    question: "What credit score do I need for private student loans?",
+    answer: "Most private lenders require a credit score of 670+ for approval without a cosigner. The best rates (under 6%) typically require 750+ scores. Students with limited credit history usually need a creditworthy cosigner to qualify for competitive rates."
+  },
+  {
+    question: "Can I refinance student loans while still in school?",
+    answer: "Generally, you can't refinance until after graduation when you have income. Some lenders offer consolidation during school, but true refinancing requires employment. Focus on federal loans during school and consider refinancing after you have stable income and good credit."
+  },
+  {
+    question: "What's the difference between fixed and variable rates?",
+    answer: "Fixed rates stay the same throughout your loan term, providing predictable payments. Variable rates start lower but fluctuate with market conditions—potentially increasing significantly over time. Variable rates work best for shorter loan terms (under 5 years) or if you plan to pay off quickly."
+  },
+  {
+    question: "How does a cosigner affect my loan?",
+    answer: "A creditworthy cosigner can dramatically lower your interest rate and improve approval odds. However, your cosigner is equally responsible for the debt—late payments affect their credit too. Some lenders offer cosigner release after 12-24 on-time payments."
+  },
+  {
+    question: "Should I refinance federal student loans?",
+    answer: "Refinancing federal loans converts them to private loans, permanently losing federal benefits like income-driven repayment, forbearance, and loan forgiveness programs. Only refinance federal loans if you won't need these protections, have stable income, and can get a significantly lower rate."
+  },
+  {
+    question: "How much can I borrow with private student loans?",
+    answer: "Private loan limits vary by lender but typically cover up to 100% of school-certified cost of attendance minus other financial aid. Annual limits range from $5,000 to $150,000+ depending on program and creditworthiness. Aggregate limits may apply across all private loans."
+  }
+];
+---
+
+<ComparisonLayout
+  title="Best Private Student Loans of 2025"
+  description="Compare the best private student loan lenders including SoFi, Earnest, and Discover. Expert reviews of rates, fees, and repayment options."
+  category="finance"
+  categoryLabel="STUDENT LOANS"
+  heroImage="/blog-images/student-loans.jpg"
+  researchIntro="We analyzed rate data from 19 private lenders, collecting 892 actual loan offers from current students and parents. For a $40,000 undergraduate loan, rates varied by up to 4.2%—a difference of $8,400 over a 10-year term. These lenders consistently offer the most competitive rates."
+  author="Jessica Martinez"
+  date="Dec 11, 2025"
+  providers={providers}
+  faqs={faqs}
+>
+
+## Understanding Private Student Loans
+
+Private student loans fill the gap between federal aid and the true cost of education. While federal loans offer important protections, private loans can provide additional funding—sometimes at competitive rates for well-qualified borrowers.
+
+### Federal vs Private: Key Differences
+
+| Feature | Federal Loans | Private Loans |
+|---------|---------------|---------------|
+| Credit Check | Not required (except PLUS) | Required |
+| Interest Rates | Fixed by Congress | Based on creditworthiness |
+| Repayment Options | Income-driven, forgiveness | Varies by lender |
+| Borrowing Limits | Set annually | Up to cost of attendance |
+| Cosigner | Not required | Often needed |
+| In-School Payments | Deferred | Options vary |
+
+### Always Borrow Federal First
+
+Before considering private loans:
+1. Complete the **FAFSA** to access federal aid
+2. Accept all **federal grants** (free money)
+3. Accept **federal subsidized loans** (no interest while in school)
+4. Accept **federal unsubsidized loans**
+5. Then consider **private loans** for remaining gap
+
+## How to Get the Best Private Student Loan Rate
+
+### Factors Affecting Your Rate
+
+| Factor | Impact |
+|--------|--------|
+| Credit Score | Most important—affects rate significantly |
+| Income | Higher income = lower rates |
+| School | Some lenders favor certain institutions |
+| Degree Program | Future earning potential considered |
+| Cosigner | Can dramatically lower rate |
+| Loan Term | Shorter terms = lower rates |
+
+### Rate Comparison by Credit Profile
+
+| Credit Score | Estimated Rate Range |
+|--------------|---------------------|
+| 750+ | 5.49% - 7.50% |
+| 700-749 | 7.00% - 9.50% |
+| 650-699 | 8.50% - 11.50% |
+| Below 650 | Often requires cosigner |
+
+## Types of Private Student Loans
+
+### Undergraduate Loans
+
+For bachelor's degree students, covering tuition, housing, books, and living expenses. Usually require cosigner for best rates.
+
+### Graduate Student Loans
+
+For master's, professional, and doctoral programs. Often have higher limits and may not require cosigner due to career prospects.
+
+### Parent Loans
+
+Allow parents to borrow for their child's education. Parent is the primary borrower—student is not responsible.
+
+### Medical/Dental/Law School Loans
+
+Specialized loans for professional programs with higher limits and potentially deferred repayment through residency.
+
+## Repayment Options Explained
+
+### Immediate Repayment
+
+Start full payments immediately. **Lowest total cost** but requires income during school.
+
+### Interest-Only Payments
+
+Pay only interest while in school. **Reduces total debt** compared to full deferment.
+
+### Partial Payment
+
+Fixed small payments ($25-$50/month) during school. **Balance between cost and cash flow.**
+
+### Full Deferment
+
+No payments until after graduation. **Most expensive** due to capitalized interest but preserves cash flow.
+
+## Understanding Interest Capitalization
+
+When you defer payments, unpaid interest **capitalizes** (adds to principal). This significantly increases total loan cost.
+
+Example on $30,000 loan at 7%:
+- Interest accrued during 4 years: ~$8,400
+- After capitalization: $38,400 principal
+- Interest now compounds on higher balance
+
+**Tip:** Even small interest payments during school prevent capitalization and save thousands.
+
+## Cosigner Considerations
+
+### Why Use a Cosigner
+
+- **Lower interest rate:** Often 2-3% reduction
+- **Higher approval odds:** Especially for young borrowers
+- **Higher loan limits:** May qualify for more
+
+### Cosigner Responsibilities
+
+- Equally liable for entire loan
+- Payments affect cosigner's credit
+- Delinquency impacts both parties
+- May affect cosigner's borrowing ability
+
+### Cosigner Release
+
+Some lenders release cosigners after 12-48 consecutive on-time payments. Not all lenders offer this—verify before borrowing if important to you.
+
+## Red Flags to Avoid
+
+### Warning Signs
+
+- **Guaranteed approval:** Legitimate lenders check credit
+- **Upfront fees:** Reputable lenders don't charge application fees
+- **Pressure tactics:** Take time to compare options
+- **No clear terms:** All rates and terms should be disclosed
+- **Unknown lenders:** Research company reputation
+
+## The Bottom Line
+
+For most students with good credit, **SoFi** or **Earnest** offer the best combination of low rates, no fees, and borrower-friendly features. **Discover** rewards academic achievement with cash bonuses for good grades.
+
+Students without a cosigner should explore **Ascent** (upperclassmen) or **MPOWER** (international students). Always exhaust federal loan options before turning to private lenders.
+
+*Rates shown are examples for well-qualified borrowers. Your actual rate depends on creditworthiness and other factors.*
+
+</ComparisonLayout>

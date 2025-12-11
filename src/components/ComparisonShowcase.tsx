@@ -33,124 +33,64 @@ const springTransition = {
 
 const smoothEase = [0.25, 0.46, 0.45, 0.94];
 
-// Quick stats summary component
-function QuickStats({ providers }: { providers: Provider[] }) {
+// Minimal inline summary - Apple style
+function QuickSummary({ providers }: { providers: Provider[] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  const stats = [
-    {
-      label: "Providers Reviewed",
-      value: providers.length.toString(),
-      icon: "📊",
-    },
-    {
-      label: "Top Rated",
-      value: providers[0]?.name.split(" ")[0] || "—",
-      icon: "🏆",
-    },
-    {
-      label: "Best Value",
-      value:
-        providers.find((p) => p.bestFor.toLowerCase().includes("budget"))?.name.split(" ")[0] ||
-        providers[2]?.name.split(" ")[0] ||
-        "—",
-      icon: "💰",
-    },
-    {
-      label: "Avg Rating",
-      value: (providers.reduce((sum, p) => sum + p.rating, 0) / providers.length).toFixed(1),
-      icon: "⭐",
-    },
-  ];
+  
+  const avgRating = (providers.reduce((sum, p) => sum + p.rating, 0) / providers.length).toFixed(1);
+  const topProvider = providers[0]?.name || "";
 
   return (
     <motion.div
       ref={ref}
-      className="quick-stats"
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: smoothEase }}
+      className="quick-summary"
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.5, ease: smoothEase }}
     >
-      {stats.map((stat, index) => (
-        <motion.div
-          key={stat.label}
-          className="stat-card"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{
-            delay: index * 0.1,
-            ...springTransition,
-          }}
-          whileHover={{
-            y: -4,
-            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.08)",
-          }}
-        >
-          <span className="stat-icon">{stat.icon}</span>
-          <span className="stat-value">{stat.value}</span>
-          <span className="stat-label">{stat.label}</span>
-        </motion.div>
-      ))}
+      <p className="summary-text">
+        <span className="summary-count">{providers.length} providers</span> compared · 
+        <span className="summary-highlight"> {topProvider}</span> ranked #1 · 
+        <span className="summary-rating">{avgRating}</span> avg rating
+      </p>
 
       <style>{`
-        .quick-stats {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1rem;
-          margin-bottom: 2.5rem;
+        .quick-summary {
+          text-align: center;
+          padding: 1rem 0 1.5rem;
+          border-bottom: 1px solid #e5e7eb;
+          margin-bottom: 1.5rem;
         }
 
-        @media (max-width: 768px) {
-          .quick-stats {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
-        @media (max-width: 480px) {
-          .quick-stats {
-            grid-template-columns: 1fr;
-          }
-        }
-
-        .stat-card {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 1.25rem;
-          background: #ffffff;
-          border-radius: 16px;
-          border: 1px solid #e2e8f0;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-          transition: all 0.3s ease;
-        }
-
-        .stat-icon {
-          font-size: 1.5rem;
-          margin-bottom: 0.5rem;
-        }
-
-        .stat-value {
-          font-family: 'Lexend', sans-serif;
-          font-weight: 700;
-          font-size: 1.125rem;
-          color: #0f172a;
-          margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-          font-size: 0.75rem;
+        .summary-text {
+          font-size: 0.9rem;
           color: #64748b;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
+          margin: 0;
+          letter-spacing: -0.01em;
+        }
+
+        .summary-count {
+          font-weight: 600;
+          color: #0f172a;
+        }
+
+        .summary-highlight {
+          font-weight: 600;
+          color: #0f172a;
+        }
+
+        .summary-rating {
+          font-weight: 600;
+          color: #0f172a;
         }
       `}</style>
     </motion.div>
   );
 }
 
-// Sort/Filter pills component
-function FilterPills({
+// Minimal sort options - Apple style
+function SortOptions({
   activeFilter,
   onFilterChange,
 }: {
@@ -158,84 +98,71 @@ function FilterPills({
   onFilterChange: (filter: string) => void;
 }) {
   const filters = [
-    { id: "all", label: "All Providers" },
-    { id: "rating", label: "Highest Rated" },
-    { id: "price", label: "Lowest Price" },
-    { id: "service", label: "Best Service" },
+    { id: "all", label: "Our Pick" },
+    { id: "rating", label: "Rating" },
+    { id: "price", label: "Price" },
   ];
 
   return (
-    <div className="filter-pills-container">
-      <div className="filter-pills">
+    <div className="sort-container">
+      <span className="sort-label">Sort by</span>
+      <div className="sort-options">
         {filters.map((filter) => (
           <motion.button
             key={filter.id}
-            className={`filter-pill ${activeFilter === filter.id ? "active" : ""}`}
+            className={`sort-option ${activeFilter === filter.id ? "active" : ""}`}
             onClick={() => onFilterChange(filter.id)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={springTransition}
+            whileTap={{ scale: 0.97 }}
           >
             {filter.label}
-            {activeFilter === filter.id && (
-              <motion.div
-                className="pill-indicator"
-                layoutId="pill-indicator"
-                transition={springTransition}
-              />
-            )}
           </motion.button>
         ))}
       </div>
 
       <style>{`
-        .filter-pills-container {
-          position: sticky;
-          top: 64px;
-          z-index: 40;
-          background: linear-gradient(180deg, #f8fafc 0%, #f8fafc 80%, transparent 100%);
-          padding: 1rem 0 1.5rem;
-          margin-bottom: 1rem;
-        }
-
-        .filter-pills {
+        .sort-container {
           display: flex;
-          gap: 0.5rem;
-          flex-wrap: wrap;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 2rem;
         }
 
-        .filter-pill {
-          position: relative;
-          padding: 10px 20px;
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          border-radius: 100px;
-          font-family: 'Lexend', sans-serif;
+        .sort-label {
+          font-size: 0.8rem;
+          color: #94a3b8;
           font-weight: 500;
-          font-size: 0.875rem;
-          color: #475569;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .sort-options {
+          display: flex;
+          background: #f1f5f9;
+          border-radius: 8px;
+          padding: 3px;
+        }
+
+        .sort-option {
+          padding: 8px 16px;
+          background: transparent;
+          border: none;
+          border-radius: 6px;
+          font-family: inherit;
+          font-weight: 500;
+          font-size: 0.85rem;
+          color: #64748b;
           cursor: pointer;
           transition: all 0.2s ease;
-          overflow: hidden;
         }
 
-        .filter-pill:hover {
-          border-color: #3b82f6;
-          color: #3b82f6;
+        .sort-option:hover {
+          color: #0f172a;
         }
 
-        .filter-pill.active {
-          background: #0f172a;
-          border-color: #0f172a;
-          color: #ffffff;
-        }
-
-        .pill-indicator {
-          position: absolute;
-          inset: 0;
-          background: #0f172a;
-          border-radius: 100px;
-          z-index: -1;
+        .sort-option.active {
+          background: #ffffff;
+          color: #0f172a;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
       `}</style>
     </div>
@@ -280,25 +207,14 @@ export default function ComparisonShowcase({
   return (
     <section className="comparison-showcase" ref={containerRef}>
       <div className="showcase-container">
-        {/* Section Header */}
-        {title && (
-          <motion.div
-            className="showcase-header"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, ease: smoothEase }}
-          >
-            <span className="header-label">Compare & Choose</span>
-            <h2 className="header-title">{title}</h2>
-          </motion.div>
-        )}
+        {/* No header - cleaner look */}
 
-        {/* Quick Stats */}
-        <QuickStats providers={providers} />
+        {/* Quick Summary */}
+        <QuickSummary providers={providers} />
 
-        {/* Filter Pills */}
+        {/* Sort Options */}
         {showFilters && (
-          <FilterPills activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+          <SortOptions activeFilter={activeFilter} onFilterChange={setActiveFilter} />
         )}
 
         {/* Provider Cards */}
@@ -334,41 +250,14 @@ export default function ComparisonShowcase({
 
       <style>{`
         .comparison-showcase {
-          padding: 2rem 0 4rem;
+          padding: 0 0 4rem;
           background: #f8fafc;
         }
 
         .showcase-container {
-          max-width: 900px;
+          max-width: 880px;
           margin: 0 auto;
           padding: 0 1.5rem;
-        }
-
-        .showcase-header {
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-
-        .header-label {
-          display: inline-block;
-          padding: 6px 16px;
-          background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-          color: #1d4ed8;
-          font-family: 'Lexend', sans-serif;
-          font-weight: 600;
-          font-size: 0.75rem;
-          border-radius: 100px;
-          margin-bottom: 0.75rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-
-        .header-title {
-          font-family: 'Sora', sans-serif;
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: #0f172a;
-          margin: 0;
         }
 
         .providers-list {
@@ -379,10 +268,6 @@ export default function ComparisonShowcase({
         @media (max-width: 640px) {
           .showcase-container {
             padding: 0 1rem;
-          }
-
-          .header-title {
-            font-size: 1.5rem;
           }
         }
       `}</style>

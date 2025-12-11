@@ -226,3 +226,5 @@ export default function CreditCardReview({ card, index }: CreditCardReviewProps)
     </motion.div>
   );
 }
+
+
