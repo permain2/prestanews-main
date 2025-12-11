@@ -41,7 +41,7 @@ const section = tags?.[0] ? tags[0].replace('-', ' ').replace(/\b\w/g, l => l.to
 
 // Breadcrumb items
 const breadcrumbItems = [
-    { name: 'News', url: '/news' },
+    { name: 'Blog', url: '/blog' },
     { name: title }
 ];
 
@@ -101,7 +101,7 @@ const newsletterType = isInsurance ? 'insurance' : isCreditCard ? 'credit-card' 
         <header class="article-header">
             <div class="header-container">
                 {tags && tags[0] && (
-                    <a href={`/news/${tags[0]}`} class="category-link" rel="tag">
+                    <a href={`/blog`} class="category-link" rel="tag">
                         {tags[0].replace('-', ' ')}
                     </a>
                 )}

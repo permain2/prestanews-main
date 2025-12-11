@@ -306,8 +306,6 @@ The `ArticleSchema.astro` component automatically includes:
 ```
 www.screened.com/
 ├── /                          # Homepage
-├── /news/                     # News & articles index
-├── /blog/[slug]/              # Individual blog posts
 │
 ├── /credit-cards/             # Credit cards hub
 │   ├── /best-travel-cards/
@@ -322,8 +320,11 @@ www.screened.com/
 │   ├── /life/
 │   └── /renters/
 │
-├── /guides/                   # Guides hub
+├── /guides/                   # Guides hub (evergreen educational content)
 │   └── /[guide-slug]/         # Individual guides
+│
+├── /blog/                     # Blog hub (news & updates)
+│   └── /[blog-slug]/          # Individual blog posts
 │
 ├── /reviews/                  # Product reviews
 │   └── /[review-slug]/
