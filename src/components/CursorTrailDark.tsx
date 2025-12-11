@@ -326,6 +326,11 @@ export default function CursorTrailDark({
                 .trail-dark-title .split-word {
                     will-change: transform, opacity;
                     display: inline-block;
+                    margin-right: 0.3em;
+                }
+
+                .trail-dark-title .split-word:last-child {
+                    margin-right: 0;
                 }
 
                 .trail-dark-subtitle {
