@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -5,16 +6,14 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Gemini API key - pass via environment variable for security
+// Load API key from .env file
 const API_KEY = process.env.GEMINI_API_KEY;
 
 if (!API_KEY) {
-  console.error('❌ Error: GEMINI_API_KEY environment variable is not set.');
+  console.error('❌ Error: GEMINI_API_KEY not set in .env file');
   console.error('');
-  console.error('To generate a new API key:');
-  console.error('  1. Go to: https://aistudio.google.com/apikey');
-  console.error('  2. Click "Create API key"');
-  console.error('  3. Run: GEMINI_API_KEY=your_key_here node scripts/generate-team-headshots.js');
+  console.error('Add to your .env file:');
+  console.error('  GEMINI_API_KEY=your_key_here');
   console.error('');
   process.exit(1);
 }

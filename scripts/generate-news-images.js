@@ -9,10 +9,16 @@
  * - Visual Elements: Subtle gradients, soft lighting, geometric patterns
  */
 
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 
-const API_KEY = "AIzaSyAsjaKCEKz5VHKq1s3eiF5E0fILJzDjj_M";
+// Load API key from environment
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  console.error('❌ Error: GEMINI_API_KEY not set in .env file');
+  process.exit(1);
+}
 
 const newsImages = [
   {

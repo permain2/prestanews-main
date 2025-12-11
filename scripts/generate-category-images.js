@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -5,8 +6,12 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Gemini API key
-const API_KEY = "AIzaSyCajW_O9-rBlnKr4c24OT60rCi0XZhSNKo";
+// Load API key from environment
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  console.error('❌ Error: GEMINI_API_KEY not set in .env file');
+  process.exit(1);
+}
 
 // Category definitions with image prompts
 const categories = [

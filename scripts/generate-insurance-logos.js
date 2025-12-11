@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -5,7 +6,12 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const API_KEY = "AIzaSyAsjaKCEKz5VHKq1s3eiF5E0fILJzDjj_M";
+// Load API key from environment
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  console.error('❌ Error: GEMINI_API_KEY not set in .env file');
+  process.exit(1);
+}
 
 // 20 Insurance company logos to generate
 const insuranceLogos = [

@@ -8,10 +8,16 @@
  * - Aesthetic: Premium financial publication, sophisticated yet approachable
  */
 
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 
-const API_KEY = "AIzaSyAsjaKCEKz5VHKq1s3eiF5E0fILJzDjj_M";
+// Load API key from .env file
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  console.error('❌ Error: GEMINI_API_KEY not set in .env file');
+  process.exit(1);
+}
 
 // ============ INSURANCE IMAGES (4) ============
 const insuranceImages = [

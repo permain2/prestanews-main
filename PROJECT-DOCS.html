@@ -161,6 +161,43 @@
         <p><strong>Domain:</strong> prestanews.com (redirects to screened branding)<br>
         <strong>Last Updated:</strong> December 11, 2025</p>
 
+        <!-- QUICK START -->
+        <section class="section" style="background: linear-gradient(135deg, #e8f4ff 0%, #f0f7ff 100%); border-left: 5px solid #3B82F6;">
+            <h2 style="margin-top: 0; background: none; border: none; padding: 0;">🚀 Quick Start for New Developers</h2>
+            <p>New to the project? Here's how to get up and running in 5 minutes:</p>
+            
+            <pre><code># 1. Clone the repository
+git clone https://github.com/permain2/affiliatewebsite.git
+cd affiliatewebsite
+
+# 2. Install dependencies
+npm install
+
+# 3. Create your .env file (see Section 3.8 for all keys)
+cp .env.example .env   # If exists, or create manually
+
+# 4. Add your API keys to .env
+GEMINI_API_KEY=your_key_here
+IMAGIFY_API_KEY=your_key_here
+# ... etc
+
+# 5. Start development server
+npm run dev
+
+# 6. Open browser
+# http://localhost:4321</code></pre>
+            
+            <h4>Key Files to Know</h4>
+            <table>
+                <tr><td><code>src/pages/</code></td><td>All website pages (routes)</td></tr>
+                <tr><td><code>src/content/</code></td><td>Blog & review articles (Markdown)</td></tr>
+                <tr><td><code>src/components/</code></td><td>Reusable UI components</td></tr>
+                <tr><td><code>public/</code></td><td>Images, logos, static assets</td></tr>
+                <tr><td><code>scripts/</code></td><td>Automation scripts (see Section 3.7)</td></tr>
+                <tr><td><code>.env</code></td><td>API keys (create this, see Section 3.8)</td></tr>
+            </table>
+        </section>
+
         <nav class="nav-toc">
             <h2>Table of Contents</h2>
             <ul>
@@ -169,6 +206,8 @@
                 <li><a href="#image-tools">3. Image Scraping & Background Removal</a></li>
                 <li><a href="#image-optimization">3.5 Image Optimization SOP (Imagify)</a></li>
                 <li><a href="#alt-text">3.6 Alt Text Generation (Gemini AI)</a></li>
+                <li><a href="#scripts-reference">3.7 Scripts Reference (All Automation)</a></li>
+                <li><a href="#env-setup">3.8 Environment Setup (.env)</a></li>
                 <li><a href="#site-structure">4. Site Structure</a></li>
                 <li><a href="#tech-stack">5. Tech Stack & Hosting</a></li>
                 <li><a href="#email-system">6. Email Opt-ins System</a></li>
@@ -536,6 +575,307 @@ import { getAltText } from '../utils/altTextMap';
             </ul>
         </section>
 
+        <!-- SECTION 3.7: SCRIPTS REFERENCE -->
+        <section id="scripts-reference" class="section">
+            <h2>3.7 Scripts Reference (All Automation)</h2>
+            <p>All scripts are located in <code>/scripts/</code> and use environment variables from <code>.env</code> file.</p>
+
+            <h3>🖼️ Image Generation Scripts</h3>
+            <p>These scripts use <strong>Google Gemini / Imagen AI</strong> to generate images for the site.</p>
+            
+            <table>
+                <tr><th>Script</th><th>Purpose</th><th>API Key</th><th>Command</th></tr>
+                <tr>
+                    <td><code>generate-all-images.js</code></td>
+                    <td>Generates insurance category images and guides images</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-all-images.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-all-page-images.cjs</code></td>
+                    <td>Generates all insurance + guides images (CommonJS version)</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-all-page-images.cjs</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-category-images.js</code></td>
+                    <td>Generates credit card category headers (travel, cash-back, etc.)</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-category-images.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-insurance-hero.js</code></td>
+                    <td>Generates hero images for insurance pages</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-insurance-hero.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-insurance-logos.js</code></td>
+                    <td>Generates 20 insurance company logo placeholders</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-insurance-logos.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-remaining-logos.js</code></td>
+                    <td>Generates missing insurance logos</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-remaining-logos.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-news-images.js</code></td>
+                    <td>Generates news article featured images</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-news-images.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-news-images.cjs</code></td>
+                    <td>Same as above (CommonJS version)</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-news-images.cjs</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-team-headshots.js</code></td>
+                    <td>Generates AI team member photos</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/generate-team-headshots.js</code></td>
+                </tr>
+            </table>
+
+            <h3>✍️ Content Generation Scripts</h3>
+            <p>These scripts use <strong>Claude AI (Anthropic)</strong> to generate article content.</p>
+            
+            <table>
+                <tr><th>Script</th><th>Purpose</th><th>API Key</th><th>Command</th></tr>
+                <tr>
+                    <td><code>generate-article.js</code></td>
+                    <td>Generate a single blog or review article</td>
+                    <td>ANTHROPIC_API_KEY</td>
+                    <td><code>node scripts/generate-article.js blog "Your Topic"</code><br>
+                        <code>node scripts/generate-article.js review "Card Name"</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-articles.js</code></td>
+                    <td>Batch generate multiple articles from predefined topics</td>
+                    <td>ANTHROPIC_API_KEY</td>
+                    <td><code>node scripts/generate-articles.js</code></td>
+                </tr>
+            </table>
+
+            <h3>🔧 Image Optimization Scripts</h3>
+            <p>These scripts compress and optimize images to reduce file size.</p>
+            
+            <table>
+                <tr><th>Script</th><th>Purpose</th><th>API Key</th><th>Command</th></tr>
+                <tr>
+                    <td><code>optimize-images-imagify.js</code></td>
+                    <td>Cloud-based image optimization via Imagify API</td>
+                    <td>IMAGIFY_API_KEY</td>
+                    <td><code>npm run optimize:images</code> (normal)<br>
+                        <code>npm run optimize:images:aggressive</code> (photos)<br>
+                        <code>npm run optimize:images:dry</code> (preview)</td>
+                </tr>
+                <tr>
+                    <td><code>optimize-large-images-sharp.js</code></td>
+                    <td>Local optimization using Sharp (fallback for large files)</td>
+                    <td>None (local)</td>
+                    <td><code>node scripts/optimize-large-images-sharp.js</code></td>
+                </tr>
+            </table>
+
+            <h3>🏷️ SEO & Alt Text Scripts</h3>
+            <p>These scripts improve SEO by generating image descriptions.</p>
+            
+            <table>
+                <tr><th>Script</th><th>Purpose</th><th>API Key</th><th>Command</th></tr>
+                <tr>
+                    <td><code>generate-alt-text-gemini.js</code></td>
+                    <td>Analyze images and generate SEO-friendly alt text</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>npm run generate:alt-text</code><br>
+                        <code>npm run generate:alt-text:dry</code> (preview)</td>
+                </tr>
+            </table>
+
+            <h3>🤖 Utility Scripts</h3>
+            <p>Helper scripts for various tasks.</p>
+            
+            <table>
+                <tr><th>Script</th><th>Purpose</th><th>API Key</th><th>Command</th></tr>
+                <tr>
+                    <td><code>match-team-photos.js</code></td>
+                    <td>Uses AI to analyze uploaded photos and match them to team members</td>
+                    <td>GEMINI_API_KEY</td>
+                    <td><code>node scripts/match-team-photos.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>download-card-images-test.js</code></td>
+                    <td>Download credit card images via Apify + remove backgrounds via Freepik</td>
+                    <td>APIFY_API_TOKEN<br>FREEPIK_API_KEY</td>
+                    <td><code>node scripts/download-card-images-test.js</code></td>
+                </tr>
+            </table>
+
+            <h3>Script File Formats</h3>
+            <table>
+                <tr><th>Extension</th><th>Type</th><th>How dotenv is loaded</th></tr>
+                <tr>
+                    <td><code>.js</code></td>
+                    <td>ES Modules (ESM)</td>
+                    <td><code>import 'dotenv/config';</code></td>
+                </tr>
+                <tr>
+                    <td><code>.cjs</code></td>
+                    <td>CommonJS</td>
+                    <td><code>require('dotenv').config();</code></td>
+                </tr>
+            </table>
+
+            <h3>How to Add a New Script</h3>
+            <pre><code>// 1. Create file: scripts/my-new-script.js
+
+// 2. Add dotenv at the TOP of the file
+import 'dotenv/config';
+
+// 3. Load your API key from environment
+const API_KEY = process.env.MY_API_KEY;
+if (!API_KEY) {
+  console.error('❌ Error: MY_API_KEY not set in .env file');
+  process.exit(1);
+}
+
+// 4. Your script logic here...
+
+// 5. Add the key to .env file
+// MY_API_KEY=your_key_here</code></pre>
+        </section>
+
+        <!-- SECTION 3.8: ENVIRONMENT SETUP -->
+        <section id="env-setup" class="section">
+            <h2>3.8 Environment Setup (.env)</h2>
+            <p>All API keys are stored in a <code>.env</code> file in the project root. This file is <strong>not committed to Git</strong> for security.</p>
+
+            <h3>Creating the .env File</h3>
+            <pre><code># Create .env in project root
+touch .env
+
+# Add your API keys (one per line)
+GEMINI_API_KEY=your_google_gemini_key
+IMAGIFY_API_KEY=your_imagify_pro_key
+ANTHROPIC_API_KEY=your_claude_api_key
+APIFY_API_TOKEN=your_apify_token
+FREEPIK_API_KEY=your_freepik_key
+VERCEL_API_KEY=your_vercel_key</code></pre>
+
+            <h3>API Keys Reference</h3>
+            <table>
+                <tr><th>Variable</th><th>Service</th><th>Used For</th><th>Get Key From</th></tr>
+                <tr>
+                    <td><code>GEMINI_API_KEY</code></td>
+                    <td>Google Gemini AI</td>
+                    <td>Image generation, alt text analysis</td>
+                    <td><a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a></td>
+                </tr>
+                <tr>
+                    <td><code>IMAGIFY_API_KEY</code></td>
+                    <td>Imagify Pro</td>
+                    <td>Image compression/optimization</td>
+                    <td><a href="https://app.imagify.io" target="_blank">app.imagify.io</a></td>
+                </tr>
+                <tr>
+                    <td><code>ANTHROPIC_API_KEY</code></td>
+                    <td>Claude (Anthropic)</td>
+                    <td>Article content generation</td>
+                    <td><a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></td>
+                </tr>
+                <tr>
+                    <td><code>APIFY_API_TOKEN</code></td>
+                    <td>Apify</td>
+                    <td>Web scraping (card images)</td>
+                    <td><a href="https://console.apify.com" target="_blank">console.apify.com</a></td>
+                </tr>
+                <tr>
+                    <td><code>FREEPIK_API_KEY</code></td>
+                    <td>Freepik</td>
+                    <td>Background removal</td>
+                    <td><a href="https://www.freepik.com/api" target="_blank">freepik.com/api</a></td>
+                </tr>
+                <tr>
+                    <td><code>VERCEL_API_KEY</code></td>
+                    <td>Vercel</td>
+                    <td>Deployment automation</td>
+                    <td><a href="https://vercel.com/account/tokens" target="_blank">vercel.com/account/tokens</a></td>
+                </tr>
+            </table>
+
+            <h3>Vercel Environment Variables</h3>
+            <p>For production, these are set in Vercel Dashboard → Project → Settings → Environment Variables:</p>
+            <table>
+                <tr><th>Variable</th><th>Purpose</th></tr>
+                <tr><td><code>UPSTASH_REDIS_REST_URL</code></td><td>Newsletter subscriber database</td></tr>
+                <tr><td><code>UPSTASH_REDIS_REST_TOKEN</code></td><td>Auth token for Upstash</td></tr>
+                <tr><td><code>ADMIN_API_KEY</code></td><td>Admin access to subscriber list</td></tr>
+            </table>
+
+            <h3>Sample .env File</h3>
+            <pre><code># ===========================================
+# PrestaNews / Screened - Environment Variables
+# ===========================================
+# DO NOT COMMIT THIS FILE TO GIT!
+# Copy this template and add your own keys.
+# ===========================================
+
+# Google Gemini AI (image generation, vision)
+GEMINI_API_KEY=AIzaSy...
+
+# Imagify Pro (image optimization)
+IMAGIFY_API_KEY=4aad0f5d...
+
+# Claude AI (article generation)
+ANTHROPIC_API_KEY=sk-ant-api...
+
+# Apify (web scraping)
+APIFY_API_TOKEN=apify_api_...
+
+# Freepik (background removal)
+FREEPIK_API_KEY=FPSXd...
+
+# Vercel (deployment)
+VERCEL_API_KEY=...</code></pre>
+
+            <h3>Security Best Practices</h3>
+            <ul>
+                <li><strong>.env is gitignored</strong> - Never commit API keys to Git</li>
+                <li><strong>Rotate keys regularly</strong> - Especially if accidentally exposed</li>
+                <li><strong>Use separate keys</strong> - Dev vs Production when possible</li>
+                <li><strong>Monitor usage</strong> - Check dashboards for unexpected API calls</li>
+            </ul>
+
+            <h3>Troubleshooting</h3>
+            <table>
+                <tr><th>Error</th><th>Cause</th><th>Solution</th></tr>
+                <tr>
+                    <td><code>API key not set in .env</code></td>
+                    <td>Missing key in .env file</td>
+                    <td>Add the key to your .env file</td>
+                </tr>
+                <tr>
+                    <td><code>API key expired</code></td>
+                    <td>Key needs renewal</td>
+                    <td>Generate new key from provider dashboard</td>
+                </tr>
+                <tr>
+                    <td><code>Model not found</code></td>
+                    <td>Wrong model name in script</td>
+                    <td>Check API docs for current model names</td>
+                </tr>
+                <tr>
+                    <td><code>Rate limit exceeded</code></td>
+                    <td>Too many API calls</td>
+                    <td>Add delays between calls, check quota</td>
+                </tr>
+            </table>
+        </section>
+
         <!-- SECTION 4: SITE STRUCTURE -->
         <section id="site-structure" class="section">
             <h2>4. Site Structure</h2>
@@ -627,6 +967,19 @@ npm run build
 
 # Preview production build
 npm run preview</code></pre>
+
+            <h3>All NPM Scripts</h3>
+            <table>
+                <tr><th>Command</th><th>Description</th></tr>
+                <tr><td><code>npm run dev</code></td><td>Start local development server (localhost:4321)</td></tr>
+                <tr><td><code>npm run build</code></td><td>Build production site to <code>dist/</code></td></tr>
+                <tr><td><code>npm run preview</code></td><td>Preview production build locally</td></tr>
+                <tr><td><code>npm run optimize:images</code></td><td>Optimize images with Imagify (normal)</td></tr>
+                <tr><td><code>npm run optimize:images:dry</code></td><td>Preview optimization without changes</td></tr>
+                <tr><td><code>npm run optimize:images:aggressive</code></td><td>Aggressive compression for photos</td></tr>
+                <tr><td><code>npm run generate:alt-text</code></td><td>Generate SEO alt text for all images</td></tr>
+                <tr><td><code>npm run generate:alt-text:dry</code></td><td>Preview alt text (sample 3 images)</td></tr>
+            </table>
 
             <h3>Deployment Process</h3>
             <ol>
@@ -769,6 +1122,9 @@ curl "https://prestanews.com/api/subscribers?key=YOUR_ADMIN_KEY&format=csv"</cod
                 <li class="completed"><input type="checkbox" checked disabled> Deploy to Vercel</li>
                 <li class="completed"><input type="checkbox" checked disabled> Configure custom domain (prestanews.com)</li>
                 <li class="completed"><input type="checkbox" checked disabled> Optimize all images with Imagify + Sharp (89MB → 5.4MB, 94% reduction)</li>
+                <li class="completed"><input type="checkbox" checked disabled> Generate SEO alt text for all 102 images (Gemini AI)</li>
+                <li class="completed"><input type="checkbox" checked disabled> Update all scripts to use .env file (no hardcoded API keys)</li>
+                <li class="completed"><input type="checkbox" checked disabled> Document all scripts in PROJECT-DOCS.html</li>
             </ul>
 
             <h3>Pending Tasks <span class="badge badge-pending">TODO</span></h3>
