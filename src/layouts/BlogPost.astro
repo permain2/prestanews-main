@@ -732,27 +732,57 @@ const newsletterType = isInsurance ? 'insurance' : isCreditCard ? 'credit-card' 
 </style>
 
 <script>
-    // Newsletter form interaction (works for all 3 types)
+    // Newsletter form submission
     const form = document.getElementById('newsletter-form');
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = form.querySelector('button');
-            const input = form.querySelector('input');
+            const input = form.querySelector('input') as HTMLInputElement;
             
-            if (btn && input) {
+            if (btn && input && input.value) {
                 const originalText = btn.innerHTML;
-                btn.innerHTML = '✓';
-                btn.style.background = '#10b981';
+                btn.innerHTML = '...';
+                btn.disabled = true;
                 input.disabled = true;
                 
-                // Reset after 3 seconds for demo
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = '';
-                    input.disabled = false;
-                    input.value = '';
-                }, 3000);
+                try {
+                    const response = await fetch('/api/subscribe', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            email: input.value,
+                            source: 'guide-sidebar'
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        btn.innerHTML = '✓';
+                        btn.style.background = '#10b981';
+                        input.value = '';
+                        input.placeholder = 'Subscribed!';
+                    } else {
+                        btn.innerHTML = '✗';
+                        btn.style.background = '#ef4444';
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.style.background = '';
+                            btn.disabled = false;
+                            input.disabled = false;
+                        }, 2000);
+                    }
+                } catch (error) {
+                    btn.innerHTML = '✗';
+                    btn.style.background = '#ef4444';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                        input.disabled = false;
+                    }, 2000);
+                }
             }
         });
     }

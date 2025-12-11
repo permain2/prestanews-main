@@ -123,7 +123,7 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <!-- Right: Newsletter -->
-      <form class="footer-bottom-newsletter">
+      <form class="footer-bottom-newsletter" id="footer-newsletter">
         <input type="email" placeholder="your@email.com" class="bottom-newsletter-input" required />
         <button type="submit" class="bottom-newsletter-btn">Subscribe</button>
       </form>
@@ -435,3 +435,57 @@ const currentYear = new Date().getFullYear();
     }
   }
 </style>
+
+<script>
+  // Footer newsletter submission
+  const footerForm = document.getElementById('footer-newsletter');
+  if (footerForm) {
+    footerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = footerForm.querySelector('button');
+      const input = footerForm.querySelector('input') as HTMLInputElement;
+      
+      if (btn && input && input.value) {
+        const originalText = btn.textContent;
+        btn.textContent = '...';
+        btn.disabled = true;
+        input.disabled = true;
+        
+        try {
+          const response = await fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              email: input.value,
+              source: 'footer'
+            })
+          });
+          
+          if (response.ok) {
+            btn.textContent = '✓ Done';
+            btn.style.background = '#10b981';
+            input.value = '';
+          } else {
+            btn.textContent = 'Error';
+            btn.style.background = '#ef4444';
+            setTimeout(() => {
+              btn.textContent = originalText;
+              btn.style.background = '';
+              btn.disabled = false;
+              input.disabled = false;
+            }, 2000);
+          }
+        } catch (error) {
+          btn.textContent = 'Error';
+          btn.style.background = '#ef4444';
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+            btn.disabled = false;
+            input.disabled = false;
+          }, 2000);
+        }
+      }
+    });
+  }
+</script>
