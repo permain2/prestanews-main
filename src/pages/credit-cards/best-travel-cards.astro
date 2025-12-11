@@ -1,6 +1,10 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import { getCardImage } from '../../utils/cardImageMap';
+import PointsValueCalculator from '../../components/calculators/PointsValueCalculator.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
 // Premium travel credit cards - 15 cards
 const creditCards = [
@@ -278,6 +282,25 @@ const faqs = [
 ---
 
 <MainLayout title="15 Best Travel Credit Cards of December 2025 | Expert Reviews" description="Compare the best travel credit cards for 2025. Expert reviews of Chase Sapphire, Amex Platinum, Capital One Venture X & more. Find your perfect card for flights, hotels & rewards.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="15 Best Travel Credit Cards of December 2025"
+    description="Compare the best travel credit cards for 2025. Expert reviews of Chase Sapphire, Amex Platinum, Capital One Venture X & more."
+    url="/credit-cards/best-travel-cards"
+    image="/category-images/travel-rewards.jpeg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Sarah Chen"
+    section="Credit Cards"
+    tags={['travel credit cards', 'credit card rewards', 'travel rewards', 'Chase Sapphire', 'Amex Platinum']}
+    wordCount={4500}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Credit Cards', url: '/credit-cards' },
+    { name: 'Best Travel Cards' }
+  ]} />
   
   <!-- Hero Section with Scroll Animation -->
   <section class="hero-section relative overflow-hidden bg-gradient-to-br from-[#0D2C4B] via-[#1a4a7a] to-[#0D2C4B] py-20 md:py-28">
@@ -597,6 +620,11 @@ const faqs = [
             <h4>🎯 Key Insight</h4>
             <p>Most travel experts recommend starting with a <strong>flexible points card</strong> (like Chase Sapphire Preferred) before getting co-branded cards. Flexibility lets you shop for the best deals across airlines rather than being locked to one carrier.</p>
           </div>
+
+          <h3>Calculate Your Points Value</h3>
+          <p>Use our interactive calculator to find out exactly how much your credit card points are worth:</p>
+          
+          <PointsValueCalculator client:visible />
         </div>
 
         <!-- How to Choose -->

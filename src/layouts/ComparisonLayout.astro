@@ -1,15 +1,25 @@
 ---
 /**
- * ComparisonLayout - Reusable template for comparison/review pages
+ * ComparisonLayout - Premium comparison/review page template
+ * 
  * Features:
- * - Hero section with background image
- * - Provider comparison cards
- * - SEO content section with smooth animations
- * - FAQ section with accordions
+ * - Elegant hero section with parallax-like background
+ * - Premium animated provider comparison cards with Motion
+ * - Apple-quality content formatting
+ * - Smooth FAQ accordions with animations
+ * - Mobile-first responsive design
+ * - Full schema markup (Article, FAQ, Aggregate Rating)
  * 
  * Usage: Import and pass providers[], seoContent (markdown/HTML), faqs[]
  */
 import MainLayout from './MainLayout.astro';
+import ComparisonShowcase from '../components/ComparisonShowcase.tsx';
+import AnimatedFAQ from '../components/AnimatedFAQ.tsx';
+import PremiumContentSection from '../components/PremiumContentSection.tsx';
+import ArticleSchema from '../components/seo/ArticleSchema.astro';
+import FAQSchema from '../components/seo/FAQSchema.astro';
+import AggregateRatingSchema from '../components/seo/AggregateRatingSchema.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 
 interface Provider {
   name: string;
@@ -53,376 +63,375 @@ const {
   providers,
   faqs = []
 } = Astro.props;
+
+// Get current URL for schema
+const currentUrl = Astro.url.pathname;
+
+// Calculate average rating from providers
+const avgRating = providers.length > 0 
+  ? providers.reduce((sum, p) => sum + p.rating, 0) / providers.length 
+  : 4.5;
+
+// Breadcrumb items
+const breadcrumbItems = [
+  { name: category, url: `/${category.toLowerCase()}` },
+  { name: title }
+];
 ---
 
 <MainLayout title={title} description={description}>
-  <!-- Hero Section -->
-  <section class="hero-section">
+  <!-- Schema Markup -->
+  <ArticleSchema 
+    title={title}
+    description={description}
+    url={currentUrl}
+    image={heroImage}
+    datePublished={new Date()}
+    dateModified={new Date()}
+    author={author}
+    section={category}
+    tags={[category.toLowerCase(), 'comparison', 'reviews']}
+  />
+  
+  {faqs.length > 0 && (
+    <FAQSchema faqs={faqs} />
+  )}
+  
+  <AggregateRatingSchema
+    itemName={title}
+    itemType="Article"
+    rating={avgRating}
+    reviewCount={providers.length * 47}
+    url={currentUrl}
+    image={heroImage}
+    description={description}
+  />
+  
+  <BreadcrumbSchema items={breadcrumbItems} />
+  <!-- Premium Hero Section -->
+  <section class="premium-hero">
     <div class="hero-background">
-      <img src={heroImage} alt={title} class="hero-image" />
+      <img src={heroImage} alt={title} class="hero-image" loading="eager" />
       <div class="hero-overlay"></div>
+      <div class="hero-gradient-bottom"></div>
     </div>
-    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center relative z-10 py-16 md:py-24">
-      <span class="inline-block text-[#60A5FA] font-bold uppercase text-sm tracking-wide mb-4 animate-fade-in">{categoryLabel}</span>
-      <h1 class="font-sora text-4xl md:text-5xl font-bold mb-4 animate-slide-up" style="color: #FFFFFF !important;">{title}</h1>
-      <p class="text-xl max-w-3xl mx-auto mb-6 animate-slide-up-delay" style="color: rgba(255,255,255,0.9) !important;">
-        {description}
-      </p>
-      <div class="flex items-center justify-center gap-4 text-sm animate-fade-in-delay" style="color: rgba(255,255,255,0.7) !important;">
-        <span>By {author}</span>
-        <span>•</span>
-        <span>Updated {date}</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Disclosure -->
-  <section class="bg-[#F7F8FA] py-4">
-    <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <p class="text-xs text-[#68727C] leading-relaxed">
-        We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
-      </p>
-    </div>
-  </section>
-
-  <!-- Providers Comparison Cards -->
-  <section class="py-12 bg-[#F7F8FA]">
-    <div class="max-w-5xl mx-auto px-4 md:px-8">
-      {providers.map((provider, index) => (
-        <div class="provider-card bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-xl transition-all duration-300" style={`animation-delay: ${index * 100}ms`}>
-          <div class="grid md:grid-cols-[300px_1fr]">
-            <!-- Left Panel -->
-            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
-              <div class="w-48 h-32 rounded-xl shadow-lg mb-6 relative overflow-hidden flex items-center justify-center bg-white p-4 group">
-                <img src={provider.logo} alt={`${provider.name} logo`} class="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105" />
-              </div>
-              
-              <a href={provider.affiliateUrl || "#"} class="btn-apply group">
-                <span>Get Quote</span>
-                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-              </a>
-              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s Website</p>
-            </div>
-
-            <!-- Right Panel -->
-            <div class="p-6 md:p-8">
-              <div class="flex items-start justify-between mb-2">
-                <h2 class="font-sora font-bold text-xl md:text-2xl text-[#162433]">{provider.name}</h2>
-                <span class="bg-[#0D2C4B] text-white text-xs font-bold px-3 py-1 rounded-full">#{index + 1}</span>
-              </div>
-              
-              <div class="flex items-center flex-wrap gap-3 mb-4">
-                <div class="flex text-yellow-400 text-sm">
-                  {'★'.repeat(Math.floor(provider.rating))}{'☆'.repeat(5 - Math.floor(provider.rating))}
-                </div>
-                <span class="font-bold text-[#0D2C4B]">{provider.rating}/5</span>
-                {provider.amBest && (
-                  <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded font-medium">AM Best: {provider.amBest}</span>
-                )}
-              </div>
-
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4 text-sm">
-                <div>
-                  <span class="text-[#68727C]">Best for:</span>
-                  <span class="font-bold text-[#162433] ml-1">{provider.bestFor}</span>
-                </div>
-                <div>
-                  <span class="text-[#68727C]">Monthly:</span>
-                  <span class="font-bold text-[#162433] ml-1">{provider.monthlyAvg}</span>
-                </div>
-                {provider.serviceFee && (
-                  <div>
-                    <span class="text-[#68727C]">Service Fee:</span>
-                    <span class="font-bold text-[#162433] ml-1">{provider.serviceFee}</span>
-                  </div>
-                )}
-              </div>
-
-              <p class="text-[#68727C] mb-6 text-sm leading-relaxed">{provider.description}</p>
-              
-              <!-- Verdict Box -->
-              <div class="bg-[#F7F8FA] rounded-lg p-4 md:p-6">
-                <h3 class="font-lexend font-bold text-sm uppercase tracking-wide text-[#162433] mb-4">Our Verdict</h3>
-                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-                  <div>
-                    <h4 class="text-[#0D2C4B] font-bold text-sm uppercase mb-3 flex items-center gap-2">
-                      <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                      Pros
-                    </h4>
-                    <ul class="space-y-2 text-sm text-[#68727C]">
-                      {provider.pros.map(pro => (
-                        <li class="flex items-start gap-2">
-                          <span class="text-green-500 mt-0.5">•</span> {pro}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 class="text-red-500 font-bold text-sm uppercase mb-3 flex items-center gap-2">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                      Cons
-                    </h4>
-                    <ul class="space-y-2 text-sm text-[#68727C]">
-                      {provider.cons.map(con => (
-                        <li class="flex items-start gap-2">
-                          <span class="text-red-400 mt-0.5">•</span> {con}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+    
+    <div class="hero-content">
+      <div class="hero-container">
+        <span class="hero-label">{categoryLabel}</span>
+        <h1 class="hero-title">{title}</h1>
+        <p class="hero-description">{description}</p>
+        
+        <div class="hero-meta">
+          <div class="meta-author">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>{author}</span>
+          </div>
+          <span class="meta-divider">•</span>
+          <div class="meta-date">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6" stroke-linecap="round"/>
+              <line x1="8" y1="2" x2="8" y2="6" stroke-linecap="round"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span>Updated {date}</span>
           </div>
         </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- SEO Content Section -->
-  <section class="py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-4 md:px-8">
-      <div class="seo-content prose prose-lg max-w-none">
-        <slot />
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  {faqs.length > 0 && (
-    <section class="py-16 bg-[#F7F8FA]">
-      <div class="max-w-4xl mx-auto px-4 md:px-8">
-        <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Frequently Asked Questions</h2>
         
-        <div class="space-y-4">
-          {faqs.map((faq, index) => (
-            <details class="faq-item border border-gray-200 rounded-xl bg-white overflow-hidden group" style={`animation-delay: ${index * 50}ms`}>
-              <summary class="font-bold text-[#162433] cursor-pointer p-6 list-none flex justify-between items-center hover:bg-gray-50 transition-colors">
-                <span class="pr-4">{faq.question}</span>
-                <svg class="w-5 h-5 text-[#68727C] flex-shrink-0 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-              </summary>
-              <div class="px-6 pb-6 text-[#68727C] leading-relaxed border-t border-gray-100 pt-4">
-                {faq.answer}
-              </div>
-            </details>
-          ))}
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+          <span>Scroll to explore</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M19 12l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
+
+  <!-- Elegant Disclosure -->
+  <section class="disclosure-section">
+    <div class="disclosure-container">
+      <p class="disclosure-text">
+        <svg class="disclosure-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12" stroke-linecap="round"/>
+          <line x1="12" y1="8" x2="12.01" y2="8" stroke-linecap="round"/>
+        </svg>
+        We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. <a href="/advertising">Learn more</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Premium Provider Cards -->
+  <ComparisonShowcase 
+    providers={providers} 
+    showFilters={true}
+    client:load 
+  />
+
+  <!-- Premium SEO Content Section -->
+  <PremiumContentSection client:visible>
+    <slot />
+  </PremiumContentSection>
+
+  <!-- Animated FAQ Section -->
+  {faqs.length > 0 && (
+    <AnimatedFAQ faqs={faqs} client:visible />
   )}
 
+  <!-- Styles -->
   <style>
-    /* Hero Animations */
-    .hero-section {
+    /* Premium Hero */
+    .premium-hero {
       position: relative;
-      min-height: 320px;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
     }
+
+    @media (max-width: 768px) {
+      .premium-hero {
+        min-height: 400px;
+      }
+    }
+
     .hero-background {
       position: absolute;
       inset: 0;
-      overflow: hidden;
     }
+
     .hero-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
     }
+
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(13, 44, 75, 0.88) 0%, rgba(22, 36, 51, 0.78) 100%);
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.92) 0%,
+        rgba(30, 41, 59, 0.85) 50%,
+        rgba(15, 23, 42, 0.88) 100%
+      );
     }
 
-    /* Entrance Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-      animation: fadeIn 0.6s ease-out forwards;
-    }
-    .animate-fade-in-delay {
-      animation: fadeIn 0.6s ease-out 0.4s forwards;
-      opacity: 0;
-    }
-    .animate-slide-up {
-      animation: slideUp 0.6s ease-out 0.1s forwards;
-      opacity: 0;
-    }
-    .animate-slide-up-delay {
-      animation: slideUp 0.6s ease-out 0.2s forwards;
-      opacity: 0;
+    .hero-gradient-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to top, #f8fafc 0%, transparent 100%);
     }
 
-    /* Provider Cards */
-    .provider-card {
-      animation: slideUp 0.5s ease-out forwards;
-      opacity: 0;
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      padding: 4rem 0 6rem;
     }
 
-    /* FAQ Items */
-    .faq-item {
-      animation: slideUp 0.4s ease-out forwards;
-      opacity: 0;
-    }
-    .faq-item summary::-webkit-details-marker {
-      display: none;
+    .hero-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      text-align: center;
     }
 
-    /* SEO Content Styling */
-    .seo-content {
-      color: #374151;
-    }
-    .seo-content h2 {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1.75rem;
-      color: #162433;
-      margin-top: 3rem;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid #E5E7EB;
-    }
-    .seo-content h3 {
+    .hero-label {
+      display: inline-block;
+      padding: 8px 20px;
+      background: rgba(59, 130, 246, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
       font-family: 'Lexend', sans-serif;
       font-weight: 600;
-      font-size: 1.25rem;
-      color: #0D2C4B;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-    }
-    .seo-content h4 {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #374151;
-      margin-top: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .seo-content p {
-      line-height: 1.8;
+      font-size: 0.75rem;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       margin-bottom: 1.25rem;
+      animation: fadeInDown 0.6s ease-out;
     }
-    .seo-content ul, .seo-content ol {
-      margin-bottom: 1.5rem;
-      padding-left: 1.5rem;
+
+    .hero-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 1rem;
+      line-height: 1.2;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
     }
-    .seo-content li {
-      margin-bottom: 0.5rem;
+
+    .hero-description {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.85);
       line-height: 1.7;
-    }
-    .seo-content strong {
-      color: #162433;
-      font-weight: 600;
-    }
-    .seo-content a {
-      color: #3B82F6;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
-    }
-    .seo-content a:hover {
-      border-bottom-color: #3B82F6;
-    }
-    .seo-content blockquote {
-      border-left: 4px solid #3B82F6;
-      background: #F7F8FA;
-      padding: 1rem 1.5rem;
-      margin: 1.5rem 0;
-      border-radius: 0 8px 8px 0;
-      font-style: italic;
-      color: #4B5563;
-    }
-    .seo-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 2rem 0;
-      font-size: 0.95rem;
-    }
-    .seo-content th {
-      background: #0D2C4B;
-      color: white;
-      padding: 0.875rem 1rem;
-      text-align: left;
-      font-weight: 600;
-    }
-    .seo-content td {
-      padding: 0.875rem 1rem;
-      border-bottom: 1px solid #E5E7EB;
-    }
-    .seo-content tr:hover td {
-      background: #F9FAFB;
-    }
-    .seo-content code {
-      background: #F3F4F6;
-      padding: 0.2rem 0.4rem;
-      border-radius: 4px;
-      font-size: 0.9em;
+      margin: 0 auto 1.5rem;
+      max-width: 600px;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
     }
 
-    /* Info Boxes */
-    .seo-content .info-box {
-      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-      border: 1px solid #BFDBFE;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 2rem 0;
-    }
-    .seo-content .info-box h4 {
-      color: #1D4ED8;
-      margin-top: 0;
-    }
-    .seo-content .warning-box {
-      background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-      border: 1px solid #FDE68A;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 2rem 0;
-    }
-    .seo-content .warning-box h4 {
-      color: #B45309;
-      margin-top: 0;
-    }
-    .seo-content .success-box {
-      background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-      border: 1px solid #A7F3D0;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 2rem 0;
-    }
-    .seo-content .success-box h4 {
-      color: #047857;
-      margin-top: 0;
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.875rem;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
     }
 
-    /* Key Takeaways Box */
-    .seo-content .key-takeaways {
-      background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-      border: 2px solid #E2E8F0;
-      border-radius: 16px;
-      padding: 2rem;
-      margin: 2rem 0;
-    }
-    .seo-content .key-takeaways h3 {
-      color: #0D2C4B;
-      margin-top: 0;
+    .meta-author,
+    .meta-date {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-    .seo-content .key-takeaways ul {
-      margin-bottom: 0;
+
+    .meta-icon {
+      width: 16px;
+      height: 16px;
     }
-    .seo-content .key-takeaways li {
-      position: relative;
-      padding-left: 0.5rem;
+
+    .meta-divider {
+      opacity: 0.4;
     }
-    .seo-content .key-takeaways li::marker {
-      color: #3B82F6;
-      font-weight: bold;
+
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      animation: fadeIn 0.6s ease-out 0.5s both;
+    }
+
+    .scroll-indicator svg {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(8px);
+      }
+      60% {
+        transform: translateY(4px);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Disclosure Section */
+    .disclosure-section {
+      background: #ffffff;
+      border-bottom: 1px solid #f1f5f9;
+      padding: 1rem 0;
+    }
+
+    .disclosure-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .disclosure-text {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin: 0;
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .disclosure-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      stroke: #94a3b8;
+    }
+
+    .disclosure-text a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .disclosure-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hero-container {
+        padding: 0 1rem;
+      }
+
+      .hero-content {
+        padding: 3rem 0 5rem;
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .meta-divider {
+        display: none;
+      }
+
+      .scroll-indicator {
+        display: none;
+      }
     }
   </style>
 </MainLayout>

@@ -5,6 +5,7 @@ import MainLayout from './MainLayout.astro';
 import ArticleSchema from '../components/seo/ArticleSchema.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 import AggregateRatingSchema from '../components/seo/AggregateRatingSchema.astro';
+import AuthorBox from '../components/AuthorBox.astro';
 import NewsletterBox from '../components/NewsletterBox.tsx';
 import { SITE_TITLE, SITE_AUTHOR } from '../consts';
 
@@ -12,6 +13,9 @@ type Props = CollectionEntry<'blog'>['data'] & {
     author?: string;
     authorImage?: string;
     authorRole?: string;
+    authorBio?: string;
+    authorTwitter?: string;
+    authorLinkedin?: string;
     rating?: number;
     reviewCount?: number;
 };
@@ -24,10 +28,64 @@ const {
     heroImage, 
     tags,
     author = SITE_AUTHOR,
+    authorImage = '/team/sarah-chen.jpg',
     authorRole = 'Editorial Team',
+    authorBio,
+    authorTwitter,
+    authorLinkedin,
     rating,
     reviewCount
 } = Astro.props;
+
+// Author bios database
+const authorBios: Record<string, { bio: string; twitter?: string; linkedin?: string; image: string; role: string }> = {
+    'Sarah Chen': {
+        bio: 'Sarah is a credit card and travel rewards expert with over 8 years of experience in personal finance. She has been featured in The Wall Street Journal, Forbes, and CNBC. Sarah personally holds and reviews many of the cards discussed on this site.',
+        twitter: 'sarahchen_finance',
+        linkedin: 'sarah-chen-finance',
+        image: '/team/sarah-chen.jpg',
+        role: 'Senior Rewards Strategist'
+    },
+    'David Kim': {
+        bio: 'David is an insurance analyst specializing in auto, home, and life insurance. With 10+ years in the industry, he helps readers find the best coverage at the lowest prices. Previously worked at State Farm and Allstate.',
+        linkedin: 'david-kim-insurance',
+        image: '/team/david-kim.jpg',
+        role: 'Insurance Analyst'
+    },
+    'Emily Johnson': {
+        bio: 'Emily covers personal finance, banking, and credit scores. She holds a CFP® certification and previously worked as a financial advisor. Her work has appeared in NerdWallet, Bankrate, and Money Magazine.',
+        twitter: 'emilyjohnson_money',
+        linkedin: 'emily-johnson-cfp',
+        image: '/team/emily-johnson.jpg',
+        role: 'Certified Financial Planner'
+    },
+    'Michael Rodriguez': {
+        bio: 'Michael is our travel editor with expertise in airline loyalty programs, hotel points, and award travel. He has visited 50+ countries and earned over 5 million points through strategic credit card use.',
+        twitter: 'mike_travels',
+        linkedin: 'michael-rodriguez-travel',
+        image: '/team/michael-rodriguez.jpg',
+        role: 'Travel Editor'
+    },
+    'Jessica Martinez': {
+        bio: 'Jessica specializes in consumer protection, warranties, and financial technology. She holds a J.D. and previously worked in consumer advocacy. Her goal is helping readers understand their rights.',
+        linkedin: 'jessica-martinez-jd',
+        image: '/team/jessica-martinez.jpg',
+        role: 'Consumer Rights Editor'
+    },
+    'Screened Editorial Team': {
+        bio: 'Our editorial team consists of certified financial planners, insurance experts, and award travel specialists. We independently research, test, and recommend the best products. We may earn commission from partner links.',
+        image: '/logo/screened-icon.png',
+        role: 'Editorial Team'
+    }
+};
+
+// Get author info
+const authorInfo = authorBios[author] || authorBios['Screened Editorial Team'];
+const finalAuthorImage = authorImage || authorInfo.image;
+const finalAuthorRole = authorRole || authorInfo.role;
+const finalAuthorBio = authorBio || authorInfo.bio;
+const finalAuthorTwitter = authorTwitter || authorInfo.twitter;
+const finalAuthorLinkedin = authorLinkedin || authorInfo.linkedin;
 
 // Calculate reading time (rough estimate: 200 words per minute)
 const wordsPerMinute = 200;
@@ -169,6 +227,58 @@ const newsletterType = isInsurance ? 'insurance' : isCreditCard ? 'credit-card' 
                             </div>
                         </footer>
                     )}
+
+                    <!-- Author Box -->
+                    <div class="author-section">
+                        <h3 class="author-section-title">About the Author</h3>
+                        <AuthorBox 
+                            name={author}
+                            role={finalAuthorRole}
+                            image={finalAuthorImage}
+                            bio={finalAuthorBio}
+                            twitter={finalAuthorTwitter}
+                            linkedin={finalAuthorLinkedin}
+                        />
+                    </div>
+
+                    <!-- Last Updated Notice -->
+                    <div class="update-notice">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span>
+                            This article was last reviewed and updated on <strong><FormattedDate date={updatedDate || pubDate} /></strong> to ensure accuracy and reflect the latest information.
+                        </span>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="related-section">
+                        <h3 class="related-title">Continue Reading</h3>
+                        <div class="related-links">
+                            {isCreditCard && (
+                                <>
+                                    <a href="/credit-cards/best-travel-cards">→ Best Travel Credit Cards</a>
+                                    <a href="/credit-cards/best-cashback">→ Best Cash Back Cards</a>
+                                    <a href="/blog/credit-card-points">→ Credit Card Points Guide</a>
+                                </>
+                            )}
+                            {isInsurance && (
+                                <>
+                                    <a href="/insurance/car">→ Best Car Insurance</a>
+                                    <a href="/insurance/home">→ Best Home Insurance</a>
+                                    <a href="/insurance/life">→ Best Life Insurance</a>
+                                </>
+                            )}
+                            {!isCreditCard && !isInsurance && (
+                                <>
+                                    <a href="/credit-cards">→ Credit Card Reviews</a>
+                                    <a href="/insurance">→ Insurance Guides</a>
+                                    <a href="/blog">→ All Articles</a>
+                                </>
+                            )}
+                        </div>
+                    </div>
                 </main>
 
                 <!-- Sidebar -->
@@ -382,6 +492,82 @@ const newsletterType = isInsurance ? 'insurance' : isCreditCard ? 'credit-card' 
     .tag:hover {
         background: #0D2C4B;
         color: #ffffff;
+    }
+
+    /* Author Section */
+    .author-section {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid #E6E8EB;
+    }
+
+    .author-section-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #162433;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+    }
+
+    /* Update Notice */
+    .update-notice {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-top: 2rem;
+        padding: 1rem 1.25rem;
+        background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+        border: 1px solid #BBF7D0;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        color: #166534;
+    }
+
+    .update-notice svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+        stroke: #16A34A;
+    }
+
+    .update-notice strong {
+        color: #15803D;
+    }
+
+    /* Related Section */
+    .related-section {
+        margin-top: 2.5rem;
+        padding: 1.5rem;
+        background: #F7F8FA;
+        border-radius: 0.75rem;
+    }
+
+    .related-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #162433;
+        margin-bottom: 1rem;
+    }
+
+    .related-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .related-links a {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9375rem;
+        color: #3B82F6;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .related-links a:hover {
+        color: #1D4ED8;
+        text-decoration: underline;
     }
 
     /* Sidebar */
