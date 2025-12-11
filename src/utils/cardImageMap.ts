@@ -10,7 +10,6 @@ const cardImages: Record<string, string> = {
   "amex-gold": "/credit-cards/amex-gold.png",
   "amex-green": "/credit-cards/amex-green.png",
   "amex-everyday": "/credit-cards/amex-everyday.png",
-  // amex-cash-magnet removed - image was corrupted YouTube thumbnail
   "blue-cash-preferred": "/credit-cards/blue-cash-preferred.png",
   "blue-cash-everyday": "/credit-cards/blue-cash-everyday.png",
   "amex-business-platinum": "/credit-cards/amex-business-platinum.png",
@@ -24,28 +23,42 @@ const cardImages: Record<string, string> = {
   // Chase Cards
   "chase-sapphire-preferred": "/credit-cards/chase-sapphire-preferred.png",
   "chase-slate-edge": "/credit-cards/chase-slate-edge.png",
+  "chase-sapphire-reserve": "/credit-cards/chase-sapphire-preferred.png", // Use Preferred image as fallback
   
   // Capital One Cards
   "capital-one-venture-x": "/credit-cards/capital-one-venture-x.png",
+  "capital-one-venture": "/credit-cards/capital-one-venture-x.png", // Use Venture X as fallback
+  "capital-one-savor": "/credit-cards/capital-one-venture-x.png", // Use Venture X as fallback
   
   // Citi Cards
   "citi-double-cash": "/credit-cards/citi-double-cash.png",
   "citi-diamond-preferred": "/credit-cards/citi-diamond-preferred.png",
+  "citi-premier": "/credit-cards/citi-diamond-preferred.png", // Use Diamond as fallback
   
   // Discover Cards
   "discover-it-balance-transfer": "/credit-cards/discover-it-balance-transfer.png",
   
   // Bank of America Cards
   "bankamericard": "/credit-cards/bankamericard.png",
+  "bofa-travel-rewards": "/credit-cards/bankamericard.png",
   
   // Wells Fargo Cards
   "wells-fargo-reflect": "/credit-cards/wells-fargo-reflect.png",
+  "wells-fargo-autograph": "/credit-cards/wells-fargo-reflect.png", // Use Reflect as fallback
   
   // US Bank Cards
   "us-bank-visa-platinum": "/credit-cards/us-bank-visa-platinum.png",
   
   // Amazon Cards
   "amazon-business-prime": "/credit-cards/amazon-business-prime.png",
+  
+  // Marriott Cards - use Amex for co-brands
+  "marriott-bonvoy-brilliant": "/credit-cards/amex-platinum.png",
+  "marriott-bonvoy-boundless": "/credit-cards/chase-sapphire-preferred.png",
+  
+  // United Cards - use Chase
+  "united-explorer": "/credit-cards/chase-sapphire-preferred.png",
+  "united-club-infinite": "/credit-cards/chase-sapphire-preferred.png",
 };
 
 // Name variations mapping to normalized keys
@@ -116,6 +129,10 @@ const nameVariations: Record<string, string> = {
   "sapphire preferred": "chase-sapphire-preferred",
   "chase sapphire preferred card": "chase-sapphire-preferred",
   "csp": "chase-sapphire-preferred",
+  "chase sapphire reserve": "chase-sapphire-reserve",
+  "sapphire reserve": "chase-sapphire-reserve",
+  "chase sapphire reserve card": "chase-sapphire-reserve",
+  "csr": "chase-sapphire-reserve",
   "chase slate edge": "chase-slate-edge",
   "slate edge": "chase-slate-edge",
   
@@ -123,6 +140,12 @@ const nameVariations: Record<string, string> = {
   "capital one venture x": "capital-one-venture-x",
   "venture x": "capital-one-venture-x",
   "venture x rewards": "capital-one-venture-x",
+  "capital one venture x rewards": "capital-one-venture-x",
+  "capital one venture": "capital-one-venture",
+  "venture card": "capital-one-venture",
+  "capital one savor": "capital-one-savor",
+  "savor card": "capital-one-savor",
+  "capital one savor one": "capital-one-savor",
   
   // Citi Cards
   "citi double cash": "citi-double-cash",
@@ -130,6 +153,28 @@ const nameVariations: Record<string, string> = {
   "citi double cash card": "citi-double-cash",
   "citi diamond preferred": "citi-diamond-preferred",
   "diamond preferred": "citi-diamond-preferred",
+  "citi premier": "citi-premier",
+  "citi premier card": "citi-premier",
+  
+  // Wells Fargo
+  "wells fargo autograph": "wells-fargo-autograph",
+  "autograph card": "wells-fargo-autograph",
+  
+  // Marriott
+  "marriott bonvoy brilliant": "marriott-bonvoy-brilliant",
+  "bonvoy brilliant": "marriott-bonvoy-brilliant",
+  "marriott bonvoy boundless": "marriott-bonvoy-boundless",
+  "bonvoy boundless": "marriott-bonvoy-boundless",
+  
+  // United
+  "united explorer": "united-explorer",
+  "united explorer card": "united-explorer",
+  "united club infinite": "united-club-infinite",
+  "united club infinite card": "united-club-infinite",
+  
+  // Bank of America
+  "bofa travel rewards": "bofa-travel-rewards",
+  "bank of america travel rewards": "bofa-travel-rewards",
   
   // Discover
   "discover it balance transfer": "discover-it-balance-transfer",

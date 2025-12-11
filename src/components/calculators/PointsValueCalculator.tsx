@@ -3,19 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface PointsProgram {
   name: string;
-  value: number; // cents per point
+  value: number;
   transferPartners?: string[];
 }
 
 const pointsPrograms: Record<string, PointsProgram> = {
   'chase-ur': {
     name: 'Chase Ultimate Rewards',
-    value: 1.25, // via Chase Travel portal with Sapphire Preferred
+    value: 1.25,
     transferPartners: ['United', 'Southwest', 'Hyatt', 'Marriott', 'IHG', 'British Airways', 'Air France']
   },
   'chase-ur-reserve': {
     name: 'Chase UR (Reserve)',
-    value: 1.5, // via Chase Travel portal with Sapphire Reserve
+    value: 1.5,
     transferPartners: ['United', 'Southwest', 'Hyatt', 'Marriott', 'IHG', 'British Airways', 'Air France']
   },
   'amex-mr': {
@@ -33,41 +33,13 @@ const pointsPrograms: Record<string, PointsProgram> = {
     value: 1.0,
     transferPartners: ['Air France', 'Emirates', 'JetBlue', 'Singapore', 'Turkish', 'Virgin Atlantic']
   },
-  'hyatt': {
-    name: 'World of Hyatt',
-    value: 1.7,
-    transferPartners: []
-  },
-  'marriott': {
-    name: 'Marriott Bonvoy',
-    value: 0.7,
-    transferPartners: ['40+ airline partners']
-  },
-  'hilton': {
-    name: 'Hilton Honors',
-    value: 0.5,
-    transferPartners: ['10+ airline partners']
-  },
-  'delta': {
-    name: 'Delta SkyMiles',
-    value: 1.1,
-    transferPartners: []
-  },
-  'united': {
-    name: 'United MileagePlus',
-    value: 1.2,
-    transferPartners: []
-  },
-  'southwest': {
-    name: 'Southwest Rapid Rewards',
-    value: 1.4,
-    transferPartners: []
-  },
-  'american': {
-    name: 'AAdvantage',
-    value: 1.3,
-    transferPartners: []
-  }
+  'hyatt': { name: 'World of Hyatt', value: 1.7, transferPartners: [] },
+  'marriott': { name: 'Marriott Bonvoy', value: 0.7, transferPartners: ['40+ airline partners'] },
+  'hilton': { name: 'Hilton Honors', value: 0.5, transferPartners: ['10+ airline partners'] },
+  'delta': { name: 'Delta SkyMiles', value: 1.1, transferPartners: [] },
+  'united': { name: 'United MileagePlus', value: 1.2, transferPartners: [] },
+  'southwest': { name: 'Southwest Rapid Rewards', value: 1.4, transferPartners: [] },
+  'american': { name: 'AAdvantage', value: 1.3, transferPartners: [] }
 };
 
 export default function PointsValueCalculator() {
@@ -80,8 +52,7 @@ export default function PointsValueCalculator() {
   
   const calculations = useMemo(() => {
     const cashValue = (pointsAmount * valuePerPoint) / 100;
-    const transferValue = (pointsAmount * (valuePerPoint * 1.5)) / 100; // Estimate 50% more with transfers
-    
+    const transferValue = (pointsAmount * (valuePerPoint * 1.5)) / 100;
     return {
       cashValue,
       transferValue,
@@ -90,10 +61,16 @@ export default function PointsValueCalculator() {
   }, [pointsAmount, valuePerPoint]);
 
   return (
-    <div className="calculator-container">
+    <motion.div 
+      className="calculator-container"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ type: "spring", stiffness: 100, damping: 20 }}
+    >
       <div className="calculator-header">
         <div className="calculator-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <rect x="4" y="2" width="16" height="20" rx="2"/>
             <line x1="8" y1="6" x2="16" y2="6"/>
             <line x1="8" y1="10" x2="16" y2="10"/>
@@ -149,21 +126,24 @@ export default function PointsValueCalculator() {
           />
           <div className="quick-amounts">
             {[25000, 50000, 75000, 100000].map(amount => (
-              <button
+              <motion.button
                 key={amount}
                 onClick={() => setPointsAmount(amount)}
                 className={pointsAmount === amount ? 'active' : ''}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 {(amount / 1000)}K
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
 
         <div className="input-group">
           <label>
-            Point Value (¢ per point)
-            <span className="label-hint">Average: {program.value}¢</span>
+            Point Value (cents per point)
+            <span className="label-hint">Average: {program.value} cents</span>
           </label>
           <input
             type="number"
@@ -173,12 +153,14 @@ export default function PointsValueCalculator() {
             max="5"
             step="0.1"
           />
-          <button 
+          <motion.button 
             className="reset-btn"
             onClick={() => setCustomValue(null)}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             Reset to average
-          </button>
+          </motion.button>
         </div>
 
         <AnimatePresence mode="wait">
@@ -188,20 +170,28 @@ export default function PointsValueCalculator() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
-            <div className="result-card primary">
+            <motion.div 
+              className="result-card primary"
+              whileHover={{ scale: 1.01, y: -2 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            >
               <span className="result-label">Estimated Cash Value</span>
               <span className="result-value">${calculations.cashValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              <span className="result-sub">at {valuePerPoint}¢ per point</span>
-            </div>
+              <span className="result-sub">at {valuePerPoint} cents per point</span>
+            </motion.div>
 
             {program.transferPartners && program.transferPartners.length > 0 && (
-              <div className="result-card secondary">
+              <motion.div 
+                className="result-card secondary"
+                whileHover={{ scale: 1.01, y: -2 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              >
                 <span className="result-label">Potential Transfer Value</span>
                 <span className="result-value">${calculations.transferValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 <span className="result-sub">with optimal transfer partner redemption</span>
-              </div>
+              </motion.div>
             )}
 
             <div className="value-breakdown">
@@ -217,7 +207,7 @@ export default function PointsValueCalculator() {
 
             {program.transferPartners && program.transferPartners.length > 0 && (
               <div className="transfer-partners">
-                <span className="partners-label">Transfer Partners:</span>
+                <span className="partners-label">Transfer Partners</span>
                 <div className="partners-list">
                   {program.transferPartners.slice(0, 6).map(partner => (
                     <span key={partner} className="partner-tag">{partner}</span>
@@ -240,12 +230,14 @@ export default function PointsValueCalculator() {
 
       <style>{`
         .calculator-container {
-          background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-          border: 1px solid #e2e8f0;
-          border-radius: 16px;
+          background: #ffffff;
+          border-radius: 20px;
           overflow: hidden;
           margin: 2rem 0;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+          box-shadow: 
+            0 0 0 1px rgba(0, 0, 0, 0.03),
+            0 2px 4px rgba(0, 0, 0, 0.02),
+            0 12px 24px rgba(0, 0, 0, 0.06);
         }
 
         .calculator-header {
@@ -253,30 +245,35 @@ export default function PointsValueCalculator() {
           align-items: center;
           gap: 1rem;
           padding: 1.5rem;
-          background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
           color: white;
         }
 
         .calculator-icon {
           width: 48px;
           height: 48px;
-          background: rgba(255, 255, 255, 0.15);
-          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 14px;
           display: flex;
           align-items: center;
           justify-content: center;
         }
 
+        .calculator-icon svg {
+          stroke: rgba(255, 255, 255, 0.9);
+        }
+
         .calculator-header h3 {
           margin: 0 0 0.25rem;
-          font-size: 1.25rem;
-          font-weight: 700;
+          font-size: 1.125rem;
+          font-weight: 600;
+          letter-spacing: -0.01em;
         }
 
         .calculator-header p {
           margin: 0;
           font-size: 0.875rem;
-          opacity: 0.8;
+          opacity: 0.7;
         }
 
         .calculator-body {
@@ -284,117 +281,121 @@ export default function PointsValueCalculator() {
         }
 
         .input-group {
-          margin-bottom: 1.25rem;
+          margin-bottom: 1.5rem;
         }
 
         .input-group label {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: #374151;
+          font-size: 0.8125rem;
+          font-weight: 500;
+          color: #475569;
           margin-bottom: 0.5rem;
+          letter-spacing: 0.01em;
         }
 
         .label-hint {
           font-weight: 400;
-          color: #6b7280;
+          color: #94a3b8;
         }
 
         .input-group select,
         .input-group input {
           width: 100%;
-          padding: 0.75rem 1rem;
-          border: 2px solid #e5e7eb;
-          border-radius: 10px;
+          padding: 0.875rem 1rem;
+          border: none;
+          border-radius: 12px;
           font-size: 1rem;
-          transition: all 0.2s;
-          background: white;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          background: #f8fafc;
+          color: #0f172a;
         }
 
         .input-group select:focus,
         .input-group input:focus {
           outline: none;
-          border-color: #3b82f6;
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+          background: #f1f5f9;
+          box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
         }
 
         .quick-amounts {
           display: flex;
           gap: 0.5rem;
-          margin-top: 0.5rem;
+          margin-top: 0.75rem;
         }
 
         .quick-amounts button {
           flex: 1;
-          padding: 0.5rem;
-          border: 1px solid #e5e7eb;
-          border-radius: 8px;
-          background: white;
+          padding: 0.625rem;
+          border: none;
+          border-radius: 10px;
+          background: #f8fafc;
           font-size: 0.875rem;
           font-weight: 500;
-          color: #4b5563;
+          color: #64748b;
           cursor: pointer;
-          transition: all 0.2s;
+          transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .quick-amounts button:hover {
-          background: #f3f4f6;
+          background: #f1f5f9;
+          color: #334155;
         }
 
         .quick-amounts button.active {
-          background: #0D2C4B;
-          border-color: #0D2C4B;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
           color: white;
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
         }
 
         .reset-btn {
-          margin-top: 0.5rem;
+          margin-top: 0.75rem;
           padding: 0.5rem 1rem;
           border: none;
-          background: #f3f4f6;
-          border-radius: 8px;
-          font-size: 0.8rem;
-          color: #6b7280;
+          background: transparent;
+          font-size: 0.8125rem;
+          color: #64748b;
           cursor: pointer;
-          transition: all 0.2s;
+          transition: color 0.15s;
         }
 
         .reset-btn:hover {
-          background: #e5e7eb;
-          color: #374151;
+          color: #334155;
         }
 
         .results-section {
           margin-top: 1.5rem;
           padding-top: 1.5rem;
-          border-top: 1px solid #e5e7eb;
+          border-top: 1px solid #f1f5f9;
         }
 
         .result-card {
-          padding: 1.25rem;
-          border-radius: 12px;
-          margin-bottom: 1rem;
+          padding: 1.5rem;
+          border-radius: 16px;
+          margin-bottom: 0.75rem;
           text-align: center;
+          cursor: default;
         }
 
         .result-card.primary {
-          background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
           color: white;
+          box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
         }
 
         .result-card.secondary {
-          background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+          background: linear-gradient(135deg, #047857 0%, #059669 100%);
           color: white;
+          box-shadow: 0 8px 24px rgba(4, 120, 87, 0.15);
         }
 
         .result-label {
           display: block;
-          font-size: 0.8rem;
+          font-size: 0.75rem;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
-          opacity: 0.9;
+          letter-spacing: 0.08em;
+          opacity: 0.8;
           margin-bottom: 0.5rem;
         }
 
@@ -404,88 +405,92 @@ export default function PointsValueCalculator() {
           font-weight: 700;
           line-height: 1;
           margin-bottom: 0.25rem;
+          letter-spacing: -0.02em;
         }
 
         .result-sub {
-          font-size: 0.8rem;
-          opacity: 0.8;
+          font-size: 0.8125rem;
+          opacity: 0.7;
         }
 
         .value-breakdown {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 1rem;
+          gap: 0.75rem;
           margin-top: 1rem;
         }
 
         .breakdown-item {
           padding: 1rem;
           background: #f8fafc;
-          border-radius: 10px;
+          border-radius: 12px;
           text-align: center;
         }
 
         .breakdown-item span {
           display: block;
           font-size: 0.75rem;
-          color: #6b7280;
+          color: #64748b;
           margin-bottom: 0.25rem;
         }
 
         .breakdown-item strong {
-          font-size: 0.95rem;
-          color: #162433;
+          font-size: 0.9375rem;
+          color: #0f172a;
+          font-weight: 600;
         }
 
         .transfer-partners {
           margin-top: 1rem;
           padding: 1rem;
-          background: #f0f9ff;
-          border-radius: 10px;
-          border: 1px solid #bae6fd;
+          background: #f8fafc;
+          border-radius: 12px;
         }
 
         .partners-label {
           display: block;
           font-size: 0.75rem;
           font-weight: 600;
-          color: #0369a1;
-          margin-bottom: 0.5rem;
+          color: #64748b;
+          margin-bottom: 0.625rem;
           text-transform: uppercase;
+          letter-spacing: 0.05em;
         }
 
         .partners-list {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.5rem;
+          gap: 0.375rem;
         }
 
         .partner-tag {
-          padding: 0.25rem 0.75rem;
+          padding: 0.25rem 0.625rem;
           background: white;
-          border: 1px solid #e0f2fe;
           border-radius: 100px;
           font-size: 0.75rem;
-          color: #0284c7;
+          color: #475569;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .partner-tag.more {
-          background: #0284c7;
-          border-color: #0284c7;
+          background: #0f172a;
           color: white;
         }
 
         .calculator-footer {
           padding: 1rem 1.5rem;
           background: #f8fafc;
-          border-top: 1px solid #e5e7eb;
         }
 
         .calculator-footer p {
           margin: 0;
-          font-size: 0.8rem;
-          color: #6b7280;
-          line-height: 1.5;
+          font-size: 0.8125rem;
+          color: #64748b;
+          line-height: 1.6;
+        }
+
+        .calculator-footer strong {
+          color: #475569;
         }
 
         @media (max-width: 640px) {
@@ -503,6 +508,6 @@ export default function PointsValueCalculator() {
           }
         }
       `}</style>
-    </div>
+    </motion.div>
   );
 }
