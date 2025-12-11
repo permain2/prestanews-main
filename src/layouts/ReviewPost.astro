@@ -94,8 +94,10 @@ const displayImage = realCardImage || heroImage;
                 )}
 
                 <!-- Article Body -->
-                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 prose prose-lg prose-headings:font-sora prose-p:font-poppins prose-a:text-[#3B82F6] prose-a:no-underline hover:prose-a:text-[#0D2C4B] max-w-none">
-                    <slot />
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                    <div class="article-content">
+                        <slot />
+                    </div>
                 </div>
             </div>
 

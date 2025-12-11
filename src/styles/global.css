@@ -3,6 +3,9 @@
 /* Import Button System */
 @import "./buttons.css";
 
+/* Import Article Content Styling */
+@import "./article-content.css";
+
 @theme {
   /* PrestaNews Brand Colors */
   --color-primary: #0D2C4B;      /* Dark Navy Blue - main brand color */
