@@ -1,6 +1,7 @@
 "use client"
 
-import { delay, wrap } from "motion"
+import { animate, delay, stagger, wrap } from "motion"
+import { splitText } from "motion-plus"
 import { usePointerPosition } from "motion-plus/react"
 import {
     AnimatePresence,
@@ -8,7 +9,7 @@ import {
     useMotionValueEvent,
     useTransform,
 } from "motion/react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface TrailImage {
     id: number
@@ -47,6 +48,8 @@ interface CursorTrailDarkProps {
     imageSize?: number
     spawnDistance?: number
     velocityFactor?: number
+    compact?: boolean
+    animateTitle?: boolean
 }
 
 export default function CursorTrailDark({
@@ -59,6 +62,8 @@ export default function CursorTrailDark({
     imageSize = 160,
     spawnDistance = 100,
     velocityFactor = 0.08,
+    compact = false,
+    animateTitle = false,
 }: CursorTrailDarkProps) {
     const imageIndex = useRef(0)
     const idCounter = useRef(0)
@@ -94,6 +99,35 @@ export default function CursorTrailDark({
         }
     })
 
+    const titleRef = useRef<HTMLHeadingElement>(null)
+    const hasAnimated = useRef(false)
+
+    // Split text animation for title
+    useEffect(() => {
+        if (!animateTitle || hasAnimated.current) return
+
+        document.fonts.ready.then(() => {
+            if (!titleRef.current) return
+
+            titleRef.current.style.visibility = "visible"
+
+            const { words } = splitText(titleRef.current)
+
+            animate(
+                words,
+                { opacity: [0, 1], y: [15, 0] },
+                {
+                    type: "spring",
+                    duration: 1.2,
+                    bounce: 0,
+                    delay: stagger(0.035, { start: 0.2 }),
+                }
+            )
+
+            hasAnimated.current = true
+        })
+    }, [animateTitle])
+
     const spawnImage = (x: number, y: number) => {
         if (!containerRef.current) return
         
@@ -121,10 +155,13 @@ export default function CursorTrailDark({
         }, fadeOutDuration)
     }
 
+    const containerHeight = compact ? 220 : 320
+    const mobileContainerHeight = compact ? 180 : 280
+
     return (
         <div 
             ref={containerRef}
-            className="cursor-trail-dark-container"
+            className={`cursor-trail-dark-container ${compact ? 'compact' : ''}`}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => {
                 setIsHovering(false)
@@ -179,21 +216,45 @@ export default function CursorTrailDark({
 
             {/* Content - On top */}
             <div className="content-layer">
-                <span className="trail-kicker">{kicker}</span>
-                <h1 className="trail-dark-title">{title}</h1>
-                <p className="trail-dark-subtitle">{subtitle}</p>
-                <div className="trail-meta">
+                <motion.span 
+                    className="trail-kicker"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.4 }}
+                >
+                    {kicker}
+                </motion.span>
+                <h1 
+                    ref={titleRef}
+                    className={`trail-dark-title ${animateTitle ? 'animated' : ''}`}
+                >
+                    {title}
+                </h1>
+                <motion.p 
+                    className="trail-dark-subtitle"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.5 }}
+                >
+                    {subtitle}
+                </motion.p>
+                <motion.div 
+                    className="trail-meta"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8, duration: 0.4 }}
+                >
                     <span>By {author}</span>
                     <span>•</span>
                     <span>Updated {date}</span>
-                </div>
+                </motion.div>
             </div>
 
             <style>{`
                 .cursor-trail-dark-container {
                     position: relative;
                     width: 100%;
-                    min-height: 320px;
+                    min-height: ${containerHeight}px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
@@ -201,6 +262,10 @@ export default function CursorTrailDark({
                     overflow: hidden;
                     cursor: crosshair;
                     background: #0D2C4B;
+                }
+
+                .cursor-trail-dark-container.compact {
+                    min-height: ${containerHeight}px;
                 }
 
                 .trail-images-layer {
@@ -227,38 +292,47 @@ export default function CursorTrailDark({
                     position: relative;
                     z-index: 10;
                     text-align: center;
-                    padding: 0 2rem;
+                    padding: ${compact ? '0 1.5rem' : '0 2rem'};
                     pointer-events: none;
                 }
 
                 .trail-kicker {
                     display: inline-block;
                     font-family: 'Poppins', sans-serif;
-                    font-size: 0.875rem;
+                    font-size: ${compact ? '0.75rem' : '0.875rem'};
                     font-weight: 700;
                     letter-spacing: 0.1em;
                     color: #3B82F6;
                     text-transform: uppercase;
-                    margin-bottom: 1rem;
+                    margin-bottom: ${compact ? '0.5rem' : '1rem'};
                 }
 
                 .trail-dark-title {
                     font-family: 'Lexend', sans-serif;
-                    font-size: clamp(2rem, 5vw, 3rem);
+                    font-size: ${compact ? 'clamp(1.5rem, 4vw, 2.25rem)' : 'clamp(2rem, 5vw, 3rem)'};
                     font-weight: 700;
                     color: #FFFFFF !important;
                     line-height: 1.2;
-                    margin-bottom: 1rem;
-                    max-width: 800px;
+                    margin-bottom: ${compact ? '0.5rem' : '1rem'};
+                    max-width: ${compact ? '650px' : '800px'};
+                }
+
+                .trail-dark-title.animated {
+                    visibility: hidden;
+                }
+
+                .trail-dark-title .split-word {
+                    will-change: transform, opacity;
+                    display: inline-block;
                 }
 
                 .trail-dark-subtitle {
                     font-family: 'Poppins', sans-serif;
-                    font-size: 1.25rem;
+                    font-size: ${compact ? '1rem' : '1.25rem'};
                     color: #CBD5E1;
-                    line-height: 1.7;
-                    max-width: 700px;
-                    margin: 0 auto 1.5rem;
+                    line-height: 1.6;
+                    max-width: ${compact ? '550px' : '700px'};
+                    margin: 0 auto ${compact ? '0.75rem' : '1.5rem'};
                 }
 
                 .trail-meta {
@@ -267,15 +341,15 @@ export default function CursorTrailDark({
                     justify-content: center;
                     gap: 0.75rem;
                     font-family: 'Poppins', sans-serif;
-                    font-size: 0.875rem;
+                    font-size: ${compact ? '0.75rem' : '0.875rem'};
                     color: #94A3B8;
                 }
 
                 .trail-card-dark {
                     position: absolute;
-                    width: ${imageSize}px;
+                    width: ${compact ? imageSize * 0.75 : imageSize}px;
                     height: auto;
-                    max-height: ${imageSize * 0.7}px;
+                    max-height: ${(compact ? imageSize * 0.75 : imageSize) * 0.7}px;
                     object-fit: contain;
                     pointer-events: none;
                     border-radius: 10px;
@@ -284,14 +358,20 @@ export default function CursorTrailDark({
 
                 @media (max-width: 768px) {
                     .cursor-trail-dark-container {
-                        min-height: 280px;
+                        min-height: ${mobileContainerHeight}px;
+                    }
+                    .cursor-trail-dark-container.compact {
+                        min-height: ${mobileContainerHeight}px;
                     }
                     .trail-card-dark {
-                        width: 100px;
-                        max-height: 70px;
+                        width: ${compact ? '70px' : '100px'};
+                        max-height: ${compact ? '50px' : '70px'};
                     }
                     .trail-dark-subtitle {
-                        font-size: 1rem;
+                        font-size: ${compact ? '0.875rem' : '1rem'};
+                    }
+                    .content-layer {
+                        padding: 0 1rem;
                     }
                 }
             `}</style>

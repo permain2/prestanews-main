@@ -1,6 +1,8 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import SignupNotifications from '../../components/SignupNotifications.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
 import { getCardImage } from '../../utils/cardImageMap';
 import PointsValueCalculator from '../../components/calculators/PointsValueCalculator.tsx';
 import FAQSchema from '../../components/seo/FAQSchema.astro';
@@ -303,7 +305,7 @@ const faqs = [
     { name: 'Best Travel Cards' }
   ]} />
   
-  <!-- Compact Header with Cursor Trail -->
+  <!-- Compact Header with Cursor Trail & Animated Title -->
   <CursorTrailDark 
     client:load
     title="Best Travel Credit Cards of December 2025"
@@ -311,6 +313,17 @@ const faqs = [
     subtitle="Compare 15 expert-reviewed travel cards for flights, hotels, lounge access & flexible rewards."
     author="Sarah Chen"
     date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
+
+  <!-- Social Proof Notifications -->
+  <SignupNotifications 
+    client:load
+    initialDelay={5000}
+    interval={120000}
+    displayDuration={6000}
+    showInitialBatch={1}
   />
 
   <!-- Disclosure -->
@@ -322,40 +335,10 @@ const faqs = [
     </div>
   </section>
 
-  <!-- Category Pills -->
+  <!-- TOC Toggle Navigation -->
   <section class="bg-white border-b border-gray-200 py-4 sticky top-16 z-40">
-    <div class="max-w-[90rem] mx-auto px-4 md:px-8">
-      <div class="flex gap-4 overflow-x-auto pb-2">
-        <a href="/credit-cards" class="filter-btn">All Cards</a>
-        <a href="/credit-cards/best-travel-cards" class="filter-btn active" style="color: #FFFFFF !important;">Travel Cards</a>
-        <a href="/credit-cards/best-cashback" class="filter-btn">Cash Back</a>
-        <a href="/credit-cards/business" class="filter-btn">Business</a>
-        <a href="/credit-cards/no-annual-fee" class="filter-btn">No Annual Fee</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Table of Contents -->
-  <section class="py-10 bg-white border-b border-gray-100">
-    <div class="max-w-4xl mx-auto px-4 md:px-8">
-      <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
-        <h2 class="font-sora text-lg font-bold text-[#162433] mb-4 flex items-center gap-2">
-          <span class="w-8 h-8 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10" stroke-linecap="round"/></svg>
-          </span>
-          Table of Contents
-        </h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
-          <a href="#cards" class="toc-link">→ All 15 Travel Cards</a>
-          <a href="#how-rewards-work" class="toc-link">→ How Travel Rewards Work</a>
-          <a href="#how-to-choose" class="toc-link">→ How to Choose a Card</a>
-          <a href="#best-by-category" class="toc-link">→ Best Cards by Category</a>
-          <a href="#compare-table" class="toc-link">→ Quick Comparison Table</a>
-          <a href="#methodology" class="toc-link">→ Our Ranking Methodology</a>
-          <a href="#faq" class="toc-link">→ FAQ (10 Questions)</a>
-          <a href="#related" class="toc-link">→ Related Guides</a>
-        </div>
-      </div>
+    <div class="max-w-5xl mx-auto px-4 md:px-8 flex justify-center">
+      <TOCToggleGroup client:load />
     </div>
   </section>
 
@@ -864,32 +847,6 @@ const faqs = [
 </MainLayout>
 
 <style>
-  /* Filter Buttons - matching cashback page */
-  .filter-btn {
-    white-space: nowrap;
-    padding: 0.625rem 1.5rem;
-    border-radius: 9999px;
-    background-color: #F3F4F6;
-    color: #162433 !important;
-    font-weight: 700;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-  
-  .filter-btn:hover {
-    background-color: #E5E7EB;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  
-  .filter-btn.active {
-    background-color: #0D2C4B !important;
-    color: #FFFFFF !important;
-    box-shadow: 0 4px 12px rgba(13, 44, 75, 0.3);
-  }
-
   /* Apply Button shine effect */
   .apply-btn {
     position: relative;
@@ -909,47 +866,6 @@ const faqs = [
   
   .apply-btn:hover .shine-effect {
     left: 100%;
-  }
-
-  /* Navigation Pills (legacy) */
-  .nav-pill {
-    white-space: nowrap;
-    padding: 0.625rem 1.5rem;
-    border-radius: 9999px;
-    background-color: #F3F4F6;
-    color: #162433;
-    font-weight: 600;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-pill:hover {
-    background-color: #E5E7EB;
-    transform: translateY(-1px);
-  }
-  
-  .nav-pill.active {
-    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
-    color: white;
-    box-shadow: 0 4px 12px rgba(13, 44, 75, 0.3);
-  }
-
-  /* Table of Contents */
-  .toc-link {
-    display: block;
-    padding: 0.75rem 1rem;
-    background: white;
-    border-radius: 8px;
-    color: #4B5563;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-  }
-  .toc-link:hover {
-    background: #EBF5FF;
-    color: #0066B2;
-    border-color: #BFDBFE;
-    transform: translateX(4px);
   }
 
   /* Card Container */
