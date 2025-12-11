@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 100" width="240" height="100">
+  <defs>
+    <linearGradient id="bg-protect-my-car" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6826d9;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow-protect-my-car">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Main container -->
+  <rect x="5" y="5" width="230" height="90" rx="16" ry="16" fill="url(#bg-protect-my-car)" filter="url(#glow-protect-my-car)"/>
+  
+  <!-- Accent stripe -->
+  <rect x="5" y="5" width="8" height="90" rx="4" ry="4" fill="#A78BFA"/>
+  
+  <!-- Car icon -->
+  <g transform="translate(25, 30)">
+    <path d="M5 25 L10 15 L40 15 L45 25 L45 35 L5 35 Z" fill="#FFFFFF" fill-opacity="0.15"/>
+    <circle cx="15" cy="35" r="5" fill="#A78BFA"/>
+    <circle cx="35" cy="35" r="5" fill="#A78BFA"/>
+  </g>
+  
+  <!-- Company name -->
+  <text x="75" y="45" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+        font-size="22" 
+        font-weight="800" 
+        fill="#FFFFFF"
+        letter-spacing="1">PROTECT MY CAR</text>
+  
+  <!-- Tagline -->
+  <text x="75" y="68" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" 
+        font-size="11" 
+        font-weight="500" 
+        fill="#FFFFFF"
+        fill-opacity="0.7"
+        letter-spacing="0.5">EXTENDED WARRANTY</text>
+</svg>

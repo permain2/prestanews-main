@@ -731,6 +731,38 @@ import { getAltText } from '../utils/altTextMap';
                 </tr>
             </table>
 
+            <h3>🏷️ Logo Fetching Scripts <span class="badge badge-done">NEW</span></h3>
+            <p>Scripts for fetching company logos from APIs or generating SVG fallbacks.</p>
+            
+            <table>
+                <tr><th>Script</th><th>Purpose</th><th>API Key</th><th>Command</th></tr>
+                <tr>
+                    <td><code>fetch-insurance-logos-brandfetch.js</code></td>
+                    <td>Fetch insurance company logos (GEICO, Progressive, etc.)</td>
+                    <td>BRANDFETCH_API_KEY</td>
+                    <td><code>node scripts/fetch-insurance-logos-brandfetch.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>fetch-warranty-logos.js</code></td>
+                    <td>Fetch extended car warranty company logos (CARCHEX, Endurance, etc.)</td>
+                    <td>BRANDFETCH_API_KEY</td>
+                    <td><code>node scripts/fetch-warranty-logos.js</code><br>
+                        <code>node scripts/fetch-warranty-logos.js --force</code></td>
+                </tr>
+                <tr>
+                    <td><code>fetch-company-logos.js</code></td>
+                    <td>Fetch logos for home warranty, gold IRA, student loans, etc.</td>
+                    <td>None (Clearbit free)</td>
+                    <td><code>node scripts/fetch-company-logos.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-warranty-logos.js</code></td>
+                    <td>Generate professional SVG logos for companies not in Brandfetch</td>
+                    <td>None (local)</td>
+                    <td><code>node scripts/generate-warranty-logos.js</code></td>
+                </tr>
+            </table>
+
             <h3>🤖 Utility Scripts</h3>
             <p>Helper scripts for various tasks.</p>
             
@@ -835,6 +867,12 @@ VERCEL_API_KEY=your_vercel_key</code></pre>
                     <td><a href="https://www.freepik.com/api" target="_blank">freepik.com/api</a></td>
                 </tr>
                 <tr>
+                    <td><code>BRANDFETCH_API_KEY</code></td>
+                    <td>Brandfetch</td>
+                    <td>Company logo fetching (high quality)</td>
+                    <td><a href="https://brandfetch.com/developers" target="_blank">brandfetch.com/developers</a></td>
+                </tr>
+                <tr>
                     <td><code>VERCEL_API_KEY</code></td>
                     <td>Vercel</td>
                     <td>Deployment automation</td>
@@ -873,6 +911,9 @@ APIFY_API_TOKEN=apify_api_...
 
 # Freepik (background removal)
 FREEPIK_API_KEY=FPSXd...
+
+# Brandfetch (company logos - high quality)
+BRANDFETCH_API_KEY=cGeEgsd9...
 
 # Vercel (deployment)
 VERCEL_API_KEY=...</code></pre>
@@ -1251,54 +1292,130 @@ SANITY_TOKEN=your_token node scripts/migrate-cards-to-sanity.js</code></pre>
 
         <!-- SECTION 9: LOGO & ICON SEARCH -->
         <section id="logo-search" class="section">
-            <h2>9. Logo & Icon Search (Brandfetch API)</h2>
-            <p><span class="badge badge-done">NEW</span> Automated fetching of real company logos using Brandfetch API.</p>
+            <h2>9. Logo & Icon Search (Brandfetch API + Fallback SVG)</h2>
+            <p><span class="badge badge-done">UPDATED Dec 2025</span> Multi-tier logo fetching with API + auto-generated fallbacks.</p>
 
             <h3>Overview</h3>
-            <p><strong>Brandfetch</strong> provides high-quality brand assets (logos, colors, fonts) for thousands of companies. We use it to replace AI-generated placeholder logos with real company logos.</p>
+            <p><strong>Brandfetch</strong> provides high-quality brand assets (logos, colors, fonts) for thousands of companies. For niche companies not in Brandfetch, we auto-generate professional SVG logos as fallbacks.</p>
 
-            <h3>Quick Reference</h3>
-            <pre><code># Fetch all insurance company logos
+            <h3>Logo Fetching Strategy (3-Tier)</h3>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                <ol>
+                    <li><strong>Tier 1: Brandfetch API</strong> - Best quality, real logos with transparent backgrounds</li>
+                    <li><strong>Tier 2: Clearbit Logo API</strong> - Free fallback, good for major brands</li>
+                    <li><strong>Tier 3: Auto-Generated SVG</strong> - Professional styled logos for niche companies</li>
+                </ol>
+            </div>
+
+            <h3>Quick Reference Commands</h3>
+            <pre><code># Insurance company logos (existing)
 node scripts/fetch-insurance-logos-brandfetch.js
 
-# Requires BRANDFETCH_API_KEY in .env</code></pre>
+# Extended Car Warranty company logos (NEW)
+node scripts/fetch-warranty-logos.js
+node scripts/fetch-warranty-logos.js --force  # Re-download all
 
-            <h3>How It Works</h3>
-            <ol>
-                <li>Script loops through list of company domains</li>
-                <li>Calls Brandfetch API for each domain</li>
-                <li>Downloads best available logo (PNG preferred, transparent background)</li>
-                <li>Saves to <code>public/insurance-logos/</code></li>
-                <li>Original AI logos backed up to <code>public/insurance-logos-ai-backup/</code></li>
-            </ol>
+# Generate SVG fallbacks for missing logos
+node scripts/generate-warranty-logos.js
 
-            <h3>Companies Configured</h3>
+# All require BRANDFETCH_API_KEY in .env for best results</code></pre>
+
+            <h3>Creating Logos for a New Comparison Page</h3>
+            <div style="background: linear-gradient(135deg, #e8f4ff 0%, #f0f7ff 100%); padding: 1.5rem; border-radius: 8px; border-left: 5px solid #3B82F6; margin: 1rem 0;">
+                <h4 style="margin-top: 0; color: #1a3a5c;">Step-by-Step: Adding Logos for New Category</h4>
+                <pre><code># 1. Create a new fetch script (copy from existing)
+cp scripts/fetch-warranty-logos.js scripts/fetch-[category]-logos.js
+
+# 2. Edit the script - update company list with domains:
+const companies = [
+  { name: 'Company Name', domain: 'company.com', slug: 'company-name' },
+  // ... add all companies
+];
+const outputDir = 'public/[category]-logos';
+
+# 3. Run the fetch script
+node scripts/fetch-[category]-logos.js
+
+# 4. Check results - some may fail (niche companies)
+# Script creates: src/utils/[category]LogoMap.ts
+
+# 5. For failed logos, create SVG fallbacks
+cp scripts/generate-warranty-logos.js scripts/generate-[category]-logos.js
+# Edit colors and company names, then run:
+node scripts/generate-[category]-logos.js
+
+# 6. Use in your Astro page:
+import { get[Category]Logo } from '../../utils/[category]LogoMap';
+&lt;img src={get[Category]Logo(company.slug)} alt={company.name} /&gt;</code></pre>
+            </div>
+
+            <h3>Existing Logo Scripts</h3>
             <table>
-                <tr><th>Category</th><th>Companies</th></tr>
-                <tr><td>Car Insurance</td><td>GEICO, Progressive, State Farm, Allstate, Liberty Mutual, Nationwide, Farmers, USAA</td></tr>
-                <tr><td>Life Insurance</td><td>Prudential, MetLife, New York Life, Northwestern Mutual, MassMutual, Haven Life</td></tr>
-                <tr><td>Home/Renters</td><td>Travelers, Lemonade, Amica, Erie, Chubb</td></tr>
+                <tr><th>Script</th><th>Output Directory</th><th>Companies</th></tr>
+                <tr>
+                    <td><code>fetch-insurance-logos-brandfetch.js</code></td>
+                    <td><code>public/insurance-logos/</code></td>
+                    <td>GEICO, Progressive, State Farm, Allstate, etc. (19 total)</td>
+                </tr>
+                <tr>
+                    <td><code>fetch-warranty-logos.js</code></td>
+                    <td><code>public/warranty-logos/</code></td>
+                    <td>CARCHEX, Endurance, CarShield, Olive, etc. (10 total)</td>
+                </tr>
+                <tr>
+                    <td><code>fetch-company-logos.js</code></td>
+                    <td><code>public/company-logos/</code></td>
+                    <td>Home warranty, car transport, gold IRA, savings, etc.</td>
+                </tr>
+                <tr>
+                    <td><code>generate-warranty-logos.js</code></td>
+                    <td><code>public/warranty-logos/*.svg</code></td>
+                    <td>SVG fallbacks for warranty companies</td>
+                </tr>
             </table>
 
-            <h3>Adding New Companies</h3>
-            <p>Edit <code>scripts/fetch-insurance-logos-brandfetch.js</code>:</p>
-            <pre><code>const insuranceCompanies = [
-  // Add new company
-  { name: 'companyname', domain: 'company.com' },
-  // ... existing companies
-];</code></pre>
+            <h3>Logo Map Utilities</h3>
+            <p>Each logo fetch script auto-generates a TypeScript utility for easy usage:</p>
+            <table>
+                <tr><th>Utility File</th><th>Import</th><th>Usage</th></tr>
+                <tr>
+                    <td><code>src/utils/warrantyLogoMap.ts</code></td>
+                    <td><code>import { getWarrantyLogo } from '../../utils/warrantyLogoMap'</code></td>
+                    <td><code>getWarrantyLogo('carchex')</code> → <code>/warranty-logos/carchex.png</code></td>
+                </tr>
+                <tr>
+                    <td><code>src/utils/companyLogoMap.ts</code></td>
+                    <td><code>import { getCompanyLogo } from '../../utils/companyLogoMap'</code></td>
+                    <td><code>getCompanyLogo('sofi')</code> → <code>/company-logos/sofi.png</code></td>
+                </tr>
+            </table>
 
             <h3>API Information</h3>
             <table>
-                <tr><th>Item</th><th>Value</th></tr>
-                <tr><td>API</td><td>Brandfetch API v2</td></tr>
-                <tr><td>Endpoint</td><td><code>https://api.brandfetch.io/v2/brands/{domain}</code></td></tr>
-                <tr><td>Authentication</td><td>Bearer token in header</td></tr>
-                <tr><td>Get API Key</td><td><a href="https://brandfetch.com/developers" target="_blank">brandfetch.com/developers</a></td></tr>
+                <tr><th>API</th><th>Cost</th><th>Quality</th><th>Coverage</th></tr>
+                <tr><td>Brandfetch API v2</td><td>Paid (has free tier)</td><td>⭐⭐⭐⭐⭐ Best</td><td>Major brands, some niche</td></tr>
+                <tr><td>Clearbit Logo API</td><td>Free</td><td>⭐⭐⭐⭐ Good</td><td>Major brands only</td></tr>
+                <tr><td>Google Favicon</td><td>Free</td><td>⭐⭐ Fallback</td><td>Any domain</td></tr>
+                <tr><td>Auto-generated SVG</td><td>Free</td><td>⭐⭐⭐ Professional</td><td>Any company</td></tr>
             </table>
 
-            <h3>Logo Selection Priority</h3>
-            <p>The script selects logos in this order:</p>
+            <h3>SVG Fallback Generator Features</h3>
+            <ul>
+                <li><strong>Brand Colors:</strong> Define primary/secondary colors per company</li>
+                <li><strong>Gradient Backgrounds:</strong> Professional gradient fills</li>
+                <li><strong>Shield Icon:</strong> Trust/protection symbol with checkmark</li>
+                <li><strong>Drop Shadows:</strong> Modern depth effect</li>
+                <li><strong>Responsive Text:</strong> Auto-sizing based on company name length</li>
+            </ul>
+            <pre><code>// Example SVG config in generate-[category]-logos.js
+{ 
+  name: 'CARCHEX', 
+  slug: 'carchex',
+  colors: { primary: '#1E3A5F', secondary: '#4A90D9', text: '#FFFFFF' },
+  shortName: 'CARCHEX'  // For logo text
+}</code></pre>
+
+            <h3>Logo Selection Priority (Brandfetch)</h3>
             <ol>
                 <li>Type: <code>logo</code> with <code>dark</code> theme (colored for light backgrounds)</li>
                 <li>Type: <code>logo</code> (any theme)</li>
@@ -1308,20 +1425,29 @@ node scripts/fetch-insurance-logos-brandfetch.js
             </ol>
             <p>Format priority: PNG with transparent background → PNG → SVG</p>
 
-            <h3>Output Files</h3>
-            <pre><code>public/insurance-logos/
-├── geico.png
-├── progressive.png
-├── statefarm.png
-├── allstate.png
-├── ... (19 total logos)</code></pre>
-
             <h3>Troubleshooting</h3>
             <table>
                 <tr><th>Issue</th><th>Solution</th></tr>
                 <tr><td>API error 401</td><td>Check BRANDFETCH_API_KEY in .env</td></tr>
-                <tr><td>No logo found</td><td>Company may not be in Brandfetch database - manually source</td></tr>
-                <tr><td>Wrong logo variant</td><td>Manually download preferred variant from Brandfetch website</td></tr>
+                <tr><td>No logo found (niche company)</td><td>Run generate-[category]-logos.js for SVG fallback</td></tr>
+                <tr><td>Logo has white background</td><td>Use Freepik API background removal (FREEPIK_API_KEY)</td></tr>
+                <tr><td>Wrong logo variant</td><td>Manually download from Brandfetch website</td></tr>
+                <tr><td>SVG looks wrong</td><td>Adjust colors in generate script, re-run</td></tr>
+            </table>
+
+            <h3>Warranty Logos Generated (Dec 2025)</h3>
+            <table>
+                <tr><th>Company</th><th>Source</th><th>File</th></tr>
+                <tr><td>CARCHEX</td><td>Brandfetch</td><td>carchex.png</td></tr>
+                <tr><td>Endurance</td><td>Brandfetch</td><td>endurance.png</td></tr>
+                <tr><td>CarShield</td><td>Brandfetch</td><td>carshield.png</td></tr>
+                <tr><td>Olive</td><td>Brandfetch</td><td>olive.png</td></tr>
+                <tr><td>Protect My Car</td><td>Brandfetch</td><td>protect-my-car.png</td></tr>
+                <tr><td>autopom!</td><td>Brandfetch</td><td>autopom.png</td></tr>
+                <tr><td>Warranty Direct</td><td>SVG Fallback</td><td>warranty-direct.svg</td></tr>
+                <tr><td>Route 66</td><td>Brandfetch</td><td>route-66.png</td></tr>
+                <tr><td>American Auto Shield</td><td>Brandfetch</td><td>american-auto-shield.png</td></tr>
+                <tr><td>CARCHEX Titanium</td><td>Copy of CARCHEX</td><td>carchex-titanium.png</td></tr>
             </table>
         </section>
 
@@ -1641,24 +1767,116 @@ const creditCards = [
             <h3>Files to Create for New Comparison Page</h3>
             <ol>
                 <li><code>src/pages/[category]/[slug].astro</code> - Main page file</li>
-                <li>Provider logos in <code>public/[category]-logos-small/</code></li>
-                <li>Optional: Card images in <code>public/card-images/</code></li>
+                <li>Provider logos in <code>public/[category]-logos/</code></li>
+                <li>Logo map utility in <code>src/utils/[category]LogoMap.ts</code></li>
+                <li>Optional: Hero image in <code>public/blog-images/</code></li>
             </ol>
 
+            <h3>🚀 Complete Workflow: Creating New Comparison Page</h3>
+            <div style="background: linear-gradient(135deg, #e8f4ff 0%, #f0f7ff 100%); padding: 1.5rem; border-radius: 8px; border-left: 5px solid #3B82F6; margin: 1rem 0;">
+                <h4 style="margin-top: 0; color: #1a3a5c;">Step-by-Step Guide</h4>
+                <pre><code># ============================================
+# STEP 1: Fetch Company Logos (REQUIRED FIRST)
+# ============================================
+
+# 1a. Create logo fetch script (copy from existing)
+cp scripts/fetch-warranty-logos.js scripts/fetch-pet-insurance-logos.js
+
+# 1b. Edit the script with your companies:
+const companies = [
+  { name: 'Embrace Pet Insurance', domain: 'embracepetinsurance.com', slug: 'embrace' },
+  { name: 'Healthy Paws', domain: 'healthypawspetinsurance.com', slug: 'healthy-paws' },
+  { name: 'Nationwide Pet', domain: 'petinsurance.com', slug: 'nationwide' },
+  // ... add all 5-10 companies
+];
+const outputDir = 'public/pet-insurance-logos';
+
+# 1c. Run the fetch script (requires BRANDFETCH_API_KEY in .env)
+node scripts/fetch-pet-insurance-logos.js
+
+# 1d. Check which logos failed, create SVG fallbacks if needed
+cp scripts/generate-warranty-logos.js scripts/generate-pet-insurance-logos.js
+# Edit colors/names, then:
+node scripts/generate-pet-insurance-logos.js
+
+# Result: Creates public/pet-insurance-logos/*.png and src/utils/petInsuranceLogoMap.ts
+
+# ============================================
+# STEP 2: Create the Astro Page
+# ============================================
+
+# 2a. Copy template from similar page
+cp src/pages/blog/best-extended-car-warranty.astro src/pages/insurance/pet.astro
+
+# 2b. Update imports at top:
+import { getPetInsuranceLogo } from '../../utils/petInsuranceLogoMap';
+
+# 2c. Update provider data array with your companies
+# 2d. Update FAQs array (5-7 questions)
+# 2e. Update schema markup (ArticleSchema, FAQSchema)
+# 2f. Update hero text, dates, author
+
+# ============================================
+# STEP 3: Add Hero Image (Optional but recommended)
+# ============================================
+
+# Use existing or generate with Gemini:
+node scripts/generate-insurance-hero.js "pet insurance"
+# Or add manually to public/blog-images/pet-insurance.jpg
+
+# ============================================
+# STEP 4: Test & Deploy
+# ============================================
+npm run dev
+# Visit http://localhost:4321/insurance/pet
+# Check logos load, accordions work, mobile responsive
+npm run build  # Verify no build errors</code></pre>
+            </div>
+
             <h3>Example: Creating "Best Pet Insurance" Page</h3>
-            <pre><code>// 1. Create src/pages/insurance/pet.astro
-// 2. Define providers array with 5-10 pet insurance companies
-// 3. Define faqs array with 5-7 common questions
-// 4. Define tocItems (or use defaults)
-// 5. Use the page structure template above
-// 6. Add logos to public/insurance-logos-small/
+            <pre><code>// 1. Run logo fetch first (see Section 9 for details)
+node scripts/fetch-pet-insurance-logos.js
+
+// 2. Create src/pages/insurance/pet.astro
+
+// 3. Import the auto-generated logo map
+import { getPetInsuranceLogo } from '../../utils/petInsuranceLogoMap';
+
+// 4. Define providers array with 5-10 pet insurance companies
+const providers = [
+  {
+    name: 'Embrace Pet Insurance',
+    slug: 'embrace',
+    bestFor: 'Best Overall',
+    rating: 4.8,
+    monthlyAvg: '$35-$70',
+    pros: ['Diminishing deductible', 'Wellness rewards'],
+    cons: ['14-day waiting period'],
+    description: 'Comprehensive coverage with unique rewards program.',
+    // ... other fields
+  },
+  // ... more providers
+];
+
+// 5. Use logo in template
+{providers.map(provider => (
+  &lt;img 
+    src={getPetInsuranceLogo(provider.slug)} 
+    alt={`${provider.name} logo`}
+  /&gt;
+))}
+
+// 6. Define faqs array with 5-7 common questions
+
+// 7. Use the page structure template above
 
 // AI Prompt Example:
 "Create a comparison page for best pet insurance companies 2025.
 Include: Embrace, Healthy Paws, Nationwide, ASPCA, Lemonade, Trupanion.
-Use the same structure as /insurance/car.astro.
+Use the same structure as /blog/best-extended-car-warranty.astro.
 Research intro should mention real data about pet insurance costs.
-Include 6 FAQs about coverage, costs, and pre-existing conditions."</code></pre>
+Include 6 FAQs about coverage, costs, and pre-existing conditions.
+Make sure to fetch logos first using the logo workflow in PROJECT-DOCS.html Section 9."</code></pre>
 
             <h3>Blog Comparison Pages (ComparisonLayout)</h3>
             <p>For comparison articles in <code>/blog/</code>, use the <code>ComparisonLayout</code> which handles most structure automatically:</p>
@@ -1720,6 +1938,10 @@ Include 6 FAQs about coverage, costs, and pre-existing conditions."</code></pre>
                 <li class="completed"><input type="checkbox" checked disabled> <strong>SEO Workflow Orchestrator</strong> - Batch processing for keywords</li>
                 <li class="completed"><input type="checkbox" checked disabled> <strong>Target Keywords File</strong> - 40 keywords from competitor analysis</li>
                 <li class="completed"><input type="checkbox" checked disabled> <strong>Generated 2 SEO articles</strong> - small business insurance (Grade A), home warranty (Grade A)</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Extended Car Warranty Page</strong> - Full comparison page using travel cards template</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Warranty Logo Scripts</strong> - fetch-warranty-logos.js + generate-warranty-logos.js</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Warranty Logo Map</strong> - src/utils/warrantyLogoMap.ts utility</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Fetched 9/10 warranty logos</strong> - via Brandfetch API (1 SVG fallback)</li>
             </ul>
 
             <h3>Pending Tasks <span class="badge badge-pending">TODO</span></h3>

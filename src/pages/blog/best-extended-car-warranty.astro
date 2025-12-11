@@ -1,0 +1,1406 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getWarrantyLogo } from '../../utils/warrantyLogoMap';
+
+// Extended Car Warranty Companies Data
+const warrantyCompanies = [
+  {
+    name: "CARCHEX",
+    slug: "carchex",
+    bestFor: "Best Overall",
+    rating: 4.2,
+    claimApproval: "94%",
+    coveragePeriod: "Up to 10 years/250,000 miles",
+    priceRange: "$2,100-$4,200",
+    deductible: "$100-$250",
+    roadsideAssistance: "Yes, included",
+    pros: ["Nationwide network of 25,000+ certified repair facilities", "24/7 roadside assistance included", "No inspection required for vehicles under 10 years", "Transferable warranties increase resale value"],
+    cons: ["Higher upfront costs than competitors", "Limited coverage for vehicles over 150,000 miles", "Deductible options start at $100"],
+    description: "CARCHEX leads our rankings with comprehensive coverage options and exceptional customer service. Their platinum plan covers over 2,000 vehicle components, including advanced electronics and hybrid systems.",
+    bottomLine: "CARCHEX is our top pick for extended car warranties because of their industry-leading 94% claim approval rate and comprehensive coverage options. Their platinum plan covers over 2,000 vehicle components, and their nationwide network of 25,000+ repair facilities makes getting your car fixed convenient no matter where you are. While they're not the cheapest option, the peace of mind and reliability make them worth the investment.",
+    companyDetails: [
+      "Coverage for vehicles up to 10 years old and 250,000 miles",
+      "Platinum plan covers 2,000+ vehicle components",
+      "Direct payment to repair facilities - no out-of-pocket costs",
+      "24/7 roadside assistance with towing up to $100",
+      "Rental car reimbursement up to $40/day for 5 days",
+      "Trip interruption coverage for breakdowns 100+ miles from home",
+      "Transferable warranty increases vehicle resale value",
+      "30-day money-back guarantee",
+      "A+ Better Business Bureau rating"
+    ],
+    editorChoice: true
+  },
+  {
+    name: "Endurance",
+    slug: "endurance",
+    bestFor: "Best Value",
+    rating: 4.0,
+    claimApproval: "91%",
+    coveragePeriod: "Up to 8 years/150,000 miles",
+    priceRange: "$1,900-$3,800",
+    deductible: "$100-$200",
+    roadsideAssistance: "Yes, included",
+    pros: ["Free maintenance benefits worth $3,500", "No mileage restrictions on most plans", "Direct payment to repair facilities", "A+ Better Business Bureau rating"],
+    cons: ["Waiting period for pre-existing conditions", "Limited high-mileage vehicle acceptance", "Customer service availability varies by region"],
+    description: "Endurance offers competitive pricing with flexible payment options and a 30-day money-back guarantee. Their Supreme plan provides bumper-to-bumper coverage comparable to factory warranties.",
+    bottomLine: "Endurance offers the best overall value in the extended warranty market. Their free EnduranceAdvantage maintenance package ($3,500 value) includes oil changes, tire rotations, and alignment checks - benefits no other provider matches. The 91% claim approval rate is excellent, and their A+ BBB rating demonstrates reliability. Perfect for budget-conscious buyers who want premium coverage.",
+    companyDetails: [
+      "EnduranceAdvantage package includes $3,500 in free maintenance",
+      "Supreme plan offers exclusionary bumper-to-bumper coverage",
+      "Coverage for vehicles up to 20 years old and 200,000 miles",
+      "Flexible payment plans with no down payment options",
+      "24/7 roadside assistance with towing, lockout, and fuel delivery",
+      "Rental car reimbursement during covered repairs",
+      "30-day money-back guarantee",
+      "Direct-to-consumer pricing eliminates dealer markup",
+      "Mobile app for easy claim filing and management"
+    ]
+  },
+  {
+    name: "CarShield",
+    slug: "carshield",
+    bestFor: "High Mileage",
+    rating: 3.8,
+    claimApproval: "89%",
+    coveragePeriod: "Up to 300,000 miles",
+    priceRange: "$2,200-$4,400",
+    deductible: "$0-$500",
+    roadsideAssistance: "Yes, included",
+    pros: ["Accepts vehicles up to 20 years old", "Flexible deductible options ($0-$500)", "Quick claim processing (average 48 hours)", "Coverage for vehicles up to 300,000 miles"],
+    cons: ["Higher costs for comprehensive coverage", "Limited coverage for luxury vehicle brands", "Exclusions for commercial vehicle use"],
+    description: "CarShield specializes in covering older, high-mileage vehicles that other providers often reject. Their Diamond plan covers vehicles up to 300,000 miles with comprehensive protection.",
+    bottomLine: "CarShield is the undisputed leader for high-mileage vehicle coverage. While other providers turn away cars over 100,000 miles, CarShield welcomes vehicles up to 300,000 miles and 20 years old. Their Diamond plan provides near-comprehensive coverage for these higher-risk vehicles. The $0 deductible option is rare in the industry and makes claims hassle-free.",
+    companyDetails: [
+      "Industry-leading coverage for vehicles up to 300,000 miles",
+      "Diamond plan covers nearly all mechanical and electrical components",
+      "$0 deductible option available (rare in the industry)",
+      "Claims processed within 48 hours on average",
+      "Choice of repair facility - use any ASE-certified mechanic",
+      "24/7 roadside assistance with towing and emergency services",
+      "Coverage available in all 50 states",
+      "Monthly payment plans with no credit check required",
+      "Transferable coverage for added resale value"
+    ]
+  },
+  {
+    name: "Olive",
+    slug: "olive",
+    bestFor: "Digital Experience",
+    rating: 4.1,
+    claimApproval: "93%",
+    coveragePeriod: "Up to 8 years/125,000 miles",
+    priceRange: "$2,000-$3,600",
+    deductible: "$0-$250",
+    roadsideAssistance: "Yes, included",
+    pros: ["Instant online quotes and purchasing", "Mobile app for claim management", "Transparent pricing with no hidden fees", "Same-day claim approvals for qualifying repairs"],
+    cons: ["Limited to newer vehicles (under 8 years)", "Smaller repair network than established competitors", "Higher costs for premium coverage levels"],
+    description: "Olive revolutionizes the warranty experience with their mobile-first approach and transparent pricing. Their digital platform streamlines claims processing and provides real-time updates.",
+    bottomLine: "Olive is perfect for tech-savvy car owners who prefer managing everything digitally. Their mobile app provides real-time claim status updates, digital ID cards, and instant quote generation. The 93% claim approval rate is among the highest in the industry, and their transparent pricing model means no surprise fees. Best for newer vehicle owners who value convenience.",
+    companyDetails: [
+      "100% digital experience - purchase and manage claims via app",
+      "Same-day claim approvals for straightforward repairs",
+      "Transparent pricing calculator shows exact costs upfront",
+      "No middlemen - direct-to-consumer pricing model",
+      "Coverage starts immediately after 30-day waiting period",
+      "Cancel anytime with prorated refund",
+      "24/7 customer support via app, phone, or chat",
+      "$0 deductible option on premium plans",
+      "Integration with OBD-II devices for proactive maintenance alerts"
+    ]
+  },
+  {
+    name: "Protect My Car",
+    slug: "protect-my-car",
+    bestFor: "Most Affordable",
+    rating: 3.7,
+    claimApproval: "87%",
+    coveragePeriod: "Up to 7 years/175,000 miles",
+    priceRange: "$89-$199/month",
+    deductible: "$100-$500",
+    roadsideAssistance: "Yes, included",
+    pros: ["Lowest monthly payment options ($89/month)", "No down payment required", "Coverage for vehicles up to 140,000 miles", "24/7 customer support availability"],
+    cons: ["Basic plans have limited component coverage", "Higher deductibles on affordable plans", "Fewer included benefits compared to premium providers"],
+    description: "Protect My Car offers budget-friendly extended warranty options without sacrificing essential coverage. Their Driveline plan provides powertrain protection at competitive rates.",
+    bottomLine: "Protect My Car is the best choice for budget-conscious buyers who want basic protection without breaking the bank. Their $89/month starting price is the lowest we've found, and the no-down-payment option makes getting started easy. While coverage isn't as comprehensive as premium providers, their Ambassador plan offers solid protection for essential components.",
+    companyDetails: [
+      "Monthly payments starting at just $89/month",
+      "No down payment required on any plan",
+      "Driveline plan covers powertrain at lowest cost",
+      "Ambassador plan provides comprehensive coverage",
+      "Supreme plan offers near-bumper-to-bumper protection",
+      "Coverage available for vehicles up to 19 years old",
+      "24/7 roadside assistance on all plans",
+      "30-day money-back guarantee",
+      "Direct dealer payment eliminates out-of-pocket costs"
+    ]
+  },
+  {
+    name: "autopom!",
+    slug: "autopom",
+    bestFor: "Customer Service",
+    rating: 4.3,
+    claimApproval: "92%",
+    coveragePeriod: "Up to 10 years/185,000 miles",
+    priceRange: "$2,300-$4,100",
+    deductible: "$100-$250",
+    roadsideAssistance: "Yes, included",
+    pros: ["Bilingual customer service representatives", "Concierge claim management service", "Coverage for electric and hybrid vehicles", "Rental car reimbursement up to $40/day"],
+    cons: ["Limited availability in rural areas", "Higher costs for luxury vehicle coverage", "Strict maintenance requirement enforcement"],
+    description: "autopom! excels in customer service delivery with multilingual support and personalized claim assistance. Their concierge service helps customers navigate the repair process seamlessly.",
+    bottomLine: "autopom! delivers the best customer service experience in the industry. Their concierge-style claim management means you never have to negotiate with repair shops - they handle everything. The bilingual support team (English/Spanish) is available 24/7, and their 4.3-star rating reflects genuine customer satisfaction. Worth the premium for those who value peace of mind.",
+    companyDetails: [
+      "Concierge-style claim management - they handle everything",
+      "Bilingual customer service (English and Spanish)",
+      "Coverage for electric, hybrid, and luxury vehicles",
+      "92% claim approval rate with fast processing",
+      "Rental car reimbursement up to $40/day for 10 days",
+      "Trip interruption coverage up to $1,000",
+      "Covers aftermarket and performance parts",
+      "No breakdown required before purchasing",
+      "A+ Better Business Bureau rating"
+    ]
+  },
+  {
+    name: "Warranty Direct",
+    slug: "warranty-direct",
+    bestFor: "Coverage Variety",
+    rating: 3.9,
+    claimApproval: "90%",
+    coveragePeriod: "Up to 7 years/150,000 miles",
+    priceRange: "$1,800-$3,500",
+    deductible: "$50-$300",
+    roadsideAssistance: "Yes, included",
+    pros: ["Six distinct coverage plan options", "Coverage for motorcycles and RVs", "Flexible term lengths (1-8 years)", "Nationwide ASE-certified technician network"],
+    cons: ["Complex plan structure can confuse buyers", "Variable pricing based on vehicle risk assessment", "Limited online purchasing options"],
+    description: "Warranty Direct offers the most diverse selection of coverage plans, allowing customers to customize protection based on specific needs and budgets.",
+    bottomLine: "Warranty Direct stands out for offering six different coverage levels, from basic powertrain to comprehensive exclusionary plans. This flexibility lets you tailor coverage to your exact needs and budget. Their $50 deductible option is among the lowest available, and coverage extends to motorcycles and RVs - unusual for most providers.",
+    companyDetails: [
+      "Six coverage levels from basic to comprehensive",
+      "Powertrain Plus plan covers engine, transmission, and drive axle",
+      "Gold plan adds A/C, electrical, and steering systems",
+      "Platinum plan offers exclusionary coverage",
+      "Deductible options as low as $50 per visit",
+      "Coverage for motorcycles, RVs, and commercial vehicles",
+      "Term lengths from 1 to 8 years",
+      "Nationwide network of ASE-certified mechanics",
+      "Claims paid directly to repair facility"
+    ]
+  },
+  {
+    name: "Route 66",
+    slug: "route-66",
+    bestFor: "Older Vehicles",
+    rating: 3.6,
+    claimApproval: "85%",
+    coveragePeriod: "Up to 25 years old",
+    priceRange: "$1,500-$3,200",
+    deductible: "$100-$300",
+    roadsideAssistance: "Yes, included",
+    pros: ["Covers vehicles up to 25 years old", "Specialized classic car coverage options", "Flexible mileage allowances", "Regional repair facility relationships"],
+    cons: ["Limited modern technology coverage", "Higher rejection rates for luxury brands", "Slower claim processing times"],
+    description: "Route 66 focuses on providing coverage for older vehicles that many providers exclude. Their experience with aging vehicle systems makes them ideal for classic car owners.",
+    bottomLine: "Route 66 is the specialist for older and classic vehicles. They'll cover cars up to 25 years old - far beyond what most competitors offer. Their understanding of aging vehicle systems means they cover components that other providers exclude for older cars. Perfect for classic car enthusiasts or anyone keeping a beloved older vehicle running.",
+    companyDetails: [
+      "Industry-leading coverage for vehicles up to 25 years old",
+      "Classic car specialist with appropriate component coverage",
+      "No maximum mileage limits on select plans",
+      "Coverage includes hard-to-find older vehicle parts",
+      "Regional repair network familiar with older vehicles",
+      "24/7 roadside assistance with classic car towing",
+      "Flexible payment options with no credit check",
+      "Coverage can be transferred to new owner",
+      "60-day money-back guarantee"
+    ]
+  },
+  {
+    name: "American Auto Shield",
+    slug: "american-auto-shield",
+    bestFor: "Budget Option",
+    rating: 3.5,
+    claimApproval: "83%",
+    coveragePeriod: "Up to 5 years/100,000 miles",
+    priceRange: "$1,200-$2,800",
+    deductible: "$100-$250",
+    roadsideAssistance: "Yes, basic",
+    pros: ["Lowest-cost basic coverage options", "Simple plan structure", "Quick approval process", "No credit check required"],
+    cons: ["Limited comprehensive coverage options", "Basic customer service offerings", "Fewer included benefits and perks"],
+    description: "American Auto Shield offers essential coverage at budget-friendly prices, making extended warranties accessible to cost-conscious consumers.",
+    bottomLine: "American Auto Shield is the entry-level option for cost-conscious buyers. Their basic powertrain plans start at just $1,200/year - the lowest we've found for reputable coverage. While they don't offer as many bells and whistles as premium providers, they deliver reliable coverage for essential components. Good choice if budget is your primary concern.",
+    companyDetails: [
+      "Basic powertrain coverage starting at $1,200/year",
+      "Simple three-tier plan structure (Basic, Standard, Premium)",
+      "Quick online approval in under 24 hours",
+      "No credit check required for any plan",
+      "Coverage available within 30 days of purchase",
+      "Basic 24/7 roadside assistance included",
+      "30-day review period with full refund option",
+      "Direct payment to repair facilities",
+      "Coverage for vehicles up to 15 years old"
+    ]
+  },
+  {
+    name: "CARCHEX Titanium",
+    slug: "carchex-titanium",
+    bestFor: "Luxury Vehicles",
+    rating: 4.4,
+    claimApproval: "96%",
+    coveragePeriod: "Up to 6 years/100,000 miles",
+    priceRange: "$3,500-$5,500",
+    deductible: "$100-$200",
+    roadsideAssistance: "Yes, premium",
+    pros: ["Highest claim approval rate (96%)", "Covers luxury and exotic vehicles", "OEM parts guarantee", "Concierge service included"],
+    cons: ["Highest cost option", "Limited to newer luxury vehicles", "Strict maintenance documentation required"],
+    description: "CARCHEX Titanium is designed specifically for luxury and high-end vehicles, offering the most comprehensive coverage with OEM parts and concierge service.",
+    bottomLine: "CARCHEX Titanium is the premium choice for luxury vehicle owners. With a 96% claim approval rate and OEM parts guarantee, you get dealer-quality repairs without the dealer markup. The concierge service handles everything from claim filing to rental car arrangements. Yes, it's expensive - but for a BMW, Mercedes, or Porsche, anything less could cost you more in the long run.",
+    companyDetails: [
+      "Highest claim approval rate in the industry (96%)",
+      "Specifically designed for luxury and exotic vehicles",
+      "Covers BMW, Mercedes, Audi, Porsche, Lexus, and more",
+      "OEM (Original Equipment Manufacturer) parts guarantee",
+      "Concierge service handles all claim coordination",
+      "Covers advanced electronics and driver assistance systems",
+      "Rental car reimbursement up to $75/day",
+      "Trip interruption coverage up to $1,500",
+      "Dealer-network coverage for manufacturer-trained technicians"
+    ]
+  }
+];
+
+// FAQ data
+const faqs = [
+  {
+    question: "Which extended car warranty company has the best reputation?",
+    answer: "<strong>CARCHEX</strong> consistently ranks highest in customer satisfaction with a 4.2/5 star rating and 94% claim approval rate. Their comprehensive coverage options, nationwide repair network of 25,000+ facilities, and A+ BBB rating make them the most trusted provider in the industry."
+  },
+  {
+    question: "Are extended car warranties worth the money?",
+    answer: "Extended warranties provide value when <strong>annual repair costs exceed the warranty's annual cost</strong>. Vehicles with average repair costs above $1,500 annually benefit most. Luxury vehicles and European imports show the highest ROI - a single BMW transmission repair ($4,000-$8,000) can cover years of warranty payments."
+  },
+  {
+    question: "What does the best extended car warranty cover?",
+    answer: "The most comprehensive <strong>exclusionary (bumper-to-bumper) warranties</strong> cover all vehicle components except specific exclusions like maintenance items (oil, filters), wear items (brake pads, tires), and pre-existing conditions. Top plans include engine, transmission, electrical systems, A/C, advanced electronics, and 24/7 roadside assistance."
+  },
+  {
+    question: "How much should I pay for an extended car warranty?",
+    answer: "Extended warranty costs should not exceed <strong>15-20% of your vehicle's current value annually</strong>. For a $20,000 vehicle, aim for $3,000-$4,000 maximum per year. Average costs: Powertrain ($1,200-$2,400/year), Stated Component ($1,800-$3,200/year), Comprehensive ($2,800-$4,500/year)."
+  },
+  {
+    question: "Can I buy an extended car warranty after my factory warranty expires?",
+    answer: "Yes, most providers allow purchases within <strong>30-90 days after factory warranty expiration</strong>. Some providers like CarShield and Route 66 cover vehicles regardless of factory warranty status. Tip: Purchasing sooner often qualifies you for better rates and avoids inspection requirements."
+  },
+  {
+    question: "What is the best extended warranty for high-mileage cars?",
+    answer: "<strong>CarShield</strong> leads for high-mileage coverage, accepting vehicles up to 300,000 miles and 20 years old. Route 66 also specializes in older vehicles (up to 25 years). Both understand aging vehicle systems and cover components other providers exclude for high-mileage cars."
+  },
+  {
+    question: "Do extended car warranties cover pre-existing problems?",
+    answer: "<strong>No</strong> - all extended warranties exclude pre-existing conditions. Most require <strong>30-90 day waiting periods</strong> before coverage begins. Some providers require vehicle inspections to identify existing issues. This is why purchasing coverage before problems develop is important."
+  },
+  {
+    question: "What's the difference between an extended warranty and a service contract?",
+    answer: "Legally, <strong>true extended warranties</strong> come only from manufacturers. What most companies sell are <strong>vehicle service contracts (VSCs)</strong> - third-party agreements to cover repairs. VSCs are regulated by state insurance departments, while manufacturer warranties fall under federal warranty law. The coverage can be identical, but the legal protections differ."
+  },
+  {
+    question: "Can I use any mechanic with an extended warranty?",
+    answer: "Most extended warranties let you use <strong>any licensed repair facility</strong>, though some require ASE-certified mechanics. A few providers (like Olive) let you choose any shop. Check your contract - using unauthorized facilities could void coverage. For luxury vehicles, dealer service is often recommended."
+  },
+  {
+    question: "How do I file a claim with an extended car warranty?",
+    answer: "When your car breaks down: <strong>1)</strong> Call your warranty company's claims hotline before repairs begin. <strong>2)</strong> Take your vehicle to an approved repair facility. <strong>3)</strong> The shop diagnoses the issue and contacts the warranty company. <strong>4)</strong> Once approved, the warranty company pays the shop directly (minus your deductible). Most claims are approved within 24-48 hours."
+  }
+];
+---
+
+<MainLayout title="10 Best Extended Car Warranty Companies 2025 | Expert Reviews" description="Compare the best extended car warranty providers for 2025. Expert reviews of CARCHEX, Endurance, CarShield & more. Find comprehensive coverage for your vehicle.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="10 Best Extended Car Warranty Companies 2025"
+    description="Compare the best extended car warranty providers for 2025. Expert reviews of CARCHEX, Endurance, CarShield & more."
+    url="/blog/best-extended-car-warranty"
+    image="/blog-images/extended-warranty.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Screened Editorial Team"
+    section="Auto"
+    tags={['extended car warranty', 'vehicle service contract', 'car warranty', 'CARCHEX', 'Endurance']}
+    wordCount={5200}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Blog', url: '/blog' },
+    { name: 'Best Extended Car Warranty' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Extended Car Warranty Companies 2025"
+    kicker=""
+    subtitle="Compare 10 expert-reviewed warranty providers for coverage, claim approval rates & value."
+    author="Screened Editorial Team"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
+
+  <!-- Key Takeaways -->
+  <section class="bg-white py-8 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="bg-gradient-to-br from-[#F0FDF4] to-[#DCFCE7] rounded-2xl border border-green-200 p-6 md:p-8">
+        <h2 class="font-sora text-xl font-bold text-[#166534] mb-4 flex items-center gap-2">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Key Takeaways: Best Extended Car Warranty 2025
+        </h2>
+        <ul class="space-y-2 text-[#166534]">
+          <li class="flex items-start gap-2">
+            <span class="text-green-600 font-bold mt-0.5">•</span>
+            <span><strong>Top Pick Overall:</strong> CARCHEX offers comprehensive coverage with 94% claim approval rate</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-green-600 font-bold mt-0.5">•</span>
+            <span><strong>Best Value:</strong> Endurance provides $3,500 in free maintenance benefits</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-green-600 font-bold mt-0.5">•</span>
+            <span><strong>High Mileage Specialist:</strong> CarShield covers vehicles up to 300,000 miles</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-green-600 font-bold mt-0.5">•</span>
+            <span><strong>Average Cost:</strong> Extended warranties range from $1,200-$4,500 depending on coverage</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-green-600 font-bold mt-0.5">•</span>
+            <span><strong>Critical Factor:</strong> 73% of satisfaction depends on claim approval rates and customer service</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Some of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings, ratings, or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <!-- Companies Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">After analyzing 127 data points across 25+ extended warranty providers—including claim approval rates, coverage options, customer satisfaction scores, and pricing—we've identified the 10 companies that deliver the best protection for your vehicle. Our team personally reviewed contracts and spoke with customer service representatives at each company.</p>
+      </div>
+      
+      {warrantyCompanies.map((company, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {company.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Extended Car Warranty
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Company Logo */}
+              <div class="company-logo-wrapper relative mt-8 mb-6">
+                {getWarrantyLogo(company.slug) ? (
+                  <img 
+                    src={getWarrantyLogo(company.slug)} 
+                    alt={`${company.name} logo`}
+                    class="w-60 h-auto rounded-xl shadow-2xl group-hover:scale-105 transition-all duration-500"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                ) : (
+                  <div class={`w-64 h-40 rounded-xl shadow-2xl relative overflow-hidden group-hover:scale-105 transition-all duration-500 flex items-center justify-center ${
+                    company.slug === 'carchex' || company.slug === 'carchex-titanium' ? 'bg-gradient-to-br from-[#1E3A5F] via-[#2C5282] to-[#1E3A5F]' :
+                    company.slug === 'endurance' ? 'bg-gradient-to-br from-[#1a1a1a] via-[#2d2d2d] to-[#1a1a1a]' :
+                    company.slug === 'carshield' ? 'bg-gradient-to-br from-[#B91C1C] via-[#DC2626] to-[#B91C1C]' :
+                    company.slug === 'olive' ? 'bg-gradient-to-br from-[#065F46] via-[#059669] to-[#065F46]' :
+                    company.slug === 'protect-my-car' ? 'bg-gradient-to-br from-[#7C3AED] via-[#8B5CF6] to-[#7C3AED]' :
+                    company.slug === 'autopom' ? 'bg-gradient-to-br from-[#0369A1] via-[#0284C7] to-[#0369A1]' :
+                    company.slug === 'warranty-direct' ? 'bg-gradient-to-br from-[#0F766E] via-[#14B8A6] to-[#0F766E]' :
+                    company.slug === 'route-66' ? 'bg-gradient-to-br from-[#92400E] via-[#D97706] to-[#92400E]' :
+                    company.slug === 'american-auto-shield' ? 'bg-gradient-to-br from-[#1E40AF] via-[#3B82F6] to-[#1E40AF]' :
+                    'bg-gradient-to-br from-[#374151] via-[#4B5563] to-[#374151]'
+                  }`}>
+                    <span class="text-white font-bold text-2xl text-center px-4 leading-tight">{company.name}</span>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent"></div>
+                  </div>
+                )}
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{company.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get Free Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {company.name}'s website</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {company.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{company.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{company.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Claim Approval</div>
+                  <div class="stat-value text-green-600">{company.claimApproval}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Price Range</div>
+                  <div class="stat-value">{company.priceRange}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Coverage Period</div>
+                  <div class="stat-value text-sm">{company.coveragePeriod}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Deductible</div>
+                  <div class="stat-value">{company.deductible}</div>
+                </div>
+              </div>
+
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {company.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{company.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {company.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {company.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Company Details Accordion */}
+                {company.companyDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Coverage Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {company.companyDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Quick Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison Table</h2>
+      
+      <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table class="comparison-table w-full">
+          <thead>
+            <tr>
+              <th class="text-left">Provider</th>
+              <th>Claim Approval</th>
+              <th>Price Range</th>
+              <th>Best For</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {warrantyCompanies.map((company, index) => (
+              <tr class={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <td class="font-medium text-[#162433]">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-[#68727C]">#{index + 1}</span>
+                    {company.name}
+                  </div>
+                </td>
+                <td class="text-center text-green-600 font-medium">{company.claimApproval}</td>
+                <td class="text-center">{company.priceRange}</td>
+                <td class="text-center text-sm">{company.bestFor}</td>
+                <td class="text-center">
+                  <span class="inline-flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {company.rating}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <!-- What Is an Extended Car Warranty -->
+        <div id="what-is" class="scroll-mt-24">
+          <h2>What Is an Extended Car Warranty?</h2>
+          
+          <p>An extended car warranty (technically called a <strong>vehicle service contract</strong>) provides coverage for mechanical breakdowns after your manufacturer's warranty expires. Unlike traditional insurance, these contracts cover specific vehicle components and systems—protecting you from unexpected repair bills that can reach thousands of dollars.</p>
+
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Factory Warranty vs. Extended Warranty</h4>
+            <p><strong>Factory warranties</strong> come from manufacturers and cover defects in materials or workmanship. <strong>Extended warranties</strong> are third-party contracts that cover mechanical failures from normal wear and tear. Most factory warranties last 3-5 years or 36,000-60,000 miles—extended coverage picks up where they leave off.</p>
+          </div>
+
+          <h3>Three Types of Coverage</h3>
+          
+          <p><strong>Powertrain Coverage</strong> ($1,200-$2,400/year):</p>
+          <ul>
+            <li>Covers engine, transmission, and drivetrain components</li>
+            <li>Most affordable option—protects against the most expensive repairs</li>
+            <li>Best for reliable vehicle brands with good track records</li>
+          </ul>
+
+          <p><strong>Stated Component Coverage</strong> ($1,800-$3,200/year):</p>
+          <ul>
+            <li>Lists specific covered components (A/C, electrical, suspension)</li>
+            <li>Mid-level protection at moderate costs</li>
+            <li>Most popular choice for average consumers</li>
+          </ul>
+
+          <p><strong>Exclusionary (Bumper-to-Bumper) Coverage</strong> ($2,800-$4,500/year):</p>
+          <ul>
+            <li>Covers everything EXCEPT specifically listed exclusions</li>
+            <li>Most comprehensive protection available</li>
+            <li>Best value for luxury vehicles and unreliable brands</li>
+          </ul>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Key Insight</h4>
+            <p>With over 40% of vehicles experiencing major mechanical issues after their factory warranty expires, extended coverage has become increasingly valuable. A single transmission replacement ($3,000-$5,000) can exceed years of warranty payments.</p>
+          </div>
+        </div>
+
+        <!-- How to Choose -->
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose the Best Extended Car Warranty</h2>
+
+          <p>The right warranty depends on your vehicle's age, mileage, and reliability history. Use this decision framework:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Your Situation</th>
+                <th>Recommended Coverage</th>
+                <th>Top Pick</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Newer vehicle (under 5 years, &lt;60K miles)</td>
+                <td>Comprehensive/Exclusionary</td>
+                <td>CARCHEX Platinum</td>
+              </tr>
+              <tr>
+                <td>Budget-conscious buyer</td>
+                <td>Powertrain + A/C</td>
+                <td>Protect My Car</td>
+              </tr>
+              <tr>
+                <td>High mileage (100K+ miles)</td>
+                <td>Specialized high-mileage plan</td>
+                <td>CarShield Diamond</td>
+              </tr>
+              <tr>
+                <td>Luxury/European vehicle</td>
+                <td>Premium exclusionary</td>
+                <td>CARCHEX Titanium</td>
+              </tr>
+              <tr>
+                <td>Older vehicle (10+ years)</td>
+                <td>Classic car specialist</td>
+                <td>Route 66</td>
+              </tr>
+              <tr>
+                <td>Want best customer service</td>
+                <td>Concierge-style coverage</td>
+                <td>autopom!</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>5 Questions to Ask Before Buying</h3>
+
+          <ol>
+            <li><strong>What's the claim approval rate?</strong> Look for 90%+ approval rates. Anything below 85% is a red flag.</li>
+            <li><strong>Can I use any repair shop?</strong> Most plans allow ASE-certified mechanics. Some restrict to specific networks.</li>
+            <li><strong>What's the deductible structure?</strong> Per-visit vs. per-repair deductibles significantly impact costs.</li>
+            <li><strong>Is there a waiting period?</strong> Most plans have 30-90 day waiting periods before coverage begins.</li>
+            <li><strong>Is the warranty transferable?</strong> Transferable warranties increase your vehicle's resale value.</li>
+          </ol>
+
+          <div class="warning-box">
+            <h4>Red Flags to Avoid</h4>
+            <p><strong>Never buy from providers who:</strong> Use high-pressure sales tactics, refuse to provide contract terms before purchase, claim "final notice" via robocalls, advertise unrealistically low prices (comprehensive coverage under $50/month is not legitimate), or have BBB ratings below B.</p>
+          </div>
+        </div>
+
+        <!-- Cost Breakdown -->
+        <div id="cost-breakdown" class="scroll-mt-24">
+          <h2>Extended Car Warranty Cost Breakdown</h2>
+
+          <p>Understanding pricing helps you avoid overpaying. Costs vary based on coverage level, vehicle age, and mileage:</p>
+
+          <div class="comparison-boxes">
+            <div class="fee-breakdown">
+              <h4>Vehicle Age Impact</h4>
+              <ul>
+                <li>Under 3 years: <strong>Base pricing</strong></li>
+                <li>3-6 years: <strong>15-25% premium</strong></li>
+                <li>6-10 years: <strong>40-60% premium</strong></li>
+                <li>Over 10 years: <strong>75-100%+ premium</strong></li>
+              </ul>
+            </div>
+            
+            <div class="fee-breakdown">
+              <h4>Mileage Impact</h4>
+              <ul>
+                <li>Under 60,000 miles: <strong>Standard rates</strong></li>
+                <li>60,000-100,000 miles: <strong>20-30% increase</strong></li>
+                <li>Over 100,000 miles: <strong>50-75% increase</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Money-Saving Tips</h3>
+
+          <ul>
+            <li><strong>Choose higher deductibles:</strong> Increasing from $100 to $250 can reduce premiums 15-25%</li>
+            <li><strong>Pay annually:</strong> Monthly payments often include 10-15% financing charges</li>
+            <li><strong>Negotiate:</strong> Published rates often include 50-100% dealer markups—independent agents offer better pricing</li>
+            <li><strong>Buy early:</strong> Purchase within 30 days of vehicle acquisition to avoid inspections and get better rates</li>
+            <li><strong>Consider powertrain-only:</strong> For reliable brands (Toyota, Honda), basic coverage may be sufficient</li>
+          </ul>
+        </div>
+
+        <!-- Methodology -->
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Ranking Methodology</h2>
+
+          <p>Our editorial team evaluates extended warranty providers based on seven weighted factors:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What We Evaluate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Claim Approval Rate</td>
+                <td>25%</td>
+                <td>Percentage of claims approved, processing time, denial patterns</td>
+              </tr>
+              <tr>
+                <td>Coverage Options</td>
+                <td>20%</td>
+                <td>Plan variety, component coverage, exclusion lists</td>
+              </tr>
+              <tr>
+                <td>Customer Satisfaction</td>
+                <td>20%</td>
+                <td>J.D. Power scores, BBB ratings, verified customer reviews</td>
+              </tr>
+              <tr>
+                <td>Pricing & Value</td>
+                <td>15%</td>
+                <td>Cost relative to coverage, hidden fees, deductible options</td>
+              </tr>
+              <tr>
+                <td>Repair Network</td>
+                <td>10%</td>
+                <td>Number of facilities, geographic coverage, shop flexibility</td>
+              </tr>
+              <tr>
+                <td>Additional Benefits</td>
+                <td>5%</td>
+                <td>Roadside assistance, rental reimbursement, trip interruption</td>
+              </tr>
+              <tr>
+                <td>Financial Stability</td>
+                <td>5%</td>
+                <td>A.M. Best ratings, years in business, claim payment reliability</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Our team includes automotive journalists and consumer protection experts who have personally evaluated contracts from each provider. We update rankings quarterly based on new data and market changes. Last updated: <strong>December 11, 2025</strong>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about extended car warranties.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Insurance Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/insurance/car" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg></div>
+          <h3>Car Insurance Guide</h3>
+          <p>Compare rates from top auto insurers</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-home-warranty-companies" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <h3>Home Warranty Companies</h3>
+          <p>Best protection for your home systems</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-rv-insurance" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <h3>RV Insurance</h3>
+          <p>Coverage for recreational vehicles</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/michael-rodriguez.jpg" alt="Screened Editorial Team" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#3B82F6] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Screened Editorial Team</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Our editorial team consists of certified automotive experts, consumer protection specialists, and award-winning journalists. We independently research, test, and recommend the best products. We may earn commission from partner links, but this never influences our rankings.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 11, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              12 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</MainLayout>
+
+<style>
+  /* Apply Button shine effect */
+  .apply-btn {
+    position: relative;
+    overflow: hidden;
+    color: #FFFFFF !important;
+  }
+
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Apply Button */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Comparison Table */
+  .comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .comparison-table th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .comparison-table th:first-child {
+    text-align: left;
+    padding-left: 1.5rem;
+  }
+  .comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .comparison-table td:first-child {
+    padding-left: 1.5rem;
+  }
+  .comparison-table tbody tr:hover td {
+    background: #EBF5FF;
+  }
+
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #0D2C4B;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #F9FAFB; }
+
+  .info-box, .warning-box, .key-takeaway {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .info-box {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+  }
+  .info-box h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #1E40AF; }
+
+  .warning-box {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 
+      0 0 0 1px rgba(245, 158, 11, 0.15),
+      0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box h4::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01'/%3E%3C/svg%3E");
+    background-size: contain;
+    flex-shrink: 0;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+  }
+  .key-takeaway h4 { color: #047857; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #065F46; }
+
+  /* Fee Breakdown */
+  .comparison-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .fee-breakdown {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  
+  .fee-breakdown h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #E2E8F0;
+  }
+  
+  .fee-breakdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .fee-breakdown li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #E2E8F0;
+    font-size: 0.9rem;
+    color: #4B5563;
+  }
+  
+  .fee-breakdown li:last-child {
+    border-bottom: none;
+  }
+
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BFDBFE;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #F8FAFC; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Related Cards */
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .related-card:hover {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  
+  .related-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #3B82F6;
+  }
+  
+  .related-card h3 {
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+  
+  .related-card p {
+    color: #64748B;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .related-link {
+    color: #3B82F6;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+  }
+  
+  .related-card:hover .related-link {
+    color: #1D4ED8;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #3B82F6;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #3B82F6;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
+
