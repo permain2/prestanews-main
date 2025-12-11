@@ -278,128 +278,153 @@ export default function PremiumContentSection({
           font-weight: 600;
         }
 
-        /* Key Takeaways Box */
+        /* Key Takeaways Box - Premium card style */
         .premium-content .key-takeaways {
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-          border: 1px solid #e2e8f0;
-          border-radius: 20px;
-          padding: 2rem;
+          background: #ffffff;
+          border: none;
+          border-radius: 16px;
+          padding: 0;
           margin: 2rem 0;
-          position: relative;
           overflow: hidden;
-        }
-
-        .premium-content .key-takeaways::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+          box-shadow: 
+            0 0 0 1px rgba(0, 0, 0, 0.03),
+            0 4px 24px rgba(0, 0, 0, 0.06);
         }
 
         .premium-content .key-takeaways h3 {
-          color: #0f172a;
-          margin-top: 0;
-          margin-bottom: 1.25rem;
-          font-size: 1.25rem;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #ffffff;
+          margin: 0;
+          padding: 1rem 1.5rem;
+          font-size: 1rem;
+        }
+
+        .premium-content .key-takeaways h3::before {
+          content: '';
+          width: 20px;
+          height: 20px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'/%3E%3C/svg%3E");
+          background-size: contain;
+          flex-shrink: 0;
         }
 
         .premium-content .key-takeaways ul {
           margin: 0;
+          padding: 1.25rem 1.5rem;
         }
 
         .premium-content .key-takeaways li {
           padding-left: 1.5rem;
+          color: #334155;
         }
 
         .premium-content .key-takeaways li::before {
-          background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+          background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
         }
 
-        /* Info Box */
+        /* Info Box - No emoji, uses icon in header */
         .premium-content .info-box {
-          background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-          border: 1px solid #bfdbfe;
-          border-radius: 16px;
-          padding: 1.5rem 2rem;
-          margin: 2rem 0;
-          position: relative;
-        }
-
-        .premium-content .info-box::before {
-          content: '💡';
-          position: absolute;
-          top: -12px;
-          left: 20px;
           background: #ffffff;
-          padding: 4px 8px;
-          border-radius: 8px;
-          font-size: 1.25rem;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          border: none;
+          border-radius: 16px;
+          padding: 0;
+          margin: 2rem 0;
+          overflow: hidden;
+          box-shadow: 
+            0 0 0 1px rgba(59, 130, 246, 0.1),
+            0 4px 24px rgba(59, 130, 246, 0.08);
         }
 
         .premium-content .info-box h4 {
-          color: #1d4ed8;
-          margin: 0 0 0.75rem;
-          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+          color: #ffffff;
+          margin: 0;
+          padding: 1rem 1.5rem;
+          font-size: 0.9375rem;
+        }
+
+        .premium-content .info-box h4::before {
+          content: '';
+          width: 20px;
+          height: 20px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4M12 8h.01'/%3E%3C/svg%3E");
+          background-size: contain;
+          flex-shrink: 0;
         }
 
         .premium-content .info-box p {
-          color: #1e40af;
+          color: #334155;
           margin: 0;
+          padding: 1.25rem 1.5rem;
           font-size: 0.95rem;
           line-height: 1.7;
         }
 
         .premium-content .info-box ul {
-          margin: 0.5rem 0 0;
+          margin: 0;
+          padding: 0 1.5rem 1.25rem;
         }
 
         .premium-content .info-box li {
-          color: #1e40af;
+          color: #334155;
         }
 
         .premium-content .info-box li::before {
-          background: #2563eb;
+          background: #3b82f6;
         }
 
         /* Success Box */
         .premium-content .success-box {
-          background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-          border: 1px solid #86efac;
-          border-radius: 16px;
-          padding: 1.5rem 2rem;
-          margin: 2rem 0;
-          position: relative;
-        }
-
-        .premium-content .success-box::before {
-          content: '✅';
-          position: absolute;
-          top: -12px;
-          left: 20px;
           background: #ffffff;
-          padding: 4px 8px;
-          border-radius: 8px;
-          font-size: 1.25rem;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          border: none;
+          border-radius: 16px;
+          padding: 0;
+          margin: 2rem 0;
+          overflow: hidden;
+          box-shadow: 
+            0 0 0 1px rgba(34, 197, 94, 0.1),
+            0 4px 24px rgba(34, 197, 94, 0.08);
         }
 
         .premium-content .success-box h4 {
-          color: #166534;
-          margin: 0 0 0.75rem;
-          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+          color: #ffffff;
+          margin: 0;
+          padding: 1rem 1.5rem;
+          font-size: 0.9375rem;
+        }
+
+        .premium-content .success-box h4::before {
+          content: '';
+          width: 20px;
+          height: 20px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+          background-size: contain;
+          flex-shrink: 0;
         }
 
         .premium-content .success-box p,
         .premium-content .success-box li {
-          color: #15803d;
+          color: #334155;
+        }
+
+        .premium-content .success-box p {
+          margin: 0;
+          padding: 1.25rem 1.5rem;
         }
 
         .premium-content .success-box ul {
-          margin: 0.5rem 0 0;
+          margin: 0;
+          padding: 0 1.5rem 1.25rem;
         }
 
         .premium-content .success-box li::before {
@@ -408,39 +433,50 @@ export default function PremiumContentSection({
 
         /* Warning Box */
         .premium-content .warning-box {
-          background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-          border: 1px solid #fcd34d;
-          border-radius: 16px;
-          padding: 1.5rem 2rem;
-          margin: 2rem 0;
-          position: relative;
-        }
-
-        .premium-content .warning-box::before {
-          content: '⚠️';
-          position: absolute;
-          top: -12px;
-          left: 20px;
           background: #ffffff;
-          padding: 4px 8px;
-          border-radius: 8px;
-          font-size: 1.25rem;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          border: none;
+          border-radius: 16px;
+          padding: 0;
+          margin: 2rem 0;
+          overflow: hidden;
+          box-shadow: 
+            0 0 0 1px rgba(245, 158, 11, 0.15),
+            0 4px 24px rgba(245, 158, 11, 0.1);
         }
 
         .premium-content .warning-box h4 {
-          color: #92400e;
-          margin: 0 0 0.75rem;
-          font-size: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+          color: #ffffff;
+          margin: 0;
+          padding: 1rem 1.5rem;
+          font-size: 0.9375rem;
         }
 
-        .premium-content .warning-box p,
+        .premium-content .warning-box h4::before {
+          content: '';
+          width: 20px;
+          height: 20px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01'/%3E%3C/svg%3E");
+          background-size: contain;
+          flex-shrink: 0;
+        }
+
+        .premium-content .warning-box p {
+          margin: 0;
+          padding: 1.25rem 1.5rem;
+          color: #334155;
+        }
+
         .premium-content .warning-box li {
-          color: #a16207;
+          color: #334155;
         }
 
         .premium-content .warning-box ul {
-          margin: 0.5rem 0 0;
+          margin: 0;
+          padding: 0 1.5rem 1.25rem;
         }
 
         .premium-content .warning-box li::before {
@@ -516,7 +552,7 @@ export default function PremiumContentSection({
 // Export sub-components for use in Astro
 export function KeyTakeaways({
   children,
-  title = "📋 Key Takeaways",
+  title = "Key Takeaways",
 }: {
   children: ReactNode;
   title?: string;
