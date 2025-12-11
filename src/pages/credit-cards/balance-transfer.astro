@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import { getCardImage } from '../../utils/cardImageMap';
 
 // Balance transfer credit cards
 const creditCards = [
@@ -148,15 +149,23 @@ const creditCards = [
           <div class="grid md:grid-cols-[300px_1fr]">
             <!-- Left Panel - Card Image & CTA -->
             <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
-              <div class="w-64 h-40 rounded-xl shadow-xl mb-6 relative overflow-hidden" style={`background: linear-gradient(135deg, ${index % 4 === 0 ? '#1E40AF 0%, #3B82F6 50%, #1E40AF 100%' : index % 4 === 1 ? '#065F46 0%, #10B981 50%, #065F46 100%' : index % 4 === 2 ? '#7C3AED 0%, #A78BFA 50%, #7C3AED 100%' : '#DC2626 0%, #EF4444 50%, #DC2626 100%'});`}>
-                <div class="absolute top-6 left-6 w-10 h-8 rounded bg-gradient-to-br from-yellow-300 to-yellow-500 opacity-90"></div>
-                <div class="absolute top-4 right-4">
-                  <div class="text-white font-bold text-sm tracking-tight opacity-90">0% APR</div>
+              {getCardImage(card.name) ? (
+                <img 
+                  src={getCardImage(card.name)} 
+                  alt={card.name}
+                  class="w-64 h-auto rounded-xl shadow-xl mb-6 hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                />
+              ) : (
+                <div class="w-64 h-40 rounded-xl shadow-xl mb-6 relative overflow-hidden" style={`background: linear-gradient(135deg, ${index % 4 === 0 ? '#1E40AF 0%, #3B82F6 50%, #1E40AF 100%' : index % 4 === 1 ? '#065F46 0%, #10B981 50%, #065F46 100%' : index % 4 === 2 ? '#7C3AED 0%, #A78BFA 50%, #7C3AED 100%' : '#DC2626 0%, #EF4444 50%, #DC2626 100%'});`}>
+                  <div class="absolute top-6 left-6 w-10 h-8 rounded bg-gradient-to-br from-yellow-300 to-yellow-500 opacity-90"></div>
+                  <div class="absolute top-4 right-4">
+                    <div class="text-white font-bold text-sm tracking-tight opacity-90">0% APR</div>
+                  </div>
+                  <div class="absolute bottom-4 left-4 right-4">
+                    <div class="text-white text-xs font-medium opacity-80 leading-tight">{card.name}</div>
+                  </div>
                 </div>
-                <div class="absolute bottom-4 left-4 right-4">
-                  <div class="text-white text-xs font-medium opacity-80 leading-tight">{card.name}</div>
-                </div>
-              </div>
+              )}
               
               <!-- Key Stats -->
               <div class="w-full grid grid-cols-2 gap-2 mb-4">

@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import { getCardImage } from '../../utils/cardImageMap';
 
 // No annual fee credit cards
 const creditCards = [
@@ -98,15 +99,23 @@ const creditCards = [
         <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
           <div class="grid md:grid-cols-[300px_1fr]">
             <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
-              <div class="w-64 h-40 rounded-xl shadow-xl mb-6 relative overflow-hidden" style={`background: linear-gradient(135deg, ${index % 2 === 0 ? '#0077C0 0%, #00A3E0 50%, #0077C0 100%' : '#2563EB 0%, #3B82F6 50%, #2563EB 100%'});`}>
-                <div class="absolute top-6 left-6 w-10 h-8 rounded bg-gradient-to-br from-yellow-300 to-yellow-500 opacity-90"></div>
-                <div class="absolute top-4 right-4">
-                  <div class="text-white font-bold text-lg tracking-tight opacity-90">AMEX</div>
+              {getCardImage(card.name) ? (
+                <img 
+                  src={getCardImage(card.name)} 
+                  alt={card.name}
+                  class="w-64 h-auto rounded-xl shadow-xl mb-6 hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                />
+              ) : (
+                <div class="w-64 h-40 rounded-xl shadow-xl mb-6 relative overflow-hidden" style={`background: linear-gradient(135deg, ${index % 2 === 0 ? '#0077C0 0%, #00A3E0 50%, #0077C0 100%' : '#2563EB 0%, #3B82F6 50%, #2563EB 100%'});`}>
+                  <div class="absolute top-6 left-6 w-10 h-8 rounded bg-gradient-to-br from-yellow-300 to-yellow-500 opacity-90"></div>
+                  <div class="absolute top-4 right-4">
+                    <div class="text-white font-bold text-lg tracking-tight opacity-90">AMEX</div>
+                  </div>
+                  <div class="absolute bottom-4 left-4 right-4">
+                    <div class="text-white text-xs font-medium opacity-80 leading-tight">{card.name}</div>
+                  </div>
                 </div>
-                <div class="absolute bottom-4 left-4 right-4">
-                  <div class="text-white text-xs font-medium opacity-80 leading-tight">{card.name}</div>
-                </div>
-              </div>
+              )}
               
               <a href="#" class="apply-btn group w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide mb-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 relative overflow-hidden" style="color: #FFFFFF !important;">
                 <span class="relative z-10" style="color: #FFFFFF !important;">Apply Now</span>
