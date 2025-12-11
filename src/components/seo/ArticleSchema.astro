@@ -1,0 +1,80 @@
+---
+/**
+ * Article Schema - JSON-LD structured data for articles/blog posts
+ * Enables rich snippets in Google search results
+ */
+import { SITE_TITLE, SITE_URL, SITE_LOGO } from '../../consts';
+
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  datePublished: Date;
+  dateModified?: Date;
+  author?: string;
+  authorUrl?: string;
+  section?: string;
+  tags?: string[];
+  wordCount?: number;
+}
+
+const {
+  title,
+  description,
+  url,
+  image,
+  datePublished,
+  dateModified = datePublished,
+  author = 'Screened Editorial Team',
+  authorUrl = SITE_URL,
+  section = 'Finance',
+  tags = [],
+  wordCount,
+} = Astro.props;
+
+const fullUrl = url.startsWith('http') ? url : `${SITE_URL}${url}`;
+const imageUrl = image ? (image.startsWith('http') ? image : `${SITE_URL}${image}`) : `${SITE_URL}${SITE_LOGO}`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": `${fullUrl}#article`,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": fullUrl
+  },
+  "headline": title,
+  "description": description,
+  "image": {
+    "@type": "ImageObject",
+    "url": imageUrl,
+    "width": 1200,
+    "height": 630
+  },
+  "datePublished": datePublished.toISOString(),
+  "dateModified": dateModified.toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": author,
+    "url": authorUrl
+  },
+  "publisher": {
+    "@type": "Organization",
+    "@id": `${SITE_URL}/#organization`,
+    "name": SITE_TITLE,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${SITE_URL}${SITE_LOGO}`,
+      "width": 512,
+      "height": 512
+    }
+  },
+  "articleSection": section,
+  "keywords": tags.join(', '),
+  "inLanguage": "en-US",
+  ...(wordCount && { "wordCount": wordCount })
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

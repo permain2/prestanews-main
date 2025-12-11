@@ -6,10 +6,16 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: process.env.SITE_URL || 'https://prestanews.vercel.app',
+	site: process.env.SITE_URL || 'https://www.screened.com',
 	integrations: [mdx(), sitemap(), react()],
-    vite: {
-        plugins: [tailwind()],
-    },
-    output: 'static',
+	vite: {
+		plugins: [tailwind()],
+	},
+	output: 'static',
+	trailingSlash: 'ignore',
+	prefetch: {
+		prefetchAll: true,
+		defaultStrategy: 'viewport',
+	},
+	compressHTML: true,
 });

@@ -1,0 +1,42 @@
+---
+/**
+ * Website Schema - JSON-LD structured data for the website
+ * Enables sitelinks search box in Google search results
+ */
+import { SITE_TITLE, SITE_URL, SITE_DESCRIPTION } from '../../consts';
+
+interface Props {
+  name?: string;
+  url?: string;
+  description?: string;
+}
+
+const {
+  name = SITE_TITLE,
+  url = SITE_URL,
+  description = SITE_DESCRIPTION,
+} = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${url}/#website`,
+  "name": name,
+  "url": url,
+  "description": description,
+  "publisher": {
+    "@id": `${url}/#organization`
+  },
+  "inLanguage": "en-US",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": `${url}/search?q={search_term_string}`
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

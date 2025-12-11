@@ -1,0 +1,57 @@
+---
+/**
+ * Organization Schema - JSON-LD structured data for the organization
+ * Used on homepage and site-wide for brand recognition
+ */
+import { SITE_TITLE, SITE_URL, SITE_DESCRIPTION, SITE_LOGO } from '../../consts';
+
+interface Props {
+  name?: string;
+  url?: string;
+  logo?: string;
+  description?: string;
+}
+
+const {
+  name = SITE_TITLE,
+  url = SITE_URL,
+  logo = `${SITE_URL}${SITE_LOGO}`,
+  description = SITE_DESCRIPTION,
+} = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${url}/#organization`,
+  "name": name,
+  "url": url,
+  "logo": {
+    "@type": "ImageObject",
+    "@id": `${url}/#logo`,
+    "url": logo,
+    "width": 512,
+    "height": 512,
+    "caption": name
+  },
+  "image": logo,
+  "description": description,
+  "foundingDate": "2024",
+  "sameAs": [
+    "https://twitter.com/screenedcom",
+    "https://www.facebook.com/screenedcom",
+    "https://www.linkedin.com/company/screened"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "contact@screened.com",
+    "availableLanguage": ["English"]
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "US"
+  }
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

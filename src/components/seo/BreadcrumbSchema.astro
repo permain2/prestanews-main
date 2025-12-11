@@ -1,0 +1,39 @@
+---
+/**
+ * Breadcrumb Schema - JSON-LD structured data for breadcrumb navigation
+ * Improves site navigation display in search results
+ */
+import { SITE_URL, SITE_TITLE } from '../../consts';
+
+interface BreadcrumbItem {
+  name: string;
+  url?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+// Always include home as first item
+const breadcrumbItems = [
+  { name: 'Home', url: SITE_URL },
+  ...items
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbItems.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    ...(item.url && { 
+      "item": item.url.startsWith('http') ? item.url : `${SITE_URL}${item.url}`
+    })
+  }))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

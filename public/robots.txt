@@ -1,8 +1,25 @@
+# Screened.com Robots.txt
+# https://www.screened.com
+
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://prestanews.com/sitemap-index.xml
+# Disallow non-content pages
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /search?
+Disallow: /*?preview=
 
-# Crawl-delay
+# Sitemaps
+Sitemap: https://www.screened.com/sitemap-index.xml
+
+# Crawl-delay for respectful crawling
 Crawl-delay: 1
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+
+# Bing specific
+User-agent: Bingbot
+Allow: /

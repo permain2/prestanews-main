@@ -3,24 +3,52 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_LANGUAGE } from '../consts';
 
 interface Props {
   title: string;
   description?: string;
   image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  author?: string;
+  noindex?: boolean;
 }
 
-const { title, description = "Your trusted source for credit card reviews, travel guides, and financial insights.", image } = Astro.props;
+const { 
+  title, 
+  description = SITE_DESCRIPTION, 
+  image,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  noindex = false
+} = Astro.props;
+
+// Format the page title
+const pageTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={SITE_LANGUAGE.split('-')[0]} dir="ltr">
   <head>
-    <BaseHead title={`${title} - PrestaNews`} description={description} image={image} />
+    <BaseHead 
+      title={pageTitle} 
+      description={description} 
+      image={image}
+      type={type}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+      noindex={noindex}
+    />
+    <slot name="head" />
   </head>
-  <body class="flex flex-col min-h-screen bg-white">
+  <body class="flex flex-col min-h-screen bg-white antialiased">
     <Header />
-    <main class="flex-grow">
+    <main id="main-content" class="flex-grow" role="main">
       <slot />
     </main>
     <Footer />

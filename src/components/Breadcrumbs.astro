@@ -1,0 +1,119 @@
+---
+/**
+ * Visual Breadcrumb Navigation Component
+ * Provides accessible breadcrumb navigation with schema markup
+ */
+import BreadcrumbSchema from './seo/BreadcrumbSchema.astro';
+import { SITE_URL } from '../consts';
+
+interface BreadcrumbItem {
+  name: string;
+  url?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<!-- Schema Markup -->
+<BreadcrumbSchema items={items} />
+
+<!-- Visual Breadcrumbs -->
+<nav aria-label="Breadcrumb" class={`breadcrumbs ${className}`}>
+  <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <!-- Home is always first -->
+    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="/" itemprop="item" class="breadcrumb-link">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+      <span class="breadcrumb-separator" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </span>
+    </li>
+    
+    {items.map((item, index) => (
+      <li 
+        class="breadcrumb-item" 
+        itemprop="itemListElement" 
+        itemscope 
+        itemtype="https://schema.org/ListItem"
+        aria-current={index === items.length - 1 ? 'page' : undefined}
+      >
+        {item.url ? (
+          <>
+            <a href={item.url} itemprop="item" class="breadcrumb-link">
+              <span itemprop="name">{item.name}</span>
+            </a>
+            <span class="breadcrumb-separator" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </>
+        ) : (
+          <span class="breadcrumb-current" itemprop="name">{item.name}</span>
+        )}
+        <meta itemprop="position" content={String(index + 2)} />
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    padding: 1rem 0;
+  }
+
+  .breadcrumb-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .breadcrumb-link {
+    color: #68727C;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .breadcrumb-link:hover {
+    color: #146aff;
+    text-decoration: underline;
+  }
+
+  .breadcrumb-separator {
+    color: #D5D9DD;
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumb-current {
+    color: #162433;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .breadcrumbs {
+      font-size: 0.8125rem;
+    }
+  }
+</style>

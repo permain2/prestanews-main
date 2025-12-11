@@ -2,33 +2,90 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import MainLayout from './MainLayout.astro';
+import ArticleSchema from '../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import { SITE_TITLE, SITE_AUTHOR } from '../consts';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+    author?: string;
+    authorImage?: string;
+    authorRole?: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { 
+    title, 
+    description, 
+    pubDate, 
+    updatedDate, 
+    heroImage, 
+    tags,
+    author = SITE_AUTHOR,
+    authorRole = 'Editorial Team'
+} = Astro.props;
+
+// Calculate reading time (rough estimate: 200 words per minute)
+const wordsPerMinute = 200;
+const wordCount = 1500; // Default estimate, can be passed as prop
+const readingTime = Math.ceil(wordCount / wordsPerMinute);
+
+// Get current page URL
+const currentUrl = Astro.url.pathname;
+
+// Determine section from tags or URL
+const section = tags?.[0] ? tags[0].replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Finance';
+
+// Breadcrumb items
+const breadcrumbItems = [
+    { name: 'News', url: '/news' },
+    { name: title }
+];
 ---
 
-<MainLayout title={title} description={description}>
-    <article class="article-page">
+<MainLayout title={title} description={description} image={heroImage}>
+    <!-- Structured Data -->
+    <ArticleSchema
+        title={title}
+        description={description}
+        url={currentUrl}
+        image={heroImage}
+        datePublished={pubDate}
+        dateModified={updatedDate || pubDate}
+        author={author}
+        section={section}
+        tags={tags || []}
+        wordCount={wordCount}
+    />
+    <BreadcrumbSchema items={breadcrumbItems} />
+
+    <article class="article-page" itemscope itemtype="https://schema.org/Article">
         <!-- Header Section -->
         <header class="article-header">
             <div class="header-container">
                 {tags && tags[0] && (
-                    <a href={`/news/${tags[0]}`} class="category-link">
+                    <a href={`/news/${tags[0]}`} class="category-link" rel="tag">
                         {tags[0].replace('-', ' ')}
                     </a>
                 )}
-                <h1 class="article-title">{title}</h1>
+                <h1 class="article-title" itemprop="headline">{title}</h1>
+                <p class="article-description visually-hidden" itemprop="description">{description}</p>
                 <div class="article-meta">
-                    <span class="author">By PrestaNews Team</span>
-                    <span class="separator">|</span>
-                    <span class="date"><FormattedDate date={pubDate} /></span>
+                    <span class="author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        By <span itemprop="name">{author}</span>
+                    </span>
+                    <span class="separator" aria-hidden="true">|</span>
+                    <time class="date" datetime={pubDate.toISOString()} itemprop="datePublished">
+                        <FormattedDate date={pubDate} />
+                    </time>
                     {updatedDate && (
                         <>
-                            <span class="separator">|</span>
-                            <span class="updated">Updated: <FormattedDate date={updatedDate} /></span>
+                            <span class="separator" aria-hidden="true">|</span>
+                            <time class="updated" datetime={updatedDate.toISOString()} itemprop="dateModified">
+                                Updated: <FormattedDate date={updatedDate} />
+                            </time>
                         </>
                     )}
+                    <span class="separator" aria-hidden="true">|</span>
+                    <span class="reading-time">{readingTime} min read</span>
                 </div>
             </div>
         </header>
@@ -36,7 +93,17 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
         <!-- Hero Image -->
         {heroImage && (
             <div class="hero-image-container">
-                <img src={heroImage} alt={title} class="hero-image" />
+                <img 
+                    src={heroImage} 
+                    alt={title} 
+                    class="hero-image" 
+                    itemprop="image"
+                    width="832"
+                    height="468"
+                    loading="eager"
+                    decoding="async"
+                    fetchpriority="high"
+                />
             </div>
         )}
 
@@ -44,33 +111,40 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
         <div class="content-wrapper">
             <div class="content-grid">
                 <!-- Main Content -->
-                <main class="main-content">
+                <main id="main-content" class="main-content" itemprop="articleBody">
                     <div class="article-body">
                         <slot />
                     </div>
                     
                     <!-- Tags -->
                     {tags && tags.length > 0 && (
-                        <div class="article-tags">
+                        <footer class="article-tags">
                             <span class="tags-label">Related Topics:</span>
-                            <div class="tags-list">
+                            <div class="tags-list" itemprop="keywords">
                                 {tags.map((tag: string) => (
-                                    <a href={`/tags/${tag}`} class="tag">
+                                    <a href={`/tags/${tag}`} class="tag" rel="tag">
                                         {tag.replace('-', ' ')}
                                     </a>
                                 ))}
                             </div>
-                        </div>
+                        </footer>
                     )}
                 </main>
 
                 <!-- Sidebar -->
-                <aside class="sidebar">
+                <aside class="sidebar" aria-label="Newsletter signup">
                     <div class="sidebar-sticky">
                         <!-- Newsletter -->
                         <div class="newsletter-box">
                             <div class="newsletter-icon">
-                                <img src="/icons/newsletter.png" alt="Newsletter" />
+                                <img 
+                                    src="/icons/newsletter.png" 
+                                    alt="" 
+                                    aria-hidden="true"
+                                    width="48"
+                                    height="48"
+                                    loading="lazy"
+                                />
                             </div>
                             <p class="newsletter-text">Get the latest deals and news delivered to your inbox weekly.</p>
                             <a href="/newsletter" class="btn-apply" style="border-radius: 0.25rem;">Subscribe Now</a>
@@ -79,6 +153,9 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
                 </aside>
             </div>
         </div>
+        
+        <!-- Hidden metadata for schema -->
+        <meta itemprop="publisher" content={SITE_TITLE} />
     </article>
 </MainLayout>
 

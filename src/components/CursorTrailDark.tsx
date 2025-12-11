@@ -54,7 +54,7 @@ export default function CursorTrailDark({
     title,
     kicker = "TRAVEL CARDS",
     subtitle,
-    author = "PrestaNews Editorial Team",
+    author = "Screened Editorial Team",
     date = "Dec. 10, 2025",
     fadeOutDuration = 1.5,
     imageSize = 160,

@@ -2,6 +2,9 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
 import HeroTypewriter from '../components/HeroTypewriter.tsx';
+import OrganizationSchema from '../components/seo/OrganizationSchema.astro';
+import WebsiteSchema from '../components/seo/WebsiteSchema.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 // Get latest articles
 const allPosts = await getCollection('blog');
@@ -17,7 +20,10 @@ const authors = [
 ];
 ---
 
-<MainLayout title="Make Smarter Financial Decisions" description="Expert credit card reviews, insurance comparisons, and financial guides to help you save money and choose with confidence.">
+<MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <!-- Homepage-specific structured data -->
+  <OrganizationSchema />
+  <WebsiteSchema />
   
   <!-- Hero Section -->
   <section class="hero-section">
