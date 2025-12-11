@@ -20,22 +20,28 @@ interface TrailImage {
 }
 
 const insuranceLogos = [
+    // Car Insurance
     "/insurance-logos/geico.png",
     "/insurance-logos/progressive.png",
     "/insurance-logos/statefarm.png",
+    "/insurance-logos/usaa.png",
     "/insurance-logos/allstate.png",
     "/insurance-logos/libertymutual.png",
-    "/insurance-logos/prudential.png",
-    "/insurance-logos/metlife.png",
-    "/insurance-logos/newyorklife.png",
-    "/insurance-logos/northwestern.png",
-    "/insurance-logos/massmutual.png",
+    // Home Insurance
     "/insurance-logos/nationwide.png",
-    "/insurance-logos/travelers.png",
-    "/insurance-logos/farmers.png",
-    "/insurance-logos/usaa.png",
-    "/insurance-logos/lemonade.png",
     "/insurance-logos/amica.png",
+    // Life Insurance
+    "/insurance-logos/northwestern.png",
+    "/insurance-logos/newyorklife.png",
+    "/insurance-logos/prudential.png",
+    "/insurance-logos/massmutual.png",
+    "/insurance-logos/havenlife.png",
+    // Renters Insurance
+    "/insurance-logos/lemonade.png",
+    "/insurance-logos/farmers.png",
+    // Additional
+    "/insurance-logos/travelers.png",
+    "/insurance-logos/metlife.png",
     "/insurance-logos/erie.png",
     "/insurance-logos/chubb.png",
 ]
@@ -237,5 +243,9 @@ export default function CursorTrailInsurance({
         </div>
     )
 }
+
+
+
+
 
 

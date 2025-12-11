@@ -5,6 +5,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 const providers = [
   {
     name: "Northwestern Mutual",
+    logo: "/insurance-logos/northwestern.png",
     bestFor: "Whole Life Insurance",
     policyTypes: "Term, Whole, Universal",
     rating: 4.9,
@@ -15,6 +16,7 @@ const providers = [
   },
   {
     name: "New York Life",
+    logo: "/insurance-logos/newyorklife.png",
     bestFor: "Financial Planning",
     policyTypes: "Term, Whole, Universal",
     rating: 4.8,
@@ -25,6 +27,7 @@ const providers = [
   },
   {
     name: "Prudential",
+    logo: "/insurance-logos/prudential.png",
     bestFor: "Term Life Insurance",
     policyTypes: "Term, Whole, Universal, Variable",
     rating: 4.7,
@@ -35,6 +38,7 @@ const providers = [
   },
   {
     name: "State Farm",
+    logo: "/insurance-logos/statefarm.png",
     bestFor: "Bundling Benefits",
     policyTypes: "Term, Whole, Universal",
     rating: 4.6,
@@ -45,6 +49,7 @@ const providers = [
   },
   {
     name: "MassMutual",
+    logo: "/insurance-logos/massmutual.png",
     bestFor: "Dividend Policies",
     policyTypes: "Term, Whole, Universal, Variable",
     rating: 4.8,
@@ -55,6 +60,7 @@ const providers = [
   },
   {
     name: "Haven Life",
+    logo: "/insurance-logos/havenlife.png",
     bestFor: "Online Term Life",
     policyTypes: "Term only",
     rating: 4.7,
@@ -102,9 +108,9 @@ const providers = [
           <div class="grid md:grid-cols-[300px_1fr]">
             <!-- Left Panel - Logo & CTA -->
             <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
-              <!-- Provider Visual -->
-              <div class="w-48 h-32 rounded-xl shadow-lg mb-6 relative overflow-hidden flex items-center justify-center" style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);">
-                <span class="text-white font-bold text-xl font-sora text-center px-4">{provider.name}</span>
+              <!-- Provider Logo -->
+              <div class="w-48 h-32 rounded-xl shadow-lg mb-6 relative overflow-hidden flex items-center justify-center bg-white p-4">
+                <img src={provider.logo} alt={`${provider.name} logo`} class="max-w-full max-h-full object-contain" />
               </div>
               
               <!-- Apply Button -->

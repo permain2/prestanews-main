@@ -159,7 +159,7 @@
     <div class="container">
         <h1>PrestaNews / Screened - Project Documentation</h1>
         <p><strong>Domain:</strong> prestanews.com (redirects to screened branding)<br>
-        <strong>Last Updated:</strong> December 2025</p>
+        <strong>Last Updated:</strong> December 11, 2025</p>
 
         <nav class="nav-toc">
             <h2>Table of Contents</h2>
@@ -167,6 +167,8 @@
                 <li><a href="#seo-guide">1. SEO Guide</a></li>
                 <li><a href="#writing-bot">2. Writing Bot & Vocabulary System</a></li>
                 <li><a href="#image-tools">3. Image Scraping & Background Removal</a></li>
+                <li><a href="#image-optimization">3.5 Image Optimization SOP (Imagify)</a></li>
+                <li><a href="#alt-text">3.6 Alt Text Generation (Gemini AI)</a></li>
                 <li><a href="#site-structure">4. Site Structure</a></li>
                 <li><a href="#tech-stack">5. Tech Stack & Hosting</a></li>
                 <li><a href="#email-system">6. Email Opt-ins System</a></li>
@@ -334,12 +336,204 @@ const imagePath = getCardImage("American Express Platinum Card®");</code></pre>
             </ul>
 
             <h3>Image Optimization</h3>
-            <pre><code># Convert to WebP (recommended)
-npx @aspect/image-optimizer public/credit-cards/*.png
+            <p><span class="badge badge-done">DONE</span> All images optimized - reduced from ~89 MB to ~5.4 MB (94% savings)</p>
+            
+            <h4>Optimization Results (December 2025)</h4>
+            <table>
+                <tr><th>Folder</th><th>Before</th><th>After</th><th>Saved</th></tr>
+                <tr><td>team/</td><td>30 MB</td><td>1.0 MB</td><td>97%</td></tr>
+                <tr><td>insurance-images/</td><td>6.7 MB</td><td>668 KB</td><td>90%</td></tr>
+                <tr><td>news-images/</td><td>8.2 MB</td><td>640 KB</td><td>92%</td></tr>
+                <tr><td>guides-images/</td><td>9 MB</td><td>500 KB</td><td>95%</td></tr>
+                <tr><td>insurance-logos/</td><td>6.4 MB</td><td>536 KB</td><td>92%</td></tr>
+                <tr><td>blog-images/</td><td>1.9 MB</td><td>1.3 MB</td><td>32%</td></tr>
+                <tr><td>category-images/</td><td>2.5 MB</td><td>304 KB</td><td>88%</td></tr>
+                <tr><td>credit-cards/</td><td>182 KB</td><td>228 KB</td><td>Already optimized</td></tr>
+                <tr><th>TOTAL</th><th>~89 MB</th><th>5.4 MB</th><th>94%</th></tr>
+            </table>
+        </section>
 
-# Or use online tools:
-# - squoosh.app
-# - tinypng.com</code></pre>
+        <!-- SECTION 3.5: IMAGE OPTIMIZATION SOP -->
+        <section id="image-optimization" class="section">
+            <h2>3.5 Image Optimization SOP (Imagify + Sharp)</h2>
+            <p><strong>Account:</strong> Imagify Pro (API access) | <strong>Backup Tools:</strong> Sharp (local)</p>
+
+            <h3>Overview</h3>
+            <p>We use a two-tier image optimization system:</p>
+            <ol>
+                <li><strong>Imagify API</strong> - Cloud-based optimization for most images (Pro account)</li>
+                <li><strong>Sharp (local)</strong> - Fallback for large files that timeout on Imagify API</li>
+            </ol>
+
+            <h3>Quick Reference Commands</h3>
+            <pre><code># Preview what would be optimized (no changes)
+npm run optimize:images:dry
+
+# Optimize all images with NORMAL compression (best for logos, icons)
+npm run optimize:images
+
+# Optimize with AGGRESSIVE compression (best for photos)
+npm run optimize:images:aggressive
+
+# Optimize specific folder only
+IMAGIFY_API_KEY=your_key node scripts/optimize-images-imagify.js --folder=team
+
+# Fallback: Optimize large files locally with Sharp
+node scripts/optimize-large-images-sharp.js</code></pre>
+
+            <h3>Step-by-Step SOP for New Images</h3>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                <h4 style="margin-top: 0;">1. Add New Images to Project</h4>
+                <pre><code># Place images in appropriate folder:
+public/credit-cards/     → Credit card PNGs
+public/insurance-logos/  → Insurance company logos  
+public/team/             → Team member photos
+public/blog-images/      → Blog article images
+public/news-images/      → News article images
+public/guides-images/    → Guide header images
+public/category-images/  → Category page headers</code></pre>
+
+                <h4>2. Run Dry Run First</h4>
+                <pre><code># See what will be optimized without making changes
+npm run optimize:images:dry</code></pre>
+
+                <h4>3. Choose Compression Level</h4>
+                <table>
+                    <tr><th>Image Type</th><th>Command</th><th>Why</th></tr>
+                    <tr><td>Logos, Icons, Credit Cards</td><td><code>npm run optimize:images</code></td><td>Normal - preserves sharp edges</td></tr>
+                    <tr><td>Photos (team, blog, news)</td><td><code>npm run optimize:images:aggressive</code></td><td>Aggressive - photos compress well</td></tr>
+                    <tr><td>Large files (>1MB) that fail</td><td><code>node scripts/optimize-large-images-sharp.js</code></td><td>Local Sharp processing</td></tr>
+                </table>
+
+                <h4>4. Verify Results</h4>
+                <pre><code># Check folder sizes
+du -sh public/credit-cards public/team public/blog-images
+
+# Check individual file sizes
+ls -lah public/team/</code></pre>
+            </div>
+
+            <h3>Compression Levels Explained</h3>
+            <table>
+                <tr><th>Level</th><th>Flag</th><th>Best For</th><th>Typical Savings</th></tr>
+                <tr><td>Normal</td><td>(default)</td><td>Logos, icons, credit cards, graphics with text</td><td>20-40%</td></tr>
+                <tr><td>Aggressive</td><td><code>--aggressive</code></td><td>Photos, blog images, team headshots</td><td>40-70%</td></tr>
+                <tr><td>Ultra</td><td><code>--ultra</code></td><td>Background images, non-critical visuals</td><td>60-80%</td></tr>
+            </table>
+
+            <h3>Environment Setup</h3>
+            <pre><code># Create .env file in project root (not committed to git)
+IMAGIFY_API_KEY=your_imagify_api_key_here
+
+# Or pass directly in command
+IMAGIFY_API_KEY=xxx npm run optimize:images</code></pre>
+
+            <h4>Getting Your Imagify API Key</h4>
+            <ol>
+                <li>Log in to <a href="https://app.imagify.io" target="_blank">app.imagify.io</a></li>
+                <li>Go to API section</li>
+                <li>Copy your API key</li>
+                <li>Store securely in <code>.env</code> file</li>
+            </ol>
+
+            <h3>Script Files</h3>
+            <table>
+                <tr><th>Script</th><th>Purpose</th></tr>
+                <tr><td><code>scripts/optimize-images-imagify.js</code></td><td>Main Imagify API optimization script</td></tr>
+                <tr><td><code>scripts/optimize-large-images-sharp.js</code></td><td>Local Sharp fallback for large files</td></tr>
+            </table>
+
+            <h3>Backup & Recovery</h3>
+            <p>Original images are automatically backed up before optimization:</p>
+            <pre><code># Backup location
+public-backup/
+├── credit-cards/    # Original credit card images
+├── team/            # Original team photos
+├── blog-images/     # Original blog images
+└── ...
+
+# To restore an image
+cp public-backup/team/sarah-chen.jpg public/team/</code></pre>
+
+            <h3>Troubleshooting</h3>
+            <table>
+                <tr><th>Issue</th><th>Solution</th></tr>
+                <tr><td>Imagify API timeout on large files</td><td>Use Sharp fallback: <code>node scripts/optimize-large-images-sharp.js</code></td></tr>
+                <tr><td>"Optimization failed" for small PNGs</td><td>Already optimized - no action needed</td></tr>
+                <tr><td>API key not working</td><td>Check quota at app.imagify.io, verify key is correct</td></tr>
+                <tr><td>Quality too low after optimization</td><td>Use <code>normal</code> instead of <code>aggressive</code>, or restore from backup</td></tr>
+            </table>
+
+            <h3>Best Practices</h3>
+            <ul>
+                <li><strong>Always run dry-run first</strong> to preview changes</li>
+                <li><strong>Optimize before committing</strong> new images to git</li>
+                <li><strong>Keep backups</strong> until you verify quality is acceptable</li>
+                <li><strong>Use appropriate compression</strong> - normal for graphics, aggressive for photos</li>
+                <li><strong>Target file sizes:</strong>
+                    <ul>
+                        <li>Credit card images: &lt;20 KB</li>
+                        <li>Logos: &lt;50 KB</li>
+                        <li>Blog/news images: &lt;150 KB</li>
+                        <li>Team photos: &lt;200 KB</li>
+                        <li>Hero images: &lt;300 KB</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <!-- SECTION 3.6: ALT TEXT GENERATION -->
+        <section id="alt-text" class="section">
+            <h2>3.6 Alt Text Generation (Gemini AI)</h2>
+            <p><span class="badge badge-done">DONE</span> 102 images analyzed with SEO-optimized alt text generated</p>
+
+            <h3>Overview</h3>
+            <p>We use Google's Gemini AI to analyze images and generate context-aware, SEO-optimized alt text descriptions.</p>
+
+            <h3>Quick Reference Commands</h3>
+            <pre><code># Preview (analyze 3 sample images)
+npm run generate:alt-text:dry
+
+# Generate alt text for ALL images
+npm run generate:alt-text
+
+# The API key is stored in .env file
+# GEMINI_API_KEY=your_key</code></pre>
+
+            <h3>Output Files</h3>
+            <table>
+                <tr><th>File</th><th>Purpose</th></tr>
+                <tr><td><code>alt-text-mapping.json</code></td><td>JSON file for review/editing</td></tr>
+                <tr><td><code>src/utils/altTextMap.ts</code></td><td>TypeScript utility for components</td></tr>
+            </table>
+
+            <h3>How to Use in Components</h3>
+            <pre><code>// Import the helper function
+import { getAltText } from '../utils/altTextMap';
+
+// Use in your image tags
+&lt;img src="/credit-cards/amex-platinum.png" alt={getAltText("/credit-cards/amex-platinum.png")} /&gt;
+
+// Or with a fallback
+&lt;img src={imagePath} alt={getAltText(imagePath, "Default alt text")} /&gt;</code></pre>
+
+            <h3>Sample Generated Alt Texts</h3>
+            <table>
+                <tr><th>Image</th><th>Generated Alt Text</th></tr>
+                <tr><td>/credit-cards/amex-platinum.png</td><td>American Express Platinum card featuring a silver metal design and Amex logo.</td></tr>
+                <tr><td>/team/sarah-chen.jpg</td><td>Sarah Chen, Screened.com's expert on personal finance guides and credit card reviews.</td></tr>
+                <tr><td>/insurance-logos/geico.png</td><td>Geico Insurance logo featuring a green gecko, for car, home, and life policies.</td></tr>
+                <tr><td>/category-images/travel-rewards.jpeg</td><td>Travel rewards header: Airplane with a passport, globe, compass, and credit card.</td></tr>
+            </table>
+
+            <h3>SEO Best Practices for Alt Text</h3>
+            <ul>
+                <li><strong>Length:</strong> 10-15 words, max 125 characters</li>
+                <li><strong>Keywords:</strong> Include relevant terms naturally (no stuffing)</li>
+                <li><strong>Descriptive:</strong> Describe what the image shows</li>
+                <li><strong>Context:</strong> Relate to page content (credit cards, insurance, etc.)</li>
+                <li><strong>Accessibility:</strong> Useful for screen readers</li>
+            </ul>
         </section>
 
         <!-- SECTION 4: SITE STRUCTURE -->
@@ -574,6 +768,7 @@ curl "https://prestanews.com/api/subscribers?key=YOUR_ADMIN_KEY&format=csv"</cod
                 <li class="completed"><input type="checkbox" checked disabled> Add schema markup components</li>
                 <li class="completed"><input type="checkbox" checked disabled> Deploy to Vercel</li>
                 <li class="completed"><input type="checkbox" checked disabled> Configure custom domain (prestanews.com)</li>
+                <li class="completed"><input type="checkbox" checked disabled> Optimize all images with Imagify + Sharp (89MB → 5.4MB, 94% reduction)</li>
             </ul>
 
             <h3>Pending Tasks <span class="badge badge-pending">TODO</span></h3>
@@ -611,3 +806,4 @@ curl "https://prestanews.com/api/subscribers?key=YOUR_ADMIN_KEY&format=csv"</cod
     </div>
 </body>
 </html>
+

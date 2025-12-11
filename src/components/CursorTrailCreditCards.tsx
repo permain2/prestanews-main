@@ -20,22 +20,32 @@ interface TrailImage {
 }
 
 const creditCardImages = [
-    "/credit-cards/1684306443-green-credit-card-new.avif",
-    "/credit-cards/Membership_Rewards_Card.avif",
-    "/credit-cards/en_in-smart-earn-credit-card.avif",
-    "/credit-cards/in-visa-gold-card-498x280.webp",
-    "/credit-cards/visa-platinum-recto-800x450.webp",
-    "/credit-cards/images.png",
-    "/credit-cards/cq5dam.web.767.767.png",
-    "/credit-cards/-1x-1.webp",
-    "/credit-cards/f0760430-aaa4-11f0-9b33-4180f1b0bec1.webp",
-    "/credit-cards/artst.webp",
-    "/credit-cards/a0aaf110-5c28-11f0-a560-59457a3cd909.webp",
-    "/credit-cards/images (2).jpeg",
-    "/credit-cards/images (3).jpeg",
-    "/credit-cards/ihg-card-hub-seo-card-img-business-usen-1500x980.avif",
-    "/credit-cards/united_club_infinite_card.png",
-    "/credit-cards/swa_prem_biz_cardart-1.png",
+    // Travel Cards (Amex)
+    "/credit-cards/amex-platinum.png",
+    "/credit-cards/amex-gold.png",
+    "/credit-cards/amex-green.png",
+    "/credit-cards/delta-skymiles-reserve.png",
+    "/credit-cards/delta-skymiles-gold.png",
+    "/credit-cards/hilton-honors-aspire.png",
+    // Business Cards
+    "/credit-cards/amex-business-platinum.png",
+    "/credit-cards/amex-business-gold.png",
+    "/credit-cards/blue-business-plus.png",
+    "/credit-cards/amex-blue-business-cash.png",
+    "/credit-cards/amazon-business-prime.png",
+    // Cash Back Cards
+    "/credit-cards/blue-cash-preferred.png",
+    "/credit-cards/blue-cash-everyday.png",
+    "/credit-cards/amex-cash-magnet.png",
+    // Balance Transfer Cards
+    "/credit-cards/citi-diamond-preferred.png",
+    "/credit-cards/wells-fargo-reflect.png",
+    "/credit-cards/bankamericard.png",
+    "/credit-cards/discover-it-balance-transfer.png",
+    // Featured Cards
+    "/credit-cards/chase-sapphire-preferred.png",
+    "/credit-cards/capital-one-venture-x.png",
+    "/credit-cards/citi-double-cash.png",
 ]
 
 export default function CursorTrailCreditCards({
@@ -233,6 +243,10 @@ export default function CursorTrailCreditCards({
         </div>
     )
 }
+
+
+
+
 
 
 

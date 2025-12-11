@@ -12,7 +12,7 @@ const offers = [
     description: "Earn 75,000 bonus points after qualifying spend.",
     highlightNumber: "75,000",
     highlightLabel: "bonus points",
-    image: "/credit-cards/cq5dam.web.767.767.png",
+    image: "/credit-cards/chase-sapphire-preferred.png",
     link: "https://www.chase.com/personal/credit-cards/sapphire/sapphire-preferred?utm_source=prestanews&utm_medium=affiliate"
   },
   {
@@ -22,7 +22,7 @@ const offers = [
     description: "Earn 100,000 bonus miles with limited-time offer.",
     highlightNumber: "100,000",
     highlightLabel: "bonus miles",
-    image: "/credit-cards/united_club_infinite_card.png",
+    image: "/credit-cards/capital-one-venture-x.png",
     link: "https://www.capitalone.com/credit-cards/venture-x/?utm_source=prestanews&utm_medium=affiliate"
   },
   {
@@ -32,7 +32,7 @@ const offers = [
     description: "Earn 2% cash back on every purchase, everywhere.",
     highlightNumber: "2%",
     highlightLabel: "unlimited cash back",
-    image: "/credit-cards/Membership_Rewards_Card.avif",
+    image: "/credit-cards/citi-double-cash.png",
     link: "https://www.citi.com/credit-cards/citi-double-cash-credit-card?utm_source=prestanews&utm_medium=affiliate"
   },
   {
@@ -42,7 +42,7 @@ const offers = [
     description: "Premium business travel rewards and perks.",
     highlightNumber: "150,000",
     highlightLabel: "bonus points",
-    image: "/credit-cards/1684306443-green-credit-card-new.avif",
+    image: "/credit-cards/amex-business-platinum.png",
     link: "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/?utm_source=prestanews"
   },
   {
@@ -52,18 +52,18 @@ const offers = [
     description: "5% cash back in rotating categories.",
     highlightNumber: "5%",
     highlightLabel: "rotating cash back",
-    image: "/credit-cards/swa_prem_biz_cardart-1.png",
+    image: "/credit-cards/discover-it-balance-transfer.png",
     link: "https://www.discover.com/credit-cards/cash-back/?utm_source=prestanews"
   },
   {
     id: 6,
     badge: "Best for Hotels",
-    name: "IHG One Rewards Premier",
-    description: "Earn up to 26x points at IHG hotels.",
-    highlightNumber: "26x",
-    highlightLabel: "points at IHG",
-    image: "/credit-cards/ihg-card-hub-seo-card-img-business-usen-1500x980.avif",
-    link: "https://www.ihg.com/onerewards/us/en/credit-cards?utm_source=prestanews"
+    name: "Hilton Honors Aspire",
+    description: "Earn up to 14x points at Hilton hotels.",
+    highlightNumber: "14x",
+    highlightLabel: "points at Hilton",
+    image: "/credit-cards/hilton-honors-aspire.png",
+    link: "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/"
   },
 ]
 
@@ -316,6 +316,10 @@ export default function OffersCoverflow() {
     </div>
   )
 }
+
+
+
+
 
 
 

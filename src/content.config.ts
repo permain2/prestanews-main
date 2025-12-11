@@ -29,9 +29,10 @@ const reviews = defineCollection({
         pubDate: z.coerce.date(),
         updatedDate: z.coerce.date().optional(),
         heroImage: z.string().optional(),
+        tags: z.array(z.string()).optional(),
         // Review specific fields
         rating: z.number().min(0).max(5).optional(),
-        affiliateLink: z.string().url().optional(),
+        affiliateLink: z.string().optional(),
         pros: z.array(z.string()).optional(),
         cons: z.array(z.string()).optional(),
         category: z.enum(['electronics', 'credit_cards', 'software', 'general']).default('general'),

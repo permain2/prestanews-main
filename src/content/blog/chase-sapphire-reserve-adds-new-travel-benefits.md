@@ -96,3 +96,7 @@ Chase's Sapphire Reserve updates address common cardholder pain points while mai
 For existing cardholders, these changes enhance an already valuable product. For those considering the card, the updates make the Sapphire Reserve more compelling than ever.
 
 **Ready to apply?** Check out our complete [Chase Sapphire Reserve review](/reviews/capital-one-venture-x-review-is-it-worth-the-annual-fee) and comparison to help make your decision.
+
+
+
+

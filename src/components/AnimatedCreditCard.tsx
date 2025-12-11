@@ -93,3 +93,7 @@ export default function AnimatedCreditCard({ name, colorIndex }: AnimatedCreditC
 
 
 
+
+
+
+

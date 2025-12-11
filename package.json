@@ -6,7 +6,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "optimize:images": "node scripts/optimize-images-imagify.js",
+    "optimize:images:dry": "node scripts/optimize-images-imagify.js --dry-run",
+    "optimize:images:aggressive": "node scripts/optimize-images-imagify.js --aggressive",
+    "generate:alt-text": "node scripts/generate-alt-text-gemini.js",
+    "generate:alt-text:dry": "node scripts/generate-alt-text-gemini.js --dry-run"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.12",

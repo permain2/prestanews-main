@@ -21,21 +21,21 @@ interface TrailIcon {
 
 // Mix of credit card and insurance logos for guides
 const guideIcons = [
-    "/credit-cards/cq5dam.web.767.767.png",
+    "/credit-cards/chase-sapphire-preferred.png",
     "/insurance-logos/geico.png",
-    "/credit-cards/Membership_Rewards_Card.avif",
+    "/credit-cards/amex-platinum.png",
     "/insurance-logos/progressive.png",
-    "/credit-cards/united_club_infinite_card.png",
+    "/credit-cards/capital-one-venture-x.png",
     "/insurance-logos/statefarm.png",
-    "/credit-cards/1684306443-green-credit-card-new.avif",
+    "/credit-cards/amex-gold.png",
     "/insurance-logos/allstate.png",
-    "/credit-cards/in-visa-gold-card-498x280.webp",
+    "/credit-cards/citi-double-cash.png",
     "/insurance-logos/nationwide.png",
-    "/credit-cards/swa_prem_biz_cardart-1.png",
+    "/credit-cards/discover-it-balance-transfer.png",
     "/insurance-logos/travelers.png",
-    "/credit-cards/ihg-card-hub-seo-card-img-business-usen-1500x980.avif",
+    "/credit-cards/blue-cash-preferred.png",
     "/insurance-logos/prudential.png",
-    "/credit-cards/artst.webp",
+    "/credit-cards/hilton-honors-aspire.png",
     "/insurance-logos/metlife.png",
 ]
 
@@ -237,5 +237,9 @@ export default function CursorTrailGuides({
         </div>
     )
 }
+
+
+
+
 
 

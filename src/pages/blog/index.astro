@@ -3,16 +3,18 @@ import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { Image } from 'astro:assets';
+import CursorTrailBlog from '../../components/CursorTrailBlog.tsx';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<MainLayout title="Blog - Prestanews" description="Latest news and insights from Prestanews.">
+<MainLayout title="Blog - Screened" description="Latest news, guides, and insights on credit cards, insurance, and personal finance.">
+	<!-- Interactive Header with Cursor Trail -->
+	<CursorTrailBlog client:load />
+
 	<section class="container mx-auto px-4 py-12 max-w-6xl">
-		<h1 class="text-4xl font-sora font-bold text-[#162433] mb-8 border-b pb-4">Latest News</h1>
-		
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{
 				posts.map((post) => (
