@@ -5,7 +5,7 @@ import { Typewriter } from "motion-plus/react"
 import { useState } from "react"
 
 export default function HeroTypewriter({
-  words = ["Credit Cards", "Insurance", "Savings", "Investments", "Your Future"],
+  words = ["Financial", "Insurance", "Credit", "Investment", "Money"],
 }: {
   words?: string[]
 }) {
