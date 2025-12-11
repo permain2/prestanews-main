@@ -320,16 +320,11 @@ www.screened.com/
 │   ├── /life/
 │   └── /renters/
 │
-├── /guides/                   # Guides hub (evergreen educational content)
-│   └── /[guide-slug]/         # Individual guides
-│
-├── /blog/                     # Blog hub (news & updates)
+├── /blog/                     # Blog hub (news, guides & articles)
 │   └── /[blog-slug]/          # Individual blog posts
 │
 ├── /reviews/                  # Product reviews
 │   └── /[review-slug]/
-│
-├── /deals/                    # Current deals
 │
 ├── /travel/                   # Travel content
 │   ├── /airlines/
@@ -356,7 +351,6 @@ www.screened.com/
 | Collection | Location | Schema |
 |------------|----------|--------|
 | Blog | `src/content/blog/` | title, description, pubDate, heroImage, tags |
-| Guides | `src/content/guides/` | title, description, pubDate, heroImage, author, category, tags |
 | Reviews | `src/content/reviews/` | title, description, pubDate, heroImage, rating, pros, cons, category |
 
 ---

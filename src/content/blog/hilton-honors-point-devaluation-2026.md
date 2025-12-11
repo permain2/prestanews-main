@@ -74,7 +74,7 @@ The Aspire card's annual free night certificates become more valuable as award p
 
 Amex Membership Rewards transfers to Hilton at 1:2. Post-devaluation, consider whether direct hotel bookings offer better value than point transfers.
 
-Learn more about maximizing hotel points in our [credit card points guide](/guides/credit-card-points).
+Learn more about maximizing hotel points in our [credit card points guide](/blog/credit-card-points).
 
 ## Comparing Hilton to Competitors
 

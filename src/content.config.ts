@@ -13,6 +13,11 @@ const blog = defineCollection({
 		updatedDate: z.coerce.date().optional(),
 		heroImage: z.string().optional(),
 		tags: z.array(z.string()).optional(),
+		// Optional fields from guide content
+		author: z.string().optional(),
+		authorImage: z.string().optional(),
+		authorRole: z.string().optional(),
+		category: z.string().optional(),
 	}),
 });
 
@@ -33,20 +38,4 @@ const reviews = defineCollection({
     }),
 });
 
-const guides = defineCollection({
-    loader: glob({ base: './src/content/guides', pattern: '**/*.{md,mdx}' }),
-    schema: z.object({
-        title: z.string(),
-        description: z.string(),
-        pubDate: z.coerce.date(),
-        updatedDate: z.coerce.date().optional(),
-        heroImage: z.string().optional(),
-        author: z.string().optional(),
-        authorImage: z.string().optional(),
-        authorRole: z.string().optional(),
-        category: z.string().optional(),
-        tags: z.array(z.string()).optional(),
-    }),
-});
-
-export const collections = { blog, reviews, guides };
+export const collections = { blog, reviews };

@@ -75,7 +75,7 @@ Delta's dynamic pricing means lower demand equals lower prices:
 
 Delta partners with American Express Membership Rewards and other programs. Sometimes transferring points offers better value than earning SkyMiles directly.
 
-Learn more about maximizing your points in our [credit card points guide](/guides/credit-card-points).
+Learn more about maximizing your points in our [credit card points guide](/blog/credit-card-points).
 
 ## Comparing Delta to Other Programs
 
@@ -145,4 +145,4 @@ Delta SkyMiles will cost more in 2026, particularly for premium cabin internatio
 
 Savvy travelers can still find value by booking strategically, staying flexible, and using the right credit cards for their earning and redemption patterns.
 
-**Planning ahead?** Compare airline cards in our [complete credit card guide](/guides/choose-credit-card) to maximize your travel rewards.
+**Planning ahead?** Compare airline cards in our [complete credit card guide](/blog/choose-credit-card) to maximize your travel rewards.

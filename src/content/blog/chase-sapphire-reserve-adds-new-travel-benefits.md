@@ -63,7 +63,7 @@ The new benefits particularly help:
 
 **Business travelers** who appreciate the rideshare credit. Getting reimbursed for Uber rides to airports adds real value.
 
-**Points maximizers** who use Chase's [Ultimate Rewards program](/guides/credit-card-points). The enhanced benefits make earning and redeeming points more valuable.
+**Points maximizers** who use Chase's [Ultimate Rewards program](/blog/credit-card-points). The enhanced benefits make earning and redeeming points more valuable.
 
 ## How to Maximize the New Benefits
 
@@ -87,7 +87,7 @@ If you're considering the card, now is an excellent time:
 - **New benefits**: Immediately available to new cardholders
 - **Transfer partners**: Access to 14+ airline and hotel loyalty programs
 
-Compare this with our [guide to choosing the right credit card](/guides/choose-credit-card) to determine if the Sapphire Reserve fits your spending habits.
+Compare this with our [guide to choosing the right credit card](/blog/choose-credit-card) to determine if the Sapphire Reserve fits your spending habits.
 
 ## The Bottom Line
 

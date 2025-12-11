@@ -91,7 +91,7 @@ Marriott co-branded credit cards remain valuable:
 - **Marriott Bonvoy Brilliant**: 25 elite night credits + Platinum status
 - **Marriott Bonvoy Business**: 15 elite night credits
 
-Card strategies become more important under tighter requirements. Learn more about [maximizing credit card rewards](/guides/credit-card-points).
+Card strategies become more important under tighter requirements. Learn more about [maximizing credit card rewards](/blog/credit-card-points).
 
 ## Marriott's Rationale
 
@@ -140,4 +140,4 @@ Marriott's 2026 Bonvoy changes represent a modest tightening of top-tier require
 
 The program remains competitive with other hotel loyalty programs, and the enhanced benefits—particularly improved breakfast policies and earlier upgrade confirmations—add real value for engaged members.
 
-**Planning your travel strategy?** Compare hotel cards in our [comprehensive credit card guide](/guides/choose-credit-card) to maximize your Marriott earning potential.
+**Planning your travel strategy?** Compare hotel cards in our [comprehensive credit card guide](/blog/choose-credit-card) to maximize your Marriott earning potential.

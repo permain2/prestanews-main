@@ -129,7 +129,7 @@ If the Platinum no longer makes sense:
 - **Amex Green**: $150/year with travel focus
 - **Amex EveryDay Preferred**: No annual fee with MR earning
 
-Read our [guide to choosing the right credit card](/guides/choose-credit-card) for more options.
+Read our [guide to choosing the right credit card](/blog/choose-credit-card) for more options.
 
 ## Timeline and Next Steps
 
@@ -165,7 +165,7 @@ Pairing the Platinum with:
 - **Amex Blue Business Plus** for everyday spend
 - **Chase Freedom Flex** for bonus categories
 
-Learn more about [building a credit portfolio](/guides/building-credit).
+Learn more about [building a credit portfolio](/blog/building-credit).
 
 ## The Bottom Line
 
