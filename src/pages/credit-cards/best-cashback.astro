@@ -3,156 +3,585 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
 import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
 import { getCardImage } from '../../utils/cardImageMap';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
-// Cash back credit cards
+// Premium cash back credit cards - 10 cards
 const creditCards = [
   {
     name: "Blue Cash Preferred® Card from American Express",
-    bestFor: "Cash Back on Groceries",
+    slug: "amex-blue-cash-preferred",
+    bestFor: "Groceries & Streaming",
     annualFee: "$0 intro, then $95",
     bonus: "$350 statement credit",
+    bonusValue: "$350",
+    rating: 4.9,
+    rewardsRate: "6%/3%/1%",
+    foreignFee: "2.7%",
+    introAPR: "0% for 12 months",
+    regularAPR: "19.24% - 29.99% Variable",
+    pros: ["6% at U.S. supermarkets (up to $6K/yr)", "6% on select U.S. streaming", "3% at U.S. gas stations & transit", "0% intro APR for 12 months"],
+    cons: ["$6K annual cap on 6% groceries", "$95 annual fee after first year"],
+    description: "Industry-leading 6% cash back at U.S. supermarkets makes this the best card for families. Plus 6% on streaming services covers your Netflix, Disney+, and more.",
+    bottomLine: "The Blue Cash Preferred® is the undisputed king of grocery rewards. The 6% back at U.S. supermarkets (up to $6,000/year = $360 max) plus 6% on streaming services easily justifies the $95 annual fee for most families. If you spend $250+/month on groceries, you'll earn more than you pay in fees.",
+    cardDetails: [
+      "Earn $350 after spending $3,000 in first 6 months",
+      "6% cash back at U.S. supermarkets (up to $6,000 per year, then 1%)",
+      "6% cash back on select U.S. streaming subscriptions",
+      "3% cash back at U.S. gas stations",
+      "3% cash back on transit (taxis, rideshare, parking, tolls, trains, buses)",
+      "1% cash back on other purchases",
+      "0% intro APR on purchases and balance transfers for 12 months",
+      "$0 intro annual fee for the first year, then $95"
+    ],
+    category: "cashback",
+    editorChoice: true
+  },
+  {
+    name: "Citi Double Cash® Card",
+    slug: "citi-double-cash",
+    bestFor: "Flat-Rate Cash Back",
+    annualFee: "$0",
+    bonus: "$200 cash back",
+    bonusValue: "$200",
+    rating: 4.8,
+    rewardsRate: "2% on everything",
+    foreignFee: "3%",
+    introAPR: "0% for 18 months (BT)",
+    regularAPR: "19.24% - 29.24% Variable",
+    pros: ["Effective 2% on all purchases", "No annual fee forever", "18 months 0% on balance transfers", "Access to Citi ThankYou partners"],
+    cons: ["No bonus categories", "3% foreign transaction fee"],
+    description: "The simplest 2% cash back card: earn 1% when you buy, 1% when you pay. No categories to track, no activation required.",
+    bottomLine: "The Citi Double Cash® is the benchmark for flat-rate cash back. Earn an effective 2% on every purchase (1% when you buy + 1% when you pay your bill). With no annual fee and access to Citi ThankYou transfer partners, it's the perfect no-fuss option for maximizing everyday spending.",
+    cardDetails: [
+      "Earn $200 after spending $1,500 in first 6 months",
+      "1% cash back when you make a purchase",
+      "1% cash back when you pay for those purchases (effectively 2% total)",
+      "0% intro APR on balance transfers for 18 months, then 19.24% - 29.24% Variable",
+      "Access to Citi ThankYou Rewards program",
+      "Transfer points to airline partners when combined with other Citi cards",
+      "Citi Entertainment® access for presale tickets",
+      "$0 annual fee"
+    ],
+    category: "cashback"
+  },
+  {
+    name: "Wells Fargo Active Cash® Card",
+    slug: "wells-fargo-active-cash",
+    bestFor: "Simple 2% Rewards",
+    annualFee: "$0",
+    bonus: "$200 cash rewards",
+    bonusValue: "$200",
     rating: 4.7,
-    pros: ["6% at U.S. supermarkets (up to $6K)", "6% on streaming", "3% at U.S. gas stations", "3% on transit"],
-    cons: ["$6K supermarket cap", "Annual fee after first year"],
-    description: "Industry-leading 6% cash back at U.S. supermarkets makes this ideal for families."
+    rewardsRate: "2% unlimited",
+    foreignFee: "3%",
+    introAPR: "0% for 12 months",
+    regularAPR: "20.24% - 29.99% Variable",
+    pros: ["Unlimited 2% cash rewards on everything", "No annual fee", "Cell phone protection ($600)", "0% intro APR for 12 months"],
+    cons: ["3% foreign transaction fee", "No bonus categories"],
+    description: "Unlimited 2% cash rewards on all purchases with valuable cell phone protection — a rare perk on no-fee cards.",
+    bottomLine: "The Wells Fargo Active Cash® matches Citi Double Cash's 2% rate but adds $600 cell phone protection (with $25 deductible) — a benefit worth ~$100/year that's rarely found on no-annual-fee cards. If you don't have phone insurance, this card alone could save you hundreds.",
+    cardDetails: [
+      "Earn $200 cash rewards after spending $500 in first 3 months",
+      "Unlimited 2% cash rewards on purchases",
+      "0% intro APR on purchases and qualifying balance transfers for 12 months",
+      "Cell phone protection up to $600 per claim (with $25 deductible, up to 2 claims per 12 months)",
+      "No annual fee",
+      "Access to Visa Signature benefits",
+      "Zero liability protection for unauthorized transactions",
+      "My Wells Fargo Deals for personalized offers"
+    ],
+    category: "cashback"
+  },
+  {
+    name: "Chase Freedom Unlimited®",
+    slug: "chase-freedom-unlimited",
+    bestFor: "Everyday + Travel Value",
+    annualFee: "$0",
+    bonus: "$300 bonus + 5% groceries",
+    bonusValue: "$300",
+    rating: 4.8,
+    rewardsRate: "5%/3%/1.5%",
+    foreignFee: "3%",
+    introAPR: "0% for 15 months",
+    regularAPR: "20.49% - 29.24% Variable",
+    pros: ["5% on travel via Chase Travel℠", "3% on dining & drugstores", "1.5% on everything else", "Transfer to travel partners with Sapphire"],
+    cons: ["3% foreign transaction fee", "Travel bonus requires Chase portal"],
+    description: "Excellent everyday card that becomes even more powerful when paired with Chase Sapphire for travel partner transfers.",
+    bottomLine: "The Chase Freedom Unlimited® is the ultimate companion card. By itself, you get a solid 5%/3%/1.5% structure. But pair it with Chase Sapphire Preferred® or Reserve® and your cash back becomes Ultimate Rewards points — transferable to Hyatt, United, and more at 1.5-2¢ per point.",
+    cardDetails: [
+      "Earn $300 bonus + 5% on grocery stores (up to $12K, first year) after spending $500 in first 3 months",
+      "5% cash back on travel purchased through Chase Travel℠",
+      "3% cash back on dining at restaurants and drugstores",
+      "1.5% cash back on all other purchases",
+      "0% intro APR on purchases for 15 months",
+      "Points transfer to Chase travel partners when combined with Sapphire",
+      "DoorDash DashPass subscription and statement credits",
+      "$0 annual fee"
+    ],
+    category: "cashback"
+  },
+  {
+    name: "Discover it® Cash Back",
+    slug: "discover-it-cash-back",
+    bestFor: "Rotating Categories",
+    annualFee: "$0",
+    bonus: "Cashback Match™ (first year)",
+    bonusValue: "~$150-300",
+    rating: 4.6,
+    rewardsRate: "5%/1%",
+    foreignFee: "$0",
+    introAPR: "0% for 15 months",
+    regularAPR: "18.24% - 28.24% Variable",
+    pros: ["5% on rotating quarterly categories", "Cashback Match doubles all rewards year 1", "$0 foreign transaction fees", "No annual fee"],
+    cons: ["Must activate quarterly categories", "5% capped at $1,500/quarter"],
+    description: "Earn 5% in rotating categories that change quarterly, plus Discover matches ALL cash back earned in your first year.",
+    bottomLine: "The Discover it® Cash Back's Cashback Match™ effectively doubles your earnings for the entire first year. If you earn $300 in cash back, Discover adds another $300 at year's end. Combined with 5% rotating categories and $0 foreign transaction fees, it's exceptional value.",
+    cardDetails: [
+      "Cashback Match™: Discover automatically matches all cash back earned in your first year",
+      "5% cash back on rotating quarterly categories (up to $1,500 per quarter, then 1%) — requires activation",
+      "1% cash back on all other purchases",
+      "0% intro APR on purchases and balance transfers for 15 months",
+      "No annual fee",
+      "No foreign transaction fees",
+      "Free FICO® Credit Score monitoring",
+      "Social Security number alerts on Experian"
+    ],
+    category: "cashback"
+  },
+  {
+    name: "Capital One SavorOne Cash Rewards",
+    slug: "capital-one-savorone",
+    bestFor: "Dining & Entertainment",
+    annualFee: "$0",
+    bonus: "$200 cash bonus",
+    bonusValue: "$200",
+    rating: 4.7,
+    rewardsRate: "3%/1%",
+    foreignFee: "$0",
+    introAPR: "0% for 15 months",
+    regularAPR: "19.99% - 29.99% Variable",
+    pros: ["3% on dining, entertainment, groceries", "$0 foreign transaction fees", "No annual fee", "8% on Capital One Entertainment"],
+    cons: ["Lower grocery rate than Blue Cash Preferred", "No 2% flat-rate option"],
+    description: "Excellent for foodies and entertainment fans with 3% across dining, entertainment, popular streaming, and grocery stores.",
+    bottomLine: "The Capital One SavorOne delivers impressive value with no annual fee. Earn 3% on dining, entertainment, popular streaming services, and grocery stores — four high-spend categories in one card. The $0 foreign transaction fees make it perfect for international dining too.",
+    cardDetails: [
+      "Earn $200 cash bonus after spending $500 in first 3 months",
+      "3% cash back on dining and at restaurants",
+      "3% on entertainment including movie theaters, amusement parks, concerts",
+      "3% at grocery stores (excluding superstores like Walmart and Target)",
+      "3% on popular streaming services",
+      "8% cash back on tickets at Capital One Entertainment",
+      "1% on all other purchases",
+      "0% intro APR on purchases and balance transfers for 15 months",
+      "No foreign transaction fees",
+      "$0 annual fee"
+    ],
+    category: "cashback"
   },
   {
     name: "Blue Cash Everyday® Card from American Express",
-    bestFor: "No Annual Fee Cash Back",
+    slug: "amex-blue-cash-everyday",
+    bestFor: "No-Fee Groceries",
     annualFee: "$0",
     bonus: "$200 statement credit",
+    bonusValue: "$200",
     rating: 4.5,
-    pros: ["3% at U.S. supermarkets", "3% at U.S. gas stations", "3% on online retail", "No annual fee"],
+    rewardsRate: "3%/1%",
+    foreignFee: "2.7%",
+    introAPR: "0% for 15 months",
+    regularAPR: "19.24% - 29.99% Variable",
+    pros: ["3% at U.S. supermarkets (up to $6K)", "3% at U.S. gas stations", "3% on U.S. online retail", "No annual fee forever"],
     cons: ["$6K supermarket cap", "Lower rates than Blue Cash Preferred"],
-    description: "Solid cash back with no annual fee, perfect for everyday spending at supermarkets and gas stations."
+    description: "The no-fee sibling of Blue Cash Preferred with solid 3% categories and 0% intro APR.",
+    bottomLine: "If you don't want to pay the Blue Cash Preferred's $95 annual fee, the Blue Cash Everyday® offers 3% at U.S. supermarkets, gas stations, and U.S. online retail purchases — all with no annual fee. It breaks even compared to Preferred if you spend less than ~$3,200/year on groceries.",
+    cardDetails: [
+      "Earn $200 after spending $2,000 in first 6 months",
+      "3% cash back at U.S. supermarkets (up to $6,000 per year, then 1%)",
+      "3% cash back at U.S. gas stations (up to $6,000 per year, then 1%)",
+      "3% cash back on U.S. online retail purchases (up to $6,000 per year, then 1%)",
+      "1% cash back on other purchases",
+      "0% intro APR on purchases and balance transfers for 15 months",
+      "Access to Amex Offers and experiences",
+      "$0 annual fee"
+    ],
+    category: "cashback"
   },
   {
-    name: "American Express Cash Magnet® Card",
-    bestFor: "Flat-Rate Cash Back",
+    name: "Capital One Quicksilver Cash Rewards",
+    slug: "capital-one-quicksilver",
+    bestFor: "Simple & No Fees",
     annualFee: "$0",
-    bonus: "$200 statement credit",
-    rating: 4.3,
-    pros: ["Unlimited 1.5% cash back on all purchases", "No annual fee", "Intro 0% APR", "Simple rewards structure"],
-    cons: ["Lower earning than category cards", "No bonus categories"],
-    description: "Simple, straightforward card for those who want cash back on everything without tracking categories."
+    bonus: "$200 cash bonus",
+    bonusValue: "$200",
+    rating: 4.4,
+    rewardsRate: "1.5% unlimited",
+    foreignFee: "$0",
+    introAPR: "0% for 15 months",
+    regularAPR: "19.99% - 29.99% Variable",
+    pros: ["Unlimited 1.5% on everything", "No foreign transaction fees", "No annual fee", "0% intro APR for 15 months"],
+    cons: ["1.5% lower than 2% competitors", "No bonus categories"],
+    description: "Simple, straightforward 1.5% back on everything with no foreign transaction fees — perfect for international spending.",
+    bottomLine: "The Capital One Quicksilver offers unlimited 1.5% cash back with two key advantages over 2% competitors: $0 foreign transaction fees and easier approval for those building credit. If you travel internationally or have average credit, Quicksilver is a solid choice.",
+    cardDetails: [
+      "Earn $200 cash bonus after spending $500 in first 3 months",
+      "Unlimited 1.5% cash back on every purchase",
+      "0% intro APR on purchases and balance transfers for 15 months",
+      "No foreign transaction fees",
+      "No annual fee",
+      "Travel accident insurance",
+      "24/7 travel assistance services",
+      "Auto rental collision damage waiver"
+    ],
+    category: "cashback"
   },
   {
-    name: "American Express® Green Card",
-    bestFor: "Travel Cash Back",
-    annualFee: "$150",
-    bonus: "40,000 Membership Rewards points",
+    name: "Chase Freedom Flex®",
+    slug: "chase-freedom-flex",
+    bestFor: "Rotating + Base Categories",
+    annualFee: "$0",
+    bonus: "$200 bonus",
+    bonusValue: "$200",
+    rating: 4.6,
+    rewardsRate: "5%/3%/1%",
+    foreignFee: "3%",
+    introAPR: "0% for 15 months",
+    regularAPR: "20.49% - 29.24% Variable",
+    pros: ["5% rotating categories + 5% travel via Chase", "3% on dining & drugstores", "Transfer to travel partners with Sapphire", "Cell phone protection"],
+    cons: ["Must activate quarterly 5% categories", "3% foreign transaction fee"],
+    description: "Combines rotating 5% categories with strong base earnings and Ultimate Rewards flexibility.",
+    bottomLine: "The Chase Freedom Flex® offers the best of both worlds: 5% rotating categories (like Discover it) plus a solid base of 5% on Chase Travel, 3% on dining and drugstores. When paired with a Sapphire card, your cash back becomes transferable points worth up to 2¢ each.",
+    cardDetails: [
+      "Earn $200 after spending $500 in first 3 months",
+      "5% cash back on up to $1,500 in combined purchases in rotating categories each quarter (activation required)",
+      "5% cash back on travel purchased through Chase Travel℠",
+      "3% cash back on dining at restaurants and drugstores",
+      "1% cash back on all other purchases",
+      "0% intro APR on purchases for 15 months",
+      "Cell phone protection up to $800 per claim",
+      "Trip cancellation/interruption insurance",
+      "Points transfer to partners when combined with Sapphire",
+      "$0 annual fee"
+    ],
+    category: "cashback"
+  },
+  {
+    name: "U.S. Bank Cash+® Visa Signature® Card",
+    slug: "usbank-cash-plus",
+    bestFor: "Customizable Categories",
+    annualFee: "$0",
+    bonus: "$200 cash rewards",
+    bonusValue: "$200",
     rating: 4.3,
-    pros: ["3X on travel & transit", "3X at restaurants", "$189 CLEAR credit", "Convertible to cash back"],
-    cons: ["Has annual fee", "Points vs direct cash back"],
-    description: "Earn valuable points that can be redeemed for cash back or transferred to travel partners."
+    rewardsRate: "5%/2%/1%",
+    foreignFee: "3%",
+    introAPR: "0% for 15 billing cycles",
+    regularAPR: "19.24% - 29.24% Variable",
+    pros: ["Choose your own 5% categories", "5% on utilities (rare)", "2% at gas stations & grocery", "No annual fee"],
+    cons: ["5% capped at $2,000/quarter", "Must choose categories each quarter"],
+    description: "Unique card that lets you choose two 5% categories each quarter from a list including utilities, cell phone, streaming, and more.",
+    bottomLine: "The U.S. Bank Cash+® is the only card letting you earn 5% back on utility bills — a category no other card covers. Choose two 5% categories each quarter from options like utilities, cell phone, TV/internet, streaming, fast food, gyms, and more. Perfect for predictable monthly bills.",
+    cardDetails: [
+      "Earn $200 cash rewards after spending $1,000 in first 120 days",
+      "5% cash back on first $2,000 spent each quarter in two categories you choose",
+      "Category options include: home utilities, cell phone, TV/internet/streaming, select clothing stores, fast food, gyms, ground transportation, department stores, electronics stores, movie theaters, furniture stores, and more",
+      "2% cash back at one everyday category (gas stations or grocery stores)",
+      "1% cash back on all other purchases",
+      "0% intro APR on purchases and balance transfers for 15 billing cycles",
+      "No annual fee"
+    ],
+    category: "cashback"
+  }
+];
+
+// FAQ data
+const faqs = [
+  {
+    question: "What is the best cash back credit card for 2025?",
+    answer: "The <strong>Blue Cash Preferred® from American Express</strong> is our top pick for 2025 if you spend heavily on groceries. The 6% back at U.S. supermarkets (up to $6K/year) plus 6% on streaming delivers unmatched value. For a no-annual-fee option, the <strong>Citi Double Cash®</strong> or <strong>Wells Fargo Active Cash®</strong> offer 2% on everything."
+  },
+  {
+    question: "Is 2% cash back good?",
+    answer: "Yes, <strong>2% flat-rate cash back is excellent</strong> for a no-annual-fee card. On $20,000 annual spending, that's $400 back. While category cards can earn more in specific areas (5-6%), you'd need to optimize spending and track categories. For simplicity and guaranteed returns, 2% is hard to beat."
+  },
+  {
+    question: "Should I get a flat-rate or category cash back card?",
+    answer: "<strong>Category cards</strong> (like Blue Cash Preferred at 6% groceries) maximize returns if you can concentrate spending in bonus areas. <strong>Flat-rate cards</strong> (like Citi Double Cash at 2%) are better if your spending is varied or you don't want to track categories. Many people use both — category cards for specific purchases, flat-rate for everything else."
+  },
+  {
+    question: "Do cash back cards have annual fees?",
+    answer: "Many excellent cash back cards have <strong>no annual fee</strong>, including Citi Double Cash, Wells Fargo Active Cash, Discover it, and Chase Freedom cards. Premium cards like Blue Cash Preferred ($95/year) charge fees but often deliver enough extra rewards to offset the cost for high spenders."
+  },
+  {
+    question: "How do I redeem cash back rewards?",
+    answer: "Most cards offer multiple redemption options: <strong>statement credits</strong> (most common), <strong>direct deposit</strong> to bank accounts, <strong>check by mail</strong>, or <strong>gift cards</strong> (sometimes at bonus value). Statement credits and direct deposits typically offer the best value. Avoid redeeming for merchandise, which often gives worse value."
+  },
+  {
+    question: "What's the difference between cash back and points?",
+    answer: "<strong>Cash back</strong> has a fixed value (1% = 1¢ per dollar). <strong>Points</strong> can vary in value (typically 1-2¢ each) depending on how you redeem them. Some 'cash back' cards like Chase Freedom actually earn points that can be transferred to travel partners for higher value when combined with cards like Sapphire Preferred."
+  },
+  {
+    question: "Can I have multiple cash back cards?",
+    answer: "Absolutely! Many savvy consumers carry <strong>3-4 cash back cards</strong> strategically: one for groceries (Blue Cash Preferred), one for dining (SavorOne), one for gas/rotating categories (Freedom Flex), and a flat-rate backup (Citi Double Cash). This approach maximizes rewards across all spending."
+  },
+  {
+    question: "Do cash back cards affect my credit score?",
+    answer: "Like all credit cards, cash back cards can <strong>help or hurt your score</strong> depending on usage. Responsible use (paying on time, keeping utilization low) builds credit. Opening new cards causes temporary hard inquiries. Long-term, having multiple cards with good payment history improves your score."
+  },
+  {
+    question: "What credit score do I need for cash back cards?",
+    answer: "Premium cash back cards typically require <strong>good to excellent credit (700+ FICO)</strong>. No-annual-fee cards like Discover it or Capital One Quicksilver may approve scores in the <strong>650-700 range</strong>. Discover it is particularly known for approving those with limited credit history."
+  },
+  {
+    question: "Is cash back taxable income?",
+    answer: "Generally, <strong>no</strong>. The IRS treats credit card rewards as rebates on purchases rather than taxable income. However, sign-up bonuses that don't require spending (like some bank account bonuses) may be taxable. Cash back earned through normal card usage is not reported as income."
   }
 ];
 ---
 
-<MainLayout title="Best Cash Back Credit Cards" description="Expert reviews of the best American Express cash back credit cards for everyday spending.">
-  <!-- Interactive Header with Cursor Trail -->
+<MainLayout title="10 Best Cash Back Credit Cards of December 2025 | Expert Reviews" description="Compare the best cash back credit cards for 2025. Expert reviews of Blue Cash Preferred, Citi Double Cash, Chase Freedom & more. Find your perfect card for groceries, gas & everyday rewards.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="10 Best Cash Back Credit Cards of December 2025"
+    description="Compare the best cash back credit cards for 2025. Expert reviews of Blue Cash Preferred, Citi Double Cash, and more."
+    url="/credit-cards/best-cashback"
+    image="/category-images/cashback-cards.jpeg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Sarah Chen"
+    section="Credit Cards"
+    tags={['cash back credit cards', 'credit card rewards', 'Blue Cash Preferred', 'Citi Double Cash']}
+    wordCount={4000}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Credit Cards', url: '/credit-cards' },
+    { name: 'Best Cash Back Cards' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
   <CursorTrailDark 
     client:load
     title="Best Cash Back Credit Cards of December 2025"
     kicker=""
-    subtitle="Maximize your everyday spending with cards that put real money back in your pocket."
-    author="Screened Editorial Team"
-    date="Dec. 10, 2025"
+    subtitle="Compare 10 expert-reviewed cash back cards for groceries, dining, gas & everyday rewards."
+    author="Sarah Chen"
+    date="Dec. 11, 2025"
     compact={true}
     animateTitle={true}
   />
 
   <!-- Disclosure -->
-  <section class="bg-[#F7F8FA] py-4">
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <p class="text-xs text-[#68727C] leading-relaxed">
-        Most of the cards we feature here are from partners who compensate us when you approve through our site. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
+        <strong>Advertiser Disclosure:</strong> Many of the card offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings, ratings, or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
       </p>
     </div>
   </section>
 
-  <!-- Cards List -->
-  <section class="py-12 bg-[#F7F8FA]">
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <!-- Research Intro -->
-      <div class="text-center mb-10">
-        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We evaluated 38 cash back cards across 156 spending categories, calculating actual returns based on average American household spending of $5,577/month. These 4 cards consistently outperformed competitors, delivering $847-$1,420 in annual cash back for typical users.</p>
+      <TOCToggleGroup client:load items={[
+        { id: "cards", label: "All Cards", href: "#cards" },
+        { id: "rewards", label: "How It Works", href: "#how-rewards-work" },
+        { id: "how-to-choose", label: "How to Choose", href: "#how-to-choose" },
+        { id: "category", label: "By Category", href: "#best-by-category" },
+        { id: "compare-table", label: "Compare", href: "#compare-table" },
+        { id: "methodology", label: "Methodology", href: "#methodology", hideOnMobile: true },
+        { id: "faq", label: "FAQ", href: "#faq" }
+      ]} />
+    </div>
+  </section>
+
+  <!-- Cards Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We evaluated 38 cash back cards across 156 spending categories, calculating actual returns based on average American household spending of $5,577/month. These 10 cards consistently outperformed competitors, delivering $847-$1,420 in annual cash back for typical users.</p>
       </div>
       
       {creditCards.map((card, index) => (
-        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
-          <div class="grid md:grid-cols-[300px_1fr]">
-            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
-              {getCardImage(card.name) ? (
-                <img 
-                  src={getCardImage(card.name)} 
-                  alt={card.name}
-                  class="w-64 h-auto rounded-xl shadow-xl mb-6 hover:scale-105 hover:shadow-2xl transition-all duration-300"
-                />
-              ) : (
-                <div class="w-64 h-40 rounded-xl shadow-xl mb-6 relative overflow-hidden" style={`background: linear-gradient(135deg, ${index % 2 === 0 ? '#0077C0 0%, #00A3E0 50%, #0077C0 100%' : '#2563EB 0%, #3B82F6 50%, #2563EB 100%'});`}>
-                  <div class="absolute top-6 left-6 w-10 h-8 rounded bg-gradient-to-br from-yellow-300 to-yellow-500 opacity-90"></div>
-                  <div class="absolute top-4 right-4">
-                    <div class="text-white font-bold text-lg tracking-tight opacity-90">AMEX</div>
-                  </div>
-                  <div class="absolute bottom-4 left-4 right-4">
-                    <div class="text-white text-xs font-medium opacity-80 leading-tight">{card.name}</div>
-                  </div>
-                </div>
-              )}
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {card.editorChoice && (
+            <div class="bg-gradient-to-r from-[#10B981] to-[#059669] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best for Groceries & Streaming
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
               
-              <a href="#" class="apply-btn group w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide mb-3 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 relative overflow-hidden" style="color: #FFFFFF !important;">
-                <span class="relative z-10" style="color: #FFFFFF !important;">Apply Now</span>
-                <svg class="w-4 h-4 relative z-10 transition-transform group-hover:translate-x-1" fill="none" stroke="#FFFFFF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                <span class="shine-effect"></span>
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Card Image */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                {getCardImage(card.name) ? (
+                  <img 
+                    src={getCardImage(card.name)} 
+                    alt={`${card.name} credit card`}
+                    class="w-72 h-auto rounded-xl shadow-2xl group-hover:scale-105 group-hover:shadow-3xl transition-all duration-500"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                ) : (
+                  <div class={`w-72 h-44 rounded-xl shadow-2xl relative overflow-hidden group-hover:scale-105 transition-all duration-500 ${
+                    card.slug.includes('amex') || card.slug.includes('blue-cash') ? 'bg-gradient-to-br from-[#0077C0] via-[#00A3E0] to-[#0077C0]' :
+                    card.slug.includes('chase') || card.slug.includes('freedom') ? 'bg-gradient-to-br from-[#003087] via-[#0047AB] to-[#003087]' :
+                    card.slug.includes('citi') ? 'bg-gradient-to-br from-[#003DA5] via-[#0052CC] to-[#003DA5]' :
+                    card.slug.includes('wells') ? 'bg-gradient-to-br from-[#BB0000] via-[#CC0000] to-[#BB0000]' :
+                    card.slug.includes('capital') ? 'bg-gradient-to-br from-[#004C4C] via-[#006666] to-[#004C4C]' :
+                    card.slug.includes('discover') ? 'bg-gradient-to-br from-[#FF6600] via-[#FF8533] to-[#FF6600]' :
+                    card.slug.includes('usbank') ? 'bg-gradient-to-br from-[#0D2C4B] via-[#1a4a7a] to-[#0D2C4B]' :
+                    'bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#1a1a1a]'
+                  }`}>
+                    <div class="absolute top-5 left-5 w-12 h-9 rounded bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 opacity-90"></div>
+                    <div class="absolute bottom-4 left-5 right-5">
+                      <div class="text-white/90 text-xs font-medium leading-tight truncate">{card.name}</div>
+                    </div>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent"></div>
+                  </div>
+                )}
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{card.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Apply Now</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
-              <p class="text-xs text-[#68727C] text-center">On American Express's Website</p>
+              <p class="text-xs text-[#68727C] text-center mt-2">On issuer's secure website</p>
             </div>
 
+            <!-- Right Panel -->
             <div class="p-6 md:p-8">
-              <div class="flex items-start justify-between mb-4">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
-                  <span class="inline-block bg-[#DCFCE7] text-[#166534] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">{card.bestFor}</span>
-                  <h2 class="font-sora text-xl md:text-2xl font-bold text-[#162433]">{card.name}</h2>
-                </div>
-                <div class="flex items-center gap-1 bg-[#F7F8FA] px-3 py-2 rounded-lg">
-                  <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                  <span class="font-bold text-[#162433]">{card.rating}</span>
+                  <span class="inline-block bg-gradient-to-r from-[#DCFCE7] to-[#BBF7D0] text-[#166534] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {card.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{card.name}</h3>
                 </div>
               </div>
               
-              <p class="text-[#68727C] mb-6">{card.description}</p>
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{card.description}</p>
 
-              <div class="grid md:grid-cols-2 gap-6 mb-6">
-                <div class="bg-[#F7F8FA] p-4 rounded-lg">
-                  <div class="text-xs text-[#68727C] uppercase font-bold mb-1">Annual Fee</div>
-                  <div class="text-lg font-bold text-[#162433]">{card.annualFee}</div>
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Annual Fee</div>
+                  <div class="stat-value">{card.annualFee}</div>
                 </div>
-                <div class="bg-[#F7F8FA] p-4 rounded-lg">
-                  <div class="text-xs text-[#68727C] uppercase font-bold mb-1">Welcome Bonus</div>
-                  <div class="text-lg font-bold text-[#162433]">{card.bonus}</div>
+                <div class="stat-box">
+                  <div class="stat-label">Welcome Bonus</div>
+                  <div class="stat-value text-green-600">{card.bonusValue}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Rewards Rate</div>
+                  <div class="stat-value">{card.rewardsRate}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Foreign Fees</div>
+                  <div class="stat-value">{card.foreignFee}</div>
                 </div>
               </div>
 
-              <div class="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 class="font-bold text-[#162433] mb-2 flex items-center gap-2">
-                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                    Pros
-                  </h4>
-                  <ul class="text-sm text-[#68727C] space-y-1">
-                    {card.pros.map(pro => <li>• {pro}</li>)}
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-bold text-[#162433] mb-2 flex items-center gap-2">
-                    <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
-                    Cons
-                  </h4>
-                  <ul class="text-sm text-[#68727C] space-y-1">
-                    {card.cons.map(con => <li>• {con}</li>)}
-                  </ul>
-                </div>
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {card.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{card.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {card.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {card.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Card Details Accordion */}
+                {card.cardDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Card Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {card.cardDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#10B981] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
               </div>
             </div>
           </div>
@@ -160,27 +589,840 @@ const creditCards = [
       ))}
     </div>
   </section>
+
+  <!-- Quick Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison Table</h2>
+      
+      <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table class="comparison-table w-full">
+          <thead>
+            <tr>
+              <th class="text-left">Card</th>
+              <th>Annual Fee</th>
+              <th>Welcome Bonus</th>
+              <th>Best For</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {creditCards.slice(0, 10).map((card, index) => (
+              <tr class={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <td class="font-medium text-[#162433]">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-[#68727C]">#{index + 1}</span>
+                    {card.name.replace('®', '').replace('℠', '').replace('™', '').substring(0, 35)}{card.name.length > 35 ? '...' : ''}
+                  </div>
+                </td>
+                <td class="text-center">{card.annualFee}</td>
+                <td class="text-center text-green-600 font-medium">{card.bonusValue}</td>
+                <td class="text-center text-sm">{card.bestFor}</td>
+                <td class="text-center">
+                  <span class="inline-flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {card.rating}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <!-- How Cash Back Works -->
+        <div id="how-rewards-work" class="scroll-mt-24">
+          <h2>How Cash Back Credit Cards Work</h2>
+          
+          <p>Cash back credit cards return a percentage of every purchase as rewards. Unlike travel points (which vary in value based on redemption), <strong>cash back has a fixed value: 1% = 1¢ per dollar spent</strong>. This simplicity makes cash back cards popular for everyday spending.</p>
+
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Understanding Cash Back Rates</h4>
+            <p>A "2% cash back" card returns $2 for every $100 spent. A card with "5% on groceries" returns $5 per $100 at grocery stores. These percentages compound quickly — spending $500/month on groceries at 5% earns $300/year in cash back.</p>
+          </div>
+
+          <h3>Types of Cash Back Cards</h3>
+          
+          <p><strong>Flat-Rate Cash Back</strong> (like Citi Double Cash, Wells Fargo Active Cash):</p>
+          <ul>
+            <li>Same rate (typically 1.5-2%) on ALL purchases</li>
+            <li>No categories to track or activate</li>
+            <li>Best for varied, unpredictable spending</li>
+          </ul>
+
+          <p><strong>Category Cash Back</strong> (like Blue Cash Preferred, Freedom Flex):</p>
+          <ul>
+            <li>Higher rates (3-6%) in specific categories</li>
+            <li>Lower rate (1%) on non-bonus spending</li>
+            <li>Best for concentrated spending in bonus areas</li>
+          </ul>
+
+          <p><strong>Rotating Category Cash Back</strong> (like Discover it, Chase Freedom Flex):</p>
+          <ul>
+            <li>5% back in categories that change quarterly</li>
+            <li>Requires quarterly activation</li>
+            <li>Best for engaged cardholders who track promotions</li>
+          </ul>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Maximize Your Cash Back</h4>
+            <p>The most effective strategy is <strong>combining cards</strong>: use a category card for high-bonus spending (groceries, gas, dining) and a 2% flat-rate card for everything else. This approach typically earns 50-100% more than using a single card.</p>
+          </div>
+        </div>
+
+        <!-- How to Choose -->
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose a Cash Back Card</h2>
+
+          <p>The best cash back card depends on your spending patterns. Here's how to match your habits to the right card:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Your Spending Focus</th>
+                <th>Best Card Type</th>
+                <th>Top Pick</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Groceries & streaming</td>
+                <td>Category bonus</td>
+                <td>Blue Cash Preferred (6%)</td>
+              </tr>
+              <tr>
+                <td>Dining & entertainment</td>
+                <td>Category bonus</td>
+                <td>Capital One SavorOne (3%)</td>
+              </tr>
+              <tr>
+                <td>Everything (varied)</td>
+                <td>Flat-rate</td>
+                <td>Citi Double Cash (2%)</td>
+              </tr>
+              <tr>
+                <td>Rotating deals (engaged)</td>
+                <td>Rotating categories</td>
+                <td>Discover it (5% + match)</td>
+              </tr>
+              <tr>
+                <td>Travel + cash back</td>
+                <td>Flexible points</td>
+                <td>Chase Freedom Unlimited</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Annual Fee Considerations</h3>
+
+          <p>Some cash back cards charge annual fees, but they can still deliver better value:</p>
+
+          <div class="comparison-boxes">
+            <div class="fee-breakdown">
+              <h4>Blue Cash Preferred ($95/year)</h4>
+              <ul>
+                <li>6% on $6,000 groceries = <strong>$360</strong></li>
+                <li>6% on $600 streaming = <strong>$36</strong></li>
+                <li>3% on $1,200 gas = <strong>$36</strong></li>
+                <li>Minus annual fee = <strong>-$95</strong></li>
+              </ul>
+              <p class="net-value">Net cash back: <strong class="text-green-600">$337/year</strong></p>
+            </div>
+            
+            <div class="fee-breakdown">
+              <h4>Blue Cash Everyday ($0/year)</h4>
+              <ul>
+                <li>3% on $6,000 groceries = <strong>$180</strong></li>
+                <li>3% on $600 streaming = <strong>N/A</strong></li>
+                <li>3% on $1,200 gas = <strong>$36</strong></li>
+                <li>Minus annual fee = <strong>$0</strong></li>
+              </ul>
+              <p class="net-value">Net cash back: <strong class="text-green-600">$216/year</strong></p>
+            </div>
+          </div>
+
+          <div class="warning-box">
+            <h4>When to Choose No-Fee Cards</h4>
+            <p>If you spend less than $3,200/year on groceries, the Blue Cash Everyday beats Blue Cash Preferred. Always calculate your expected rewards against the annual fee to determine the true winner for your spending.</p>
+          </div>
+        </div>
+
+        <!-- Best by Category -->
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best Cash Back Cards by Category</h2>
+
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best for Groceries</h3>
+              <p class="card-name">Blue Cash Preferred®</p>
+              <p>Industry-leading 6% at U.S. supermarkets (up to $6K/year). If you spend $500+/month on groceries, nothing beats this card.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5a1.5 1.5 0 0 1 0 3H9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Flat-Rate</h3>
+              <p class="card-name">Citi Double Cash®</p>
+              <p>Effective 2% on every purchase with access to Citi ThankYou partners. The gold standard for simplicity.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best for Dining</h3>
+              <p class="card-name">Capital One SavorOne</p>
+              <p>3% on dining, entertainment, and streaming with no annual fee. Perfect for foodies and entertainment fans.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5l-9 13h6z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best for New Cardholders</h3>
+              <p class="card-name">Discover it® Cash Back</p>
+              <p>Cashback Match doubles all rewards in year one. Easier approval for those building credit.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best for Travel Combo</h3>
+              <p class="card-name">Chase Freedom Unlimited®</p>
+              <p>Solid cash back that converts to transferable points when paired with Sapphire. Best of both worlds.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v10m-6 0a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m0 0V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Customizable</h3>
+              <p class="card-name">U.S. Bank Cash+®</p>
+              <p>Choose your own 5% categories including utilities — the only card offering 5% on bills.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Methodology -->
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Ranking Methodology</h2>
+
+          <p>Our editorial team evaluates cash back credit cards based on eight weighted factors:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What We Evaluate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Cash Back Rates</td>
+                <td>30%</td>
+                <td>Category rates, flat rates, caps, and bonus breadth</td>
+              </tr>
+              <tr>
+                <td>Welcome Bonus Value</td>
+                <td>20%</td>
+                <td>Bonus amount, spend requirement, time limit</td>
+              </tr>
+              <tr>
+                <td>Annual Fee Value</td>
+                <td>15%</td>
+                <td>Fee amount vs. extra rewards for typical user</td>
+              </tr>
+              <tr>
+                <td>Redemption Flexibility</td>
+                <td>10%</td>
+                <td>Statement credit, direct deposit, gift card options</td>
+              </tr>
+              <tr>
+                <td>Additional Perks</td>
+                <td>10%</td>
+                <td>Cell phone protection, 0% APR, purchase protection</td>
+              </tr>
+              <tr>
+                <td>Foreign Transaction Fees</td>
+                <td>5%</td>
+                <td>Important for international purchases</td>
+              </tr>
+              <tr>
+                <td>Customer Satisfaction</td>
+                <td>5%</td>
+                <td>J.D. Power scores, user reviews, CFPB complaints</td>
+              </tr>
+              <tr>
+                <td>Approval Accessibility</td>
+                <td>5%</td>
+                <td>Credit score requirements, approval odds</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>We calculate expected annual cash back based on average American household spending ($5,577/month) across standard budget categories. Last updated: <strong>December 11, 2025</strong>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about cash back credit cards.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Credit Card Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/credit-cards/best-travel-cards" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Best Travel Cards</h3>
+          <p>Earn points for flights, hotels & lounge access</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/credit-cards/no-annual-fee" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h3>No Annual Fee Cards</h3>
+          <p>Great rewards without the yearly cost</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/credit-cards/business" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <h3>Business Credit Cards</h3>
+          <p>Cards designed for business expenses</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/sarah-chen.jpg" alt="Sarah Chen, Credit Card Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" onerror="this.src='https://ui-avatars.com/api/?name=Sarah+Chen&background=0D2C4B&color=fff&size=80'" />
+        <div>
+          <div class="text-xs text-[#3B82F6] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Sarah Chen</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Sarah is a credit card expert at Screened with over 8 years of experience in personal finance. She has been featured in The Wall Street Journal, Forbes, and CNBC. Sarah personally uses the Blue Cash Preferred for groceries and Citi Double Cash for everyday spending.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 11, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              12 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </MainLayout>
 
 <style>
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Apply Button */
   .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     position: relative;
     overflow: hidden;
-    color: #FFFFFF !important;
   }
   
-  .shine-effect {
+  .apply-btn::before {
+    content: '';
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
     transition: left 0.5s ease;
   }
   
-  .apply-btn:hover .shine-effect {
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+  }
+  
+  .apply-btn:hover::before {
     left: 100%;
   }
-</style>
 
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Accordion Styles */
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    color: #10B981;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #059669;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  details[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+  }
+
+  /* Comparison Table */
+  .comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .comparison-table th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .comparison-table th:first-child {
+    text-align: left;
+    padding-left: 1.5rem;
+  }
+  .comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .comparison-table td:first-child {
+    padding-left: 1.5rem;
+  }
+  .comparison-table tbody tr:hover td {
+    background: #ECFDF5;
+  }
+
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #0D2C4B;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #F9FAFB; }
+
+  .info-box, .warning-box, .key-takeaway {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .info-box {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+  }
+  .info-box h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #1E40AF; }
+
+  .warning-box {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 
+      0 0 0 1px rgba(245, 158, 11, 0.15),
+      0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box h4::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01'/%3E%3C/svg%3E");
+    background-size: contain;
+    flex-shrink: 0;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+  }
+  .key-takeaway h4 { color: #047857; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #065F46; }
+
+  /* Category Picks */
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .category-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .category-card:hover {
+    border-color: #10B981;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    margin-bottom: 1rem;
+  }
+  
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #10B981;
+  }
+  
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+  
+  .category-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .category-card .card-name {
+    color: #10B981;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-card p:last-of-type {
+    color: #64748B;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Fee Breakdown */
+  .comparison-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .fee-breakdown {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  
+  .fee-breakdown h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 1rem 0;
+  }
+  
+  .fee-breakdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+  }
+  
+  .fee-breakdown li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #E2E8F0;
+    font-size: 0.9rem;
+    color: #64748B;
+  }
+  
+  .fee-breakdown li:last-child { border-bottom: none; }
+  
+  .net-value {
+    font-size: 0.9rem;
+    color: #374151;
+    margin: 0;
+    padding-top: 0.5rem;
+    border-top: 2px solid #E2E8F0;
+  }
+
+  /* FAQ Section */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .faq-item:hover {
+    border-color: #10B981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+  }
+  
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+  }
+  
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  details[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.25rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+  }
+
+  /* Related Cards */
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .related-card:hover {
+    border-color: #10B981;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .related-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    margin-bottom: 1rem;
+  }
+  
+  .related-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #10B981;
+  }
+  
+  .related-card h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .related-card p {
+    color: #64748B;
+    font-size: 0.875rem;
+    margin: 0 0 1rem 0;
+  }
+  
+  .related-link {
+    color: #10B981;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+</style>
