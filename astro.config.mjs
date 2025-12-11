@@ -12,8 +12,8 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwind()],
 	},
-	// Hybrid: static pages + serverless API routes
-	output: 'hybrid',
+	// Server mode with static prerendering for most pages, serverless for API routes
+	output: 'server',
 	adapter: vercel(),
 	trailingSlash: 'ignore',
 	prefetch: {

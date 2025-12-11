@@ -10,6 +10,8 @@ category: "Personal Finance"
 tags: ["credit-score", "personal-finance", "guide"]
 ---
 
+import CreditScoreCalculator from '../../components/calculators/CreditScoreCalculator.tsx';
+
 Your credit score is a three-digit number that can determine whether you get approved for loans, credit cards, apartments, and even jobs. Understanding how credit scores work puts you in control of your financial future.
 
 ## What Is a Credit Score?
@@ -223,6 +225,10 @@ Recent credit applications and new accounts.
 
 ## Credit Score Impact on Your Life
 
+See exactly how much a better credit score could save you on your next loan:
+
+<CreditScoreCalculator client:load />
+
 ### Interest Rates
 
 | Credit Score | Auto Loan APR | Mortgage APR | Credit Card APR |
@@ -271,7 +277,7 @@ Your credit affects:
 
 ### If Your Score Is Good (670-739)
 
-1. Maintain low utilization (<30%)
+1. Maintain low utilization (under 30%)
 2. Keep accounts active and open
 3. Apply strategically for new credit
 4. Monitor for errors regularly
