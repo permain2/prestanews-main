@@ -1,6 +1,6 @@
 import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_DKBvgln8.mjs';
 import 'piccolore';
-import { $ as $$MainLayout } from '../chunks/MainLayout_BztIZ2OU.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_DvAyv4g9.mjs';
 import { $ as $$PostCard } from '../chunks/PostCard_9tUPvqD1.mjs';
 import { jsxs, jsx } from 'react/jsx-runtime';
 import { wrap, delay } from 'motion';
@@ -136,6 +136,8 @@ function CursorTrailInsurance({
                     overflow: hidden;
                     cursor: crosshair;
                     background: linear-gradient(135deg, #E8F4F8 0%, #E0EEF4 100%);
+                    z-index: 1;
+                    isolation: isolate;
                 }
 
                 .trail-title-insurance {
@@ -144,7 +146,7 @@ function CursorTrailInsurance({
                     font-size: clamp(2.5rem, 6vw, 4rem);
                     font-weight: 700;
                     color: #162433;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     margin-bottom: 1rem;
@@ -155,7 +157,7 @@ function CursorTrailInsurance({
                     font-family: 'Poppins', sans-serif;
                     font-size: 1.125rem;
                     color: #68727C;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     max-width: 700px;
@@ -169,7 +171,7 @@ function CursorTrailInsurance({
                     height: ${imageSize}px;
                     object-fit: contain;
                     pointer-events: none;
-                    z-index: 10;
+                    z-index: 1;
                     border-radius: 12px;
                     background: white;
                     padding: 10px;

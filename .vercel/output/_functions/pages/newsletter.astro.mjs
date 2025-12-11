@@ -1,6 +1,6 @@
 import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_DKBvgln8.mjs';
 import 'piccolore';
-import { $ as $$MainLayout } from '../chunks/MainLayout_BztIZ2OU.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_DvAyv4g9.mjs';
 import { jsxs, jsx } from 'react/jsx-runtime';
 import { useMotionValue, useSpring, useTransform, animate, motion, AnimatePresence } from 'motion/react';
 import { useState, useRef, useEffect } from 'react';

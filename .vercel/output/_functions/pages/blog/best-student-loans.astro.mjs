@@ -1,6 +1,6 @@
 import { c as createComponent, r as renderComponent, a as renderTemplate } from '../../chunks/astro/server_DKBvgln8.mjs';
 import 'piccolore';
-import { $ as $$ComparisonLayout } from '../../chunks/ComparisonLayout_Cv49nT0t.mjs';
+import { $ as $$ComparisonLayout } from '../../chunks/ComparisonLayout_DWDHPoCX.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const $$BestStudentLoans = createComponent(($$result, $$props, $$slots) => {

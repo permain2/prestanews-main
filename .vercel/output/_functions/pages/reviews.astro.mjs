@@ -1,7 +1,7 @@
 import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead, b as addAttribute } from '../chunks/astro/server_DKBvgln8.mjs';
 import 'piccolore';
 import { g as getCollection } from '../chunks/_astro_content_Tnc-eghr.mjs';
-import { $ as $$MainLayout } from '../chunks/MainLayout_BztIZ2OU.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_DvAyv4g9.mjs';
 import { $ as $$FormattedDate } from '../chunks/FormattedDate_Bx-VE8tZ.mjs';
 import { g as getCardImage } from '../chunks/cardImageMap__yuvtrme.mjs';
 export { renderers } from '../renderers.mjs';

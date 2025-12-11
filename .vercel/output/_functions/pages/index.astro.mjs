@@ -1,6 +1,6 @@
 import { e as createAstro, c as createComponent, a as renderTemplate, u as unescapeHTML, r as renderComponent, m as maybeRenderHead, b as addAttribute } from '../chunks/astro/server_DKBvgln8.mjs';
 import 'piccolore';
-import { $ as $$MainLayout } from '../chunks/MainLayout_BztIZ2OU.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_DvAyv4g9.mjs';
 import { g as getCollection } from '../chunks/_astro_content_Tnc-eghr.mjs';
 import { jsxs, jsx } from 'react/jsx-runtime';
 import { delay, wrap } from 'motion';

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
-import SignupNotifications from '../../components/SignupNotifications.tsx';
 import ComparisonTOCToggle from '../../components/ComparisonTOCToggle.tsx';
 import AnimatedFAQ from '../../components/AnimatedFAQ.tsx';
 
@@ -129,15 +128,6 @@ const tocItems = [
     animateTitle={true}
   />
 
-  <!-- Social Proof Notifications -->
-  <SignupNotifications 
-    client:load
-    initialDelay={5000}
-    interval={120000}
-    displayDuration={6000}
-    showInitialBatch={1}
-  />
-
   <!-- Disclosure -->
   <section class="bg-[#F7F8FA] py-4">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
@@ -159,7 +149,6 @@ const tocItems = [
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <!-- Research Intro -->
       <div class="text-center mb-10">
-        <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4">Top Renters Insurance Companies</h2>
         <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We obtained 186 quotes for $30K personal property coverage across 10 cities, tested each company's claims process with small claims, and analyzed 3,200+ customer reviews. These 6 insurers deliver the best value—protecting your belongings for as little as $10-$20 per month.</p>
       </div>
       

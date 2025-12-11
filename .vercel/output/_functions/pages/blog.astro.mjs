@@ -1,7 +1,7 @@
 import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead, b as addAttribute } from '../chunks/astro/server_DKBvgln8.mjs';
 import 'piccolore';
 import { g as getCollection } from '../chunks/_astro_content_Tnc-eghr.mjs';
-import { $ as $$MainLayout } from '../chunks/MainLayout_BztIZ2OU.mjs';
+import { $ as $$MainLayout } from '../chunks/MainLayout_DvAyv4g9.mjs';
 import { $ as $$FormattedDate } from '../chunks/FormattedDate_Bx-VE8tZ.mjs';
 import { $ as $$Image } from '../chunks/_astro_assets_CNcbqDS2.mjs';
 import { jsxs, jsx } from 'react/jsx-runtime';
@@ -155,6 +155,8 @@ function CursorTrailBlog({
                     overflow: hidden;
                     cursor: crosshair;
                     background: linear-gradient(135deg, #F0F4FF 0%, #E8EEF8 100%);
+                    z-index: 1;
+                    isolation: isolate;
                 }
 
                 .trail-title-blog {
@@ -163,7 +165,7 @@ function CursorTrailBlog({
                     font-size: clamp(2.5rem, 6vw, 4rem);
                     font-weight: 700;
                     color: #162433;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     margin-bottom: 1rem;
@@ -174,7 +176,7 @@ function CursorTrailBlog({
                     font-family: 'Poppins', sans-serif;
                     font-size: 1.125rem;
                     color: #68727C;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     max-width: 700px;
@@ -188,7 +190,7 @@ function CursorTrailBlog({
                     height: auto;
                     object-fit: contain;
                     pointer-events: none;
-                    z-index: 10;
+                    z-index: 1;
                     border-radius: 8px;
                     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
                 }
@@ -199,7 +201,7 @@ function CursorTrailBlog({
                     height: ${logoSize}px;
                     object-fit: contain;
                     pointer-events: none;
-                    z-index: 10;
+                    z-index: 1;
                     border-radius: 10px;
                     background: white;
                     padding: 8px;
