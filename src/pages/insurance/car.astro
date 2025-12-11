@@ -67,21 +67,47 @@ const providers = [
 ---
 
 <MainLayout title="Best Car Insurance" description="Expert reviews of the best car insurance providers to help you find affordable coverage with great service.">
-  <!-- Header -->
-  <section class="bg-[#0D2C4B] py-12 md:py-16">
-    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center">
-      <span class="inline-block text-[#3B82F6] font-bold uppercase text-sm tracking-wide mb-4">CAR INSURANCE</span>
+  <!-- Header with Hero Image -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <img src="/insurance-heroes/car-insurance.jpeg" alt="Car Insurance" class="hero-image" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center relative z-10 py-16 md:py-24">
+      <span class="inline-block text-[#60A5FA] font-bold uppercase text-sm tracking-wide mb-4">CAR INSURANCE</span>
       <h1 class="font-sora text-4xl md:text-5xl font-bold mb-4" style="color: #FFFFFF !important;">Best Car Insurance of December 2025</h1>
-      <p class="text-xl max-w-3xl mx-auto mb-6" style="color: rgba(255,255,255,0.8) !important;">
+      <p class="text-xl max-w-3xl mx-auto mb-6" style="color: rgba(255,255,255,0.9) !important;">
         Our experts have reviewed the top auto insurance providers to help you find the right coverage at the best price.
       </p>
-      <div class="flex items-center justify-center gap-4 text-sm" style="color: rgba(255,255,255,0.6) !important;">
+      <div class="flex items-center justify-center gap-4 text-sm" style="color: rgba(255,255,255,0.7) !important;">
         <span>By PrestaNews Insurance Team</span>
         <span>•</span>
         <span>Updated Dec. 10, 2025</span>
       </div>
     </div>
   </section>
+
+  <style>
+    .hero-section {
+      position: relative;
+      min-height: 320px;
+    }
+    .hero-background {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13, 44, 75, 0.85) 0%, rgba(22, 36, 51, 0.75) 100%);
+    }
+  </style>
 
   <!-- Disclosure -->
   <section class="bg-[#F7F8FA] py-4">

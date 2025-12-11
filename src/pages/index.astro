@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
+import HeroTypewriter from '../components/HeroTypewriter.tsx';
 
 // Get latest articles
 const allPosts = await getCollection('blog');
@@ -22,7 +23,10 @@ const authors = [
   <section class="hero-section">
     <div class="hero-container">
       <div class="hero-content">
-        <h1 class="hero-title">Make Smarter<br/>Financial Decisions</h1>
+        <HeroTypewriter 
+          client:load 
+          words={["Credit Cards", "Insurance", "Savings", "Investments", "Your Future"]} 
+        />
         <p class="hero-subtitle">
           Expert reviews and unbiased comparisons on credit cards, insurance, and personal finance — helping you save money and choose with confidence.
         </p>
@@ -145,7 +149,7 @@ const authors = [
         <div class="offer-card">
           <div class="offer-badge">Best for Travel</div>
           <div class="offer-card-image">
-            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop" alt="Chase Sapphire Preferred" />
+            <img src="/credit-cards/cq5dam.web.767.767.png" alt="Chase Sapphire Preferred" />
           </div>
           <div class="offer-content">
             <h3 class="offer-name">Chase Sapphire Preferred®</h3>
@@ -154,7 +158,7 @@ const authors = [
               <span class="highlight-number">75,000</span>
               <span class="highlight-label">bonus points</span>
             </div>
-            <a href="https://www.chase.com/personal/credit-cards/sapphire/sapphire-preferred?utm_source=prestanews&utm_medium=affiliate&utm_campaign=credit_cards_homepage&utm_content=travel_card" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
+            <a href="https://www.chase.com/personal/credit-cards/sapphire/sapphire-preferred?utm_source=prestanews&utm_medium=affiliate" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
           </div>
         </div>
 
@@ -162,7 +166,7 @@ const authors = [
         <div class="offer-card">
           <div class="offer-badge">Best for Miles</div>
           <div class="offer-card-image">
-            <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=250&fit=crop" alt="Capital One Venture X" />
+            <img src="/credit-cards/united_club_infinite_card.png" alt="Capital One Venture X" />
           </div>
           <div class="offer-content">
             <h3 class="offer-name">Capital One Venture X</h3>
@@ -171,7 +175,7 @@ const authors = [
               <span class="highlight-number">100,000</span>
               <span class="highlight-label">bonus miles</span>
             </div>
-            <a href="https://www.capitalone.com/credit-cards/venture-x/?utm_source=prestanews&utm_medium=affiliate&utm_campaign=credit_cards_homepage&utm_content=miles_card" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
+            <a href="https://www.capitalone.com/credit-cards/venture-x/?utm_source=prestanews&utm_medium=affiliate" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
           </div>
         </div>
 
@@ -179,7 +183,7 @@ const authors = [
         <div class="offer-card">
           <div class="offer-badge">Best for Cash Back</div>
           <div class="offer-card-image">
-            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=250&fit=crop" alt="Citi Double Cash" />
+            <img src="/credit-cards/Membership_Rewards_Card.avif" alt="Citi Double Cash" />
           </div>
           <div class="offer-content">
             <h3 class="offer-name">Citi Double Cash® Card</h3>
@@ -188,7 +192,7 @@ const authors = [
               <span class="highlight-number">2%</span>
               <span class="highlight-label">unlimited cash back</span>
             </div>
-            <a href="https://www.citi.com/credit-cards/citi-double-cash-credit-card?utm_source=prestanews&utm_medium=affiliate&utm_campaign=credit_cards_homepage&utm_content=cashback_card" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
+            <a href="https://www.citi.com/credit-cards/citi-double-cash-credit-card?utm_source=prestanews&utm_medium=affiliate" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
           </div>
         </div>
       </div>
@@ -370,15 +374,6 @@ const authors = [
     margin: 0 auto;
     position: relative;
     z-index: 1;
-  }
-
-  .hero-title {
-    font-family: 'Lexend', sans-serif;
-    font-size: clamp(2.25rem, 5vw, 3.5rem);
-    font-weight: 600;
-    color: #162433;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
   }
 
   .hero-subtitle {
@@ -1233,9 +1228,6 @@ const authors = [
       gap: 2rem;
     }
 
-    .offers-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
 
     .categories-grid {
       grid-template-columns: repeat(2, 1fr);
