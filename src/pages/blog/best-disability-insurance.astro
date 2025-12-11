@@ -130,21 +130,8 @@ const faqs = [
     answer: "Yes, but pre-existing conditions may be excluded from coverage or result in higher premiums. Many insurers will cover you after a condition has been stable for 12-24 months. Simplified issue policies may have fewer health questions but more limited coverage."
   }
 ];
----
 
-<ComparisonLayout
-  title="Best Disability Insurance Companies of 2025"
-  description="Compare the best disability insurance providers including Northwestern Mutual, Guardian Life, and MassMutual. Expert reviews of coverage, costs, and policy features."
-  category="insurance"
-  categoryLabel="INSURANCE"
-  heroImage="/blog-images/disability-insurance.jpg"
-  researchIntro="We obtained 89 quotes across 14 insurers for professionals earning $75K-$250K annually, comparing policy definitions, benefit periods, and premium costs. We also analyzed claims denial rates from state insurance department data. These carriers have the strongest own-occupation definitions and lowest denial rates."
-  author="Emily Johnson"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
->
-
+const content = `
 ## Why Disability Insurance Matters
 
 Your ability to earn income is likely your most valuable financial asset. A 35-year-old earning $75,000 annually will earn over $2.25 million before retirement. Disability insurance protects this earning potential when illness or injury prevents you from working.
@@ -251,6 +238,20 @@ For most working professionals, **Northwestern Mutual** or **Guardian Life** off
 At minimum, ensure you have long-term disability coverage equal to 60% of your income with an elimination period you can cover from savings. Review your employer's group coverage and supplement with individual insurance if gaps exist.
 
 *Premium estimates are illustrative. Actual costs depend on individual factors and underwriting.*
+`;
+---
 
-</ComparisonLayout>
+<ComparisonLayout
+  title="Best Disability Insurance Companies of 2025"
+  description="Compare the best disability insurance providers including Northwestern Mutual, Guardian Life, and MassMutual. Expert reviews of coverage, costs, and policy features."
+  category="insurance"
+  categoryLabel="INSURANCE"
+  heroImage="/blog-images/disability-insurance.jpg"
+  researchIntro="We obtained 89 quotes across 14 insurers for professionals earning $75K-$250K annually, comparing policy definitions, benefit periods, and premium costs. We also analyzed claims denial rates from state insurance department data. These carriers have the strongest own-occupation definitions and lowest denial rates."
+  author="Emily Johnson"
+  date="Dec 11, 2025"
+  providers={providers}
+  faqs={faqs}
+  content={content}
+/>
 
