@@ -1,0 +1,302 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const providers = [
+  {
+    name: "American Home Shield",
+    logo: "/insurance-logos-small/ahs.png",
+    bestFor: "Overall Coverage",
+    monthlyAvg: "$49-$59",
+    serviceFee: "$125",
+    rating: 4.7,
+    pros: ["Largest contractor network (17,000+ technicians)", "24/7 customer service", "Optional pool/spa coverage", "A+ BBB rating"],
+    cons: ["Higher service call fee", "Some pre-existing condition exclusions"],
+    description: "American Home Shield dominates the home warranty industry with over 2 million customers and 45 years of experience."
+  },
+  {
+    name: "Choice Home Warranty",
+    logo: "/insurance-logos-small/choicehomewarranty.png",
+    bestFor: "HVAC Coverage",
+    monthlyAvg: "$44-$59",
+    serviceFee: "$75",
+    rating: 4.5,
+    pros: ["No coverage caps on repairs", "180-day workmanship guarantee", "Same-day service available", "Covers smart home devices"],
+    cons: ["Limited rural availability", "Newer company with less track record"],
+    description: "Choice Home Warranty specializes in unlimited repair costs for covered items, ideal for homes with aging HVAC systems."
+  },
+  {
+    name: "Select Home Warranty",
+    logo: "/insurance-logos-small/selecthomewarranty.png",
+    bestFor: "Budget Option",
+    monthlyAvg: "$35-$49",
+    serviceFee: "$75",
+    rating: 4.3,
+    pros: ["Lowest monthly premiums", "Competitive service fee", "Month-to-month options", "Quick online quotes"],
+    cons: ["Limited coverage for older appliances", "Smaller contractor network"],
+    description: "Select Home Warranty offers the most affordable entry point with Basic coverage starting at $35 monthly."
+  },
+  {
+    name: "Cinch Home Services",
+    logo: "/insurance-logos-small/cinch.png",
+    bestFor: "Customer Service",
+    monthlyAvg: "$54-$79",
+    serviceFee: "$75",
+    rating: 4.4,
+    pros: ["Excellent mobile app", "24/7 phone and chat support", "180-day workmanship warranty", "Transparent pricing"],
+    cons: ["Higher monthly premiums", "Fewer additional coverage options"],
+    description: "Cinch Home Services excels in customer experience with 24/7 support and an industry-leading mobile app."
+  },
+  {
+    name: "First American Home Warranty",
+    logo: "/insurance-logos-small/firstamerican.png",
+    bestFor: "New Homes",
+    monthlyAvg: "$45-$65",
+    serviceFee: "$75",
+    rating: 4.2,
+    pros: ["Excellent smart home coverage", "Competitive service fees", "Strong suburban contractor network", "Flexible contract terms"],
+    cons: ["Limited coverage for older homes", "Fewer customization options"],
+    description: "First American specializes in coverage for newer homes with comprehensive plans for modern systems and appliances."
+  },
+  {
+    name: "Liberty Home Guard",
+    logo: "/insurance-logos-small/libertyhomeguard.png",
+    bestFor: "Plan Flexibility",
+    monthlyAvg: "$42-$65",
+    serviceFee: "$60",
+    rating: 4.1,
+    pros: ["Extensive customization options", "Coverage for rental units", "Lowest service fee", "90-day workmanship guarantee"],
+    cons: ["Complex plan structure", "Limited state availability"],
+    description: "Liberty Home Guard offers highly customizable plans with add-on options for specific coverage needs."
+  },
+  {
+    name: "Total Home Protection",
+    logo: "/insurance-logos-small/totalhomeprotection.png",
+    bestFor: "Older Homes",
+    monthlyAvg: "$39-$55",
+    serviceFee: "$70",
+    rating: 4.0,
+    pros: ["Covers pre-existing conditions", "Specialized older home plans", "Experienced with vintage appliances", "Competitive pricing"],
+    cons: ["Longer waiting periods", "Limited contractor network"],
+    description: "Total Home Protection specializes in coverage for aging homes and systems over 15 years old."
+  },
+  {
+    name: "AFC Home Club",
+    logo: "/insurance-logos-small/afchomeclub.png",
+    bestFor: "Regional Coverage",
+    monthlyAvg: "$38-$52",
+    serviceFee: "$65",
+    rating: 3.9,
+    pros: ["Excellent local contractor relationships", "Quick response times", "Personalized customer service", "Competitive pricing"],
+    cons: ["Limited geographic availability", "Fewer plan options"],
+    description: "AFC Home Club provides strong regional coverage in select markets with excellent local service."
+  },
+  {
+    name: "2-10 Home Buyers Warranty",
+    logo: "/insurance-logos-small/2-10.png",
+    bestFor: "Real Estate Transactions",
+    monthlyAvg: "$43-$60",
+    serviceFee: "$75",
+    rating: 3.8,
+    pros: ["Specialized real estate coverage", "Strong agent relationships", "Comprehensive structural options", "Buyer/seller protection"],
+    cons: ["Limited direct-to-consumer marketing", "Basic mobile app"],
+    description: "2-10 Home Buyers Warranty focuses on coverage during real estate transactions with buyer and seller protection."
+  },
+  {
+    name: "AHS ProConnect",
+    logo: "/insurance-logos-small/ahsproconnect.png",
+    bestFor: "DIY Homeowners",
+    monthlyAvg: "$41-$55",
+    serviceFee: "$65",
+    rating: 3.7,
+    pros: ["Diagnostic services for DIY repairs", "Parts coverage for self-install", "Lower diagnostic visit fees", "Educational resources"],
+    cons: ["Limited full-service options", "Requires homeowner involvement"],
+    description: "AHS ProConnect caters to handy homeowners with diagnostic services and parts coverage for DIY repairs."
+  }
+];
+---
+
+<MainLayout title="Best Home Warranty Companies 2024" description="Compare the best home warranty companies of 2024. Expert reviews, pricing, coverage options & customer ratings.">
+  <!-- Header with Hero Image -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <img src="/insurance-heroes/home-warranty.jpeg" alt="Home Warranty" class="hero-image" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="max-w-[90rem] mx-auto px-4 md:px-8 text-center relative z-10 py-16 md:py-24">
+      <span class="inline-block text-[#60A5FA] font-bold uppercase text-sm tracking-wide mb-4">HOME WARRANTY</span>
+      <h1 class="font-sora text-4xl md:text-5xl font-bold mb-4" style="color: #FFFFFF !important;">Best Home Warranty Companies 2024</h1>
+      <p class="text-xl max-w-3xl mx-auto mb-6" style="color: rgba(255,255,255,0.9) !important;">
+        Protect your home from unexpected repair costs. We reviewed 25 providers to find the best coverage, pricing, and service.
+      </p>
+      <div class="flex items-center justify-center gap-4 text-sm" style="color: rgba(255,255,255,0.7) !important;">
+        <span>By Screened Editorial Team</span>
+        <span>•</span>
+        <span>Updated Dec. 11, 2025</span>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .hero-section {
+      position: relative;
+      min-height: 320px;
+    }
+    .hero-background {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13, 44, 75, 0.85) 0%, rgba(22, 36, 51, 0.75) 100%);
+    }
+  </style>
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
+      </p>
+    </div>
+  </section>
+
+  <!-- Providers List -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      
+      {providers.map((provider, index) => (
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
+          <div class="grid md:grid-cols-[300px_1fr]">
+            <!-- Left Panel - Logo & CTA -->
+            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
+              <!-- Provider Logo -->
+              <div class="w-48 h-32 rounded-xl shadow-lg mb-6 relative overflow-hidden flex items-center justify-center bg-white p-4">
+                <img src={provider.logo} alt={`${provider.name} logo`} class="max-w-full max-h-full object-contain" />
+              </div>
+              
+              <!-- Apply Button -->
+              <a href="#" class="btn-apply">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s Website</p>
+            </div>
+
+            <!-- Right Panel - Provider Details -->
+            <div class="p-6 md:p-8">
+              <div class="flex items-start justify-between mb-2">
+                <h2 class="font-sora font-bold text-xl md:text-2xl text-[#162433]">{provider.name}</h2>
+                <span class="bg-[#0D2C4B] text-white text-xs font-bold px-3 py-1 rounded-full">#{index + 1}</span>
+              </div>
+              
+              <div class="flex items-center gap-4 mb-4">
+                <div class="flex text-yellow-400 text-sm">
+                  {'★'.repeat(Math.floor(provider.rating))}{'☆'.repeat(5 - Math.floor(provider.rating))}
+                </div>
+                <span class="font-bold text-[#0D2C4B]">{provider.rating}/5</span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4 mb-4 text-sm">
+                <div>
+                  <span class="text-[#68727C]">Best for:</span>
+                  <span class="font-bold text-[#162433] ml-1">{provider.bestFor}</span>
+                </div>
+                <div>
+                  <span class="text-[#68727C]">Monthly:</span>
+                  <span class="font-bold text-[#162433] ml-1">{provider.monthlyAvg}</span>
+                </div>
+                <div>
+                  <span class="text-[#68727C]">Service Fee:</span>
+                  <span class="font-bold text-[#162433] ml-1">{provider.serviceFee}</span>
+                </div>
+              </div>
+
+              <p class="text-[#68727C] mb-6 text-sm">{provider.description}</p>
+              
+              <!-- Verdict Box -->
+              <div class="bg-[#F7F8FA] rounded-lg p-4 md:p-6">
+                <h3 class="font-lexend font-bold text-sm uppercase tracking-wide text-[#162433] mb-4">Our Verdict</h3>
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                  <div>
+                    <h4 class="text-[#0D2C4B] font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                      <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      Pros
+                    </h4>
+                    <ul class="space-y-2 text-sm text-[#68727C]">
+                      {provider.pros.map(pro => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-green-500 mt-1">•</span> {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="text-red-500 font-bold text-sm uppercase mb-3 flex items-center gap-2">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                      Cons
+                    </h4>
+                    <ul class="space-y-2 text-sm text-[#68727C]">
+                      {provider.cons.map(con => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-red-400 mt-1">•</span> {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-12 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8">Home Warranty FAQ</h2>
+      
+      <div class="space-y-6">
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            What does a home warranty cover?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Standard home warranty plans cover HVAC systems, plumbing, electrical systems, water heaters, and major appliances like refrigerators, dishwashers, and washers/dryers. Premium plans may include pools, spas, and additional appliances.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            How much do home warranty plans cost?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Monthly premiums range from $35-$79 depending on coverage level and provider. Service call fees add $60-$125 per repair visit. Total annual costs typically range from $500-$1,200.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            Home warranty vs home insurance: What's the difference?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Home warranties cover mechanical failures and normal wear and tear of systems and appliances. Home insurance protects against sudden, accidental damage from covered perils like fire, theft, or weather events. Most homeowners benefit from both types of coverage.</p>
+        </details>
+
+        <details class="border border-gray-200 rounded-lg p-6 group">
+          <summary class="font-bold text-[#162433] cursor-pointer list-none flex justify-between items-center">
+            Are home warranty companies worth it?
+            <svg class="w-5 h-5 text-[#68727C] group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <p class="text-[#68727C] mt-4">Home warranties provide value for homeowners with aging systems and appliances. The average homeowner saves $1,200-$2,400 annually on major repairs. However, newer homes with reliable systems may not benefit enough to justify the cost.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</MainLayout>
