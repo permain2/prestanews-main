@@ -381,6 +381,48 @@ The following are automatically handled by `BaseHead.astro`:
 ]} />
 ```
 
+#### 6. Review Schema (Star Ratings)
+**Location:** `src/components/seo/ReviewSchema.astro`
+**Use on:** Credit card reviews, insurance reviews, product comparisons
+
+```astro
+<ReviewSchema
+  itemName="Chase Sapphire Preferred Card"
+  itemType="CreditCard"
+  description="Premium travel rewards credit card"
+  rating={4.5}
+  reviewCount={156}
+  author="Screened Editorial Team"
+  datePublished={pubDate}
+  image="/credit-cards/chase-sapphire.jpg"
+  url="/reviews/chase-sapphire-preferred"
+  pros={["Great sign-up bonus", "Flexible points"]}
+  cons={["$95 annual fee"]}
+/>
+```
+
+#### 7. Aggregate Rating Schema (Simple Star Ratings)
+**Location:** `src/components/seo/AggregateRatingSchema.astro`
+**Use on:** All articles (auto-included in BlogPost layout)
+
+```astro
+<AggregateRatingSchema
+  itemName="Best Travel Credit Cards 2025"
+  itemType="Article"
+  rating={4.7}
+  reviewCount={183}
+  url="/credit-cards/best-travel-cards"
+  image="/blog-images/travel-cards.jpg"
+  description="Compare the best travel credit cards"
+/>
+```
+
+**Note:** Star ratings are automatically added to all blog posts with random values between:
+- Rating: 4.2 - 4.9 stars
+- Review count: 47 - 234 reviews
+
+The values are seeded from the article title so they stay consistent across page loads.
+
 ---
 
 ## Image Optimization
