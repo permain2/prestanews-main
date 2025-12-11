@@ -245,7 +245,7 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
                     whileHover={{ x: 4, transition: { duration: 0.15 } }}
                   >
                     <span className="benefit-icon">{benefit.icon}</span>
-                    <span>{benefit.text}</span>
+                    <span className="benefit-text">{benefit.text}</span>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -310,8 +310,12 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
+                          className="btn-text-send"
                         >
-                          FREE
+                          Send
+                          <svg className="send-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M4 10h12M12 6l4 4-4 4" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
                         </motion.span>
                       )}
                     </AnimatePresence>
@@ -372,6 +376,14 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
             0 4px 24px rgba(0, 0, 0, 0.3),
             0 1px 0 rgba(255, 255, 255, 0.05) inset;
           min-height: 320px;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .newsletter-box-modern:hover {
+          border-color: rgba(255, 255, 255, 0.12);
+          box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.4),
+            0 1px 0 rgba(255, 255, 255, 0.08) inset;
         }
 
         .glow-orb {
@@ -552,8 +564,37 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
         }
 
         .benefit-icon {
-          font-size: 0.875rem;
+          width: 16px;
+          height: 16px;
           flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .benefit-icon svg {
+          width: 14px;
+          height: 14px;
+        }
+
+        .newsletter-guides .benefit-icon { color: #60a5fa; }
+        .newsletter-credit-card .benefit-icon { color: #fbbf24; }
+        .newsletter-insurance .benefit-icon { color: #34d399; }
+
+        .btn-text-send {
+          display: flex;
+          align-items: center;
+          gap: 0.375rem;
+        }
+
+        .send-arrow {
+          width: 14px;
+          height: 14px;
+          transition: transform 0.2s ease;
+        }
+
+        .submit-btn:hover .send-arrow {
+          transform: translateX(2px);
         }
 
         .signup-form {
@@ -811,12 +852,23 @@ const ShieldIcon = () => (
   </svg>
 )
 
+// SVG Icons for benefits - premium minimal style
+const BenefitIcons = {
+  sparkle: <svg viewBox="0 0 16 16" fill="none"><path d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z" fill="currentColor"/></svg>,
+  chart: <svg viewBox="0 0 16 16" fill="none"><path d="M2 14V6L6 10L10 4L14 8V14H2Z" fill="currentColor" opacity="0.3"/><path d="M2 6L6 10L10 4L14 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  target: <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/><circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.5"/><circle cx="8" cy="8" r="1" fill="currentColor"/></svg>,
+  card: <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M1 7H15" stroke="currentColor" strokeWidth="1.5"/><rect x="3" y="9" width="4" height="2" rx="0.5" fill="currentColor" opacity="0.5"/></svg>,
+  car: <svg viewBox="0 0 16 16" fill="none"><path d="M3 10V12H4.5M12.5 12H14V10M3 10L4 6H12L13 10M3 10H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="5" cy="12" r="1.5" stroke="currentColor" strokeWidth="1.5"/><circle cx="11" cy="12" r="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>,
+  home: <svg viewBox="0 0 16 16" fill="none"><path d="M2 8L8 2L14 8V14H10V10H6V14H2V8Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  dollar: <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/><path d="M8 4V12M6 6H9.5C10.3 6 11 6.7 11 7.5S10.3 9 9.5 9H6.5C5.7 9 5 9.7 5 10.5S5.7 12 6.5 12H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+}
+
 // Configuration for each variant
 const variants: Record<NewsletterVariant, {
   icon: React.ReactNode
   offer: string
   subtitle: string
-  benefits: { icon: string; text: string }[]
+  benefits: { icon: React.ReactNode; text: string }[]
   socialProof: string
 }> = {
   guides: {
@@ -824,9 +876,9 @@ const variants: Record<NewsletterVariant, {
     offer: "Money Cheat Sheet",
     subtitle: "Weekly tips to save $1,000+/year",
     benefits: [
-      { icon: "💰", text: "Hidden savings strategies" },
-      { icon: "📊", text: "Budget templates & tools" },
-      { icon: "🎯", text: "Personalized money tips" }
+      { icon: BenefitIcons.sparkle, text: "Hidden savings strategies" },
+      { icon: BenefitIcons.chart, text: "Budget templates & tools" },
+      { icon: BenefitIcons.target, text: "Personalized money tips" }
     ],
     socialProof: "12,847 readers already saving"
   },
@@ -835,9 +887,9 @@ const variants: Record<NewsletterVariant, {
     offer: "$2,500 Card Guide",
     subtitle: "Best cards for max rewards (2025)",
     benefits: [
-      { icon: "💳", text: "Top bonus offers this month" },
-      { icon: "📊", text: "Point valuations cheat sheet" },
-      { icon: "🎯", text: "Card matching quiz" }
+      { icon: BenefitIcons.card, text: "Top bonus offers this month" },
+      { icon: BenefitIcons.chart, text: "Point valuations cheat sheet" },
+      { icon: BenefitIcons.target, text: "Card matching quiz" }
     ],
     socialProof: "12,847 cardholders already earning"
   },
@@ -846,9 +898,9 @@ const variants: Record<NewsletterVariant, {
     offer: "$1,200 Savings Guide",
     subtitle: "Cut your premiums in half",
     benefits: [
-      { icon: "🚗", text: "Auto rate comparison sheet" },
-      { icon: "🏠", text: "Home coverage checklist" },
-      { icon: "💰", text: "Hidden discount codes" }
+      { icon: BenefitIcons.car, text: "Auto rate comparison sheet" },
+      { icon: BenefitIcons.home, text: "Home coverage checklist" },
+      { icon: BenefitIcons.dollar, text: "Hidden discount codes" }
     ],
     socialProof: "8,234 protected readers"
   }
