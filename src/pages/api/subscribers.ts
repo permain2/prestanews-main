@@ -3,10 +3,10 @@ import { Redis } from '@upstash/redis';
 
 export const prerender = false;
 
-// Initialize Redis with Upstash credentials (via Vercel integration)
+// Initialize Redis - uses env vars with any prefix (screened_KV_REST_API_URL, etc.)
 const redis = new Redis({
-  url: import.meta.env.KV_REST_API_URL,
-  token: import.meta.env.KV_REST_API_TOKEN,
+  url: import.meta.env.screened_KV_REST_API_URL || import.meta.env.KV_REST_API_URL,
+  token: import.meta.env.screened_KV_REST_API_TOKEN || import.meta.env.KV_REST_API_TOKEN,
 });
 
 // Simple admin key - change this to something secure!
