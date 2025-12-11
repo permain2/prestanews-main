@@ -14,22 +14,87 @@
   ],
   "redirects": [
     {
-      "source": "/news/:path*",
-      "destination": "/news",
+      "source": "/news",
+      "destination": "/blog",
       "permanent": true
     },
     {
-      "source": "/profile/:path*",
+      "source": "/news/(.*)",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/profile",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/users/:path*",
+      "source": "/profile/(.*)",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/uploads/:path*",
+      "source": "/users",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/users/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/uploads",
+      "destination": "/legacy/placeholder.svg",
+      "permanent": true
+    },
+    {
+      "source": "/uploads/(.*)",
+      "destination": "/legacy/placeholder.svg",
+      "permanent": true
+    },
+    {
+      "source": "/forums",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/forums/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wiki",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wiki/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/videos",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/videos/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/images",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/images/(.*)",
+      "destination": "/legacy/placeholder.svg",
+      "permanent": true
+    },
+    {
+      "source": "/api/image/(.*)",
       "destination": "/legacy/placeholder.svg",
       "permanent": true
     },
@@ -39,7 +104,7 @@
       "permanent": true
     },
     {
-      "source": "/:slug/16-:id/:path*",
+      "source": "/:slug/16-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -49,7 +114,7 @@
       "permanent": true
     },
     {
-      "source": "/:slug/17-:id/:path*",
+      "source": "/:slug/17-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -59,7 +124,7 @@
       "permanent": true
     },
     {
-      "source": "/:slug/18-:id/:path*",
+      "source": "/:slug/18-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -69,7 +134,7 @@
       "permanent": true
     },
     {
-      "source": "/:slug/14-:id/:path*",
+      "source": "/:slug/14-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -79,7 +144,7 @@
       "permanent": true
     },
     {
-      "source": "/:slug/15-:id/:path*",
+      "source": "/:slug/15-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -89,12 +154,12 @@
       "permanent": true
     },
     {
-      "source": "/:slug/28-:id/:path*",
+      "source": "/:slug/28-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/heres-what-you-missed-:path*",
+      "source": "/heres-what-you-missed-(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -104,17 +169,17 @@
       "permanent": true
     },
     {
-      "source": "/:slug/128-:id/:path*",
+      "source": "/:slug/128-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/:slug/132-:id/:path*",
+      "source": "/:slug/132-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/:slug/131-:id/:path*",
+      "source": "/:slug/131-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -124,12 +189,17 @@
       "permanent": true
     },
     {
-      "source": "/:slug/262-:id/:path*",
+      "source": "/:slug/262-:id/(.*)",
       "destination": "/",
       "permanent": true
     },
     {
-      "source": "/:slug/all-images/:path*",
+      "source": "/:slug/all-images",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/all-images/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -139,7 +209,7 @@
       "permanent": true
     },
     {
-      "source": "/:slug/staff-review/:path*",
+      "source": "/:slug/staff-review/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -149,7 +219,7 @@
       "permanent": true
     },
     {
-      "source": "/:slug/user-reviews/:path*",
+      "source": "/:slug/user-reviews/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -159,7 +229,7 @@
       "permanent": true
     },
     {
-      "source": "/:slug/trivia/:path*",
+      "source": "/:slug/trivia/(.*)",
       "destination": "/",
       "permanent": true
     },
@@ -169,7 +239,37 @@
       "permanent": true
     },
     {
-      "source": "/:slug/movies/:path*",
+      "source": "/:slug/movies/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/shows",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/shows/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/characters",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/characters/(.*)",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/cast",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/cast/(.*)",
       "destination": "/",
       "permanent": true
     }
