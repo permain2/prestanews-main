@@ -1,265 +1,1402 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Coverage Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
+// Best disability insurance providers - 8 providers
 const providers = [
   {
     name: "Northwestern Mutual",
-    logo: "https://logo.clearbit.com/northwesternmutual.com",
+    slug: "northwestern-mutual",
+    logo: "/insurance-logos/northwestern.png",
     bestFor: "Overall Coverage",
-    monthlyAvg: "$50-$200/mo",
+    monthlyPremium: "$50-$200/mo",
+    monthlyValue: "Premium",
     rating: 4.8,
     amBest: "A++",
+    benefitPeriod: "To age 65/67",
+    eliminationPeriod: "90 days",
+    maxBenefit: "Up to $30,000/mo",
+    ownOccupation: "Yes",
     pros: ["Own-occupation coverage available", "Strong financial stability (A++ rating)", "Customizable policy riders", "Long benefit periods up to age 67"],
     cons: ["Higher premiums than competitors", "Requires agent consultation", "Longer underwriting process"],
-    description: "Northwestern Mutual offers comprehensive disability coverage with excellent financial strength ratings and extensive customization options.",
-    affiliateUrl: "#"
+    description: "Northwestern Mutual offers the most comprehensive disability coverage with excellent financial strength ratings and extensive customization options for professionals.",
+    bottomLine: "Northwestern Mutual is our top pick for professionals who want the strongest disability protection money can buy. Their true own-occupation coverage means surgeons, lawyers, and specialists get full benefits even if they can work in another field. The A++ AM Best rating provides peace of mind that claims will be paid, and their riders (future increase option, COLA, residual disability) offer maximum flexibility.",
+    policyDetails: [
+      "True own-occupation definition available (specialty-specific protection)",
+      "Benefit periods: 2 years, 5 years, to age 65, or to age 67",
+      "Elimination periods: 30, 60, 90, 180, or 365 days",
+      "Maximum benefit up to $30,000/month (income-based)",
+      "Future Increase Option allows coverage increases without new underwriting",
+      "Cost of Living Adjustment (COLA) rider available",
+      "Residual/partial disability benefits included",
+      "Non-cancellable and guaranteed renewable policies",
+      "Rehabilitation and recovery benefits",
+      "A++ AM Best financial strength rating"
+    ],
+    editorChoice: true
   },
   {
     name: "Guardian Life",
-    logo: "https://logo.clearbit.com/guardianlife.com",
+    slug: "guardian-life",
+    logo: "/insurance-logos/guardian-life.png",
     bestFor: "Professional Coverage",
-    monthlyAvg: "$45-$180/mo",
+    monthlyPremium: "$45-$180/mo",
+    monthlyValue: "Premium",
     rating: 4.7,
     amBest: "A++",
+    benefitPeriod: "To age 65/67",
+    eliminationPeriod: "90 days",
+    maxBenefit: "Up to $25,000/mo",
+    ownOccupation: "Yes",
     pros: ["True own-occupation for professionals", "Strong policy provisions", "Excellent claim payment history", "Partial disability benefits"],
     cons: ["Complex application process", "Premium pricing", "Limited online tools"],
     description: "Guardian Life specializes in disability coverage for high-earning professionals with true own-occupation definitions that protect your specific career.",
-    affiliateUrl: "#"
+    bottomLine: "Guardian Life is the gold standard for physicians, attorneys, and executives who need bulletproof own-occupation protection. Their claims payment history is exceptional, and they don't nickel-and-dime on definitions. If you're a specialist earning $200K+, Guardian should be at the top of your list for quotes.",
+    policyDetails: [
+      "True own-occupation coverage for medical, legal, and executive professions",
+      "ProVider Plus policy with enhanced specialty-specific definitions",
+      "Benefit periods up to age 67",
+      "Elimination periods: 60, 90, 180 days",
+      "Maximum monthly benefit up to $25,000",
+      "Future purchase option for coverage increases",
+      "Mental health and substance abuse coverage",
+      "Catastrophic disability benefit available",
+      "Retirement protection rider",
+      "A++ AM Best financial strength rating"
+    ]
   },
   {
     name: "MassMutual",
-    logo: "https://logo.clearbit.com/massmutual.com",
+    slug: "massmutual",
+    logo: "/insurance-logos/massmutual.png",
     bestFor: "Policy Flexibility",
-    monthlyAvg: "$40-$175/mo",
+    monthlyPremium: "$40-$175/mo",
+    monthlyValue: "Value",
     rating: 4.6,
     amBest: "A++",
+    benefitPeriod: "To age 67 or Lifetime",
+    eliminationPeriod: "90 days",
+    maxBenefit: "Up to $20,000/mo",
+    ownOccupation: "Yes (Lifetime available)",
     pros: ["Lifetime own-occupation rider available", "Strong dividend history", "Future increase option", "Residual disability benefits"],
     cons: ["Higher cost for premium features", "Agent-only sales", "Lengthy underwriting"],
     description: "MassMutual provides highly flexible disability policies with unique features like lifetime own-occupation coverage and future purchase options.",
-    affiliateUrl: "#"
+    bottomLine: "MassMutual stands out with their lifetime own-occupation rider—one of the few carriers offering this coverage. This means you're protected in your specific occupation for life, not just to age 65. Their dividend-paying policies can reduce your effective cost over time, making them a smart long-term choice.",
+    policyDetails: [
+      "Lifetime own-occupation rider available (unique in the industry)",
+      "Dividend-paying policies that can reduce premiums",
+      "Benefit periods: 5 years, to age 65, to age 67, lifetime (accidents)",
+      "Elimination periods: 30, 60, 90, 180, 365 days",
+      "Future Increase Option without medical underwriting",
+      "Cost of Living Adjustment (COLA) with compound increases",
+      "Enhanced partial disability benefits",
+      "Student loan rider for recent graduates",
+      "A++ AM Best financial strength rating"
+    ]
   },
   {
     name: "Principal Financial",
-    logo: "https://logo.clearbit.com/principal.com",
+    slug: "principal-financial",
+    logo: "/insurance-logos/principal.png",
     bestFor: "Small Business Owners",
-    monthlyAvg: "$35-$150/mo",
+    monthlyPremium: "$35-$150/mo",
+    monthlyValue: "Value",
     rating: 4.4,
     amBest: "A+",
+    benefitPeriod: "To age 65/67",
+    eliminationPeriod: "90 days",
+    maxBenefit: "Up to $15,000/mo",
+    ownOccupation: "Modified (2-5 years)",
     pros: ["Business overhead expense coverage", "Competitive pricing", "Strong group disability options", "Online application available"],
-    cons: ["Own-occupation only for 2 years on some policies", "Limited individual policy features", "Fewer riders available"],
+    cons: ["Own-occupation only for 2-5 years on some policies", "Limited individual policy features", "Fewer riders available"],
     description: "Principal Financial excels in business-focused disability coverage including overhead expense policies for self-employed professionals.",
-    affiliateUrl: "#"
+    bottomLine: "Principal Financial is the best choice for small business owners and self-employed professionals. Their Business Overhead Expense (BOE) policy covers rent, utilities, employee salaries, and other fixed costs while you recover. Combined with individual disability coverage, you can protect both your income and your business.",
+    policyDetails: [
+      "Business Overhead Expense (BOE) coverage available",
+      "Modified own-occupation definition (own-occ for 2-5 years)",
+      "Benefit periods: 2 years, 5 years, to age 65",
+      "Elimination periods: 30, 60, 90 days",
+      "Key person disability coverage for businesses",
+      "Buy-sell disability funding options",
+      "Simplified underwriting for smaller policies",
+      "Online application and policy management",
+      "A+ AM Best financial strength rating"
+    ]
   },
   {
     name: "Ameritas",
-    logo: "https://logo.clearbit.com/ameritas.com",
-    bestFor: "Value Option",
-    monthlyAvg: "$30-$140/mo",
+    slug: "ameritas",
+    logo: "/insurance-logos/ameritas.png",
+    bestFor: "Best Value",
+    monthlyPremium: "$30-$140/mo",
+    monthlyValue: "Affordable",
     rating: 4.3,
     amBest: "A",
+    benefitPeriod: "To age 65/67",
+    eliminationPeriod: "90 days",
+    maxBenefit: "Up to $15,000/mo",
+    ownOccupation: "Yes",
     pros: ["Competitive pricing", "True own-occupation available", "Good policy provisions", "Partial disability from day one"],
     cons: ["Smaller company than competitors", "Fewer customization options", "Limited name recognition"],
-    description: "Ameritas offers competitively priced disability coverage with strong policy provisions, making it a solid value choice.",
-    affiliateUrl: "#"
+    description: "Ameritas offers competitively priced disability coverage with strong policy provisions, making it a solid value choice for professionals.",
+    bottomLine: "Ameritas delivers the best value for professionals who want true own-occupation coverage without paying Northwestern or Guardian premiums. Their DInamic Foundation policy includes partial disability benefits from day one of the elimination period—a feature that typically requires an extra rider elsewhere. Great for budget-conscious professionals.",
+    policyDetails: [
+      "True own-occupation coverage at competitive rates",
+      "DInamic Foundation and DInamic Platinum policy options",
+      "Partial disability benefits from day one of elimination period",
+      "Benefit periods: 2 years, 5 years, to age 65, to age 67",
+      "Elimination periods: 30, 60, 90, 180, 365 days",
+      "Future increase option without medical questions",
+      "COLA with 3% simple or 3% compound options",
+      "Rehabilitation and recovery benefits",
+      "A AM Best financial strength rating"
+    ]
   },
   {
     name: "Mutual of Omaha",
-    logo: "https://logo.clearbit.com/mutualofomaha.com",
+    slug: "mutual-of-omaha",
+    logo: "/insurance-logos/mutualofomaha.png",
     bestFor: "Simple Coverage",
-    monthlyAvg: "$25-$120/mo",
+    monthlyPremium: "$25-$120/mo",
+    monthlyValue: "Budget",
     rating: 4.2,
     amBest: "A+",
+    benefitPeriod: "2-5 years",
+    eliminationPeriod: "90 days",
+    maxBenefit: "Up to $10,000/mo",
+    ownOccupation: "Modified",
     pros: ["Simplified application process", "No medical exam options", "Affordable premiums", "Quick approval times"],
     cons: ["More limited coverage amounts", "Basic policy features", "Shorter benefit periods"],
     description: "Mutual of Omaha offers straightforward disability coverage with simplified underwriting, ideal for those wanting quick, affordable protection.",
-    affiliateUrl: "#"
+    bottomLine: "Mutual of Omaha is perfect for those who want solid disability coverage without the complexity or cost of premium policies. Their simplified underwriting means faster approvals with minimal health questions. Best for employees who need to supplement employer coverage or professionals in lower-risk occupations.",
+    policyDetails: [
+      "Simplified issue policies with no medical exam options",
+      "Modified own-occupation definition",
+      "Benefit periods: 2 years, 5 years",
+      "Elimination periods: 30, 60, 90 days",
+      "Maximum benefit up to $10,000/month",
+      "Quick approval process (often same day)",
+      "Accident-only options available",
+      "Mental health coverage included",
+      "A+ AM Best financial strength rating"
+    ]
   },
   {
     name: "Unum",
-    logo: "https://logo.clearbit.com/unum.com",
+    slug: "unum",
+    logo: "/insurance-logos/unum.png",
     bestFor: "Group Coverage",
-    monthlyAvg: "$20-$100/mo",
+    monthlyPremium: "$20-$100/mo",
+    monthlyValue: "Budget",
     rating: 4.1,
     amBest: "A-",
+    benefitPeriod: "2 years to age 65",
+    eliminationPeriod: "90-180 days",
+    maxBenefit: "Up to $15,000/mo",
+    ownOccupation: "Limited",
     pros: ["Leader in group disability", "Supplemental individual options", "Strong workplace programs", "Mental health coverage"],
     cons: ["Individual policies less competitive", "Past claim disputes", "Own-occupation limitations"],
     description: "Unum dominates the group disability market and offers supplemental individual coverage to enhance employer-provided benefits.",
-    affiliateUrl: "#"
+    bottomLine: "Unum is the 800-pound gorilla of group disability insurance—chances are your employer's plan is through them. Their individual supplemental policies are designed to stack on top of group coverage, filling gaps in benefit amounts or adding own-occupation protection. Best used as a supplement, not a standalone policy.",
+    policyDetails: [
+      "Market leader in employer-sponsored group disability",
+      "Individual supplemental policies available",
+      "Integrates with employer group coverage",
+      "Benefit periods: 2 years, 5 years, to age 65",
+      "Mental health and substance abuse coverage",
+      "Return-to-work programs and support",
+      "Vocational rehabilitation services",
+      "Online claims management",
+      "A- AM Best financial strength rating"
+    ]
   },
   {
     name: "Assurity",
-    logo: "https://logo.clearbit.com/assurity.com",
+    slug: "assurity",
+    logo: "/insurance-logos/assurity.png",
     bestFor: "Self-Employed",
-    monthlyAvg: "$28-$130/mo",
+    monthlyPremium: "$28-$130/mo",
+    monthlyValue: "Value",
     rating: 4.0,
     amBest: "A-",
+    benefitPeriod: "To age 65/67",
+    eliminationPeriod: "90 days",
+    maxBenefit: "Up to $10,000/mo",
+    ownOccupation: "Yes",
     pros: ["Flexible underwriting for self-employed", "Competitive rates", "Various benefit periods", "Graded premium options"],
     cons: ["Smaller carrier", "Limited availability", "Fewer high-end features"],
     description: "Assurity provides disability coverage tailored for self-employed individuals and small business owners with flexible income documentation.",
-    affiliateUrl: "#"
+    bottomLine: "Assurity is the go-to choice for self-employed professionals who struggle to prove income through traditional documentation. They accept tax returns, 1099s, and even business financials to qualify you. Their flexible underwriting makes them ideal for freelancers, consultants, and gig economy workers who need protection.",
+    policyDetails: [
+      "Flexible income documentation for self-employed",
+      "Accepts tax returns, 1099s, and business financials",
+      "True own-occupation coverage available",
+      "Benefit periods: 2 years, 5 years, to age 65, to age 67",
+      "Elimination periods: 30, 60, 90, 180 days",
+      "Graded premium options for cash flow flexibility",
+      "Future purchase option available",
+      "Recovery benefits and rehabilitation support",
+      "A- AM Best financial strength rating"
+    ]
   }
 ];
 
+// FAQ data
 const faqs = [
   {
     question: "What is disability insurance?",
-    answer: "Disability insurance replaces a portion of your income (typically 60-70%) if you become unable to work due to illness or injury. It protects your most valuable asset—your ability to earn income—ensuring you can pay bills and maintain your lifestyle during recovery."
+    answer: "Disability insurance replaces a portion of your income (typically <strong>60-70%</strong>) if you become unable to work due to illness or injury. It protects your most valuable asset—your ability to earn income—ensuring you can pay bills and maintain your lifestyle during recovery. Think of it as paycheck protection for when you can't work."
   },
   {
     question: "What's the difference between short-term and long-term disability?",
-    answer: "Short-term disability covers temporary disabilities for 3-6 months with shorter elimination periods (1-14 days). Long-term disability covers extended disabilities for years or until retirement age, with elimination periods of 90-180 days. Most people need long-term coverage since short-term needs can often be covered by savings."
+    answer: "<strong>Short-term disability</strong> covers temporary disabilities for 3-6 months with shorter elimination periods (1-14 days). <strong>Long-term disability</strong> covers extended disabilities for years or until retirement age, with elimination periods of 90-180 days. Most financial experts recommend prioritizing long-term coverage since short-term needs can often be covered by an emergency fund."
   },
   {
     question: "What does 'own-occupation' mean?",
-    answer: "Own-occupation disability insurance pays benefits if you can't perform your specific job, even if you could work in another field. This is crucial for specialized professionals like doctors, lawyers, and executives. 'Any-occupation' policies only pay if you can't work any job suited to your education and experience."
+    answer: "<strong>Own-occupation</strong> disability insurance pays benefits if you can't perform your specific job, even if you could work in another field. A surgeon who can no longer operate but could teach gets full benefits. <strong>Any-occupation</strong> policies only pay if you can't work ANY job suited to your education—much harder to qualify. Own-occupation is essential for specialists and high earners."
   },
   {
     question: "How much disability insurance do I need?",
-    answer: "Most experts recommend coverage equal to 60-70% of your gross income. You typically can't insure more than 60-70% because insurers want you to have incentive to return to work. Consider your monthly expenses, existing savings, and any employer coverage when determining your needs."
+    answer: "Most experts recommend coverage equal to <strong>60-70% of your gross income</strong>. You typically can't insure more than this because insurers want you to have incentive to return to work. Calculate your monthly expenses, account for employer coverage, and ensure you can maintain your lifestyle. If your employer pays premiums, benefits are taxable—factor this into coverage amounts."
   },
   {
     question: "What is an elimination period?",
-    answer: "The elimination period is the waiting time between becoming disabled and when benefits begin—essentially a deductible measured in time. Common periods are 30, 60, 90, or 180 days. Longer elimination periods result in lower premiums but require more savings to cover the gap."
+    answer: "The <strong>elimination period</strong> is the waiting time between becoming disabled and when benefits begin—essentially a deductible measured in time. Common periods are 30, 60, 90, or 180 days. <strong>Longer elimination periods = lower premiums</strong> but require more savings to cover the gap. Most people choose 90 days as a balance between cost and coverage."
   },
   {
     question: "Is disability insurance tax deductible?",
-    answer: "If you pay premiums with after-tax dollars personally, your benefits are tax-free. If your employer pays premiums or you use pre-tax dollars, benefits are taxable. This tax treatment significantly affects how much coverage you actually need."
+    answer: "If you pay premiums with <strong>after-tax dollars personally</strong>, your benefits are tax-free. If your employer pays premiums or you use pre-tax dollars, benefits are taxable. This is critical: a $5,000/month benefit that's taxable is really only $3,500 after taxes. Pay with after-tax dollars for tax-free benefits when you need them most."
   },
   {
     question: "Can I get disability insurance with pre-existing conditions?",
-    answer: "Yes, but pre-existing conditions may be excluded from coverage or result in higher premiums. Many insurers will cover you after a condition has been stable for 12-24 months. Simplified issue policies may have fewer health questions but more limited coverage."
+    answer: "Yes, but pre-existing conditions may be <strong>excluded from coverage</strong> (you won't get benefits for that condition) or result in higher premiums. Many insurers will cover you after a condition has been stable for 12-24 months. <strong>Apply sooner rather than later</strong>—every year you wait risks developing new conditions that affect coverage."
+  },
+  {
+    question: "How do I choose between Northwestern Mutual, Guardian, and MassMutual?",
+    answer: "<strong>Northwestern Mutual</strong> is best for maximum coverage and customization. <strong>Guardian Life</strong> excels for physicians and high-earning specialists with their ProVider Plus policy. <strong>MassMutual</strong> offers unique lifetime own-occupation coverage. All three have A++ ratings—get quotes from each and compare policy language carefully."
+  },
+  {
+    question: "Should I buy individual disability insurance if I have employer coverage?",
+    answer: "<strong>Yes, in most cases.</strong> Employer group coverage typically has limitations: any-occupation definitions, 60% salary caps, taxable benefits, and it ends when you leave. Individual policies are portable, often offer own-occupation protection, and provide tax-free benefits if you pay premiums. Supplement group coverage with individual insurance for complete protection."
+  },
+  {
+    question: "What's the best disability insurance for doctors and physicians?",
+    answer: "Physicians should prioritize <strong>Guardian Life</strong> or <strong>Northwestern Mutual</strong> for their true own-occupation specialty-specific coverage. A surgeon who can't operate but could do consultations still gets full benefits. Look for policies that define disability by your specific medical specialty, not just 'physician.' The extra cost is worth it for $300K+ earners."
   }
 ];
-
-const content = `
-## Why Disability Insurance Matters
-
-Your ability to earn income is likely your most valuable financial asset. A 35-year-old earning $75,000 annually will earn over $2.25 million before retirement. Disability insurance protects this earning potential when illness or injury prevents you from working.
-
-**Key statistics:**
-- 1 in 4 workers will experience a disability lasting 90+ days before age 67
-- The average long-term disability lasts 2.5 years
-- Only 48% of American adults have disability coverage beyond Social Security
-
-## Types of Disability Insurance
-
-### Individual Disability Insurance
-
-Purchased directly from an insurance company, individual policies offer:
-- **Portability:** Coverage stays with you if you change jobs
-- **Customization:** Choose your own benefit amount, elimination period, and riders
-- **Own-occupation protection:** Available on most individual policies
-- **Non-cancellable guarantees:** Premiums and benefits locked in
-
-### Group/Employer Disability Insurance
-
-Provided through your employer, group policies typically offer:
-- **Lower cost:** Employer may pay part or all premiums
-- **Guaranteed issue:** No medical underwriting required
-- **Limited benefits:** Often caps at 60% of salary with monthly maximums
-- **Not portable:** Coverage ends when employment ends
-
-### Supplemental Disability Insurance
-
-Individual coverage purchased to supplement employer coverage, filling gaps in:
-- Benefit amounts (if group coverage is insufficient)
-- Own-occupation protection (if group is any-occupation)
-- Bonus and commission income (often excluded from group)
-
-## Key Policy Features to Understand
-
-### Benefit Period
-
-How long benefits are paid after elimination period ends:
-- **2 years:** Budget option, covers most disabilities
-- **5 years:** Moderate coverage
-- **To age 65/67:** Recommended for comprehensive protection
-- **Lifetime:** Available for accidents (illness typically to age 65)
-
-### Definition of Disability
-
-| Definition | What It Means | Best For |
-|------------|---------------|----------|
-| Own-Occupation | Can't perform your specific job | Specialists, high earners |
-| Modified Own-Occ | Own-occ for 2-5 years, then any-occ | Budget-conscious professionals |
-| Any-Occupation | Can't perform any job you're suited for | Basic coverage needs |
-| Income Replacement | Benefits reduced by other income | Lower premiums |
-
-### Essential Riders to Consider
-
-**Future Increase Option:** Purchase additional coverage later without new medical underwriting—essential for young professionals expecting income growth.
-
-**Cost of Living Adjustment (COLA):** Benefits increase annually with inflation during a claim, protecting purchasing power during long-term disabilities.
-
-**Residual/Partial Disability:** Pays proportional benefits if you can work part-time or earn less due to disability—critical for gradual recovery scenarios.
-
-**Own-Occupation Rider:** Upgrades any-occupation policies to own-occupation definitions for your specific job.
-
-## How Much Does Disability Insurance Cost?
-
-Disability insurance typically costs 1-3% of your annual income. Key factors affecting premiums:
-
-| Factor | Impact on Premium |
-|--------|------------------|
-| Age | Older = Higher cost |
-| Gender | Women typically pay more |
-| Occupation | Riskier jobs = Higher cost |
-| Health | Better health = Lower cost |
-| Benefit Amount | Higher benefits = Higher cost |
-| Elimination Period | Longer wait = Lower cost |
-| Benefit Period | Longer benefits = Higher cost |
-
-### Sample Monthly Premiums
-
-For a 35-year-old professional earning $100,000:
-
-| Benefit | Elimination | Benefit Period | Est. Monthly Cost |
-|---------|-------------|----------------|------------------|
-| $5,000/mo | 90 days | To age 67 | $80-$150 |
-| $5,000/mo | 90 days | 5 years | $50-$90 |
-| $5,000/mo | 180 days | To age 67 | $60-$120 |
-
-## Disability Insurance vs. Social Security Disability
-
-| Feature | Private Disability | SSDI |
-|---------|-------------------|------|
-| Definition | Own-occupation available | Any substantial work |
-| Wait Time | 30-180 days | 5 months minimum |
-| Approval Rate | ~95%+ | ~35% initially |
-| Benefit Amount | 60-70% of income | Average $1,500/month |
-| Duration | To age 65-67 | Until recovery or retirement |
-
-Most people who qualify for private disability benefits would NOT qualify for SSDI due to stricter definitions.
-
-## The Bottom Line
-
-For most working professionals, **Northwestern Mutual** or **Guardian Life** offer the most comprehensive disability coverage with true own-occupation protection. Those seeking value should consider **Ameritas** or **Principal Financial**.
-
-At minimum, ensure you have long-term disability coverage equal to 60% of your income with an elimination period you can cover from savings. Review your employer's group coverage and supplement with individual insurance if gaps exist.
-
-*Premium estimates are illustrative. Actual costs depend on individual factors and underwriting.*
-`;
 ---
 
-<ComparisonLayout
-  title="Best Disability Insurance Companies of 2025"
-  description="Compare the best disability insurance providers including Northwestern Mutual, Guardian Life, and MassMutual. Expert reviews of coverage, costs, and policy features."
-  category="insurance"
-  categoryLabel="DISABILITY INSURANCE"
-  heroImage="/blog-images/disability-insurance.jpg"
-  researchIntro="We obtained 89 quotes across 14 insurers for professionals earning $75K-$250K annually, comparing policy definitions, benefit periods, and premium costs. We also analyzed claims denial rates from state insurance department data. These carriers have the strongest own-occupation definitions and lowest denial rates."
-  author="Emily Johnson"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
-  content={content}
-/>
+<MainLayout title="Best Disability Insurance Companies of December 2025 | Expert Reviews" description="Compare the best disability insurance companies for 2025. Expert reviews of Northwestern Mutual, Guardian Life, MassMutual & more. Find own-occupation coverage to protect your income.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="Best Disability Insurance Companies of December 2025"
+    description="Compare the best disability insurance companies for 2025. Expert reviews of Northwestern Mutual, Guardian Life, MassMutual & more."
+    url="/blog/best-disability-insurance"
+    image="/insurance-images/disability-insurance.jpeg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Emily Johnson"
+    section="Insurance"
+    tags={['disability insurance', 'income protection', 'own-occupation', 'Northwestern Mutual', 'Guardian Life']}
+    wordCount={4500}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Blog', url: '/blog' },
+    { name: 'Best Disability Insurance' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Disability Insurance Companies of 2025"
+    kicker=""
+    subtitle="Protect your most valuable asset—your income. Compare 8 top-rated carriers with own-occupation coverage."
+    author="Emily Johnson"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Some of the insurance offers on this page are from partners who compensate us when you request a quote. This doesn't affect our rankings, ratings, or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We obtained 89 quotes across 14 insurers for professionals earning $75K-$250K annually, comparing policy definitions, benefit periods, and premium costs. We also analyzed claims denial rates from state insurance department data. These 8 carriers have the strongest own-occupation definitions and lowest denial rates.</p>
+      </div>
+      
+      {providers.map((provider, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {provider.editorChoice && (
+            <div class="bg-gradient-to-r from-[#0066B2] to-[#004C8C] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Disability Insurance
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Company Logo */}
+              <div class="logo-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 bg-white rounded-xl shadow-lg flex items-center justify-center p-4 border border-gray-100 group-hover:shadow-xl transition-shadow">
+                  <img 
+                    src={provider.logo} 
+                    alt={`${provider.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                    onerror={`this.onerror=null; this.parentElement.innerHTML='<div class="text-xl font-bold text-[#0D2C4B]">${provider.name}</div>'`}
+                  />
+                </div>
+                
+                {/* AM Best Rating Badge */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <span class="text-xs font-bold text-[#68727C]">AM Best:</span>
+                  <span class="font-bold text-[#0066B2]">{provider.amBest}</span>
+                </div>
+              </div>
+              
+              {/* Rating */}
+              <div class="flex items-center gap-1.5 mb-4">
+                <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <span class="font-bold text-[#162433]">{provider.rating}</span>
+                <span class="text-[#68727C] text-sm">/5</span>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s website</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {provider.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{provider.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{provider.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Monthly Premium</div>
+                  <div class="stat-value text-sm">{provider.monthlyPremium}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Benefit Period</div>
+                  <div class="stat-value text-sm">{provider.benefitPeriod}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Own-Occupation</div>
+                  <div class="stat-value text-green-600 text-sm">{provider.ownOccupation}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Max Benefit</div>
+                  <div class="stat-value text-sm">{provider.maxBenefit}</div>
+                </div>
+              </div>
+
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {provider.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{provider.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Policy Details Accordion */}
+                {provider.policyDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Policy Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {provider.policyDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#0066B2] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Quick Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison Table</h2>
+      
+      <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table class="comparison-table w-full">
+          <thead>
+            <tr>
+              <th class="text-left">Company</th>
+              <th>AM Best</th>
+              <th>Own-Occupation</th>
+              <th>Monthly Cost</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {providers.map((provider, index) => (
+              <tr class={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <td class="font-medium text-[#162433]">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-[#68727C]">#{index + 1}</span>
+                    {provider.name}
+                  </div>
+                </td>
+                <td class="text-center font-bold text-[#0066B2]">{provider.amBest}</td>
+                <td class="text-center">
+                  <span class={`px-2 py-1 rounded-full text-xs font-medium ${provider.ownOccupation === 'Yes' || provider.ownOccupation.includes('Lifetime') ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                    {provider.ownOccupation}
+                  </span>
+                </td>
+                <td class="text-center">{provider.monthlyPremium}</td>
+                <td class="text-center">
+                  <span class="inline-flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {provider.rating}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <!-- Why Disability Insurance Matters -->
+        <div id="how-rewards-work" class="scroll-mt-24">
+          <h2>Why Disability Insurance Matters</h2>
+          
+          <p>Your ability to earn income is likely your most valuable financial asset. A 35-year-old earning $75,000 annually will earn over <strong>$2.25 million</strong> before retirement. Disability insurance protects this earning potential when illness or injury prevents you from working.</p>
+
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> The Statistics Are Sobering</h4>
+            <p><strong>1 in 4 workers</strong> will experience a disability lasting 90+ days before age 67. The average long-term disability lasts 2.5 years. Only 48% of American adults have disability coverage beyond Social Security—which denies 65% of initial applications.</p>
+          </div>
+
+          <h3>Types of Disability Insurance</h3>
+          
+          <p><strong>Individual Disability Insurance</strong> (what we recommend) offers:</p>
+          <ul>
+            <li><strong>Portability:</strong> Coverage stays with you if you change jobs</li>
+            <li><strong>Customization:</strong> Choose your benefit amount, elimination period, and riders</li>
+            <li><strong>Own-occupation protection:</strong> Available on most individual policies</li>
+            <li><strong>Non-cancellable guarantees:</strong> Premiums and benefits locked in</li>
+          </ul>
+
+          <p><strong>Group/Employer Disability Insurance</strong> typically offers:</p>
+          <ul>
+            <li>Lower cost (employer may pay part or all premiums)</li>
+            <li>Guaranteed issue (no medical underwriting required)</li>
+            <li>Limited benefits (often caps at 60% of salary with monthly maximums)</li>
+            <li>Not portable (coverage ends when employment ends)</li>
+          </ul>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Key Insight</h4>
+            <p>Even if you have employer coverage, you likely need individual disability insurance. Group policies are typically any-occupation (much harder to qualify), taxable if employer-paid, and disappear when you leave your job. <strong>Supplement group coverage with individual insurance for complete protection.</strong></p>
+          </div>
+        </div>
+
+        <!-- Understanding Policy Features -->
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>Key Policy Features to Understand</h2>
+
+          <h3>Definition of Disability</h3>
+          
+          <table>
+            <thead>
+              <tr>
+                <th>Definition</th>
+                <th>What It Means</th>
+                <th>Best For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Own-Occupation</strong></td>
+                <td>Can't perform your specific job</td>
+                <td>Specialists, high earners</td>
+              </tr>
+              <tr>
+                <td><strong>Modified Own-Occ</strong></td>
+                <td>Own-occ for 2-5 years, then any-occ</td>
+                <td>Budget-conscious professionals</td>
+              </tr>
+              <tr>
+                <td><strong>Any-Occupation</strong></td>
+                <td>Can't perform any job you're suited for</td>
+                <td>Basic coverage needs</td>
+              </tr>
+              <tr>
+                <td><strong>Income Replacement</strong></td>
+                <td>Benefits reduced by other income</td>
+                <td>Lower premiums</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Essential Riders to Consider</h3>
+
+          <div class="comparison-boxes">
+            <div class="fee-breakdown">
+              <h4>Future Increase Option</h4>
+              <ul>
+                <li>Increase coverage later without medical exam</li>
+                <li>Essential for young professionals</li>
+                <li>Protects income growth</li>
+              </ul>
+              <p class="net-value"><strong class="text-green-600">Highly Recommended</strong></p>
+            </div>
+            
+            <div class="fee-breakdown">
+              <h4>COLA (Cost of Living)</h4>
+              <ul>
+                <li>Benefits increase during claim</li>
+                <li>Protects against inflation</li>
+                <li>3% simple or compound</li>
+              </ul>
+              <p class="net-value"><strong class="text-green-600">Highly Recommended</strong></p>
+            </div>
+          </div>
+
+          <div class="warning-box">
+            <h4>Don't Skip the Medical Exam</h4>
+            <p>Simplified issue policies are tempting but come with coverage limitations and higher long-term costs. If you're healthy, the full medical underwriting process (blood work, physical) gets you better policy terms and lower premiums. Take the exam.</p>
+          </div>
+        </div>
+
+        <!-- Best by Category -->
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best Disability Insurance by Category</h2>
+
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5l-9 13h6z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Overall</h3>
+              <p class="card-name">Northwestern Mutual</p>
+              <p>A++ rated with true own-occupation coverage and maximum customization. The gold standard for professionals.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best for Physicians</h3>
+              <p class="card-name">Guardian Life</p>
+              <p>ProVider Plus policy with specialty-specific own-occupation definitions for doctors and surgeons.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Policy Features</h3>
+              <p class="card-name">MassMutual</p>
+              <p>Unique lifetime own-occupation rider and dividend-paying policies that reduce costs over time.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+              <h3>Best for Business Owners</h3>
+              <p class="card-name">Principal Financial</p>
+              <p>Business Overhead Expense coverage to protect your company while you recover from disability.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5a1.5 1.5 0 0 1 0 3H9"/></svg></span>
+              <h3>Best Value</h3>
+              <p class="card-name">Ameritas</p>
+              <p>True own-occupation coverage at competitive rates with partial disability from day one.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <h3>Best for Self-Employed</h3>
+              <p class="card-name">Assurity</p>
+              <p>Flexible income documentation accepts tax returns and 1099s for freelancers and gig workers.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- How Much Does It Cost -->
+        <div id="methodology" class="scroll-mt-24">
+          <h2>How Much Does Disability Insurance Cost?</h2>
+
+          <p>Disability insurance typically costs <strong>1-3% of your annual income</strong>. For a $100,000 earner, expect to pay $1,000-$3,000 per year ($83-$250/month) for comprehensive coverage.</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Impact on Premium</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Age</td>
+                <td>Older = Higher cost (lock in rates young)</td>
+              </tr>
+              <tr>
+                <td>Gender</td>
+                <td>Women typically pay 20-40% more</td>
+              </tr>
+              <tr>
+                <td>Occupation</td>
+                <td>Riskier jobs = Higher cost (office work lowest)</td>
+              </tr>
+              <tr>
+                <td>Health</td>
+                <td>Better health = Lower cost (get coverage early)</td>
+              </tr>
+              <tr>
+                <td>Benefit Amount</td>
+                <td>Higher benefits = Higher cost</td>
+              </tr>
+              <tr>
+                <td>Elimination Period</td>
+                <td>Longer wait = Lower cost (90 days is sweet spot)</td>
+              </tr>
+              <tr>
+                <td>Benefit Period</td>
+                <td>Longer benefits = Higher cost (to age 65 recommended)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Our recommendation: Get quotes from at least 3 carriers. <strong>Northwestern Mutual</strong>, <strong>Guardian Life</strong>, and <strong>MassMutual</strong> should be on everyone's list. Add <strong>Ameritas</strong> for a value comparison.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about disability insurance.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Insurance Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/insurance/life" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h3>Life Insurance</h3>
+          <p>Protect your family's financial future</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-small-business-insurance" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <h3>Small Business Insurance</h3>
+          <p>Coverage for entrepreneurs & small businesses</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/insurance/home" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <h3>Home Insurance</h3>
+          <p>Protect your biggest investment</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/emily-johnson.jpg" alt="Emily Johnson, Insurance Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Emily Johnson</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Emily is an insurance specialist at Screened with over 7 years of experience helping professionals find the right disability coverage. She holds a CLU (Chartered Life Underwriter) designation and has personally reviewed over 500 disability insurance policies.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 11, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              14 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</MainLayout>
+
+<style>
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Logo Wrapper */
+  .logo-wrapper img {
+    filter: none;
+    transition: transform 0.3s ease;
+  }
+
+  /* Apply Button */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Comparison Table */
+  .comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .comparison-table th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .comparison-table th:first-child {
+    text-align: left;
+    padding-left: 1.5rem;
+  }
+  .comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .comparison-table td:first-child {
+    padding-left: 1.5rem;
+  }
+  .comparison-table tbody tr:hover td {
+    background: #EBF5FF;
+  }
+
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #0D2C4B;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #F9FAFB; }
+
+  .info-box, .warning-box, .key-takeaway {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .info-box {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+  }
+  .info-box h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #1E40AF; }
+
+  .warning-box {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 
+      0 0 0 1px rgba(245, 158, 11, 0.15),
+      0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box h4::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01'/%3E%3C/svg%3E");
+    background-size: contain;
+    flex-shrink: 0;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+  }
+  .key-takeaway h4 { color: #047857; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #065F46; }
+
+  /* Category Picks */
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .category-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .category-card:hover {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    margin-bottom: 1rem;
+  }
+  
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #3B82F6;
+  }
+  
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+  
+  .category-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .category-card .card-name {
+    color: #3B82F6;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-card p:last-of-type {
+    color: #64748B;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Fee Breakdown */
+  .comparison-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .fee-breakdown {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  
+  .fee-breakdown h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #E2E8F0;
+  }
+  
+  .fee-breakdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+  }
+  
+  .fee-breakdown li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #E2E8F0;
+    font-size: 0.9rem;
+    color: #4B5563;
+  }
+  
+  .net-value {
+    text-align: center;
+    font-weight: 600;
+    color: #162433;
+    margin: 0;
+    padding-top: 0.5rem;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BFDBFE;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #F8FAFC; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Related Cards */
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .related-card:hover {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  
+  .related-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #3B82F6;
+  }
+  
+  .related-card h3 {
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+  
+  .related-card p {
+    color: #64748B;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .related-link {
+    color: #3B82F6;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+  }
+  
+  .related-card:hover .related-link {
+    color: #1D4ED8;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #3B82F6;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #3B82F6;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
