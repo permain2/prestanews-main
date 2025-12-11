@@ -11,7 +11,11 @@
     "optimize:images:dry": "node scripts/optimize-images-imagify.js --dry-run",
     "optimize:images:aggressive": "node scripts/optimize-images-imagify.js --aggressive",
     "generate:alt-text": "node scripts/generate-alt-text-gemini.js",
-    "generate:alt-text:dry": "node scripts/generate-alt-text-gemini.js --dry-run"
+    "generate:alt-text:dry": "node scripts/generate-alt-text-gemini.js --dry-run",
+    "seo:article": "node scripts/seo-article-generator.js",
+    "seo:serp": "node scripts/analyze-serp.js",
+    "seo:workflow": "node scripts/seo-workflow.js",
+    "seo:batch": "node scripts/seo-workflow.js --json scripts/target-keywords.json --limit 5"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.12",
@@ -20,6 +24,8 @@
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/vercel": "^9.0.2",
     "@google/generative-ai": "^0.24.1",
+    "@sanity/client": "^7.13.2",
+    "@sanity/image-url": "^2.0.2",
     "@tailwindcss/vite": "^4.1.17",
     "@upstash/redis": "^1.35.7",
     "astro": "^5.16.4",

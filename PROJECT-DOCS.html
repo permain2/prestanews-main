@@ -212,7 +212,10 @@ npm run dev
                 <li><a href="#tech-stack">5. Tech Stack & Hosting</a></li>
                 <li><a href="#email-system">6. Email Opt-ins System</a></li>
                 <li><a href="#backlinks">7. Backlink Strategy</a></li>
-                <li><a href="#tasks">8. Task Tracking</a></li>
+                <li><a href="#sanity-cms">8. Sanity CMS (Content Management) <span class="badge badge-done">NEW</span></a></li>
+                <li><a href="#logo-search">9. Logo & Icon Search (Brandfetch) <span class="badge badge-done">NEW</span></a></li>
+                <li><a href="#seo-workflow">10. SEO Content Workflow (AI Articles) <span class="badge badge-done">NEW</span></a></li>
+                <li><a href="#tasks">11. Task Tracking</a></li>
             </ul>
         </nav>
 
@@ -696,6 +699,38 @@ import { getAltText } from '../utils/altTextMap';
                 </tr>
             </table>
 
+            <h3>📝 SEO Content Workflow Scripts <span class="badge badge-done">NEW</span></h3>
+            <p>Automated article generation with SERP analysis and SEO optimization.</p>
+            
+            <table>
+                <tr><th>Script</th><th>Purpose</th><th>API Key</th><th>Command</th></tr>
+                <tr>
+                    <td><code>seo-article-generator.js</code></td>
+                    <td>Generate SEO-optimized articles with content briefs and scoring</td>
+                    <td>ANTHROPIC_API_KEY</td>
+                    <td><code>npm run seo:article "keyword"</code></td>
+                </tr>
+                <tr>
+                    <td><code>analyze-serp.js</code></td>
+                    <td>Scrape Google SERP and analyze competitor content</td>
+                    <td>APIFY_API_TOKEN</td>
+                    <td><code>npm run seo:serp "keyword"</code></td>
+                </tr>
+                <tr>
+                    <td><code>seo-workflow.js</code></td>
+                    <td>Full orchestrated workflow (SERP + Article generation)</td>
+                    <td>Both</td>
+                    <td><code>npm run seo:workflow "keyword"</code><br>
+                        <code>npm run seo:batch</code> (top 5)</td>
+                </tr>
+                <tr>
+                    <td><code>target-keywords.json</code></td>
+                    <td>40 target keywords from competitor analysis (data file)</td>
+                    <td>N/A</td>
+                    <td>Used by seo-workflow.js</td>
+                </tr>
+            </table>
+
             <h3>🤖 Utility Scripts</h3>
             <p>Helper scripts for various tasks.</p>
             
@@ -1102,9 +1137,362 @@ curl "https://prestanews.com/api/subscribers?key=YOUR_ADMIN_KEY&format=csv"</cod
             </ul>
         </section>
 
-        <!-- SECTION 8: TASK TRACKING -->
+        <!-- SECTION 8: SANITY CMS -->
+        <section id="sanity-cms" class="section">
+            <h2>8. Sanity CMS (Content Management)</h2>
+            <p><span class="badge badge-done">NEW</span> Headless CMS for managing credit cards, affiliate links, and content.</p>
+
+            <h3>Overview</h3>
+            <p><strong>Sanity</strong> is a headless CMS that allows non-technical team members to update credit card data, affiliate links, and images without touching code. The content is fetched at build time and displayed on the website.</p>
+
+            <h3>Access Information</h3>
+            <table>
+                <tr><th>Resource</th><th>URL</th></tr>
+                <tr><td>Sanity Studio (Admin Panel)</td><td><a href="https://screened.sanity.studio" target="_blank">screened.sanity.studio</a></td></tr>
+                <tr><td>Project Dashboard</td><td><a href="https://www.sanity.io/manage/project/zhn3pkul" target="_blank">sanity.io/manage/project/zhn3pkul</a></td></tr>
+                <tr><td>Project ID</td><td><code>zhn3pkul</code></td></tr>
+                <tr><td>Dataset</td><td><code>production</code></td></tr>
+            </table>
+
+            <h3>Quick Start: Update Credit Card Data</h3>
+            <ol>
+                <li>Go to <a href="https://screened.sanity.studio" target="_blank">screened.sanity.studio</a></li>
+                <li>Log in with your Sanity account</li>
+                <li>Click on "Credit Card" in the left sidebar</li>
+                <li>Select a card to edit or click "+ Create" for a new one</li>
+                <li>Update fields (name, affiliate link, annual fee, etc.)</li>
+                <li>Click "Publish" to make changes live</li>
+            </ol>
+
+            <h3>Credit Card Schema Fields</h3>
+            <table>
+                <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+                <tr><td>name</td><td>String</td><td>Card name (e.g., "American Express Platinum Card®")</td></tr>
+                <tr><td>slug</td><td>Slug</td><td>URL-friendly identifier (auto-generated)</td></tr>
+                <tr><td>category</td><td>Select</td><td>travel, cashback, business, no-annual-fee</td></tr>
+                <tr><td>bestFor</td><td>String</td><td>What the card is best for (e.g., "Premium Travel")</td></tr>
+                <tr><td>annualFee</td><td>String</td><td>Annual fee (e.g., "$895")</td></tr>
+                <tr><td>welcomeBonus</td><td>String</td><td>Welcome offer description</td></tr>
+                <tr><td>rating</td><td>Number</td><td>Rating out of 5 (e.g., 4.9)</td></tr>
+                <tr><td>description</td><td>Text</td><td>Short card description</td></tr>
+                <tr><td>affiliateLink</td><td>URL</td><td><strong>IMPORTANT:</strong> Your affiliate application link</td></tr>
+                <tr><td>cardImage</td><td>Image</td><td>Card image (upload PNG with transparent background)</td></tr>
+                <tr><td>pros</td><td>Array</td><td>List of card benefits</td></tr>
+                <tr><td>cons</td><td>Array</td><td>List of card drawbacks</td></tr>
+                <tr><td>issuer</td><td>Select</td><td>amex, chase, capital-one, citi, etc.</td></tr>
+                <tr><td>displayOrder</td><td>Number</td><td>Order on page (lower = first)</td></tr>
+                <tr><td>isActive</td><td>Boolean</td><td>Show/hide card on website</td></tr>
+            </table>
+
+            <h3>Project Files</h3>
+            <table>
+                <tr><th>File</th><th>Purpose</th></tr>
+                <tr><td><code>studio-screened/</code></td><td>Sanity Studio (admin panel) - separate Next.js app</td></tr>
+                <tr><td><code>studio-screened/schemaTypes/creditCardType.ts</code></td><td>Credit card schema definition</td></tr>
+                <tr><td><code>studio-screened/sanity.config.ts</code></td><td>Sanity configuration (project ID, plugins)</td></tr>
+                <tr><td><code>src/lib/sanity.ts</code></td><td>Sanity client for fetching data in Astro</td></tr>
+                <tr><td><code>scripts/migrate-cards-to-sanity.js</code></td><td>Migration script (initial data import)</td></tr>
+            </table>
+
+            <h3>Running Sanity Studio Locally</h3>
+            <pre><code># Navigate to studio folder
+cd studio-screened
+
+# Install dependencies
+npm install
+
+# Start local studio
+npm run dev
+
+# Open http://localhost:3333</code></pre>
+
+            <h3>Deploying Sanity Studio</h3>
+            <pre><code># From studio-screened folder
+cd studio-screened
+
+# Deploy to Sanity's hosting
+npx sanity deploy
+
+# Choose hostname: screened</code></pre>
+
+            <h3>Fetching Data in Astro Pages</h3>
+            <pre><code>// In any .astro page
+import { getCreditCardsByCategory } from '../lib/sanity'
+
+// Fetch travel cards
+const travelCards = await getCreditCardsByCategory('travel')
+
+// Use in template
+{travelCards.map(card => (
+  &lt;div&gt;{card.name} - {card.annualFee}&lt;/div&gt;
+))}</code></pre>
+
+            <h3>GROQ Queries (Sanity Query Language)</h3>
+            <pre><code>// Get all active credit cards
+*[_type == "creditCard" && isActive == true] | order(displayOrder asc)
+
+// Get cards by category
+*[_type == "creditCard" && category == "travel"] | order(rating desc)
+
+// Get single card by slug
+*[_type == "creditCard" && slug.current == "amex-platinum"][0]</code></pre>
+
+            <h3>Environment Variables</h3>
+            <pre><code># For migration script (write access)
+SANITY_TOKEN=sk-...  # Get from sanity.io/manage → API → Tokens
+
+# For website (read-only, already in code)
+# projectId and dataset are public and hardcoded in src/lib/sanity.ts</code></pre>
+
+            <h3>Migration: Import Existing Cards</h3>
+            <pre><code># One-time migration to populate Sanity with existing card data
+SANITY_TOKEN=your_token node scripts/migrate-cards-to-sanity.js</code></pre>
+        </section>
+
+        <!-- SECTION 9: LOGO & ICON SEARCH -->
+        <section id="logo-search" class="section">
+            <h2>9. Logo & Icon Search (Brandfetch API)</h2>
+            <p><span class="badge badge-done">NEW</span> Automated fetching of real company logos using Brandfetch API.</p>
+
+            <h3>Overview</h3>
+            <p><strong>Brandfetch</strong> provides high-quality brand assets (logos, colors, fonts) for thousands of companies. We use it to replace AI-generated placeholder logos with real company logos.</p>
+
+            <h3>Quick Reference</h3>
+            <pre><code># Fetch all insurance company logos
+node scripts/fetch-insurance-logos-brandfetch.js
+
+# Requires BRANDFETCH_API_KEY in .env</code></pre>
+
+            <h3>How It Works</h3>
+            <ol>
+                <li>Script loops through list of company domains</li>
+                <li>Calls Brandfetch API for each domain</li>
+                <li>Downloads best available logo (PNG preferred, transparent background)</li>
+                <li>Saves to <code>public/insurance-logos/</code></li>
+                <li>Original AI logos backed up to <code>public/insurance-logos-ai-backup/</code></li>
+            </ol>
+
+            <h3>Companies Configured</h3>
+            <table>
+                <tr><th>Category</th><th>Companies</th></tr>
+                <tr><td>Car Insurance</td><td>GEICO, Progressive, State Farm, Allstate, Liberty Mutual, Nationwide, Farmers, USAA</td></tr>
+                <tr><td>Life Insurance</td><td>Prudential, MetLife, New York Life, Northwestern Mutual, MassMutual, Haven Life</td></tr>
+                <tr><td>Home/Renters</td><td>Travelers, Lemonade, Amica, Erie, Chubb</td></tr>
+            </table>
+
+            <h3>Adding New Companies</h3>
+            <p>Edit <code>scripts/fetch-insurance-logos-brandfetch.js</code>:</p>
+            <pre><code>const insuranceCompanies = [
+  // Add new company
+  { name: 'companyname', domain: 'company.com' },
+  // ... existing companies
+];</code></pre>
+
+            <h3>API Information</h3>
+            <table>
+                <tr><th>Item</th><th>Value</th></tr>
+                <tr><td>API</td><td>Brandfetch API v2</td></tr>
+                <tr><td>Endpoint</td><td><code>https://api.brandfetch.io/v2/brands/{domain}</code></td></tr>
+                <tr><td>Authentication</td><td>Bearer token in header</td></tr>
+                <tr><td>Get API Key</td><td><a href="https://brandfetch.com/developers" target="_blank">brandfetch.com/developers</a></td></tr>
+            </table>
+
+            <h3>Logo Selection Priority</h3>
+            <p>The script selects logos in this order:</p>
+            <ol>
+                <li>Type: <code>logo</code> with <code>dark</code> theme (colored for light backgrounds)</li>
+                <li>Type: <code>logo</code> (any theme)</li>
+                <li>Type: <code>symbol</code> with <code>dark</code> theme</li>
+                <li>Type: <code>symbol</code> (any theme)</li>
+                <li>First available logo</li>
+            </ol>
+            <p>Format priority: PNG with transparent background → PNG → SVG</p>
+
+            <h3>Output Files</h3>
+            <pre><code>public/insurance-logos/
+├── geico.png
+├── progressive.png
+├── statefarm.png
+├── allstate.png
+├── ... (19 total logos)</code></pre>
+
+            <h3>Troubleshooting</h3>
+            <table>
+                <tr><th>Issue</th><th>Solution</th></tr>
+                <tr><td>API error 401</td><td>Check BRANDFETCH_API_KEY in .env</td></tr>
+                <tr><td>No logo found</td><td>Company may not be in Brandfetch database - manually source</td></tr>
+                <tr><td>Wrong logo variant</td><td>Manually download preferred variant from Brandfetch website</td></tr>
+            </table>
+        </section>
+
+        <!-- SECTION 10: SEO CONTENT WORKFLOW -->
+        <section id="seo-workflow" class="section">
+            <h2>10. SEO Content Workflow (AI Article Generation)</h2>
+            <p><span class="badge badge-done">NEW</span> Automated workflow for generating SEO-optimized blog articles that rank on Google.</p>
+
+            <h3>Overview</h3>
+            <p>This workflow uses <strong>Claude AI</strong> + <strong>Apify</strong> to create data-driven, SEO-optimized articles targeting specific keywords. The system analyzes competitor content, generates content briefs, and produces publication-ready articles.</p>
+
+            <h3>Workflow Architecture</h3>
+            <pre><code>┌─────────────────────────────────────────────────────────────────────────┐
+│  STEP 1: SERP Analysis (Apify Google Search Scraper)                    │
+│  • Scrapes top 10 Google results for target keyword                     │
+│  • Extracts titles, descriptions, People Also Ask                       │
+│  • Identifies competitor content patterns                               │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  STEP 2: Content Brief Generation (Claude AI)                           │
+│  • Analyzes search intent                                               │
+│  • Generates optimal H2/H3 structure                                    │
+│  • Identifies semantic keywords to include                              │
+│  • Sets word count targets based on competitors                         │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  STEP 3: SEO-Optimized Article (Claude AI)                              │
+│  • Uses brand vocabulary system                                         │
+│  • E-E-A-T optimized content                                            │
+│  • Includes FAQ section with schema markup                              │
+│  • 2500+ words with proper heading hierarchy                            │
+└──────────────────────────────────┬──────────────────────────────────────┘
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  STEP 4: SEO Scoring & Validation                                       │
+│  • Keyword density check (0.5-2.5%)                                     │
+│  • Heading structure validation                                         │
+│  • Title/meta optimization check                                        │
+│  • Grade: A/B/C/D (target: 80+ for A)                                   │
+└─────────────────────────────────────────────────────────────────────────┘</code></pre>
+
+            <h3>Quick Reference Commands</h3>
+            <pre><code># Generate single article
+npm run seo:article "best small business insurance"
+
+# Analyze SERP for a keyword (uses Apify)
+npm run seo:serp "best pet insurance"
+
+# Full workflow (SERP + Article)
+npm run seo:workflow "extended car warranty"
+
+# Batch process top 5 keywords
+npm run seo:batch
+
+# Process from your target keywords file
+node scripts/seo-workflow.js --json scripts/target-keywords.json --limit 10</code></pre>
+
+            <h3>Script Files</h3>
+            <table>
+                <tr><th>Script</th><th>Purpose</th><th>API Required</th></tr>
+                <tr>
+                    <td><code>scripts/seo-article-generator.js</code></td>
+                    <td>Main article generator with content brief + SEO scoring</td>
+                    <td>ANTHROPIC_API_KEY</td>
+                </tr>
+                <tr>
+                    <td><code>scripts/analyze-serp.js</code></td>
+                    <td>SERP analysis - scrapes Google results via Apify</td>
+                    <td>APIFY_API_TOKEN</td>
+                </tr>
+                <tr>
+                    <td><code>scripts/seo-workflow.js</code></td>
+                    <td>Orchestrator - runs full workflow or batch processing</td>
+                    <td>Both</td>
+                </tr>
+                <tr>
+                    <td><code>scripts/target-keywords.json</code></td>
+                    <td>40 target keywords extracted from competitor analysis</td>
+                    <td>N/A (data file)</td>
+                </tr>
+            </table>
+
+            <h3>Target Keywords (Priority Order)</h3>
+            <p>Keywords extracted from ConsumerVoice.org competitor analysis, sorted by traffic value:</p>
+            <table>
+                <tr><th>#</th><th>Keyword</th><th>Volume</th><th>Est. Traffic Value</th><th>Category</th></tr>
+                <tr><td>1</td><td>first american home warranty</td><td>62,000</td><td>$116,885</td><td>Home</td></tr>
+                <tr><td>2</td><td>extended car warranty</td><td>16,000</td><td>$78,937</td><td>Insurance</td></tr>
+                <tr><td>3</td><td>wells fargo savings rate</td><td>7,700</td><td>$69,371</td><td>Finance</td></tr>
+                <tr><td>4</td><td>discover student loans</td><td>52,000</td><td>$68,773</td><td>Finance</td></tr>
+                <tr><td>5</td><td>rv insurance quote</td><td>8,300</td><td>$56,998</td><td>Insurance</td></tr>
+                <tr><td>6</td><td>internet providers</td><td>132,000</td><td>$50,556</td><td>Home</td></tr>
+                <tr><td>7</td><td>refinance car loan</td><td>65,000</td><td>$42,062</td><td>Finance</td></tr>
+                <tr><td>8</td><td>small business insurance</td><td>77,000</td><td>$34,403</td><td>Insurance</td></tr>
+                <tr><td>9</td><td>car transport</td><td>12,000</td><td>$32,828</td><td>Home</td></tr>
+                <tr><td>10</td><td>home camera system</td><td>8,700</td><td>$31,123</td><td>Home</td></tr>
+            </table>
+
+            <h3>Vocabulary System</h3>
+            <p>The article generator uses category-specific vocabulary to maintain brand consistency:</p>
+            <table>
+                <tr><th>Category</th><th>Use These Terms</th><th>Avoid</th></tr>
+                <tr>
+                    <td>Insurance</td>
+                    <td>coverage options, policy benefits, premium costs, deductible amounts, claim process</td>
+                    <td>cheap insurance, free quotes, best deal</td>
+                </tr>
+                <tr>
+                    <td>Finance</td>
+                    <td>APR, compound interest, credit utilization, debt-to-income ratio, amortization</td>
+                    <td>get rich quick, guaranteed returns, no risk</td>
+                </tr>
+                <tr>
+                    <td>Credit Cards</td>
+                    <td>welcome bonus, annual fee, earning rate, redemption value, transfer partners</td>
+                    <td>sign-up offer, yearly cost, how much you get back</td>
+                </tr>
+            </table>
+
+            <h3>SEO Scoring Breakdown</h3>
+            <table>
+                <tr><th>Metric</th><th>Max Points</th><th>Criteria</th></tr>
+                <tr><td>Word Count</td><td>25</td><td>2500+ words = 25pts, 2000+ = 20pts, 1500+ = 15pts</td></tr>
+                <tr><td>Keyword in Title</td><td>15</td><td>Primary keyword appears in title tag</td></tr>
+                <tr><td>First Paragraph</td><td>10</td><td>Keyword in first 100 words</td></tr>
+                <tr><td>Keyword Density</td><td>15</td><td>0.5% - 2.5% density</td></tr>
+                <tr><td>Heading Structure</td><td>15</td><td>5+ H2s and 3+ H3s</td></tr>
+                <tr><td>FAQ Section</td><td>10</td><td>Has FAQ or Frequently Asked section</td></tr>
+                <tr><td>Meta Description</td><td>10</td><td>100-160 characters with keyword</td></tr>
+                <tr><th>Total</th><th>100</th><th>Grade A = 80+, B = 60+, C = 40+</th></tr>
+            </table>
+
+            <h3>Output Locations</h3>
+            <table>
+                <tr><th>Output</th><th>Location</th></tr>
+                <tr><td>Generated Articles</td><td><code>src/content/blog/{slug}.md</code></td></tr>
+                <tr><td>Content Briefs</td><td><code>content-briefs/{slug}-brief.json</code></td></tr>
+                <tr><td>SERP Data</td><td><code>serp-data/{slug}-serp.json</code></td></tr>
+                <tr><td>Batch Reports</td><td><code>seo-reports/batch-report-{timestamp}.json</code></td></tr>
+            </table>
+
+            <h3>Articles Generated</h3>
+            <ul class="task-list">
+                <li class="completed"><input type="checkbox" checked disabled> best-small-business-insurance.md (Grade A - 93/100, 4,942 words)</li>
+                <li class="completed"><input type="checkbox" checked disabled> best-home-warranty-companies.md (Grade A - 83/100, 2,639 words)</li>
+                <li class="pending"><input type="checkbox" disabled> Remaining 38 keywords from target list</li>
+            </ul>
+
+            <h3>Future Improvements (Roadmap)</h3>
+            <ul class="task-list">
+                <li class="idea"><input type="checkbox" disabled> <strong>Deep SERP Analysis:</strong> Scrape actual competitor page content, extract word counts, heading structures, and topic coverage</li>
+                <li class="idea"><input type="checkbox" disabled> <strong>Auto Image Generation:</strong> Generate hero images for articles using Gemini Imagen</li>
+                <li class="idea"><input type="checkbox" disabled> <strong>Internal Linking:</strong> Automatically detect and insert internal links to related articles</li>
+                <li class="idea"><input type="checkbox" disabled> <strong>Content Freshness:</strong> Track article age and auto-update with current year/data</li>
+                <li class="idea"><input type="checkbox" disabled> <strong>Rank Tracking:</strong> Monitor keyword positions after publishing</li>
+                <li class="idea"><input type="checkbox" disabled> <strong>AI Detection Pass:</strong> Run through AI detection and humanize if needed</li>
+                <li class="idea"><input type="checkbox" disabled> <strong>Competitor Gap Analysis:</strong> Identify topics competitors cover that we don't</li>
+                <li class="idea"><input type="checkbox" disabled> <strong>Schema Auto-Generation:</strong> Auto-generate FAQ, HowTo, and Review schema from content</li>
+            </ul>
+
+            <h3>Environment Variables Required</h3>
+            <pre><code># Add to .env file
+ANTHROPIC_API_KEY=sk-ant-api03-...    # Claude API for content generation
+APIFY_API_TOKEN=apify_api_...          # Apify for SERP scraping</code></pre>
+        </section>
+
+        <!-- SECTION 11: TASK TRACKING -->
         <section id="tasks" class="section">
-            <h2>8. Task Tracking</h2>
+            <h2>11. Task Tracking</h2>
 
             <h3>Completed Tasks <span class="badge badge-done">DONE</span></h3>
             <ul class="task-list">
@@ -1125,12 +1513,26 @@ curl "https://prestanews.com/api/subscribers?key=YOUR_ADMIN_KEY&format=csv"</cod
                 <li class="completed"><input type="checkbox" checked disabled> Generate SEO alt text for all 102 images (Gemini AI)</li>
                 <li class="completed"><input type="checkbox" checked disabled> Update all scripts to use .env file (no hardcoded API keys)</li>
                 <li class="completed"><input type="checkbox" checked disabled> Document all scripts in PROJECT-DOCS.html</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Set up Sanity CMS</strong> - Headless CMS for credit card management</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Create Sanity Studio</strong> - Admin panel at screened.sanity.studio</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Credit Card Schema</strong> - Full schema with affiliate links, images, pros/cons</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Sanity Client Integration</strong> - src/lib/sanity.ts for data fetching</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Migration Script</strong> - Migrate existing cards to Sanity</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Brandfetch Logo Script</strong> - Fetch real insurance logos automatically</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Replace AI logos with real logos</strong> - 19 insurance companies</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>SEO Article Generator</strong> - Claude AI + content briefs + scoring</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>SERP Analysis Tool</strong> - Apify Google Search scraper integration</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>SEO Workflow Orchestrator</strong> - Batch processing for keywords</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Target Keywords File</strong> - 40 keywords from competitor analysis</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Generated 2 SEO articles</strong> - small business insurance (Grade A), home warranty (Grade A)</li>
             </ul>
 
             <h3>Pending Tasks <span class="badge badge-pending">TODO</span></h3>
             <ul class="task-list">
-                <li class="pending"><input type="checkbox" disabled> Replace AI-generated insurance logos with real company logos</li>
-                <li class="pending"><input type="checkbox" disabled> Add more credit card review articles</li>
+                <li class="pending"><input type="checkbox" disabled> Generate remaining 38 SEO articles from target keywords</li>
+                <li class="pending"><input type="checkbox" disabled> Connect Astro pages to Sanity CMS (replace hardcoded card data)</li>
+                <li class="pending"><input type="checkbox" disabled> Add affiliate links to all credit cards in Sanity</li>
+                <li class="pending"><input type="checkbox" disabled> Upload credit card images to Sanity</li>
                 <li class="pending"><input type="checkbox" disabled> Build insurance quote comparison tool</li>
                 <li class="pending"><input type="checkbox" disabled> Implement search functionality</li>
                 <li class="pending"><input type="checkbox" disabled> Add user comments/reviews system</li>

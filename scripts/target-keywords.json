@@ -1,0 +1,363 @@
+[
+  {
+    "keyword": "small business insurance",
+    "volume": 77000,
+    "traffic": 26783,
+    "trafficCost": 34403.18,
+    "topic": "small-business-insurance",
+    "category": "insurance",
+    "priority": "high"
+  },
+  {
+    "keyword": "wells fargo savings account interest rate",
+    "volume": 7700,
+    "traffic": 24285,
+    "trafficCost": 69371.29,
+    "topic": "online-savings-account",
+    "category": "finance",
+    "priority": "high"
+  },
+  {
+    "keyword": "gold coins for sale",
+    "volume": 9200,
+    "traffic": 23641,
+    "trafficCost": 27104.12,
+    "topic": "gold-bars-and-coins",
+    "category": "finance",
+    "priority": "high"
+  },
+  {
+    "keyword": "first american home warranty",
+    "volume": 62000,
+    "traffic": 22563,
+    "trafficCost": 116885.84,
+    "topic": "home-warranties",
+    "category": "home",
+    "priority": "high"
+  },
+  {
+    "keyword": "internet providers",
+    "volume": 132000,
+    "traffic": 21707,
+    "trafficCost": 50555.55,
+    "topic": "home-internet-providers",
+    "category": "home",
+    "priority": "high"
+  },
+  {
+    "keyword": "home camera system",
+    "volume": 8700,
+    "traffic": 16104,
+    "trafficCost": 31122.88,
+    "topic": "home-security",
+    "category": "home",
+    "priority": "high"
+  },
+  {
+    "keyword": "extended car warranty",
+    "volume": 16000,
+    "traffic": 14413,
+    "trafficCost": 78936.74,
+    "topic": "extended-car-warranties",
+    "category": "insurance",
+    "priority": "high"
+  },
+  {
+    "keyword": "refinance car loan",
+    "volume": 65000,
+    "traffic": 14265,
+    "trafficCost": 42061.59,
+    "topic": "auto-loan-refinancing",
+    "category": "finance",
+    "priority": "high"
+  },
+  {
+    "keyword": "discover student loans",
+    "volume": 52000,
+    "traffic": 11229,
+    "trafficCost": 68772.74,
+    "topic": "student-loans",
+    "category": "finance",
+    "priority": "high"
+  },
+  {
+    "keyword": "car transport",
+    "volume": 12000,
+    "traffic": 8450,
+    "trafficCost": 32827.70,
+    "topic": "auto-transport",
+    "category": "home",
+    "priority": "medium"
+  },
+  {
+    "keyword": "disability insurance",
+    "volume": 32000,
+    "traffic": 7013,
+    "trafficCost": 6411.86,
+    "topic": "disability-insurance",
+    "category": "insurance",
+    "priority": "medium"
+  },
+  {
+    "keyword": "rv insurance quote",
+    "volume": 8300,
+    "traffic": 6648,
+    "trafficCost": 56998.49,
+    "topic": "rv-insurance",
+    "category": "insurance",
+    "priority": "medium"
+  },
+  {
+    "keyword": "refinance mortgage rates today",
+    "volume": 13000,
+    "traffic": 5956,
+    "trafficCost": 19114.79,
+    "topic": "mortgage-refinance-companies",
+    "category": "finance",
+    "priority": "medium"
+  },
+  {
+    "keyword": "window replacement",
+    "volume": 94000,
+    "traffic": 5648,
+    "trafficCost": 10490.02,
+    "topic": "window-replacements",
+    "category": "home",
+    "priority": "medium"
+  },
+  {
+    "keyword": "united van lines",
+    "volume": 6000,
+    "traffic": 5097,
+    "trafficCost": 39879.28,
+    "topic": "moving-services",
+    "category": "home",
+    "priority": "medium"
+  },
+  {
+    "keyword": "immediate annuity calculator",
+    "volume": 11000,
+    "traffic": 3866,
+    "trafficCost": 5701.77,
+    "topic": "annuities",
+    "category": "finance",
+    "priority": "medium"
+  },
+  {
+    "keyword": "best electric bike",
+    "volume": 7800,
+    "traffic": 3771,
+    "trafficCost": 1297.48,
+    "topic": "electric-bikes",
+    "category": "lifestyle",
+    "priority": "medium"
+  },
+  {
+    "keyword": "portable oxygen",
+    "volume": 7300,
+    "traffic": 3646,
+    "trafficCost": 11760.40,
+    "topic": "portable-oxygen-concentrators",
+    "category": "lifestyle",
+    "priority": "medium"
+  },
+  {
+    "keyword": "gantt chart",
+    "volume": 130000,
+    "traffic": 3599,
+    "trafficCost": 15235.17,
+    "topic": "project-management-software",
+    "category": "tech",
+    "priority": "medium"
+  },
+  {
+    "keyword": "hellofresh cost",
+    "volume": 4200,
+    "traffic": 3293,
+    "trafficCost": 6141.32,
+    "topic": "meal-delivery-services",
+    "category": "lifestyle",
+    "priority": "medium"
+  },
+  {
+    "keyword": "best mortgage rates",
+    "volume": 19000,
+    "traffic": 2827,
+    "trafficCost": 2244.39,
+    "topic": "mortgage-loans",
+    "category": "finance",
+    "priority": "medium"
+  },
+  {
+    "keyword": "cheapest pet insurance",
+    "volume": 2900,
+    "traffic": 2492,
+    "trafficCost": 12981.33,
+    "topic": "pet-insurance",
+    "category": "insurance",
+    "priority": "medium"
+  },
+  {
+    "keyword": "road side assistance",
+    "volume": 15000,
+    "traffic": 2307,
+    "trafficCost": 4903.67,
+    "topic": "roadside-assistance-services",
+    "category": "insurance",
+    "priority": "medium"
+  },
+  {
+    "keyword": "travel insurance companies",
+    "volume": 8400,
+    "traffic": 1925,
+    "trafficCost": 8213.86,
+    "topic": "travel-insurance",
+    "category": "insurance",
+    "priority": "low"
+  },
+  {
+    "keyword": "gold ira",
+    "volume": 11000,
+    "traffic": 1722,
+    "trafficCost": 9083.57,
+    "topic": "gold-ira",
+    "category": "finance",
+    "priority": "low"
+  },
+  {
+    "keyword": "rover pet sitting",
+    "volume": 10000,
+    "traffic": 1521,
+    "trafficCost": 1344.93,
+    "topic": "pet-care",
+    "category": "lifestyle",
+    "priority": "low"
+  },
+  {
+    "keyword": "fresh start program",
+    "volume": 21000,
+    "traffic": 1494,
+    "trafficCost": 8922.00,
+    "topic": "tax-relief",
+    "category": "finance",
+    "priority": "low"
+  },
+  {
+    "keyword": "ai note taker",
+    "volume": 12000,
+    "traffic": 891,
+    "trafficCost": 2387.34,
+    "topic": "ai-notetakers",
+    "category": "tech",
+    "priority": "low"
+  },
+  {
+    "keyword": "symple lending reviews",
+    "volume": 6800,
+    "traffic": 864,
+    "trafficCost": 6829.62,
+    "topic": "home-equity-sharing",
+    "category": "finance",
+    "priority": "low"
+  },
+  {
+    "keyword": "survival food",
+    "volume": 11000,
+    "traffic": 765,
+    "trafficCost": 480.13,
+    "topic": "emergency-food-supply",
+    "category": "lifestyle",
+    "priority": "low"
+  },
+  {
+    "keyword": "badlands ranch",
+    "volume": 13000,
+    "traffic": 746,
+    "trafficCost": 1382.76,
+    "topic": "dog-food-delivery",
+    "category": "lifestyle",
+    "priority": "low"
+  },
+  {
+    "keyword": "express vpn price",
+    "volume": 3100,
+    "traffic": 647,
+    "trafficCost": 739.24,
+    "topic": "vpn-services",
+    "category": "tech",
+    "priority": "low"
+  },
+  {
+    "keyword": "boat insurance quote",
+    "volume": 6800,
+    "traffic": 643,
+    "trafficCost": 7774.87,
+    "topic": "boat-insurance",
+    "category": "insurance",
+    "priority": "low"
+  },
+  {
+    "keyword": "best password manager 2024",
+    "volume": 14000,
+    "traffic": 601,
+    "trafficCost": 1581.92,
+    "topic": "password-managers",
+    "category": "tech",
+    "priority": "low"
+  },
+  {
+    "keyword": "mailchimp pricing",
+    "volume": 12000,
+    "traffic": 493,
+    "trafficCost": 1775.43,
+    "topic": "email-marketing-software",
+    "category": "tech",
+    "priority": "low"
+  },
+  {
+    "keyword": "best roth ira accounts",
+    "volume": 8000,
+    "traffic": 378,
+    "trafficCost": 878.15,
+    "topic": "ira-accounts",
+    "category": "finance",
+    "priority": "low"
+  },
+  {
+    "keyword": "best antivirus for mac",
+    "volume": 3800,
+    "traffic": 372,
+    "trafficCost": 516.87,
+    "topic": "antivirus-software",
+    "category": "tech",
+    "priority": "low"
+  },
+  {
+    "keyword": "ice bath tub",
+    "volume": 17000,
+    "traffic": 316,
+    "trafficCost": 374.01,
+    "topic": "cold-plunge-tubs",
+    "category": "lifestyle",
+    "priority": "low"
+  },
+  {
+    "keyword": "best gutter guards",
+    "volume": 6800,
+    "traffic": 293,
+    "trafficCost": 1760.81,
+    "topic": "gutter-guards",
+    "category": "home",
+    "priority": "low"
+  },
+  {
+    "keyword": "best mattress",
+    "volume": 2900,
+    "traffic": 168,
+    "trafficCost": 418.19,
+    "topic": "mattresses",
+    "category": "lifestyle",
+    "priority": "low"
+  }
+]
+

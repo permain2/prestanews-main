@@ -1,0 +1,153 @@
+{
+  "keyword": "best small business insurance",
+  "brief": {
+    "keyword_analysis": {
+      "primary_keyword": "best small business insurance",
+      "category": "insurance",
+      "search_volume": "High",
+      "competition": "High",
+      "commercial_intent": "High"
+    },
+    "search_intent": {
+      "user_looking_for": "Small business owners seeking comprehensive insurance coverage recommendations and comparisons",
+      "intent_type": "Commercial investigation - comparing options before purchasing",
+      "buyer_journey_stage": "Consideration to Decision stage",
+      "user_goals": [
+        "Compare different insurance providers",
+        "Understand types of coverage needed",
+        "Find cost-effective insurance solutions",
+        "Read reviews and ratings",
+        "Get quotes and pricing information"
+      ]
+    },
+    "recommended_title": "Best Small Business Insurance 2024: Top 10 Providers",
+    "meta_description": "Find the best small business insurance for your needs. Compare top providers, coverage options & rates. Get quotes from leading insurers today!",
+    "required_h2_headings": [
+      "Top 10 Best Small Business Insurance Companies 2024",
+      "Types of Small Business Insurance Coverage You Need",
+      "How to Choose the Right Small Business Insurance",
+      "Small Business Insurance Cost: What to Expect",
+      "General Liability vs Professional Liability Insurance",
+      "Best Insurance for Specific Business Types",
+      "Small Business Insurance Requirements by State",
+      "How to Get Small Business Insurance Quotes",
+      "Common Small Business Insurance Claims",
+      "Small Business Insurance Tax Deductions"
+    ],
+    "people_also_ask": [
+      "What type of insurance does a small business need?",
+      "How much does small business insurance cost per month?",
+      "Is small business insurance required by law?",
+      "What is the difference between LLC and small business insurance?",
+      "Can I get small business insurance online?",
+      "What does general liability insurance cover for small business?",
+      "How do I file a small business insurance claim?",
+      "What is the cheapest small business insurance?"
+    ],
+    "semantic_keywords": [
+      "commercial insurance",
+      "business liability coverage",
+      "workers compensation insurance",
+      "professional indemnity insurance",
+      "business property insurance",
+      "cyber liability insurance",
+      "commercial auto insurance",
+      "business interruption insurance",
+      "errors and omissions insurance",
+      "commercial umbrella policy",
+      "business insurance quotes",
+      "small business coverage",
+      "commercial insurance providers",
+      "business insurance premiums",
+      "liability protection",
+      "business insurance policy",
+      "commercial insurance rates",
+      "business risk management",
+      "insurance for entrepreneurs",
+      "startup insurance coverage"
+    ],
+    "content_requirements": {
+      "minimum_word_count": 2500,
+      "key_points_to_cover": [
+        "Detailed comparison table of top 10 insurance providers",
+        "Pros and cons of each insurance company",
+        "Pricing ranges and factors affecting costs",
+        "Coverage options and policy limits",
+        "Customer service ratings and reviews",
+        "Claims process and settlement times",
+        "Industry-specific insurance recommendations",
+        "State-by-state requirements and regulations",
+        "Step-by-step guide to purchasing insurance",
+        "Money-saving tips and discounts available"
+      ],
+      "data_statistics_to_include": [
+        "Average cost of small business insurance by industry",
+        "Percentage of small businesses with insurance coverage",
+        "Most common types of business insurance claims",
+        "Average claim settlement amounts",
+        "Customer satisfaction ratings for each provider",
+        "Market share of top insurance companies",
+        "State-specific insurance requirement statistics"
+      ],
+      "expert_insights_needed": [
+        "Insurance broker recommendations",
+        "Legal expert advice on coverage requirements",
+        "Industry-specific risk assessments",
+        "Claims adjuster insights on common issues",
+        "Financial advisor tips on insurance budgeting"
+      ]
+    },
+    "internal_linking_opportunities": [
+      "Workers Compensation Insurance Guide",
+      "Professional Liability Insurance Explained",
+      "Business Property Insurance Coverage",
+      "Cyber Liability Insurance for Small Business",
+      "How to Start a Small Business Checklist",
+      "Small Business Tax Deductions Guide",
+      "Business License Requirements by State",
+      "Small Business Loan Options",
+      "Business Banking Account Comparison",
+      "Small Business Accounting Software Reviews"
+    ],
+    "content_structure": {
+      "introduction": "Hook with statistics about uninsured businesses, overview of importance",
+      "main_content": "Detailed provider comparisons, coverage explanations, buying guide",
+      "conclusion": "Summary of top recommendations with clear call-to-action",
+      "additional_elements": [
+        "Comparison tables",
+        "Infographics showing coverage types",
+        "Calculator tool for estimating costs",
+        "Checklist for choosing insurance",
+        "FAQ section",
+        "Resource links and citations"
+      ]
+    },
+    "optimization_notes": {
+      "keyword_density": "1-2% for primary keyword",
+      "readability": "Grade 8-10 reading level",
+      "formatting": "Use bullet points, numbered lists, and tables for easy scanning",
+      "images": "Include provider logos, infographics, and comparison charts",
+      "schema_markup": "FAQ schema, Review schema for provider ratings",
+      "update_frequency": "Quarterly updates for rates and provider information"
+    }
+  },
+  "seoScore": {
+    "scores": {
+      "wordCount": 25,
+      "keywordInTitle": 15,
+      "keywordInFirstParagraph": 10,
+      "keywordDensity": 8,
+      "headingStructure": 15,
+      "hasFAQ": 10,
+      "hasMetaDescription": 10,
+      "total": 93
+    },
+    "wordCount": 4942,
+    "keywordDensity": "0.12%",
+    "headings": {
+      "h2": 13,
+      "h3": 56
+    },
+    "grade": "A"
+  }
+}
