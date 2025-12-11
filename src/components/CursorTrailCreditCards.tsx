@@ -19,38 +19,21 @@ interface TrailImage {
     velocityY: number
 }
 
+// Optimized thumbnail credit cards (8 images, ~5KB each)
 const creditCardImages = [
-    // Travel Cards (Amex)
-    "/credit-cards/amex-platinum.png",
-    "/credit-cards/amex-gold.png",
-    "/credit-cards/amex-green.png",
-    "/credit-cards/delta-skymiles-reserve.png",
-    "/credit-cards/delta-skymiles-gold.png",
-    "/credit-cards/hilton-honors-aspire.png",
-    // Business Cards
-    "/credit-cards/amex-business-platinum.png",
-    "/credit-cards/amex-business-gold.png",
-    "/credit-cards/blue-business-plus.png",
-    "/credit-cards/amex-blue-business-cash.png",
-    "/credit-cards/amazon-business-prime.png",
-    // Cash Back Cards
-    "/credit-cards/blue-cash-preferred.png",
-    "/credit-cards/blue-cash-everyday.png",
-    "/credit-cards/amex-cash-magnet.png",
-    // Balance Transfer Cards
-    "/credit-cards/citi-diamond-preferred.png",
-    "/credit-cards/wells-fargo-reflect.png",
-    "/credit-cards/bankamericard.png",
-    "/credit-cards/discover-it-balance-transfer.png",
-    // Featured Cards
-    "/credit-cards/chase-sapphire-preferred.png",
-    "/credit-cards/capital-one-venture-x.png",
-    "/credit-cards/citi-double-cash.png",
+    "/cursor-trail/cards/amex-platinum.png",
+    "/cursor-trail/cards/amex-gold.png",
+    "/cursor-trail/cards/chase-sapphire-preferred.png",
+    "/cursor-trail/cards/capital-one-venture-x.png",
+    "/cursor-trail/cards/citi-double-cash.png",
+    "/cursor-trail/cards/blue-cash-preferred.png",
+    "/cursor-trail/cards/discover-it-balance-transfer.png",
+    "/cursor-trail/cards/delta-skymiles-reserve.png",
 ]
 
 export default function CursorTrailCreditCards({
     fadeOutDuration = 1.5,
-    imageSize = 180,
+    imageSize = 140,
     spawnDistance = 100,
     velocityFactor = 0.08,
 }: {
@@ -130,10 +113,8 @@ export default function CursorTrailCreditCards({
                 distance.current = undefined
             }}
         >
-            {/* Decorative Title */}
             <div className="trail-title">Credit Cards</div>
             
-            {/* Trail Images */}
             <AnimatePresence>
                 {trailImages.map((image) => (
                     <motion.img
@@ -174,7 +155,6 @@ export default function CursorTrailCreditCards({
                 ))}
             </AnimatePresence>
 
-            {/* Subtitle */}
             <p className="trail-subtitle">
                 Find the perfect credit card for your spending habits. Our experts review and compare the best options for travel rewards, cash back, business, and more.
             </p>
@@ -226,8 +206,8 @@ export default function CursorTrailCreditCards({
                     object-fit: contain;
                     pointer-events: none;
                     z-index: 10;
-                    border-radius: 12px;
-                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+                    border-radius: 10px;
+                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
                 }
 
                 @media (max-width: 768px) {
@@ -235,18 +215,11 @@ export default function CursorTrailCreditCards({
                         min-height: 220px;
                     }
                     .trail-card-image {
-                        width: 120px;
-                        max-height: 84px;
+                        width: 100px;
+                        max-height: 70px;
                     }
                 }
             `}</style>
         </div>
     )
 }
-
-
-
-
-
-
-

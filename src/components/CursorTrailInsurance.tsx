@@ -19,36 +19,20 @@ interface TrailImage {
     velocityY: number
 }
 
+// Optimized thumbnail insurance logos (7 images, ~1-2KB each)
 const insuranceLogos = [
-    // Car Insurance
-    "/insurance-logos/geico.png",
-    "/insurance-logos/progressive.png",
-    "/insurance-logos/statefarm.png",
-    "/insurance-logos/usaa.png",
-    "/insurance-logos/allstate.png",
-    "/insurance-logos/libertymutual.png",
-    // Home Insurance
-    "/insurance-logos/nationwide.png",
-    "/insurance-logos/amica.png",
-    // Life Insurance
-    "/insurance-logos/northwestern.png",
-    "/insurance-logos/newyorklife.png",
-    "/insurance-logos/prudential.png",
-    "/insurance-logos/massmutual.png",
-    "/insurance-logos/havenlife.png",
-    // Renters Insurance
-    "/insurance-logos/lemonade.png",
-    "/insurance-logos/farmers.png",
-    // Additional
-    "/insurance-logos/travelers.png",
-    "/insurance-logos/metlife.png",
-    "/insurance-logos/erie.png",
-    "/insurance-logos/chubb.png",
+    "/cursor-trail/insurance/geico.png",
+    "/cursor-trail/insurance/progressive.png",
+    "/cursor-trail/insurance/statefarm.png",
+    "/cursor-trail/insurance/allstate.png",
+    "/cursor-trail/insurance/lemonade.png",
+    "/cursor-trail/insurance/nationwide.png",
+    "/cursor-trail/insurance/prudential.png",
 ]
 
 export default function CursorTrailInsurance({
     fadeOutDuration = 1.5,
-    imageSize = 140,
+    imageSize = 100,
     spawnDistance = 100,
     velocityFactor = 0.08,
 }: {
@@ -128,10 +112,8 @@ export default function CursorTrailInsurance({
                 distance.current = undefined
             }}
         >
-            {/* Decorative Title */}
             <div className="trail-title-insurance">Insurance</div>
             
-            {/* Trail Images */}
             <AnimatePresence>
                 {trailImages.map((image) => (
                     <motion.img
@@ -172,7 +154,6 @@ export default function CursorTrailInsurance({
                 ))}
             </AnimatePresence>
 
-            {/* Subtitle */}
             <p className="trail-subtitle-insurance">
                 Find the right insurance coverage for your needs. Our experts review and compare the best providers for auto, home, renters, and life insurance.
             </p>
@@ -223,10 +204,10 @@ export default function CursorTrailInsurance({
                     object-fit: contain;
                     pointer-events: none;
                     z-index: 10;
-                    border-radius: 16px;
+                    border-radius: 12px;
                     background: white;
-                    padding: 12px;
-                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+                    padding: 10px;
+                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
                 }
 
                 @media (max-width: 768px) {
@@ -234,18 +215,12 @@ export default function CursorTrailInsurance({
                         min-height: 220px;
                     }
                     .trail-logo-image {
-                        width: 100px;
-                        height: 100px;
-                        padding: 8px;
+                        width: 70px;
+                        height: 70px;
+                        padding: 6px;
                     }
                 }
             `}</style>
         </div>
     )
 }
-
-
-
-
-
-
