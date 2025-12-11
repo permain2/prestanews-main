@@ -130,21 +130,8 @@ const faqs = [
     answer: "Risks include: price volatility (gold prices fluctuate), fees reducing returns, liquidity concerns (selling physical gold takes time), no dividends or interest, and potential dealer markups. Gold works best as portfolio diversification, not a primary investment."
   }
 ];
----
 
-<ComparisonLayout
-  title="Best Gold IRA Companies of 2025"
-  description="Compare the best gold IRA companies including Augusta Precious Metals, Goldco, and American Hartford Gold. Expert reviews of fees, minimums, and service quality."
-  category="finance"
-  categoryLabel="RETIREMENT"
-  heroImage="/blog-images/gold-ira.jpg"
-  researchIntro="We requested information kits from 23 gold IRA companies, analyzed their fee structures, and verified IRS compliance for each. Our team also reviewed 1,247 customer complaints filed with the Better Business Bureau over the past 3 years. These companies offer the most transparent pricing and smoothest rollover processes."
-  author="Michael Rodriguez"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
->
-
+const content = `
 ## Understanding Gold IRAs
 
 A gold IRA allows you to hold physical precious metals in a tax-advantaged retirement account. As economic uncertainty persists and inflation concerns grow, gold IRAs have become increasingly popular for portfolio diversification.
@@ -300,6 +287,20 @@ For most investors, **Augusta Precious Metals** offers the best combination of e
 First-time precious metals investors should consider **Noble Gold** for their industry-low $2,000 minimum, while those with larger portfolios may benefit from **Augusta's** white-glove service.
 
 *Gold prices fluctuate and past performance doesn't guarantee future results. Consult a financial advisor before making retirement investment decisions.*
+`;
+---
 
-</ComparisonLayout>
+<ComparisonLayout
+  title="Best Gold IRA Companies of 2025"
+  description="Compare the best gold IRA companies including Augusta Precious Metals, Goldco, and American Hartford Gold. Expert reviews of fees, minimums, and service quality."
+  category="finance"
+  categoryLabel="RETIREMENT"
+  heroImage="/blog-images/gold-ira.jpg"
+  researchIntro="We requested information kits from 23 gold IRA companies, analyzed their fee structures, and verified IRS compliance for each. Our team also reviewed 1,247 customer complaints filed with the Better Business Bureau over the past 3 years. These companies offer the most transparent pricing and smoothest rollover processes."
+  author="Michael Rodriguez"
+  date="Dec 11, 2025"
+  providers={providers}
+  faqs={faqs}
+  content={content}
+/>
 

@@ -154,21 +154,8 @@ const faqs = [
     answer: "Yes, interest earned on savings accounts is taxable income. Banks report interest over $10 to the IRS on Form 1099-INT. You'll need to report all interest earned on your tax return."
   }
 ];
----
 
-<ComparisonLayout
-  title="Best Online Savings Accounts of 2025"
-  description="Compare the best high-yield online savings accounts with APYs up to 5.00%. Expert analysis of top banks including Varo, Openbank, EverBank, and more."
-  category="finance"
-  categoryLabel="BANKING"
-  heroImage="/blog-images/online-savings-accounts.jpg"
-  researchIntro="We tracked APY changes daily for 47 online banks over 6 months, identifying which banks consistently stay competitive versus those offering teaser rates. On a $25,000 balance, the difference between a 4.5% and 5.0% APY is $125/year. These accounts offer top-tier rates with no gimmicks or requirements."
-  author="Jessica Martinez"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
->
-
+const content = `
 ## Understanding High-Yield Savings Accounts
 
 High-yield savings accounts (HYSAs) offer interest rates many times higher than traditional bank savings accounts. While the national average savings rate is just 0.40%, the best online savings accounts offer APYs ranging from 3.40% to 5.00%.
@@ -246,6 +233,20 @@ Opening a high-yield online savings account is one of the simplest ways to earn 
 For most savers, we recommend **Varo Bank** for the highest APY if you can meet their requirements, or **Openbank** and **EverBank** for consistently strong rates with no strings attached.
 
 *APYs shown are current as of December 2025. Rates are variable and subject to change.*
+`;
+---
 
-</ComparisonLayout>
+<ComparisonLayout
+  title="Best Online Savings Accounts of 2025"
+  description="Compare the best high-yield online savings accounts with APYs up to 5.00%. Expert analysis of top banks including Varo, Openbank, EverBank, and more."
+  category="finance"
+  categoryLabel="BANKING"
+  heroImage="/blog-images/online-savings-accounts.jpg"
+  researchIntro="We tracked APY changes daily for 47 online banks over 6 months, identifying which banks consistently stay competitive versus those offering teaser rates. On a $25,000 balance, the difference between a 4.5% and 5.0% APY is $125/year. These accounts offer top-tier rates with no gimmicks or requirements."
+  author="Jessica Martinez"
+  date="Dec 11, 2025"
+  providers={providers}
+  faqs={faqs}
+  content={content}
+/>
 
