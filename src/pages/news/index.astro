@@ -2,13 +2,14 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 
-// News posts (placeholder articles)
+// News posts with generated images
 const newsPosts = [
   {
     title: "American Airlines Unveils New Flagship Suites",
     description: "American Airlines announces a major upgrade to its international business class experience with new Flagship Suites featuring privacy doors and lie-flat seats.",
     href: "/blog/american-airlines-brings-new-flagship-suites-to-jfk",
     category: "Airlines",
+    image: "/news-images/american-airlines-flagship-suites.jpeg",
     author: "PrestaNews Team",
     date: "Dec 10, 2025"
   },
@@ -17,6 +18,7 @@ const newsPosts = [
     description: "Chase announces new perks for Sapphire Reserve cardholders including expanded lounge access and increased travel credits.",
     href: "/news/chase-sapphire-new-benefits",
     category: "Credit Cards",
+    image: "/news-images/chase-sapphire-reserve-benefits.jpeg",
     author: "PrestaNews Team",
     date: "Dec 9, 2025"
   },
@@ -25,6 +27,7 @@ const newsPosts = [
     description: "Marriott announces changes to its Bonvoy loyalty program, including new elite tier requirements and updated benefits for members.",
     href: "/news/marriott-bonvoy-changes-2026",
     category: "Hotels",
+    image: "/news-images/marriott-bonvoy-elite-status.jpeg",
     author: "PrestaNews Team",
     date: "Dec 8, 2025"
   },
@@ -33,6 +36,7 @@ const newsPosts = [
     description: "Delta reveals changes to award pricing for 2026, with some routes seeing increases while others remain competitive.",
     href: "/news/delta-skymiles-award-chart",
     category: "Airlines",
+    image: "/news-images/delta-skymiles-award-chart.jpeg",
     author: "PrestaNews Team",
     date: "Dec 7, 2025"
   },
@@ -41,6 +45,7 @@ const newsPosts = [
     description: "American Express confirms annual fee changes for the Platinum Card, along with new benefits to offset the cost.",
     href: "/news/amex-platinum-fee-increase",
     category: "Credit Cards",
+    image: "/news-images/amex-platinum-annual-fee.jpeg",
     author: "PrestaNews Team",
     date: "Dec 6, 2025"
   },
@@ -49,6 +54,7 @@ const newsPosts = [
     description: "Hilton adjusts point values across properties. Here's how the changes affect your redemption strategy.",
     href: "/news/hilton-honors-devaluation",
     category: "Hotels",
+    image: "/news-images/hilton-honors-devaluation.jpeg",
     author: "PrestaNews Team",
     date: "Dec 5, 2025"
   }
@@ -77,6 +83,7 @@ const newsPosts = [
             description={post.description}
             href={post.href}
             category={post.category}
+            image={post.image}
             author={post.author}
             date={post.date}
           />
