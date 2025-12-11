@@ -49,6 +49,24 @@ const breadcrumbItems = [
 const titleHash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
 const seededRating = 4.2 + (titleHash % 8) / 10; // 4.2 - 4.9
 const seededReviewCount = 47 + (titleHash % 188); // 47 - 234
+
+// Determine newsletter type based on tags or title
+const lowerTitle = title.toLowerCase();
+const tagsList = tags?.map((t: string) => t.toLowerCase()) || [];
+
+const isInsurance = tagsList.some((t: string) => t.includes('insurance')) || 
+                    lowerTitle.includes('insurance') ||
+                    lowerTitle.includes('coverage') ||
+                    lowerTitle.includes('renters');
+
+const isCreditCard = tagsList.some((t: string) => t.includes('credit')) || 
+                     lowerTitle.includes('credit') ||
+                     lowerTitle.includes('cashback') ||
+                     lowerTitle.includes('points') ||
+                     lowerTitle.includes('card');
+
+// Priority: insurance > credit card > guides (default)
+const newsletterType = isInsurance ? 'insurance' : isCreditCard ? 'credit-card' : 'guides';
 ---
 
 <MainLayout title={title} description={description} image={heroImage}>
@@ -155,21 +173,75 @@ const seededReviewCount = 47 + (titleHash % 188); // 47 - 234
                 <!-- Sidebar -->
                 <aside class="sidebar" aria-label="Newsletter signup">
                     <div class="sidebar-sticky">
-                        <!-- Newsletter -->
+                        
+                        {/* GUIDES NEWSLETTER - Opening Envelope */}
+                        {newsletterType === 'guides' && (
                         <div class="newsletter-box">
-                            <div class="newsletter-icon">
-                                <img 
-                                    src="/icons/newsletter.png" 
-                                    alt="" 
-                                    aria-hidden="true"
-                                    width="48"
-                                    height="48"
-                                    loading="lazy"
-                                />
+                            <div class="envelope-wrap">
+                                <svg class="envelope-svg" viewBox="0 0 48 48" fill="none">
+                                    <rect class="env-body" x="4" y="14" width="40" height="28" rx="3" fill="#1a3a5c"/>
+                                    <path class="env-flap" d="M4 17C4 15.34 5.34 14 7 14H41C42.66 14 44 15.34 44 17L24 32L4 17Z" fill="#0D2C4B"/>
+                                    <rect class="env-letter" x="10" y="6" width="28" height="24" rx="2" fill="#fff"/>
+                                    <line class="env-line" x1="14" y1="12" x2="34" y2="12" stroke="#e5e7eb" stroke-width="2"/>
+                                    <line class="env-line" x1="14" y1="18" x2="30" y2="18" stroke="#e5e7eb" stroke-width="2"/>
+                                    <line class="env-line" x1="14" y1="24" x2="26" y2="24" stroke="#e5e7eb" stroke-width="2"/>
+                                </svg>
                             </div>
-                            <p class="newsletter-text">Get the latest deals and news delivered to your inbox weekly.</p>
-                            <a href="/newsletter" class="btn-apply" style="border-radius: 0.25rem;">Subscribe Now</a>
+                            <p class="box-headline">Get the <strong>Money Cheat Sheet</strong></p>
+                            <p class="box-sub">Weekly tips to save $1,000+/year</p>
+                            <form class="box-form" id="newsletter-form">
+                                <input type="email" placeholder="Email" required />
+                                <button type="submit">FREE</button>
+                            </form>
+                            <p class="box-proof">✓ 12,847 readers</p>
                         </div>
+                        )}
+
+                        {/* CREDIT CARD NEWSLETTER */}
+                        {newsletterType === 'credit-card' && (
+                        <div class="newsletter-box newsletter-cc">
+                            <div class="cc-chip-mini">
+                                <svg viewBox="0 0 32 24"><rect x="0" y="2" width="32" height="18" rx="2" fill="#C9A227"/><rect x="3" y="6" width="5" height="2.5" fill="#A67C00"/><rect x="3" y="10" width="5" height="2.5" fill="#A67C00"/><rect x="3" y="14" width="5" height="2.5" fill="#A67C00"/><rect x="10" y="6" width="5" height="2.5" fill="#A67C00"/><rect x="10" y="10" width="5" height="2.5" fill="#A67C00"/><rect x="10" y="14" width="5" height="2.5" fill="#A67C00"/><rect x="17" y="6" width="5" height="10.5" fill="#A67C00"/><rect x="24" y="6" width="5" height="2.5" fill="#A67C00"/><rect x="24" y="10" width="5" height="2.5" fill="#A67C00"/><rect x="24" y="14" width="5" height="2.5" fill="#A67C00"/></svg>
+                            </div>
+                            <p class="box-headline">Get the <strong>$2,500 Card Guide</strong></p>
+                            <p class="box-sub">Best cards for max rewards (2025)</p>
+                            <ul class="box-list">
+                                <li>💳 Top bonus offers this month</li>
+                                <li>📊 Point valuations cheat sheet</li>
+                                <li>🎯 Card matching quiz</li>
+                            </ul>
+                            <form class="box-form" id="newsletter-form">
+                                <input type="email" placeholder="Email" required />
+                                <button type="submit">FREE</button>
+                            </form>
+                            <p class="box-proof">✓ 12,847 cardholders</p>
+                        </div>
+                        )}
+
+                        {/* INSURANCE NEWSLETTER */}
+                        {newsletterType === 'insurance' && (
+                        <div class="newsletter-box newsletter-ins">
+                            <div class="shield-mini">
+                                <svg viewBox="0 0 32 38" fill="none">
+                                    <path d="M16 2L4 8V18C4 28 10 34 16 36C22 34 28 28 28 18V8L16 2Z" fill="#146aff"/>
+                                    <path d="M12 19L15 22L21 15" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <p class="box-headline">Get the <strong>$1,200 Savings Guide</strong></p>
+                            <p class="box-sub">Cut your premiums in half</p>
+                            <ul class="box-list">
+                                <li>🚗 Auto rate comparison sheet</li>
+                                <li>🏠 Home coverage checklist</li>
+                                <li>💰 Hidden discount codes</li>
+                            </ul>
+                            <form class="box-form" id="newsletter-form">
+                                <input type="email" placeholder="Email" required />
+                                <button type="submit">FREE</button>
+                            </form>
+                            <p class="box-proof">✓ 8,234 protected readers</p>
+                        </div>
+                        )}
+
                     </div>
                 </aside>
             </div>
@@ -389,48 +461,229 @@ const seededReviewCount = 47 + (titleHash % 188); // 47 - 234
         top: 6rem;
     }
 
+    /* ========================================
+       NEWSLETTER BOX - Clean, Compact Design
+       ======================================== */
     .newsletter-box {
-        background: #0D2C4B;
-        padding: 2rem;
-        border-radius: 0.5rem;
+        background: linear-gradient(180deg, #0D2C4B 0%, #091E32 100%);
+        border-radius: 0.75rem;
+        padding: 1.25rem;
         text-align: center;
+        border: 1px solid rgba(20, 106, 255, 0.12);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .newsletter-icon {
-        width: 48px;
-        height: 48px;
-        margin: 0 auto 1rem;
-        filter: brightness(0) invert(1);
+    .newsletter-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(13, 44, 75, 0.3);
     }
 
-    .newsletter-icon img {
+    /* Icon Wrappers */
+    .envelope-wrap,
+    .cc-chip-mini,
+    .shield-mini {
+        width: 40px;
+        height: 40px;
+        margin: 0 auto 0.75rem;
+    }
+
+    .envelope-svg {
         width: 100%;
         height: 100%;
     }
 
-    .newsletter-text {
+    .env-flap {
+        transform-origin: 24px 14px;
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .env-letter {
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s;
+    }
+
+    .env-line {
+        opacity: 0;
+        transition: opacity 0.3s ease 0.2s;
+    }
+
+    .newsletter-box:hover .env-flap {
+        transform: rotateX(-180deg);
+    }
+
+    .newsletter-box:hover .env-letter {
+        transform: translateY(-10px);
+    }
+
+    .newsletter-box:hover .env-line {
+        opacity: 1;
+    }
+
+    .cc-chip-mini svg,
+    .shield-mini svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Headlines */
+    .box-headline {
         font-family: 'Poppins', sans-serif;
         font-size: 0.9375rem;
-        color: rgba(255, 255, 255, 0.85);
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-    }
-
-    .newsletter-btn {
-        display: block;
-        background: #146aff;
         color: #ffffff;
-        font-family: 'Poppins', sans-serif;
-        font-size: 0.875rem;
-        font-weight: 600;
-        padding: 0.875rem 1.5rem;
-        border-radius: 0.25rem;
-        text-decoration: none;
-        transition: background 0.2s;
+        margin-bottom: 0.25rem;
+        line-height: 1.3;
     }
 
-    .newsletter-btn:hover {
+    .box-headline strong {
+        color: #60a5fa;
+        font-weight: 700;
+    }
+
+    .box-sub {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 0.875rem;
+    }
+
+    /* List */
+    .box-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 0.875rem 0;
+        text-align: left;
+    }
+
+    .box-list li {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.75);
+        padding: 0.375rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        opacity: 0.8;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .box-list li:last-child {
+        border-bottom: none;
+    }
+
+    .newsletter-box:hover .box-list li {
+        opacity: 1;
+    }
+
+    .newsletter-box:hover .box-list li:nth-child(1) { transform: translateX(3px); transition-delay: 0s; }
+    .newsletter-box:hover .box-list li:nth-child(2) { transform: translateX(3px); transition-delay: 0.03s; }
+    .newsletter-box:hover .box-list li:nth-child(3) { transform: translateX(3px); transition-delay: 0.06s; }
+
+    /* Form */
+    .box-form {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .box-form input {
+        flex: 1;
+        min-width: 0;
+        padding: 0.625rem 0.75rem;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.8125rem;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.375rem;
+        outline: none;
+        transition: border-color 0.2s ease;
+    }
+
+    .box-form input::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    .box-form input:focus {
+        border-color: #146aff;
+    }
+
+    .box-form button {
+        padding: 0.625rem 1rem;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #ffffff;
+        background: #146aff;
+        border: none;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .box-form button:hover {
         background: #0040B1;
+    }
+
+    /* Social Proof */
+    .box-proof {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.6875rem;
+        color: rgba(255, 255, 255, 0.45);
+        margin-top: 0.625rem;
+    }
+
+    /* Credit Card Variant */
+    .newsletter-cc .cc-chip-mini {
+        width: 32px;
+        height: 24px;
+    }
+
+    .newsletter-cc .box-headline strong {
+        color: #fbbf24;
+    }
+
+    .newsletter-cc .box-form button {
+        background: #C9A227;
+        color: #0D2C4B;
+    }
+
+    .newsletter-cc .box-form button:hover {
+        background: #d4af37;
+    }
+
+    /* Insurance Variant */
+    .newsletter-ins .shield-mini {
+        width: 32px;
+        height: 38px;
+    }
+
+    .newsletter-ins .box-headline strong {
+        color: #34d399;
+    }
+
+    /* Mobile */
+    @media (max-width: 1024px) {
+        .newsletter-box {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .newsletter-box {
+            padding: 1rem;
+        }
+        
+        .box-headline {
+            font-size: 0.875rem;
+        }
+        
+        .box-form input {
+            padding: 0.5rem 0.625rem;
+            font-size: 0.75rem;
+        }
+        
+        .box-form button {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.6875rem;
+        }
     }
 
     /* Responsive */
@@ -477,3 +730,30 @@ const seededReviewCount = 47 + (titleHash % 188); // 47 - 234
         }
     }
 </style>
+
+<script>
+    // Newsletter form interaction (works for all 3 types)
+    const form = document.getElementById('newsletter-form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button');
+            const input = form.querySelector('input');
+            
+            if (btn && input) {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓';
+                btn.style.background = '#10b981';
+                input.disabled = true;
+                
+                // Reset after 3 seconds for demo
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    input.disabled = false;
+                    input.value = '';
+                }, 3000);
+            }
+        });
+    }
+</script>

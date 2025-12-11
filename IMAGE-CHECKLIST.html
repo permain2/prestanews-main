@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screened - Image Checklist</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      background: #f5f5f5; 
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { 
+      font-size: 2.5rem; 
+      color: #0D2C4B; 
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .stat {
+      background: #0D2C4B;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .stat-number { font-size: 2rem; font-weight: bold; }
+    .stat-label { font-size: 0.875rem; opacity: 0.8; }
+    
+    .section { 
+      background: white; 
+      border-radius: 12px; 
+      padding: 1.5rem; 
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #eee;
+    }
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+    .section-title { font-size: 1.25rem; font-weight: 600; color: #0D2C4B; }
+    .section-count { 
+      margin-left: auto; 
+      background: #e5e7eb; 
+      padding: 0.25rem 0.75rem; 
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+    .card-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: #f9fafb;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+    .card-item:hover { background: #f0f9ff; border-color: #3b82f6; }
+    
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d1d5db;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .checkbox:checked { background: #10b981; border-color: #10b981; }
+    
+    .card-name { font-size: 0.9rem; color: #374151; }
+    .card-badge {
+      margin-left: auto;
+      font-size: 0.7rem;
+      padding: 0.125rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .badge-amex { background: #dbeafe; color: #1d4ed8; }
+    .badge-chase { background: #dcfce7; color: #166534; }
+    .badge-citi { background: #fef3c7; color: #92400e; }
+    .badge-capital { background: #fce7f3; color: #9d174d; }
+    .badge-discover { background: #ffedd5; color: #c2410c; }
+    .badge-other { background: #f3e8ff; color: #7c3aed; }
+    
+    .badge-car { background: #dbeafe; color: #1d4ed8; }
+    .badge-home { background: #dcfce7; color: #166534; }
+    .badge-life { background: #fce7f3; color: #9d174d; }
+    .badge-renters { background: #fef3c7; color: #92400e; }
+    
+    .subsection {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+    .subsection-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 0.75rem;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #059669);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+    
+    @media print {
+      body { background: white; padding: 1rem; }
+      .section { box-shadow: none; border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📸 Screened Image Checklist</h1>
+    <p class="subtitle">All credit cards & insurance companies that need images</p>
+    
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">24</div>
+        <div class="stat-label">Credit Cards</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Insurance Companies</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">39</div>
+        <div class="stat-label">Total Images</div>
+      </div>
+    </div>
+
+    <!-- CREDIT CARDS SECTION -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #dbeafe;">💳</div>
+        <div class="section-title">Credit Cards</div>
+        <div class="section-count">24 cards</div>
+      </div>
+      
+      <!-- Travel Cards -->
+      <div class="subsection-title">🌍 Travel Cards (Amex)</div>
+      <div class="cards-grid">
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">American Express Platinum Card®</span>
+          <span class="card-badge badge-amex">AMEX</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Business Platinum Card® from Amex</span>
+          <span class="card-badge badge-amex">AMEX</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">American Express® Gold Card</span>
+          <span class="card-badge badge-amex">AMEX</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Delta SkyMiles® Reserve Amex Card</span>
+          <span class="card-badge badge-amex">AMEX</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Delta SkyMiles® Gold Amex Card</span>
+          <span class="card-badge badge-amex">AMEX</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Hilton Honors Amex Aspire Card</span>
+          <span class="card-badge badge-amex">AMEX</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">American Express® Green Card</span>
+          <span class="card-badge badge-amex">AMEX</span>
+        </label>
+      </div>
+
+      <!-- Business Cards -->
+      <div class="subsection">
+        <div class="subsection-title">💼 Business Cards</div>
+        <div class="cards-grid">
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">American Express® Business Gold Card</span>
+            <span class="card-badge badge-amex">AMEX</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Blue Business® Plus from Amex</span>
+            <span class="card-badge badge-amex">AMEX</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Amex Blue Business Cash™ Card</span>
+            <span class="card-badge badge-amex">AMEX</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Amazon Business Prime Amex Card</span>
+            <span class="card-badge badge-amex">AMEX</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Cash Back Cards -->
+      <div class="subsection">
+        <div class="subsection-title">💵 Cash Back Cards</div>
+        <div class="cards-grid">
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Blue Cash Preferred® from Amex</span>
+            <span class="card-badge badge-amex">AMEX</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Blue Cash Everyday® from Amex</span>
+            <span class="card-badge badge-amex">AMEX</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">American Express Cash Magnet® Card</span>
+            <span class="card-badge badge-amex">AMEX</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">American Express EveryDay® Card</span>
+            <span class="card-badge badge-amex">AMEX</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Balance Transfer Cards -->
+      <div class="subsection">
+        <div class="subsection-title">🔄 Balance Transfer Cards</div>
+        <div class="cards-grid">
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Citi® Diamond Preferred® Card</span>
+            <span class="card-badge badge-citi">CITI</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Wells Fargo Reflect® Card</span>
+            <span class="card-badge badge-other">WELLS FARGO</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">BankAmericard® Credit Card</span>
+            <span class="card-badge badge-other">BOFA</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Discover it® Balance Transfer</span>
+            <span class="card-badge badge-discover">DISCOVER</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">U.S. Bank Visa® Platinum Card</span>
+            <span class="card-badge badge-other">US BANK</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Chase Slate Edge℠</span>
+            <span class="card-badge badge-chase">CHASE</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Homepage Featured -->
+      <div class="subsection">
+        <div class="subsection-title">⭐ Featured on Homepage</div>
+        <div class="cards-grid">
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Chase Sapphire Preferred®</span>
+            <span class="card-badge badge-chase">CHASE</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Capital One Venture X</span>
+            <span class="card-badge badge-capital">CAPITAL ONE</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Citi Double Cash® Card</span>
+            <span class="card-badge badge-citi">CITI</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSURANCE SECTION -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #dcfce7;">🛡️</div>
+        <div class="section-title">Insurance Companies</div>
+        <div class="section-count">15 companies</div>
+      </div>
+
+      <!-- Car Insurance -->
+      <div class="subsection-title">🚗 Car Insurance</div>
+      <div class="cards-grid">
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">GEICO</span>
+          <span class="card-badge badge-car">CAR</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Progressive</span>
+          <span class="card-badge badge-car">CAR</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">State Farm</span>
+          <span class="card-badge badge-car">CAR</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">USAA</span>
+          <span class="card-badge badge-car">CAR</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Allstate</span>
+          <span class="card-badge badge-car">CAR</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Liberty Mutual</span>
+          <span class="card-badge badge-car">CAR</span>
+        </label>
+      </div>
+
+      <!-- Home Insurance -->
+      <div class="subsection">
+        <div class="subsection-title">🏠 Home Insurance</div>
+        <div class="cards-grid">
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">State Farm</span>
+            <span class="card-badge badge-home">HOME</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Allstate</span>
+            <span class="card-badge badge-home">HOME</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Liberty Mutual</span>
+            <span class="card-badge badge-home">HOME</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">USAA</span>
+            <span class="card-badge badge-home">HOME</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Nationwide</span>
+            <span class="card-badge badge-home">HOME</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Amica</span>
+            <span class="card-badge badge-home">HOME</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Life Insurance -->
+      <div class="subsection">
+        <div class="subsection-title">❤️ Life Insurance</div>
+        <div class="cards-grid">
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Northwestern Mutual</span>
+            <span class="card-badge badge-life">LIFE</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">New York Life</span>
+            <span class="card-badge badge-life">LIFE</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Prudential</span>
+            <span class="card-badge badge-life">LIFE</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">State Farm</span>
+            <span class="card-badge badge-life">LIFE</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">MassMutual</span>
+            <span class="card-badge badge-life">LIFE</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Haven Life</span>
+            <span class="card-badge badge-life">LIFE</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Renters Insurance -->
+      <div class="subsection">
+        <div class="subsection-title">🏢 Renters Insurance</div>
+        <div class="cards-grid">
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Lemonade</span>
+            <span class="card-badge badge-renters">RENTERS</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">State Farm</span>
+            <span class="card-badge badge-renters">RENTERS</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Allstate</span>
+            <span class="card-badge badge-renters">RENTERS</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Progressive</span>
+            <span class="card-badge badge-renters">RENTERS</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">USAA</span>
+            <span class="card-badge badge-renters">RENTERS</span>
+          </label>
+          <label class="card-item">
+            <input type="checkbox" class="checkbox">
+            <span class="card-name">Toggle (Farmers)</span>
+            <span class="card-badge badge-renters">RENTERS</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- UNIQUE INSURANCE LOGOS NEEDED -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #fef3c7;">📁</div>
+        <div class="section-title">Unique Insurance Logos Needed</div>
+        <div class="section-count">15 logos</div>
+      </div>
+      <p style="color: #6b7280; margin-bottom: 1rem; font-size: 0.9rem;">These are the deduplicated insurance company logos you need (some companies appear in multiple categories):</p>
+      
+      <div class="cards-grid">
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">GEICO</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Progressive</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">State Farm</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">USAA</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Allstate</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Liberty Mutual</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Nationwide</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Amica</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Northwestern Mutual</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">New York Life</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Prudential</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">MassMutual</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Haven Life</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Lemonade</span>
+        </label>
+        <label class="card-item">
+          <input type="checkbox" class="checkbox">
+          <span class="card-name">Farmers / Toggle</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- FILE NAMING GUIDE -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #f3e8ff;">📝</div>
+        <div class="section-title">Recommended File Naming</div>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">Credit Card Images</h4>
+          <code style="display: block; background: #f3f4f6; padding: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.8;">
+/public/credit-cards/<br>
+├── amex-platinum.png<br>
+├── amex-gold.png<br>
+├── amex-green.png<br>
+├── chase-sapphire-preferred.png<br>
+├── chase-sapphire-reserve.png<br>
+├── capital-one-venture-x.png<br>
+├── citi-double-cash.png<br>
+├── discover-it.png<br>
+└── ...
+          </code>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 0.5rem; color: #374151;">Insurance Logos</h4>
+          <code style="display: block; background: #f3f4f6; padding: 1rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.8;">
+/public/insurance-logos/<br>
+├── geico.png<br>
+├── progressive.png<br>
+├── state-farm.png<br>
+├── usaa.png<br>
+├── allstate.png<br>
+├── liberty-mutual.png<br>
+├── nationwide.png<br>
+└── ...
+          </code>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Screened Image Checklist • Generated Dec 11, 2025</p>
+      <p style="margin-top: 0.5rem;">Tip: Check boxes as you find each image. This page saves your progress in your browser.</p>
+    </div>
+  </div>
+
+  <script>
+    // Save checkbox state to localStorage
+    document.querySelectorAll('.checkbox').forEach((checkbox, index) => {
+      const key = 'checkbox_' + index;
+      checkbox.checked = localStorage.getItem(key) === 'true';
+      checkbox.addEventListener('change', () => {
+        localStorage.setItem(key, checkbox.checked);
+      });
+    });
+  </script>
+</body>
+</html>
