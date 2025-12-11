@@ -7,16 +7,210 @@
 
 ## Table of Contents
 
-1. [Company Information](#company-information)
-2. [Author Profiles](#author-profiles)
-3. [Site Structure](#site-structure)
-4. [Creating SEO-Optimized Posts](#creating-seo-optimized-posts)
-5. [Technical SEO Checklist](#technical-seo-checklist)
-6. [Schema Markup Reference](#schema-markup-reference)
-7. [Image Optimization](#image-optimization)
-8. [Internal Linking Strategy](#internal-linking-strategy)
-9. [Content Guidelines](#content-guidelines)
-10. [Monitoring & Tools](#monitoring--tools)
+1. [Article Publishing Checklist](#article-publishing-checklist) ⭐ **START HERE**
+2. [Company Information](#company-information)
+3. [Author Profiles](#author-profiles)
+4. [Site Structure](#site-structure)
+5. [Creating SEO-Optimized Posts](#creating-seo-optimized-posts)
+6. [Technical SEO Checklist](#technical-seo-checklist)
+7. [Schema Markup Reference](#schema-markup-reference)
+8. [Image Optimization](#image-optimization)
+9. [Internal Linking Strategy](#internal-linking-strategy)
+10. [Content Guidelines](#content-guidelines)
+11. [Monitoring & Tools](#monitoring--tools)
+
+---
+
+## Article Publishing Checklist
+
+**⭐ COMPLETE THIS CHECKLIST EVERY TIME YOU PUBLISH AN ARTICLE ⭐**
+
+### Pre-Writing (Before You Start)
+
+- [ ] **Keyword Research Done**
+  - Primary keyword identified
+  - 3-5 secondary keywords listed
+  - Search volume checked
+  - Competitor top 3 articles analyzed
+
+- [ ] **Content Outline Created**
+  - H1 title drafted
+  - H2 sections planned (5-8 sections)
+  - H3 subsections identified
+  - Word count target set (1,500-3,000 words)
+
+---
+
+### Content Creation
+
+- [ ] **Title (H1)**
+  - [ ] 50-60 characters max
+  - [ ] Primary keyword included (preferably near start)
+  - [ ] Compelling and click-worthy
+  - [ ] Unique (not duplicate of existing article)
+
+- [ ] **Meta Description**
+  - [ ] 150-160 characters
+  - [ ] Primary keyword included
+  - [ ] Call-to-action or value proposition
+  - [ ] Compelling reason to click
+
+- [ ] **URL Slug**
+  - [ ] Short and descriptive
+  - [ ] Primary keyword included
+  - [ ] No special characters or spaces
+  - [ ] Lowercase, hyphens between words
+  - Example: `/guides/best-travel-credit-cards-2025`
+
+- [ ] **Hero Image**
+  - [ ] High quality (1200x630px minimum)
+  - [ ] Relevant to content
+  - [ ] Optimized file size (<200KB)
+  - [ ] Saved to correct folder (`/public/blog-images/` or `/public/guides-images/`)
+
+---
+
+### Frontmatter (Required Fields)
+
+```markdown
+---
+title: "Your Title Here"                    # ✅ Required
+description: "150-160 char description"     # ✅ Required
+pubDate: 2025-12-10                         # ✅ Required (YYYY-MM-DD)
+heroImage: "/blog-images/your-image.jpg"    # ✅ Required
+author: "Sarah Chen"                        # ✅ Required (use real team member)
+authorImage: "/team/sarah-chen.jpg"         # ✅ Required
+authorRole: "Editor-in-Chief"               # ✅ Required
+tags: ["primary-tag", "secondary-tag"]      # ✅ Required (2-5 tags)
+---
+```
+
+- [ ] All required fields filled
+- [ ] Author matches team member
+- [ ] Tags are relevant and existing
+- [ ] Date is correct
+
+---
+
+### Content Quality
+
+- [ ] **Introduction (First 100 Words)**
+  - [ ] Primary keyword appears naturally
+  - [ ] Hook that grabs attention
+  - [ ] Clear value proposition stated
+
+- [ ] **Body Content**
+  - [ ] H2 headings every 300-400 words
+  - [ ] Primary keyword appears 3-5 times naturally
+  - [ ] Secondary keywords used in H2/H3 headings
+  - [ ] Short paragraphs (2-4 sentences max)
+  - [ ] Bullet points and numbered lists used
+  - [ ] Tables for comparisons (if applicable)
+
+- [ ] **Internal Links**
+  - [ ] 3-5 internal links to related articles
+  - [ ] Link to relevant hub page (credit-cards, insurance, guides)
+  - [ ] Descriptive anchor text (not "click here")
+
+- [ ] **External Links**
+  - [ ] 1-3 links to authoritative sources
+  - [ ] Links open in new tab
+  - [ ] No broken links
+
+- [ ] **Conclusion**
+  - [ ] Summarizes key points
+  - [ ] Clear call-to-action
+  - [ ] Primary keyword mentioned
+
+---
+
+### Images
+
+- [ ] **Hero Image**
+  - [ ] Alt text includes primary keyword
+  - [ ] Dimensions: 1200x630px
+  - [ ] File size under 200KB
+  - [ ] Format: JPG or WebP
+
+- [ ] **In-Content Images** (if any)
+  - [ ] All have descriptive alt text
+  - [ ] Properly sized (800px max width)
+  - [ ] Lazy loading will be applied automatically
+
+---
+
+### Pre-Publish Final Check
+
+- [ ] **Spelling & Grammar**
+  - [ ] Run through Grammarly or similar
+  - [ ] No typos in title or headings
+  - [ ] Proper formatting throughout
+
+- [ ] **Mobile Preview**
+  - [ ] Content readable on mobile
+  - [ ] Images display correctly
+  - [ ] Tables scroll horizontally if wide
+
+- [ ] **Links Work**
+  - [ ] All internal links tested
+  - [ ] All external links tested
+  - [ ] No 404 errors
+
+---
+
+### Post-Publish Actions
+
+- [ ] **Verify Live Page**
+  - [ ] Visit the live URL
+  - [ ] Check title displays correctly
+  - [ ] Check meta description in page source
+  - [ ] Check hero image loads
+
+- [ ] **Schema Validation**
+  - [ ] Test URL in [Rich Results Test](https://search.google.com/test/rich-results)
+  - [ ] Verify Article schema detected
+  - [ ] Verify AggregateRating schema detected
+  - [ ] No schema errors
+
+- [ ] **Index Request** (Optional but recommended)
+  - [ ] Go to [Google Search Console](https://search.google.com/search-console)
+  - [ ] URL Inspection > Enter new article URL
+  - [ ] Request Indexing
+
+- [ ] **Social Sharing**
+  - [ ] Test Open Graph preview (Facebook Debugger)
+  - [ ] Test Twitter Card preview
+  - [ ] Share to company social accounts
+
+---
+
+### Quick Reference: File Locations
+
+| Content Type | File Location | Image Folder |
+|--------------|---------------|--------------|
+| Blog/News | `src/content/blog/` | `/public/blog-images/` |
+| Guides | `src/content/guides/` | `/public/guides-images/` |
+| Reviews | `src/content/reviews/` | `/public/blog-images/` |
+
+### Quick Reference: Team Authors
+
+| Author | Role | Image |
+|--------|------|-------|
+| Sarah Chen | Editor-in-Chief | `/team/sarah-chen.jpg` |
+| Michael Rodriguez | Senior Credit Card Analyst | `/team/michael-rodriguez.jpg` |
+| Emily Johnson | Insurance Editor | `/team/emily-johnson.jpg` |
+| David Kim | Home Insurance Expert | `/team/david-kim.jpg` |
+| Jessica Martinez | Personal Finance Writer | `/team/jessica-martinez.jpg` |
+| James Wilson | Travel Editor | `/team/james-wilson.jpg` |
+
+### Quick Reference: Common Tags
+
+```
+Credit Cards: credit-cards, rewards, travel, cashback, business
+Insurance: insurance, car-insurance, home-insurance, life-insurance
+Guides: guide, how-to, tips, comparison, review
+General: personal-finance, money, savings, budgeting
+```
 
 ---
 
