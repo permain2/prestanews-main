@@ -1490,9 +1490,204 @@ ANTHROPIC_API_KEY=sk-ant-api03-...    # Claude API for content generation
 APIFY_API_TOKEN=apify_api_...          # Apify for SERP scraping</code></pre>
         </section>
 
-        <!-- SECTION 11: TASK TRACKING -->
+        <!-- SECTION 11: COMPARISON PAGE TEMPLATE -->
+        <section id="comparison-template" class="section">
+            <h2>11. Comparison Page Template (AI Bulk Creation)</h2>
+            
+            <p>This template is used for all multi-item comparison pages (3+ providers/cards). Use this structure for consistent, high-converting comparison content.</p>
+
+            <h3>Template Components</h3>
+            <table>
+                <tr><th>Component</th><th>Location</th><th>Purpose</th></tr>
+                <tr><td><code>CursorTrailDark</code></td><td>components/CursorTrailDark.tsx</td><td>Animated hero header with title animation</td></tr>
+                <tr><td><code>ComparisonTOCToggle</code></td><td>components/ComparisonTOCToggle.tsx</td><td>Sticky navigation tabs (hides some on mobile)</td></tr>
+                <tr><td><code>AnimatedFAQ</code></td><td>components/AnimatedFAQ.tsx</td><td>Accordion FAQ section</td></tr>
+                <tr><td><code>ComparisonLayout</code></td><td>layouts/ComparisonLayout.astro</td><td>Full layout for blog comparison pages</td></tr>
+            </table>
+
+            <h3>Provider/Card Data Schema</h3>
+            <pre><code>// For Insurance/Services
+const providers = [
+  {
+    name: string,           // "GEICO", "Progressive"
+    logo: string,           // "/insurance-logos-small/geico.png"
+    bestFor: string,        // "Budget-Conscious Drivers"
+    monthlyAvg: string,     // "$120"
+    rating: number,         // 4.8 (out of 5)
+    pros: string[],         // ["Competitive rates", "Strong mobile app"]
+    cons: string[],         // ["Limited local agents"]
+    description: string,    // Short 1-2 sentence description
+    amBest?: string         // "A++" (for insurance only)
+  }
+];
+
+// For Credit Cards
+const creditCards = [
+  {
+    name: string,           // "Chase Sapphire Preferred® Card"
+    slug: string,           // "chase-sapphire-preferred"
+    bestFor: string,        // "Best Overall"
+    annualFee: string,      // "$95"
+    bonus: string,          // "75,000 Ultimate Rewards® points"
+    bonusValue?: string,    // "$937"
+    rating: number,         // 4.9
+    rewardsRate?: string,   // "5X/3X/2X/1X"
+    foreignFee?: string,    // "$0"
+    introAPR?: string,      // "0% for 15 months"
+    regularAPR?: string,    // "21.49% - 28.49% Variable"
+    pros: string[],
+    cons: string[],
+    description: string,
+    bottomLine?: string,    // Detailed analysis paragraph
+    cardDetails?: string[], // Bullet points of key features
+    category?: string,      // "travel", "cashback", "business"
+    editorChoice?: boolean  // true for top pick
+  }
+];</code></pre>
+
+            <h3>FAQ Data Schema</h3>
+            <pre><code>const faqs = [
+  {
+    question: string,  // "What factors affect my car insurance rates?"
+    answer: string     // Full answer text (can include basic HTML)
+  }
+];</code></pre>
+
+            <h3>TOC Items Schema</h3>
+            <pre><code>const tocItems = [
+  { id: "providers", label: "Top Picks", href: "#providers" },
+  { id: "guide", label: "Buying Guide", href: "#guide" },
+  { id: "compare", label: "Compare", href: "#compare" },
+  { id: "methodology", label: "Methodology", href: "#methodology", hideOnMobile: true },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];</code></pre>
+
+            <h3>Page Structure Template</h3>
+            <pre><code>&lt;!-- 1. Hero Header --&gt;
+&lt;CursorTrailDark 
+  client:load
+  title="Best [Category] of December 2025"
+  kicker=""
+  subtitle="[Value proposition in 1 sentence]"
+  author="Screened Editorial Team"
+  date="Dec. 11, 2025"
+  compact={true}
+  animateTitle={true}
+/&gt;
+
+&lt;!-- 2. Disclosure (required for affiliate) --&gt;
+&lt;section class="bg-[#F7F8FA] py-4"&gt;
+  &lt;div class="max-w-5xl mx-auto px-4 md:px-8"&gt;
+    &lt;p class="text-xs text-[#68727C]"&gt;
+      We may receive compensation... &lt;a href="/advertising"&gt;Learn more&lt;/a&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- 3. Sticky TOC Navigation --&gt;
+&lt;section class="bg-white border-b py-3 sticky top-16 z-40"&gt;
+  &lt;div class="max-w-5xl mx-auto px-4 md:px-8"&gt;
+    &lt;ComparisonTOCToggle items={tocItems} client:load /&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- 4. Research Intro --&gt;
+&lt;section id="providers" class="py-12 bg-[#F7F8FA]"&gt;
+  &lt;div class="max-w-5xl mx-auto px-4 md:px-8"&gt;
+    &lt;div class="text-center mb-10"&gt;
+      &lt;p class="text-[#68727C] max-w-3xl mx-auto"&gt;
+        [Data-driven research summary: how many items reviewed, methodology highlight, key finding]
+      &lt;/p&gt;
+    &lt;/div&gt;
+    {/* Provider/Card cards loop */}
+  &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- 5. Content/Guide Section --&gt;
+&lt;section id="guide" class="py-16 bg-white"&gt;...&lt;/section&gt;
+
+&lt;!-- 6. Comparison Table --&gt;
+&lt;section id="compare" class="py-16 bg-[#F7F8FA]"&gt;...&lt;/section&gt;
+
+&lt;!-- 7. Methodology (optional) --&gt;
+&lt;section id="methodology" class="py-16 bg-white"&gt;...&lt;/section&gt;
+
+&lt;!-- 8. FAQ Section --&gt;
+&lt;section id="faq"&gt;
+  &lt;AnimatedFAQ faqs={faqs} client:visible /&gt;
+&lt;/section&gt;</code></pre>
+
+            <h3>Styling Guidelines</h3>
+            <ul>
+                <li><strong>Max Width:</strong> <code>max-w-5xl</code> (1024px) for main content, <code>max-w-4xl</code> for text-heavy sections</li>
+                <li><strong>Background Colors:</strong> Alternate <code>#F7F8FA</code> (gray) and <code>#ffffff</code> (white)</li>
+                <li><strong>Card Style:</strong> White background, <code>rounded-xl</code>, subtle shadow, hover state</li>
+                <li><strong>Text Colors:</strong> Headings <code>#162433</code>, Body <code>#68727C</code>, Links <code>#3B82F6</code></li>
+                <li><strong>CTA Button:</strong> Gradient blue (<code>#0066B2</code> to <code>#004C8C</code>)</li>
+                <li><strong>Rating Stars:</strong> Yellow <code>text-yellow-400</code></li>
+                <li><strong>Badges:</strong> Use soft colors (green-50, blue-50) with matching text</li>
+            </ul>
+
+            <h3>Required Sections for SEO</h3>
+            <table>
+                <tr><th>Section</th><th>Required?</th><th>Purpose</th></tr>
+                <tr><td>Research Intro</td><td>✅ Yes</td><td>E-E-A-T signal, differentiates from AI content</td></tr>
+                <tr><td>Buying Guide</td><td>✅ Yes</td><td>Educational content, internal linking opportunity</td></tr>
+                <tr><td>Comparison Table</td><td>✅ Yes</td><td>Featured snippet potential, user utility</td></tr>
+                <tr><td>Methodology</td><td>Recommended</td><td>Trust signal, can hide on mobile</td></tr>
+                <tr><td>FAQ</td><td>✅ Yes</td><td>FAQ schema, voice search, People Also Ask</td></tr>
+            </table>
+
+            <h3>Files to Create for New Comparison Page</h3>
+            <ol>
+                <li><code>src/pages/[category]/[slug].astro</code> - Main page file</li>
+                <li>Provider logos in <code>public/[category]-logos-small/</code></li>
+                <li>Optional: Card images in <code>public/card-images/</code></li>
+            </ol>
+
+            <h3>Example: Creating "Best Pet Insurance" Page</h3>
+            <pre><code>// 1. Create src/pages/insurance/pet.astro
+// 2. Define providers array with 5-10 pet insurance companies
+// 3. Define faqs array with 5-7 common questions
+// 4. Define tocItems (or use defaults)
+// 5. Use the page structure template above
+// 6. Add logos to public/insurance-logos-small/
+
+// AI Prompt Example:
+"Create a comparison page for best pet insurance companies 2025.
+Include: Embrace, Healthy Paws, Nationwide, ASPCA, Lemonade, Trupanion.
+Use the same structure as /insurance/car.astro.
+Research intro should mention real data about pet insurance costs.
+Include 6 FAQs about coverage, costs, and pre-existing conditions."</code></pre>
+
+            <h3>Blog Comparison Pages (ComparisonLayout)</h3>
+            <p>For comparison articles in <code>/blog/</code>, use the <code>ComparisonLayout</code> which handles most structure automatically:</p>
+            <pre><code>&lt;ComparisonLayout
+  title="Best [X] Companies of 2025"
+  description="Compare the best [X] providers..."
+  category="insurance"
+  categoryLabel="[CATEGORY] INSURANCE"
+  heroImage="/blog-images/[slug].jpg"
+  researchIntro="We analyzed [X] providers across [Y] factors..."
+  author="Emily Johnson"
+  date="Dec 11, 2025"
+  providers={providers}
+  faqs={faqs}
+  content={markdownContent}  // Pass markdown as string
+/&gt;</code></pre>
+
+            <h3>Existing Comparison Pages</h3>
+            <table>
+                <tr><th>Category</th><th>Pages</th><th>Status</th></tr>
+                <tr><td>Credit Cards</td><td>best-travel-cards, best-cashback, business, no-annual-fee, balance-transfer</td><td>✅ Template Applied</td></tr>
+                <tr><td>Insurance</td><td>car, home, life, renters</td><td>✅ Template Applied</td></tr>
+                <tr><td>Blog Comparisons</td><td>best-rv-insurance, best-disability-insurance, best-home-warranty, etc.</td><td>✅ Using ComparisonLayout</td></tr>
+            </table>
+        </section>
+
+        <!-- SECTION 12: TASK TRACKING -->
         <section id="tasks" class="section">
-            <h2>11. Task Tracking</h2>
+            <h2>12. Task Tracking</h2>
 
             <h3>Completed Tasks <span class="badge badge-done">DONE</span></h3>
             <ul class="task-list">

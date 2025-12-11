@@ -7,15 +7,16 @@ interface TOCItem {
     id: string
     label: string
     href: string
+    hideOnMobile?: boolean
 }
 
 const tocItems: TOCItem[] = [
     { id: "cards", label: "All Cards", href: "#cards" },
-    { id: "how-rewards-work", label: "How Rewards Work", href: "#how-rewards-work" },
-    { id: "how-to-choose", label: "How to Choose", href: "#how-to-choose" },
-    { id: "best-by-category", label: "By Category", href: "#best-by-category" },
+    { id: "how-rewards-work", label: "Rewards", href: "#how-rewards-work" },
+    { id: "how-to-choose", label: "How to Choose", href: "#how-to-choose", hideOnMobile: true },
+    { id: "best-by-category", label: "By Category", href: "#best-by-category", hideOnMobile: true },
     { id: "compare-table", label: "Compare", href: "#compare-table" },
-    { id: "methodology", label: "Methodology", href: "#methodology" },
+    { id: "methodology", label: "Methodology", href: "#methodology", hideOnMobile: true },
     { id: "faq", label: "FAQ", href: "#faq" },
 ]
 
@@ -28,6 +29,8 @@ function ToggleItem({
     isSelected: boolean
     onClick: () => void
 }) {
+    const className = `toggle-item${item.hideOnMobile ? ' hide-on-mobile' : ''}`
+    
     return (
         <motion.a
             href={item.href}
@@ -41,7 +44,7 @@ function ToggleItem({
             }}
             initial={{ scale: 1 }}
             whileTap={{ scale: 0.95 }}
-            className="toggle-item"
+            className={className}
         >
             <span>{item.label}</span>
             <AnimatePresence initial={false}>
@@ -175,6 +178,10 @@ export default function TOCToggleGroup() {
                         padding: 10px 6px;
                         font-size: 0.6875rem;
                         border-radius: 6px;
+                    }
+
+                    .toggle-item.hide-on-mobile {
+                        display: none;
                     }
 
                     .selected-indicator {

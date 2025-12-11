@@ -7,6 +7,7 @@ interface TOCItem {
     id: string
     label: string
     href: string
+    hideOnMobile?: boolean
 }
 
 interface ComparisonTOCToggleProps {
@@ -19,7 +20,7 @@ const defaultItems: TOCItem[] = [
     { id: "providers", label: "Top Picks", href: "#providers" },
     { id: "guide", label: "Buying Guide", href: "#guide" },
     { id: "compare", label: "Compare", href: "#compare" },
-    { id: "methodology", label: "Methodology", href: "#methodology" },
+    { id: "methodology", label: "Methodology", href: "#methodology", hideOnMobile: true },
     { id: "faq", label: "FAQ", href: "#faq" },
 ]
 
@@ -32,6 +33,8 @@ function ToggleItem({
     isSelected: boolean
     onClick: () => void
 }) {
+    const className = `comparison-toggle-item${item.hideOnMobile ? ' hide-on-mobile' : ''}`
+    
     return (
         <motion.a
             href={item.href}
@@ -45,7 +48,7 @@ function ToggleItem({
             }}
             initial={{ scale: 1 }}
             whileTap={{ scale: 0.95 }}
-            className="comparison-toggle-item"
+            className={className}
         >
             <span>{item.label}</span>
             <AnimatePresence initial={false}>
@@ -180,6 +183,10 @@ export default function ComparisonTOCToggle({ items, category }: ComparisonTOCTo
                         padding: 10px 6px;
                         font-size: 0.6875rem;
                         border-radius: 6px;
+                    }
+
+                    .comparison-toggle-item.hide-on-mobile {
+                        display: none;
                     }
 
                     .comparison-selected-indicator {
