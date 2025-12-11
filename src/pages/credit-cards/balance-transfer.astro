@@ -410,7 +410,7 @@ const faqs = [
           
           {/* Editor's Choice Badge */}
           {card.editorChoice && (
-            <div class="bg-gradient-to-r from-[#7C3AED] to-[#5B21B6] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+            <div class="bg-gradient-to-r from-[#1D4ED8] to-[#1D4ED8] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               EDITOR'S CHOICE — Best Balance Transfer Card
             </div>
@@ -422,7 +422,7 @@ const faqs = [
               
               {/* Rank Badge */}
               <div class="absolute top-4 left-4 flex items-center gap-2">
-                <span class="w-10 h-10 rounded-full bg-[#7C3AED] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+                <span class="w-10 h-10 rounded-full bg-[#1D4ED8] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
               </div>
 
               {/* Card Image */}
@@ -479,7 +479,7 @@ const faqs = [
               {/* Header */}
               <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
-                  <span class="inline-block bg-gradient-to-r from-[#EDE9FE] to-[#DDD6FE] text-[#7C3AED] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                  <span class="inline-block bg-gradient-to-r from-[#EDE9FE] to-[#DBEAFE] text-[#1D4ED8] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
                     {card.bestFor}
                   </span>
                   <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{card.name}</h3>
@@ -493,7 +493,7 @@ const faqs = [
               <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
                 <div class="stat-box">
                   <div class="stat-label">Intro APR</div>
-                  <div class="stat-value text-[#7C3AED] text-sm">{card.introAPR}</div>
+                  <div class="stat-value text-[#1D4ED8] text-sm">{card.introAPR}</div>
                 </div>
                 <div class="stat-box">
                   <div class="stat-label">Transfer Fee</div>
@@ -580,7 +580,7 @@ const faqs = [
                       <ul class="space-y-3">
                         {card.cardDetails.map(detail => (
                           <li class="flex items-start gap-3 text-sm text-[#4B5563]">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#7C3AED] mt-2 flex-shrink-0"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#1D4ED8] mt-2 flex-shrink-0"></span>
                             <span>{detail}</span>
                           </li>
                         ))}
@@ -621,7 +621,7 @@ const faqs = [
                     {card.name.replace('®', '').replace('℠', '').replace('™', '').substring(0, 25)}{card.name.length > 25 ? '...' : ''}
                   </div>
                 </td>
-                <td class="text-center text-[#7C3AED] font-medium">{card.introAPR}</td>
+                <td class="text-center text-[#1D4ED8] font-medium">{card.introAPR}</td>
                 <td class="text-center">{card.transferFee}</td>
                 <td class="text-center text-green-600">{card.annualFee}</td>
                 <td class="text-center">
@@ -912,7 +912,7 @@ const faqs = [
       <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
         <img src="/team/jennifer-walsh.jpg" alt="Jennifer Walsh, Credit Card Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
         <div>
-          <div class="text-xs text-[#7C3AED] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <div class="text-xs text-[#1D4ED8] font-bold uppercase tracking-wide mb-1">Written by</div>
           <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Jennifer Walsh</h3>
           <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
             Jennifer is a debt management specialist at Screened with over 10 years of experience helping consumers eliminate credit card debt. She has personally used balance transfer strategies to pay off over $25,000 in debt and now shares her expertise with readers.
@@ -948,7 +948,7 @@ const faqs = [
     gap: 0.5rem;
     width: 100%;
     padding: 1rem 1.5rem;
-    background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+    background: linear-gradient(135deg, #1D4ED8 0%, #1D4ED8 100%);
     color: white;
     font-weight: 700;
     font-size: 0.875rem;
@@ -1009,7 +1009,7 @@ const faqs = [
     font-size: 0.9rem;
   }
   .comparison-table th {
-    background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+    background: linear-gradient(135deg, #1D4ED8 0%, #1D4ED8 100%);
     color: white;
     padding: 1rem;
     font-weight: 600;
@@ -1082,7 +1082,7 @@ const faqs = [
   }
   
   .seo-content th {
-    background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%);
+    background: linear-gradient(135deg, #1D4ED8 0%, #1D4ED8 100%);
     color: white;
     padding: 1rem;
     text-align: left;
@@ -1104,11 +1104,11 @@ const faqs = [
   }
   
   .info-box {
-    background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%);
+    background: linear-gradient(135deg, #EDE9FE 0%, #DBEAFE 100%);
     border: 1px solid #C4B5FD;
   }
-  .info-box h4 { color: #5B21B6; margin: 0 0 0.5rem 0; font-weight: 600; }
-  .info-box p { margin: 0; color: #6D28D9; }
+  .info-box h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #1E40AF; }
 
   .warning-box {
     background: #ffffff;
@@ -1164,7 +1164,7 @@ const faqs = [
   }
   
   .category-card:hover {
-    border-color: #7C3AED;
+    border-color: #1D4ED8;
     box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
     transform: translateY(-2px);
   }
@@ -1176,14 +1176,14 @@ const faqs = [
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%);
+    background: linear-gradient(135deg, #EDE9FE 0%, #DBEAFE 100%);
     margin-bottom: 1rem;
   }
   
   .category-icon svg {
     width: 24px;
     height: 24px;
-    stroke: #7C3AED;
+    stroke: #1D4ED8;
   }
   
   .inline-icon {
@@ -1203,7 +1203,7 @@ const faqs = [
   }
   
   .category-card .card-name {
-    color: #7C3AED;
+    color: #1D4ED8;
     font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
@@ -1279,7 +1279,7 @@ const faqs = [
   }
   
   .faq-item[open] {
-    border-color: #7C3AED;
+    border-color: #1D4ED8;
     box-shadow: 0 8px 24px rgba(124, 58, 237, 0.1);
   }
   
@@ -1327,7 +1327,7 @@ const faqs = [
   }
   
   .related-card:hover {
-    border-color: #7C3AED;
+    border-color: #1D4ED8;
     box-shadow: 0 8px 24px rgba(124, 58, 237, 0.15);
     transform: translateY(-4px);
   }
@@ -1336,7 +1336,7 @@ const faqs = [
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%);
+    background: linear-gradient(135deg, #EDE9FE 0%, #DBEAFE 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1346,7 +1346,7 @@ const faqs = [
   .related-icon svg {
     width: 24px;
     height: 24px;
-    stroke: #7C3AED;
+    stroke: #1D4ED8;
   }
   
   .related-card h3 {
@@ -1362,14 +1362,14 @@ const faqs = [
   }
   
   .related-link {
-    color: #7C3AED;
+    color: #1D4ED8;
     font-weight: 600;
     font-size: 0.875rem;
     transition: color 0.2s ease;
   }
   
   .related-card:hover .related-link {
-    color: #5B21B6;
+    color: #1D4ED8;
   }
 
   /* Accordion Styles */
@@ -1406,7 +1406,7 @@ const faqs = [
   }
   
   .accordion-header:hover {
-    color: #7C3AED;
+    color: #1D4ED8;
   }
   
   .accordion-icon {
@@ -1422,7 +1422,7 @@ const faqs = [
   }
   
   .accordion-item[open] .accordion-header {
-    color: #7C3AED;
+    color: #1D4ED8;
   }
   
   .accordion-content {
