@@ -3,97 +3,88 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 import CursorTrailGuides from '../../components/CursorTrailGuides.tsx';
 
-// Guides posts - broader financial topics
+// Guides posts with AI-generated images
 const guidesPosts = [
   {
     title: "Complete Guide to Credit Card Points",
     description: "Everything you need to know about earning, redeeming, and maximizing credit card points. From beginner basics to advanced strategies.",
     href: "/guides/credit-card-points",
     category: "Credit Cards",
+    image: "/guides-images/credit-card-points-guide.jpeg",
     author: "PrestaNews Team",
-    date: "Dec 10, 2025",
-    icon: "credit-card",
-    gradient: "from-blue-500 to-blue-700"
+    date: "Dec 10, 2025"
   },
   {
     title: "How to Choose the Right Credit Card",
     description: "A step-by-step guide to selecting the perfect credit card based on your spending habits, credit score, and financial goals.",
     href: "/guides/choose-credit-card",
     category: "Credit Cards",
+    image: "/guides-images/choose-credit-card.jpeg",
     author: "PrestaNews Team",
-    date: "Dec 8, 2025",
-    icon: "cards",
-    gradient: "from-indigo-500 to-indigo-700"
+    date: "Dec 8, 2025"
   },
   {
     title: "Understanding Car Insurance Coverage",
     description: "Learn about liability, collision, comprehensive, and other coverage types to make sure you're properly protected on the road.",
     href: "/guides/car-insurance-coverage",
     category: "Insurance",
+    image: "/guides-images/car-insurance-coverage-guide.jpeg",
     author: "PrestaNews Team",
-    date: "Dec 6, 2025",
-    icon: "car",
-    gradient: "from-red-500 to-red-700"
+    date: "Dec 6, 2025"
   },
   {
     title: "Home Insurance: What's Covered?",
     description: "A comprehensive guide to homeowners insurance coverage, including what's included, exclusions, and how to file claims.",
     href: "/guides/home-insurance-coverage",
     category: "Insurance",
+    image: "/guides-images/home-insurance-coverage-guide.jpeg",
     author: "PrestaNews Team",
-    date: "Dec 4, 2025",
-    icon: "house",
-    gradient: "from-orange-500 to-orange-700"
+    date: "Dec 4, 2025"
   },
   {
     title: "Credit Score 101: What You Need to Know",
     description: "Understanding credit scores, how they're calculated, and proven tips to improve your score for better approvals and rates.",
     href: "/guides/credit-score-101",
     category: "Personal Finance",
+    image: "/guides-images/credit-score-101.jpeg",
     author: "PrestaNews Team",
-    date: "Dec 2, 2025",
-    icon: "chart",
-    gradient: "from-green-500 to-green-700"
+    date: "Dec 2, 2025"
   },
   {
     title: "Life Insurance Explained",
     description: "Term vs. whole life, how much coverage you need, and tips for finding affordable life insurance to protect your family.",
     href: "/guides/life-insurance-explained",
     category: "Insurance",
+    image: "/guides-images/life-insurance-explained.jpeg",
     author: "PrestaNews Team",
-    date: "Nov 30, 2025",
-    icon: "heart",
-    gradient: "from-purple-500 to-purple-700"
+    date: "Nov 30, 2025"
   },
   {
     title: "Maximizing Cash Back Rewards",
     description: "Strategies to earn more cash back on everyday purchases, including stacking rewards and category bonuses.",
     href: "/guides/maximize-cashback",
     category: "Credit Cards",
+    image: "/guides-images/maximize-cashback.jpeg",
     author: "PrestaNews Team",
-    date: "Nov 28, 2025",
-    icon: "dollar",
-    gradient: "from-emerald-500 to-emerald-700"
+    date: "Nov 28, 2025"
   },
   {
     title: "Renters Insurance Guide",
     description: "Why renters insurance matters, what it covers, and how to find affordable coverage for your apartment or rental home.",
     href: "/guides/renters-insurance",
     category: "Insurance",
+    image: "/guides-images/renters-insurance-guide.jpeg",
     author: "PrestaNews Team",
-    date: "Nov 26, 2025",
-    icon: "building",
-    gradient: "from-cyan-500 to-cyan-700"
+    date: "Nov 26, 2025"
   },
   {
     title: "Building Credit From Scratch",
     description: "A beginner's guide to establishing credit history, from secured cards to becoming an authorized user.",
     href: "/guides/building-credit",
     category: "Personal Finance",
+    image: "/guides-images/building-credit.jpeg",
     author: "PrestaNews Team",
-    date: "Nov 24, 2025",
-    icon: "trending",
-    gradient: "from-teal-500 to-teal-700"
+    date: "Nov 24, 2025"
   }
 ];
 ---
@@ -112,10 +103,9 @@ const guidesPosts = [
             description={post.description}
             href={post.href}
             category={post.category}
+            image={post.image}
             author={post.author}
             date={post.date}
-            icon={post.icon}
-            gradient={post.gradient}
           />
         ))}
       </div>
