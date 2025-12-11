@@ -1,11 +1,13 @@
 "use client"
 
-import { motion, useMotionValue, useTransform, useSpring, animate } from "motion/react"
+import { motion, useMotionValue, useTransform, useSpring, animate, AnimatePresence } from "motion/react"
 import { useState, useRef, useEffect, type FormEvent, type MouseEvent } from "react"
+import NewsletterSuccess from "./NewsletterSuccess"
 
 export default function NewsletterHero() {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [showSuccess, setShowSuccess] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   
   // Mouse tracking for parallax
@@ -63,6 +65,7 @@ export default function NewsletterHero() {
       if (response.ok) {
         setStatus("success")
         setEmail("")
+        setShowSuccess(true)
       } else {
         setStatus("error")
         setTimeout(() => setStatus("idle"), 3000)
@@ -73,7 +76,17 @@ export default function NewsletterHero() {
     }
   }
 
+  const handleCloseSuccess = () => {
+    setShowSuccess(false)
+  }
+
   return (
+    <>
+      <AnimatePresence>
+        {showSuccess && (
+          <NewsletterSuccess variant="guides" onClose={handleCloseSuccess} />
+        )}
+      </AnimatePresence>
     <div 
       ref={containerRef}
       className="newsletter-hero-container"
@@ -528,5 +541,6 @@ export default function NewsletterHero() {
         }
       `}</style>
     </div>
+    </>
   )
 }

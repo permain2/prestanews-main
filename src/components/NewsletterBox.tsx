@@ -1,7 +1,8 @@
 "use client"
 
-import { motion, useMotionValue, useTransform, useSpring } from "motion/react"
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "motion/react"
 import { useState, useRef, type FormEvent, type MouseEvent } from "react"
+import NewsletterSuccess from "./NewsletterSuccess"
 
 type NewsletterVariant = "guides" | "credit-card" | "insurance"
 
@@ -12,6 +13,7 @@ interface NewsletterBoxProps {
 export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps) {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [showSuccess, setShowSuccess] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
   
@@ -53,6 +55,7 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
       if (response.ok) {
         setStatus("success")
         setEmail("")
+        setShowSuccess(true)
       } else {
         setStatus("error")
         setTimeout(() => setStatus("idle"), 3000)
@@ -63,10 +66,21 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
     }
   }
 
+  const handleCloseSuccess = () => {
+    setShowSuccess(false)
+  }
+
   const config = variants[variant]
 
   return (
-    <motion.div
+    <>
+      <AnimatePresence>
+        {showSuccess && (
+          <NewsletterSuccess variant={variant} onClose={handleCloseSuccess} />
+        )}
+      </AnimatePresence>
+      
+      <motion.div
       ref={cardRef}
       className="newsletter-box-wrapper"
       style={{ rotateX, rotateY, transformPerspective: 800 }}
@@ -434,6 +448,7 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
         }
       `}</style>
     </motion.div>
+    </>
   )
 }
 
