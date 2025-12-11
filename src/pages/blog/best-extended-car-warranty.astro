@@ -1,7 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
-import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import TOCToggleGroupWarranty from '../../components/TOCToggleGroupWarranty.tsx';
 import FAQSchema from '../../components/seo/FAQSchema.astro';
 import ArticleSchema from '../../components/seo/ArticleSchema.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
@@ -396,7 +396,7 @@ const faqs = [
   <!-- TOC Toggle Navigation -->
   <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <TOCToggleGroup client:load />
+      <TOCToggleGroupWarranty client:load />
     </div>
   </section>
 
