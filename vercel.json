@@ -3,6 +3,176 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "astro",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "headers": [
+    {
+      "source": "/legacy/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/news/:path*",
+      "destination": "/news",
+      "permanent": true
+    },
+    {
+      "source": "/profile/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/users/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/uploads/:path*",
+      "destination": "/legacy/placeholder.svg",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/16-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/16-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/17-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/17-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/18-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/18-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/14-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/14-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/15-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/15-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/28-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/28-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/heres-what-you-missed-:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/128-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/128-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/132-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/131-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/262-:id",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/262-:id/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/all-images/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/staff-review",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/staff-review/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/user-reviews",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/user-reviews/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/trivia",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/trivia/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/movies",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:slug/movies/:path*",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
 }
 
