@@ -71,13 +71,18 @@ async function downloadImage(url, outputPath) {
 
 function findBestLogo(brandData) {
   // Priority: logo > symbol > icon
-  // Format priority: svg > png
-  // Theme priority: light (for white backgrounds)
+  // Theme priority: dark (colored logos for light backgrounds)
   
   const logos = brandData.logos || [];
   
-  // First try to find a "logo" type (full logo with text)
-  let logo = logos.find(l => l.type === 'logo');
+  // First try to find a "logo" type with dark theme (for light backgrounds)
+  let logo = logos.find(l => l.type === 'logo' && l.theme === 'dark');
+  if (!logo) {
+    logo = logos.find(l => l.type === 'logo'); // Any logo type
+  }
+  if (!logo) {
+    logo = logos.find(l => l.type === 'symbol' && l.theme === 'dark');
+  }
   if (!logo) {
     logo = logos.find(l => l.type === 'symbol');
   }

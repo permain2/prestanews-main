@@ -19,24 +19,24 @@ interface TrailIcon {
     velocityY: number
 }
 
-// Mix of credit card and insurance logos for guides
+// Mix of credit card and insurance logos for guides (optimized small versions)
 const guideIcons = [
-    "/credit-cards/chase-sapphire-preferred.png",
-    "/insurance-logos/geico.png",
-    "/credit-cards/amex-platinum.png",
-    "/insurance-logos/progressive.png",
-    "/credit-cards/capital-one-venture-x.png",
-    "/insurance-logos/statefarm.png",
-    "/credit-cards/amex-gold.png",
-    "/insurance-logos/allstate.png",
-    "/credit-cards/citi-double-cash.png",
-    "/insurance-logos/nationwide.png",
-    "/credit-cards/discover-it-balance-transfer.png",
-    "/insurance-logos/travelers.png",
-    "/credit-cards/blue-cash-preferred.png",
-    "/insurance-logos/prudential.png",
-    "/credit-cards/hilton-honors-aspire.png",
-    "/insurance-logos/metlife.png",
+    "/cursor-trail/cards/chase-sapphire-preferred.png",
+    "/insurance-logos-small/geico.png",
+    "/cursor-trail/cards/amex-platinum.png",
+    "/insurance-logos-small/progressive.png",
+    "/cursor-trail/cards/capital-one-venture-x.png",
+    "/insurance-logos-small/statefarm.png",
+    "/cursor-trail/cards/amex-gold.png",
+    "/insurance-logos-small/allstate.png",
+    "/cursor-trail/cards/citi-double-cash.png",
+    "/insurance-logos-small/nationwide.png",
+    "/cursor-trail/cards/discover-it-balance-transfer.png",
+    "/insurance-logos-small/travelers.png",
+    "/cursor-trail/cards/blue-cash-preferred.png",
+    "/insurance-logos-small/prudential.png",
+    "/cursor-trail/cards/delta-skymiles-reserve.png",
+    "/insurance-logos-small/metlife.png",
 ]
 
 export default function CursorTrailGuides({
