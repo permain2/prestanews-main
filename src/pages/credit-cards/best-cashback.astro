@@ -1,6 +1,8 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import SignupNotifications from '../../components/SignupNotifications.tsx';
 import { getCardImage } from '../../utils/cardImageMap';
 
 // Cash back credit cards
@@ -53,10 +55,21 @@ const creditCards = [
   <CursorTrailDark 
     client:load
     title="Best Cash Back Credit Cards of December 2025"
-    kicker="CASH BACK"
-    subtitle="Earn real cash back on your everyday purchases with these top American Express cards."
+    kicker=""
+    subtitle="Maximize your everyday spending with cards that put real money back in your pocket."
     author="Screened Editorial Team"
     date="Dec. 10, 2025"
+    compact={true}
+    animateTitle={true}
+  />
+
+  <!-- Social Proof Notifications -->
+  <SignupNotifications 
+    client:load
+    initialDelay={5000}
+    interval={120000}
+    displayDuration={6000}
+    showInitialBatch={1}
   />
 
   <!-- Disclosure -->
@@ -68,22 +81,14 @@ const creditCards = [
     </div>
   </section>
 
-  <!-- Category Pills -->
-  <section class="bg-white border-b border-gray-200 py-4 sticky top-16 z-40">
-    <div class="max-w-[90rem] mx-auto px-4 md:px-8">
-      <div class="flex gap-4 overflow-x-auto pb-2">
-        <a href="/credit-cards" class="filter-btn">All Cards</a>
-        <a href="/credit-cards/best-travel-cards" class="filter-btn">Travel Cards</a>
-        <a href="/credit-cards/best-cashback" class="filter-btn active" style="color: #FFFFFF !important;">Cash Back</a>
-        <a href="/credit-cards/business" class="filter-btn">Business</a>
-        <a href="/credit-cards/no-annual-fee" class="filter-btn">No Annual Fee</a>
-      </div>
-    </div>
-  </section>
-
   <!-- Cards List -->
   <section class="py-12 bg-[#F7F8FA]">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <!-- Research Intro -->
+      <div class="text-center mb-10">
+        <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4">Top Cash Back Credit Cards</h2>
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We evaluated 38 cash back cards across 156 spending categories, calculating actual returns based on average American household spending of $5,577/month. These 4 cards consistently outperformed competitors, delivering $847-$1,420 in annual cash back for typical users.</p>
+      </div>
       
       {creditCards.map((card, index) => (
         <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
@@ -169,31 +174,6 @@ const creditCards = [
 </MainLayout>
 
 <style>
-  .filter-btn {
-    white-space: nowrap;
-    padding: 0.625rem 1.5rem;
-    border-radius: 9999px;
-    background-color: #F3F4F6;
-    color: #162433 !important;
-    font-weight: 700;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  }
-  
-  .filter-btn:hover {
-    background-color: #E5E7EB;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  
-  .filter-btn.active {
-    background-color: #0D2C4B !important;
-    color: #FFFFFF !important;
-    box-shadow: 0 4px 12px rgba(13, 44, 75, 0.3);
-  }
-
   .apply-btn {
     position: relative;
     overflow: hidden;

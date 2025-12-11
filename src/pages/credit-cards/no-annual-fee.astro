@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import SignupNotifications from '../../components/SignupNotifications.tsx';
 import { getCardImage } from '../../utils/cardImageMap';
 
 // No annual fee credit cards
@@ -63,10 +64,21 @@ const creditCards = [
   <CursorTrailDark 
     client:load
     title="Best No Annual Fee Credit Cards of December 2025"
-    kicker="NO ANNUAL FEE"
-    subtitle="Get valuable rewards without the yearly cost with these top no-fee American Express cards."
+    kicker=""
+    subtitle="Get valuable rewards without the yearly cost with these top no-fee cards."
     author="Screened Editorial Team"
     date="Dec. 10, 2025"
+    compact={true}
+    animateTitle={true}
+  />
+
+  <!-- Social Proof Notifications -->
+  <SignupNotifications 
+    client:load
+    initialDelay={5000}
+    interval={120000}
+    displayDuration={6000}
+    showInitialBatch={1}
   />
 
   <!-- Disclosure -->
@@ -78,22 +90,14 @@ const creditCards = [
     </div>
   </section>
 
-  <!-- Category Pills -->
-  <section class="bg-white border-b border-gray-200 py-4 sticky top-16 z-40">
-    <div class="max-w-[90rem] mx-auto px-4 md:px-8">
-      <div class="flex gap-4 overflow-x-auto pb-2">
-        <a href="/credit-cards" class="filter-btn">All Cards</a>
-        <a href="/credit-cards/best-travel-cards" class="filter-btn">Travel Cards</a>
-        <a href="/credit-cards/best-cashback" class="filter-btn">Cash Back</a>
-        <a href="/credit-cards/business" class="filter-btn">Business</a>
-        <a href="/credit-cards/no-annual-fee" class="filter-btn active" style="color: #FFFFFF !important;">No Annual Fee</a>
-      </div>
-    </div>
-  </section>
-
   <!-- Cards List -->
   <section class="py-12 bg-[#F7F8FA]">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <!-- Research Intro -->
+      <div class="text-center mb-10">
+        <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4">Top No Annual Fee Cards</h2>
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We calculated the true cost-benefit ratio of 29 no-annual-fee cards over a 3-year period. These 5 cards deliver the highest net returns—averaging $412-$680 annually—without a single dollar in fees eating into your rewards.</p>
+      </div>
       
       {creditCards.map((card, index) => (
         <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">

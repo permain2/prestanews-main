@@ -9,6 +9,9 @@
  * - Smooth FAQ accordions with animations
  * - Mobile-first responsive design
  * - Full schema markup (Article, FAQ, Aggregate Rating)
+ * - Research-based intro section
+ * - TOC toggle navigation
+ * - Social proof notifications
  * 
  * Usage: Import and pass providers[], seoContent (markdown/HTML), faqs[]
  */
@@ -16,6 +19,8 @@ import MainLayout from './MainLayout.astro';
 import ComparisonShowcase from '../components/ComparisonShowcase.tsx';
 import AnimatedFAQ from '../components/AnimatedFAQ.tsx';
 import PremiumContentSection from '../components/PremiumContentSection.tsx';
+import ComparisonTOCToggle from '../components/ComparisonTOCToggle.tsx';
+import SignupNotifications from '../components/SignupNotifications.tsx';
 import ArticleSchema from '../components/seo/ArticleSchema.astro';
 import FAQSchema from '../components/seo/FAQSchema.astro';
 import AggregateRatingSchema from '../components/seo/AggregateRatingSchema.astro';
@@ -40,6 +45,12 @@ interface FAQ {
   answer: string;
 }
 
+interface TOCItem {
+  id: string;
+  label: string;
+  href: string;
+}
+
 interface Props {
   title: string;
   description: string;
@@ -50,6 +61,8 @@ interface Props {
   date?: string;
   providers: Provider[];
   faqs?: FAQ[];
+  researchIntro?: string;
+  tocItems?: TOCItem[];
 }
 
 const { 
@@ -61,7 +74,9 @@ const {
   author = "Screened Editorial Team",
   date = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
   providers,
-  faqs = []
+  faqs = [],
+  researchIntro,
+  tocItems
 } = Astro.props;
 
 // Get current URL for schema
@@ -153,6 +168,15 @@ const breadcrumbItems = [
     </div>
   </section>
 
+  <!-- Social Proof Notifications -->
+  <SignupNotifications 
+    client:load
+    initialDelay={5000}
+    interval={120000}
+    displayDuration={6000}
+    showInitialBatch={1}
+  />
+
   <!-- Elegant Disclosure -->
   <section class="disclosure-section">
     <div class="disclosure-container">
@@ -167,21 +191,43 @@ const breadcrumbItems = [
     </div>
   </section>
 
+  <!-- TOC Toggle Navigation -->
+  <section class="toc-section sticky top-16 z-40">
+    <div class="toc-container">
+      <ComparisonTOCToggle items={tocItems} client:load />
+    </div>
+  </section>
+
+  <!-- Research-Based Introduction -->
+  {researchIntro && (
+    <section id="providers" class="research-intro-section">
+      <div class="research-intro-container">
+        <p class="research-intro-text">{researchIntro}</p>
+      </div>
+    </section>
+  )}
+
   <!-- Premium Provider Cards -->
-  <ComparisonShowcase 
-    providers={providers} 
-    showFilters={true}
-    client:load 
-  />
+  <div id={researchIntro ? "" : "providers"}>
+    <ComparisonShowcase 
+      providers={providers} 
+      showFilters={true}
+      client:load 
+    />
+  </div>
 
   <!-- Premium SEO Content Section -->
-  <PremiumContentSection client:visible>
-    <slot />
-  </PremiumContentSection>
+  <div id="guide">
+    <PremiumContentSection client:visible>
+      <slot />
+    </PremiumContentSection>
+  </div>
 
   <!-- Animated FAQ Section -->
   {faqs.length > 0 && (
-    <AnimatedFAQ faqs={faqs} client:visible />
+    <div id="faq">
+      <AnimatedFAQ faqs={faqs} client:visible />
+    </div>
   )}
 
   <!-- Styles -->
@@ -404,6 +450,47 @@ const breadcrumbItems = [
 
     .disclosure-text a:hover {
       text-decoration: underline;
+    }
+
+    /* TOC Section */
+    .toc-section {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0.75rem 0;
+    }
+
+    .toc-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Research Intro Section */
+    .research-intro-section {
+      background: #f8fafc;
+      padding: 2rem 0;
+      scroll-margin-top: 120px;
+    }
+
+    .research-intro-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .research-intro-text {
+      font-size: 1.0625rem;
+      color: #475569;
+      line-height: 1.8;
+      margin: 0;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      .research-intro-text {
+        font-size: 0.9375rem;
+        text-align: left;
+      }
     }
 
     /* Responsive */

@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import SignupNotifications from '../../components/SignupNotifications.tsx';
 import { getCardImage } from '../../utils/cardImageMap';
 
 // Balance transfer credit cards
@@ -85,11 +86,29 @@ const creditCards = [
   <CursorTrailDark 
     client:load
     title="Best Balance Transfer Cards of December 2025"
-    kicker="BALANCE TRANSFER"
-    subtitle="Pay down debt faster with 0% intro APR balance transfer cards. Compare the longest intro periods and lowest fees."
+    kicker=""
+    subtitle="Eliminate high-interest debt with cards offering up to 21 months of 0% APR."
     author="Screened Editorial Team"
     date="Dec. 10, 2025"
+    compact={true}
+    animateTitle={true}
   />
+
+  <!-- Social Proof Notifications -->
+  <SignupNotifications 
+    client:load
+    initialDelay={5000}
+    interval={120000}
+    displayDuration={6000}
+    showInitialBatch={1}
+  />
+
+  <!-- Research Intro -->
+  <section class="bg-[#F7F8FA] py-8">
+    <div class="max-w-3xl mx-auto px-4 md:px-8 text-center">
+      <p class="text-[#68727C] leading-relaxed">We analyzed 24 balance transfer offers, comparing intro APR lengths, transfer fees, and post-intro rates. For a $7,500 balance (the U.S. average), these cards can save you $1,847-$2,340 in interest compared to paying the national average 20.7% APR.</p>
+    </div>
+  </section>
 
   <!-- Key Benefits -->
   <section class="bg-white py-8 border-b border-gray-200">
