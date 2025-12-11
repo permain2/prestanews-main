@@ -1,6 +1,13 @@
 ---
 import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
 
+// TOC Items - Following PROJECT-DOCS template
+const tocItems = [
+  { id: "providers", label: "Top Picks", href: "#providers" },
+  { id: "guide", label: "Loan Guide", href: "#guide" },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];
+
 const providers = [
   {
     name: "SoFi",
@@ -143,6 +150,7 @@ const faqs = [
   date="Dec 11, 2025"
   providers={providers}
   faqs={faqs}
+  tocItems={tocItems}
 >
 
 ## Understanding Private Student Loans

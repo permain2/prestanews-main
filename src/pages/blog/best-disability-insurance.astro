@@ -1,6 +1,13 @@
 ---
 import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
 
+// TOC Items - Following PROJECT-DOCS template
+const tocItems = [
+  { id: "providers", label: "Top Picks", href: "#providers" },
+  { id: "guide", label: "Coverage Guide", href: "#guide" },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];
+
 const providers = [
   {
     name: "Northwestern Mutual",
@@ -245,13 +252,14 @@ At minimum, ensure you have long-term disability coverage equal to 60% of your i
   title="Best Disability Insurance Companies of 2025"
   description="Compare the best disability insurance providers including Northwestern Mutual, Guardian Life, and MassMutual. Expert reviews of coverage, costs, and policy features."
   category="insurance"
-  categoryLabel="INSURANCE"
+  categoryLabel="DISABILITY INSURANCE"
   heroImage="/blog-images/disability-insurance.jpg"
   researchIntro="We obtained 89 quotes across 14 insurers for professionals earning $75K-$250K annually, comparing policy definitions, benefit periods, and premium costs. We also analyzed claims denial rates from state insurance department data. These carriers have the strongest own-occupation definitions and lowest denial rates."
   author="Emily Johnson"
   date="Dec 11, 2025"
   providers={providers}
   faqs={faqs}
+  tocItems={tocItems}
   content={content}
 />
 

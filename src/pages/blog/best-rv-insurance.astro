@@ -1,6 +1,15 @@
 ---
 import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
 
+// TOC Items - Following PROJECT-DOCS template
+const tocItems = [
+  { id: "providers", label: "Top Picks", href: "#providers" },
+  { id: "guide", label: "Buying Guide", href: "#guide" },
+  { id: "compare", label: "Compare", href: "#compare", hideOnMobile: true },
+  { id: "methodology", label: "Methodology", href: "#methodology", hideOnMobile: true },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];
+
 const providers = [
   {
     name: "Progressive",
@@ -247,6 +256,7 @@ Specialized RV enthusiasts benefit from **Good Sam's** deep expertise in the RV 
   date="Dec 11, 2025"
   providers={providers}
   faqs={faqs}
+  tocItems={tocItems}
   content={content}
 />
 

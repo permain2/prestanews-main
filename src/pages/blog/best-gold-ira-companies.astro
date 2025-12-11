@@ -1,6 +1,13 @@
 ---
 import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
 
+// TOC Items - Following PROJECT-DOCS template
+const tocItems = [
+  { id: "providers", label: "Top Picks", href: "#providers" },
+  { id: "guide", label: "Investment Guide", href: "#guide" },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];
+
 const providers = [
   {
     name: "Augusta Precious Metals",
@@ -294,13 +301,14 @@ First-time precious metals investors should consider **Noble Gold** for their in
   title="Best Gold IRA Companies of 2025"
   description="Compare the best gold IRA companies including Augusta Precious Metals, Goldco, and American Hartford Gold. Expert reviews of fees, minimums, and service quality."
   category="finance"
-  categoryLabel="RETIREMENT"
+  categoryLabel="GOLD IRA"
   heroImage="/blog-images/gold-ira.jpg"
   researchIntro="We requested information kits from 23 gold IRA companies, analyzed their fee structures, and verified IRS compliance for each. Our team also reviewed 1,247 customer complaints filed with the Better Business Bureau over the past 3 years. These companies offer the most transparent pricing and smoothest rollover processes."
   author="Michael Rodriguez"
   date="Dec 11, 2025"
   providers={providers}
   faqs={faqs}
+  tocItems={tocItems}
   content={content}
 />
 

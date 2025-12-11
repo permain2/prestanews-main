@@ -1,6 +1,13 @@
 ---
 import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
 
+// TOC Items - Following PROJECT-DOCS template
+const tocItems = [
+  { id: "providers", label: "Top Picks", href: "#providers" },
+  { id: "guide", label: "Savings Guide", href: "#guide" },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];
+
 const providers = [
   {
     name: "Varo Bank",
@@ -240,13 +247,14 @@ For most savers, we recommend **Varo Bank** for the highest APY if you can meet 
   title="Best Online Savings Accounts of 2025"
   description="Compare the best high-yield online savings accounts with APYs up to 5.00%. Expert analysis of top banks including Varo, Openbank, EverBank, and more."
   category="finance"
-  categoryLabel="BANKING"
+  categoryLabel="HIGH-YIELD SAVINGS"
   heroImage="/blog-images/online-savings-accounts.jpg"
   researchIntro="We tracked APY changes daily for 47 online banks over 6 months, identifying which banks consistently stay competitive versus those offering teaser rates. On a $25,000 balance, the difference between a 4.5% and 5.0% APY is $125/year. These accounts offer top-tier rates with no gimmicks or requirements."
   author="Jessica Martinez"
   date="Dec 11, 2025"
   providers={providers}
   faqs={faqs}
+  tocItems={tocItems}
   content={content}
 />
 
