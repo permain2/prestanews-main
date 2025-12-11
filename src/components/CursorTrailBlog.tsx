@@ -195,6 +195,8 @@ export default function CursorTrailBlog({
                     overflow: hidden;
                     cursor: crosshair;
                     background: linear-gradient(135deg, #F0F4FF 0%, #E8EEF8 100%);
+                    z-index: 1;
+                    isolation: isolate;
                 }
 
                 .trail-title-blog {
@@ -203,7 +205,7 @@ export default function CursorTrailBlog({
                     font-size: clamp(2.5rem, 6vw, 4rem);
                     font-weight: 700;
                     color: #162433;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     margin-bottom: 1rem;
@@ -214,7 +216,7 @@ export default function CursorTrailBlog({
                     font-family: 'Poppins', sans-serif;
                     font-size: 1.125rem;
                     color: #68727C;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     max-width: 700px;
@@ -228,7 +230,7 @@ export default function CursorTrailBlog({
                     height: auto;
                     object-fit: contain;
                     pointer-events: none;
-                    z-index: 10;
+                    z-index: 1;
                     border-radius: 8px;
                     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
                 }
@@ -239,7 +241,7 @@ export default function CursorTrailBlog({
                     height: ${logoSize}px;
                     object-fit: contain;
                     pointer-events: none;
-                    z-index: 10;
+                    z-index: 1;
                     border-radius: 10px;
                     background: white;
                     padding: 8px;
@@ -263,3 +265,5 @@ export default function CursorTrailBlog({
         </div>
     )
 }
+
+

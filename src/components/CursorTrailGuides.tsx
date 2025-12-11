@@ -182,6 +182,8 @@ export default function CursorTrailGuides({
                     overflow: hidden;
                     cursor: crosshair;
                     background: linear-gradient(135deg, #F0F4E8 0%, #E8F0E0 100%);
+                    z-index: 1;
+                    isolation: isolate;
                 }
 
                 .trail-title-guides {
@@ -190,7 +192,7 @@ export default function CursorTrailGuides({
                     font-size: clamp(2.5rem, 6vw, 4rem);
                     font-weight: 700;
                     color: #162433;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     margin-bottom: 1rem;
@@ -201,7 +203,7 @@ export default function CursorTrailGuides({
                     font-family: 'Poppins', sans-serif;
                     font-size: 1.125rem;
                     color: #68727C;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     max-width: 700px;
@@ -216,7 +218,7 @@ export default function CursorTrailGuides({
                     max-height: ${imageSize}px;
                     object-fit: contain;
                     pointer-events: none;
-                    z-index: 10;
+                    z-index: 1;
                     border-radius: 12px;
                     background: white;
                     padding: 10px;
@@ -237,6 +239,8 @@ export default function CursorTrailGuides({
         </div>
     )
 }
+
+
 
 
 

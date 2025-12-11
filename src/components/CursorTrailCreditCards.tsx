@@ -171,6 +171,8 @@ export default function CursorTrailCreditCards({
                     overflow: hidden;
                     cursor: crosshair;
                     background: linear-gradient(135deg, #EEF2F6 0%, #E8ECF0 100%);
+                    z-index: 1;
+                    isolation: isolate;
                 }
 
                 .trail-title {
@@ -179,7 +181,7 @@ export default function CursorTrailCreditCards({
                     font-size: clamp(2.5rem, 6vw, 4rem);
                     font-weight: 700;
                     color: #162433;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     margin-bottom: 1rem;
@@ -190,7 +192,7 @@ export default function CursorTrailCreditCards({
                     font-family: 'Poppins', sans-serif;
                     font-size: 1.125rem;
                     color: #68727C;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     max-width: 700px;
@@ -205,7 +207,7 @@ export default function CursorTrailCreditCards({
                     max-height: ${imageSize * 0.7}px;
                     object-fit: contain;
                     pointer-events: none;
-                    z-index: 10;
+                    z-index: 1;
                     border-radius: 10px;
                     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
                 }
@@ -223,3 +225,5 @@ export default function CursorTrailCreditCards({
         </div>
     )
 }
+
+

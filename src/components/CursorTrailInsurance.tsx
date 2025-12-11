@@ -170,6 +170,8 @@ export default function CursorTrailInsurance({
                     overflow: hidden;
                     cursor: crosshair;
                     background: linear-gradient(135deg, #E8F4F8 0%, #E0EEF4 100%);
+                    z-index: 1;
+                    isolation: isolate;
                 }
 
                 .trail-title-insurance {
@@ -178,7 +180,7 @@ export default function CursorTrailInsurance({
                     font-size: clamp(2.5rem, 6vw, 4rem);
                     font-weight: 700;
                     color: #162433;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     margin-bottom: 1rem;
@@ -189,7 +191,7 @@ export default function CursorTrailInsurance({
                     font-family: 'Poppins', sans-serif;
                     font-size: 1.125rem;
                     color: #68727C;
-                    z-index: 50;
+                    z-index: 2;
                     pointer-events: none;
                     text-align: center;
                     max-width: 700px;
@@ -203,7 +205,7 @@ export default function CursorTrailInsurance({
                     height: ${imageSize}px;
                     object-fit: contain;
                     pointer-events: none;
-                    z-index: 10;
+                    z-index: 1;
                     border-radius: 12px;
                     background: white;
                     padding: 10px;
@@ -224,3 +226,5 @@ export default function CursorTrailInsurance({
         </div>
     )
 }
+
+
