@@ -52,6 +52,7 @@ const cardImages: Record<string, string> = {
 const nameVariations: Record<string, string> = {
   // Amex Platinum variations
   "american express platinum": "amex-platinum",
+  "american express platinum card": "amex-platinum",
   "amex platinum card": "amex-platinum",
   "platinum card": "amex-platinum",
   "the platinum card": "amex-platinum",
@@ -212,4 +213,6 @@ export default {
   getAllCardImages,
   hasCardImage,
 };
+
+
 
