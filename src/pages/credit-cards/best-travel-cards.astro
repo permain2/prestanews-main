@@ -3,28 +3,61 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
 import { getCardImage } from '../../utils/cardImageMap';
 
-// Travel-focused credit cards
+// Expanded travel credit cards list - 15 cards to compete with NerdWallet
 const creditCards = [
   {
-    name: "American Express Platinum Card®",
-    bestFor: "Premium Travel",
-    annualFee: "$895",
-    bonus: "80,000 Membership Rewards points",
+    name: "Chase Sapphire Preferred® Card",
+    bestFor: "Best Overall",
+    annualFee: "$95",
+    bonus: "75,000 Ultimate Rewards points",
     rating: 4.9,
-    pros: ["5X points on flights & prepaid hotels", "Premium lounge access", "$200 airline fee credit", "$200 hotel credit"],
-    cons: ["High annual fee", "Amex acceptance limitations"],
-    description: "The premier travel rewards card with extensive lounge access, elite status, and premium travel benefits.",
+    pros: ["5X on travel via Chase", "3X on dining & streaming", "25% more value on travel", "Transfer to 14+ airlines"],
+    cons: ["$95 annual fee", "No lounge access"],
+    description: "The gold standard for travel rewards. Outstanding bonus, flexible points that transfer to airlines, and great everyday earning.",
     category: "travel"
   },
   {
-    name: "The Business Platinum Card® from American Express",
-    bestFor: "Business Travel",
-    annualFee: "$895",
-    bonus: "200,000 Membership Rewards points",
+    name: "Chase Sapphire Reserve®",
+    bestFor: "Premium Travel",
+    annualFee: "$550",
+    bonus: "75,000 Ultimate Rewards points",
     rating: 4.8,
-    pros: ["Massive welcome bonus", "5X on flights & hotels", "35% points rebate on Pay with Points", "Dell and Indeed credits"],
-    cons: ["High annual fee", "Complex benefits structure"],
-    description: "A premium business card packed with travel benefits and elevated earning rates for business spending.",
+    pros: ["$300 annual travel credit", "Priority Pass lounge access", "10X on hotels & cars via Chase", "Global Entry/TSA PreCheck credit"],
+    cons: ["High $550 annual fee", "High spend requirement for bonus"],
+    description: "The ultimate premium travel card with $300 travel credit, Priority Pass lounges, and 50% more value on Chase travel.",
+    category: "travel"
+  },
+  {
+    name: "Capital One Venture X Rewards",
+    bestFor: "Lounge Access",
+    annualFee: "$395",
+    bonus: "75,000 miles",
+    rating: 4.8,
+    pros: ["$300 travel portal credit", "Capital One lounges + Priority Pass", "10,000 anniversary miles yearly", "2X on all purchases"],
+    cons: ["Limited transfer partners", "Travel credit requires portal booking"],
+    description: "Exceptional value with premium lounge access, anniversary bonus miles, and a $300 travel credit that offsets the fee.",
+    category: "travel"
+  },
+  {
+    name: "American Express Platinum Card®",
+    bestFor: "Luxury Perks",
+    annualFee: "$695",
+    bonus: "80,000 Membership Rewards points",
+    rating: 4.7,
+    pros: ["5X on flights & prepaid hotels", "Centurion Lounge access", "$200 airline credit + $200 hotel credit", "Elite status at Hilton & Marriott"],
+    cons: ["High $695 annual fee", "Complex credits to maximize"],
+    description: "The premier luxury card with unmatched lounge access, elite hotel status, and over $1,500 in annual credits.",
+    category: "travel"
+  },
+  {
+    name: "Capital One Venture Rewards",
+    bestFor: "Simple Rewards",
+    annualFee: "$95",
+    bonus: "75,000 miles",
+    rating: 4.7,
+    pros: ["2X miles on every purchase", "5X on hotels/cars via Capital One", "Easy redemption as statement credit", "Transfer to 15+ airlines"],
+    cons: ["$95 annual fee", "Limited lounge benefits"],
+    description: "Simple and flexible - earn 2X on everything and redeem miles to erase any travel purchase on your statement.",
     category: "travel"
   },
   {
@@ -33,31 +66,53 @@ const creditCards = [
     annualFee: "$325",
     bonus: "60,000 Membership Rewards points",
     rating: 4.9,
-    pros: ["4X at restaurants worldwide", "3X on flights", "$120 dining credit", "$120 Uber Cash"],
-    cons: ["Annual fee increased", "Supermarket cap of $25K/year"],
-    description: "Outstanding travel and dining card with valuable Membership Rewards points and monthly credits.",
+    pros: ["4X at restaurants worldwide", "4X at U.S. supermarkets", "$120 dining credit + $120 Uber Cash", "3X on flights"],
+    cons: ["$325 annual fee", "Supermarket cap of $25K/year"],
+    description: "Outstanding for foodies and travelers with 4X at restaurants, grocery stores, and valuable monthly dining credits.",
     category: "travel"
   },
   {
-    name: "Delta SkyMiles® Reserve American Express Card",
-    bestFor: "Premium Delta Status",
+    name: "Citi Strata Premier℠",
+    bestFor: "Hotels & Flights",
+    annualFee: "$95",
+    bonus: "75,000 ThankYou points",
+    rating: 4.6,
+    pros: ["3X on flights, hotels & restaurants", "Transfer to 18+ airline partners", "$100 hotel credit annually", "No foreign transaction fees"],
+    cons: ["Limited lounge access", "Fewer transfer partners than Chase"],
+    description: "Strong mid-tier travel card with excellent earning rates and an annual hotel credit that offsets the fee.",
+    category: "travel"
+  },
+  {
+    name: "The Business Platinum Card® from American Express",
+    bestFor: "Business Travel",
+    annualFee: "$695",
+    bonus: "150,000 Membership Rewards points",
+    rating: 4.8,
+    pros: ["Massive welcome bonus", "5X on flights & prepaid hotels", "35% points rebate via Amex Travel", "Dell, Indeed & wireless credits"],
+    cons: ["High $695 annual fee", "Complex benefits to track"],
+    description: "The ultimate business travel card with a massive bonus and 35% points back when booking through Amex Travel.",
+    category: "travel"
+  },
+  {
+    name: "Delta SkyMiles® Reserve American Express",
+    bestFor: "Delta Flyers",
     annualFee: "$650",
     bonus: "90,000 bonus miles",
     rating: 4.6,
-    pros: ["3X miles on Delta", "Delta Sky Club access", "MQD waiver up to $25K", "Companion certificate"],
-    cons: ["High annual fee", "Limited earning outside Delta"],
-    description: "The ultimate Delta card with Sky Club access and accelerated path to elite status.",
+    pros: ["Delta Sky Club access", "3X on Delta purchases", "Companion certificate yearly", "MQD waiver up to $25K"],
+    cons: ["$650 annual fee", "Only valuable for Delta loyalists"],
+    description: "Premium Delta card with Sky Club access, companion tickets, and accelerated path to elite status.",
     category: "travel"
   },
   {
-    name: "Delta SkyMiles® Gold American Express Card",
-    bestFor: "Delta Flyers",
-    annualFee: "$0 intro, then $150",
-    bonus: "50,000 bonus miles",
+    name: "United℠ Explorer Card",
+    bestFor: "United Flyers",
+    annualFee: "$0 intro, then $95",
+    bonus: "60,000 bonus miles",
     rating: 4.5,
-    pros: ["2X miles on Delta", "2X at restaurants", "Free checked bag", "Priority boarding"],
-    cons: ["Limited earning outside Delta", "Annual fee after year 1"],
-    description: "The go-to card for casual Delta flyers with free checked bags and priority boarding.",
+    pros: ["Free checked bag", "Priority boarding", "2 United Club passes/year", "25% back on inflight purchases"],
+    cons: ["Limited earning outside United", "$95 after first year"],
+    description: "The best value United card with free checked bags worth $70+ per roundtrip and priority boarding.",
     category: "travel"
   },
   {
@@ -67,40 +122,117 @@ const creditCards = [
     bonus: "175,000 Hilton Honors points",
     rating: 4.7,
     pros: ["Automatic Diamond status", "Free weekend night yearly", "$400 Hilton resort credit", "14X at Hilton properties"],
-    cons: ["High annual fee", "Benefits tied to Hilton"],
-    description: "The pinnacle Hilton card with automatic Diamond status and incredible earning rates.",
+    cons: ["$550 annual fee", "Benefits tied to Hilton only"],
+    description: "The pinnacle Hilton card with automatic Diamond status, free nights, and resort credits worth the fee.",
+    category: "travel"
+  },
+  {
+    name: "Marriott Bonvoy Boundless®",
+    bestFor: "Marriott Loyalty",
+    annualFee: "$95",
+    bonus: "3 Free Nights (up to 50K points each)",
+    rating: 4.5,
+    pros: ["6X at Marriott hotels", "Free night annually (up to 35K)", "15 elite night credits", "Automatic Silver Elite status"],
+    cons: ["Limited earning outside Marriott", "Points value varies by property"],
+    description: "Best Marriott card for most travelers with a free night certificate that easily covers the annual fee.",
+    category: "travel"
+  },
+  {
+    name: "Bank of America® Travel Rewards",
+    bestFor: "No Annual Fee",
+    annualFee: "$0",
+    bonus: "25,000 points ($250 value)",
+    rating: 4.4,
+    pros: ["1.5X on all purchases", "$0 annual fee", "No foreign transaction fees", "25% - 75% bonus with Preferred Rewards"],
+    cons: ["Lower earning rate than fee cards", "Limited transfer options"],
+    description: "Best no-fee travel card with solid rewards and up to 75% more points for Bank of America customers.",
+    category: "travel"
+  },
+  {
+    name: "Wells Fargo Autograph℠",
+    bestFor: "Everyday Travel",
+    annualFee: "$0",
+    bonus: "20,000 bonus points",
+    rating: 4.3,
+    pros: ["3X on travel, dining, gas & transit", "$0 annual fee forever", "No foreign transaction fees", "Cell phone protection"],
+    cons: ["Lower welcome bonus", "Limited transfer partners"],
+    description: "Outstanding no-annual-fee option with 3X in popular categories and no foreign transaction fees.",
     category: "travel"
   },
   {
     name: "American Express® Green Card",
-    bestFor: "Everyday Travel",
+    bestFor: "Entry-Level Amex",
     annualFee: "$150",
     bonus: "40,000 Membership Rewards points",
     rating: 4.3,
-    pros: ["3X on travel & transit", "3X at restaurants", "$189 CLEAR credit", "LoungeBuddy credit"],
-    cons: ["Lower earning than Gold", "Fewer premium benefits"],
-    description: "An affordable entry into Membership Rewards with solid travel and dining earning.",
+    pros: ["3X on travel & transit", "3X at restaurants", "$189 CLEAR Plus credit", "LoungeBuddy credits"],
+    cons: ["Lower bonus than Gold/Platinum", "Fewer premium perks"],
+    description: "Affordable entry into the Membership Rewards ecosystem with solid travel and dining earning.",
     category: "travel"
+  }
+];
+
+// Category filters for jump links
+const categories = [
+  { id: "premium", label: "Premium Cards", cards: ["Chase Sapphire Reserve®", "American Express Platinum Card®", "Capital One Venture X Rewards"] },
+  { id: "value", label: "Best Value", cards: ["Chase Sapphire Preferred® Card", "Capital One Venture Rewards", "Citi Strata Premier℠"] },
+  { id: "airlines", label: "Airline Cards", cards: ["Delta SkyMiles® Reserve American Express", "United℠ Explorer Card"] },
+  { id: "hotels", label: "Hotel Cards", cards: ["Hilton Honors American Express Aspire Card", "Marriott Bonvoy Boundless®"] },
+  { id: "nofee", label: "No Annual Fee", cards: ["Bank of America® Travel Rewards", "Wells Fargo Autograph℠"] }
+];
+
+const faqs = [
+  {
+    question: "What is the best travel credit card overall?",
+    answer: "The Chase Sapphire Preferred® Card is widely considered the best overall travel card. It offers a strong 75,000-point welcome bonus, excellent earning rates (5X on travel via Chase, 3X on dining), and valuable transfer partners including United, Southwest, Hyatt, and Marriott. The $95 annual fee is easily offset by the benefits."
+  },
+  {
+    question: "How do travel credit card points work?",
+    answer: "Travel credit cards earn points or miles on purchases. General-purpose cards (like Chase Sapphire) earn flexible points worth about 1-2 cents each that can be transferred to airlines/hotels or used for any travel. Co-branded cards (like Delta or Hilton cards) earn loyalty points redeemable only with that brand. Most cards offer bonus points in categories like travel, dining, and hotels."
+  },
+  {
+    question: "Is it worth paying an annual fee for a travel card?",
+    answer: "For frequent travelers, yes. Premium cards like the Chase Sapphire Reserve ($550/year) include $300 in travel credits, lounge access worth $400+/year, and higher earning rates. If you travel 2+ times per year, the perks often exceed the fee. Occasional travelers may prefer no-annual-fee options like the Wells Fargo Autograph."
+  },
+  {
+    question: "What credit score do I need for a travel credit card?",
+    answer: "Most travel rewards cards require good to excellent credit (700+ FICO score). Premium cards like the Amex Platinum or Chase Sapphire Reserve typically require excellent credit (750+). However, some no-annual-fee travel cards may approve applicants with good credit in the 670-700 range."
+  },
+  {
+    question: "Should I get an airline card or a general travel card?",
+    answer: "It depends on your travel habits. Airline co-branded cards (Delta, United, etc.) offer perks like free bags and priority boarding but limit you to one airline. General travel cards (Chase Sapphire, Capital One Venture) offer more flexibility with points transferable to multiple airlines. If you fly one airline 80%+ of the time, get their card. Otherwise, choose a flexible card."
+  },
+  {
+    question: "What's the difference between points and miles?",
+    answer: "Points and miles are essentially the same thing with different names. 'Miles' is typically used by airline programs and Capital One, while 'points' is used by Chase, Amex, and Citi. Both represent reward currency worth approximately 1-2 cents each, depending on how you redeem them."
+  },
+  {
+    question: "Do travel credit cards charge foreign transaction fees?",
+    answer: "Most premium travel cards do NOT charge foreign transaction fees (typically 3% of purchases abroad). This is a key feature to look for if you travel internationally. All cards on this page have no foreign transaction fees, but always verify before applying."
+  },
+  {
+    question: "How do I maximize my travel credit card rewards?",
+    answer: "1) Put all spending on your card and pay in full monthly. 2) Use the right card for each category (dining card for restaurants, travel card for flights). 3) Transfer points to airline partners for premium cabin flights when the value exceeds 2 cents/point. 4) Take advantage of all credits and perks. 5) Time large purchases around welcome bonus requirements."
   }
 ];
 ---
 
-<MainLayout title="Best Travel Credit Cards" description="Expert reviews of the best American Express travel credit cards with premium perks and rewards.">
+<MainLayout title="Best Travel Credit Cards of December 2025" description="Compare the 15 best travel credit cards for flights, hotels, and flexible rewards. Expert reviews of Chase Sapphire, Amex Platinum, Capital One Venture & more.">
   <!-- Interactive Header with Cursor Trail -->
   <CursorTrailDark 
     client:load
     title="Best Travel Credit Cards of December 2025"
     kicker="TRAVEL CARDS"
-    subtitle="Maximize your travel rewards with the best American Express cards for flights, hotels, and premium perks."
+    subtitle="Compare 15 top travel rewards cards for flights, hotels, lounge access, and flexible points. Find your perfect card."
     author="Screened Editorial Team"
-    date="Dec. 10, 2025"
+    date="Dec. 11, 2025"
   />
 
   <!-- Disclosure -->
   <section class="bg-[#F7F8FA] py-4">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <p class="text-xs text-[#68727C] leading-relaxed">
-        Most of the cards we feature here are from partners who compensate us when you approve through our site. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
+        Most of the cards we feature here are from partners who compensate us when you apply through our site. This doesn't affect our rankings or reviews. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
       </p>
     </div>
   </section>
@@ -118,9 +250,37 @@ const creditCards = [
     </div>
   </section>
 
+  <!-- Table of Contents -->
+  <section class="py-8 bg-white border-b border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-lg font-bold text-[#162433] mb-4">Jump to Section</h2>
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <a href="#cards" class="flex items-center gap-2 text-[#3B82F6] hover:underline">
+          <span>→</span> All 15 Travel Cards
+        </a>
+        <a href="#how-rewards-work" class="flex items-center gap-2 text-[#3B82F6] hover:underline">
+          <span>→</span> How Travel Rewards Work
+        </a>
+        <a href="#how-to-choose" class="flex items-center gap-2 text-[#3B82F6] hover:underline">
+          <span>→</span> How to Choose a Card
+        </a>
+        <a href="#best-categories" class="flex items-center gap-2 text-[#3B82F6] hover:underline">
+          <span>→</span> Best Cards by Category
+        </a>
+        <a href="#methodology" class="flex items-center gap-2 text-[#3B82F6] hover:underline">
+          <span>→</span> Our Methodology
+        </a>
+        <a href="#faq" class="flex items-center gap-2 text-[#3B82F6] hover:underline">
+          <span>→</span> FAQ
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- Cards List -->
-  <section class="py-12 bg-[#F7F8FA]">
+  <section id="cards" class="py-12 bg-[#F7F8FA]">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8">All 15 Best Travel Credit Cards</h2>
       
       {creditCards.map((card, index) => (
         <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 hover:shadow-lg transition-shadow">
@@ -134,15 +294,11 @@ const creditCards = [
                   class="w-64 h-auto rounded-xl shadow-xl mb-6 hover:scale-105 hover:shadow-2xl transition-all duration-300"
                 />
               ) : (
-                <div class="w-64 h-40 rounded-xl shadow-xl mb-6 relative overflow-hidden" style={`background: linear-gradient(135deg, ${index % 3 === 0 ? '#1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%' : index % 3 === 1 ? '#C9A962 0%, #E8D5A3 50%, #C9A962 100%' : '#0077C0 0%, #00A3E0 50%, #0077C0 100%'});`}>
+                <div class="w-64 h-40 rounded-xl shadow-xl mb-6 relative overflow-hidden" style={`background: linear-gradient(135deg, ${index % 4 === 0 ? '#1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%' : index % 4 === 1 ? '#0047AB 0%, #4169E1 50%, #0047AB 100%' : index % 4 === 2 ? '#C9A962 0%, #E8D5A3 50%, #C9A962 100%' : '#004C4C 0%, #006666 50%, #004C4C 100%'});`}>
                   <div class="absolute top-6 left-6 w-10 h-8 rounded bg-gradient-to-br from-yellow-300 to-yellow-500 opacity-90"></div>
-                  <div class="absolute top-4 right-4">
-                    <div class="text-white font-bold text-lg tracking-tight opacity-90">AMEX</div>
-                  </div>
                   <div class="absolute bottom-4 left-4 right-4">
                     <div class="text-white text-xs font-medium opacity-80 leading-tight">{card.name}</div>
                   </div>
-                  <div class="absolute bottom-12 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
                 </div>
               )}
               
@@ -151,7 +307,7 @@ const creditCards = [
                 <svg class="w-4 h-4 relative z-10 transition-transform group-hover:translate-x-1" fill="none" stroke="#FFFFFF" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 <span class="shine-effect"></span>
               </a>
-              <p class="text-xs text-[#68727C] text-center">On American Express's Website</p>
+              <p class="text-xs text-[#68727C] text-center">On issuer's secure website</p>
             </div>
 
             <!-- Right Panel - Card Details -->
@@ -159,11 +315,14 @@ const creditCards = [
               <div class="flex items-start justify-between mb-4">
                 <div>
                   <span class="inline-block bg-[#EBF5FF] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">{card.bestFor}</span>
-                  <h2 class="font-sora text-xl md:text-2xl font-bold text-[#162433]">{card.name}</h2>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433]">{card.name}</h3>
                 </div>
-                <div class="flex items-center gap-1 bg-[#F7F8FA] px-3 py-2 rounded-lg">
-                  <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                  <span class="font-bold text-[#162433]">{card.rating}</span>
+                <div class="flex flex-col items-end gap-2">
+                  <span class="bg-[#0D2C4B] text-white text-xs font-bold px-3 py-1 rounded-full">#{index + 1}</span>
+                  <div class="flex items-center gap-1">
+                    <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span class="font-bold text-[#162433]">{card.rating}</span>
+                  </div>
                 </div>
               </div>
               
@@ -206,6 +365,225 @@ const creditCards = [
       ))}
     </div>
   </section>
+
+  <!-- SEO Content Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8 seo-content">
+      
+      <!-- How Travel Rewards Work -->
+      <div id="how-rewards-work">
+        <h2>How Travel Credit Card Rewards Work</h2>
+        
+        <p>Travel credit cards earn points or miles every time you make a purchase. The value of these rewards typically ranges from <strong>1 to 2 cents per point</strong>, depending on how you redeem them. Understanding the basics helps you maximize your rewards.</p>
+
+        <div class="info-box">
+          <h4>💡 Points vs. Miles: What's the Difference?</h4>
+          <p>"Points" and "miles" are essentially the same thing—reward currency with different names. Chase and Amex use "points," while airlines and Capital One use "miles." Both are worth approximately 1-2 cents each.</p>
+        </div>
+
+        <h3>Types of Travel Rewards Cards</h3>
+        
+        <p><strong>General-Purpose Travel Cards</strong> (like Chase Sapphire or Capital One Venture) earn flexible points that can:</p>
+        <ul>
+          <li>Transfer to 10-20+ airline and hotel partners</li>
+          <li>Be redeemed for any travel purchase as statement credit</li>
+          <li>Book travel through the issuer's portal</li>
+          <li>Sometimes convert to cash back (at lower value)</li>
+        </ul>
+
+        <p><strong>Co-Branded Airline/Hotel Cards</strong> (like Delta SkyMiles or Marriott Bonvoy) earn loyalty points redeemable only with that brand, but offer perks like:</p>
+        <ul>
+          <li>Free checked bags (worth $70+ per roundtrip)</li>
+          <li>Priority boarding and upgrades</li>
+          <li>Elite status credits</li>
+          <li>Companion certificates</li>
+        </ul>
+      </div>
+
+      <!-- How to Choose -->
+      <div id="how-to-choose">
+        <h2>How to Choose a Travel Credit Card</h2>
+
+        <p>The best travel card for you depends on your travel habits, spending patterns, and how much you value flexibility versus brand-specific perks.</p>
+
+        <h3>Key Questions to Ask Yourself</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>If Yes...</th>
+              <th>If No...</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Do you fly one airline 80%+ of the time?</td>
+              <td>Get that airline's co-branded card</td>
+              <td>Choose a flexible card like Chase Sapphire</td>
+            </tr>
+            <tr>
+              <td>Do you travel internationally?</td>
+              <td>Prioritize no foreign transaction fees</td>
+              <td>Focus on domestic perks</td>
+            </tr>
+            <tr>
+              <td>Can you spend $3,000-$5,000 in 3 months?</td>
+              <td>Go for cards with large bonuses</td>
+              <td>Choose cards with lower spend requirements</td>
+            </tr>
+            <tr>
+              <td>Do you value lounge access?</td>
+              <td>Consider premium cards ($400+ fee)</td>
+              <td>Mid-tier cards offer better value</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Annual Fee Considerations</h3>
+
+        <p>Don't let annual fees scare you away. Premium cards often provide more value than their fee:</p>
+
+        <ul>
+          <li><strong>Chase Sapphire Reserve ($550):</strong> $300 travel credit + lounge access + higher earning = $800+ value for frequent travelers</li>
+          <li><strong>Capital One Venture X ($395):</strong> $300 travel credit + 10,000 bonus miles yearly = fee essentially $0</li>
+          <li><strong>Amex Platinum ($695):</strong> Over $1,500 in credits if you maximize all benefits</li>
+        </ul>
+
+        <div class="warning-box">
+          <h4>⚠️ When to Avoid Annual Fee Cards</h4>
+          <p>If you travel less than twice per year or won't use the credits/perks, stick with no-annual-fee options like the Wells Fargo Autograph or Bank of America Travel Rewards.</p>
+        </div>
+      </div>
+
+      <!-- Best by Category -->
+      <div id="best-categories">
+        <h2>Best Travel Cards by Category</h2>
+
+        <h3>🏆 Best Overall: Chase Sapphire Preferred®</h3>
+        <p>The Sapphire Preferred hits the sweet spot of value, flexibility, and accessibility. The 75,000-point bonus is worth $937+ when transferred to partners like Hyatt (where points are worth 1.7 cents each). The $95 fee is easily offset by the 25% travel bonus through Chase.</p>
+
+        <h3>✈️ Best for Premium Travel: Chase Sapphire Reserve®</h3>
+        <p>For serious travelers, the Reserve's $300 travel credit, Priority Pass lounge access, and 50% bonus on Chase travel redemptions deliver exceptional value despite the $550 fee.</p>
+
+        <h3>🛋️ Best for Lounge Access: Capital One Venture X</h3>
+        <p>Access to both Capital One Lounges and Priority Pass network, plus $300 in travel credits and 10,000 anniversary miles, makes this the best premium card for lounge lovers.</p>
+
+        <h3>🍽️ Best for Dining: American Express® Gold Card</h3>
+        <p>With 4X at restaurants worldwide and $240 in annual dining/Uber credits, the Gold Card is unmatched for food lovers who travel.</p>
+
+        <h3>💰 Best No Annual Fee: Wells Fargo Autograph℠</h3>
+        <p>Earning 3X on travel, dining, gas stations, and transit with no annual fee makes this the best free travel card available.</p>
+
+        <h3>🏨 Best for Hotels: Hilton Honors Aspire</h3>
+        <p>Automatic Diamond elite status, a free weekend night, and $400 in resort credits deliver tremendous value for Hilton loyalists.</p>
+      </div>
+
+      <!-- Methodology -->
+      <div id="methodology">
+        <h2>Our Ranking Methodology</h2>
+
+        <p>We evaluate travel credit cards based on eight weighted factors:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Factor</th>
+              <th>Weight</th>
+              <th>What We Evaluate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Welcome Bonus Value</td>
+              <td>25%</td>
+              <td>Points value, spend requirement, time limit</td>
+            </tr>
+            <tr>
+              <td>Earning Rates</td>
+              <td>20%</td>
+              <td>Base rate, bonus categories, caps</td>
+            </tr>
+            <tr>
+              <td>Redemption Flexibility</td>
+              <td>15%</td>
+              <td>Transfer partners, portal value, statement credit</td>
+            </tr>
+            <tr>
+              <td>Perks & Benefits</td>
+              <td>15%</td>
+              <td>Lounges, credits, insurance, status</td>
+            </tr>
+            <tr>
+              <td>Annual Fee Value</td>
+              <td>10%</td>
+              <td>Fee offset by benefits for average user</td>
+            </tr>
+            <tr>
+              <td>Foreign Transaction Fees</td>
+              <td>5%</td>
+              <td>Must be $0 for top ratings</td>
+            </tr>
+            <tr>
+              <td>Customer Satisfaction</td>
+              <td>5%</td>
+              <td>J.D. Power, user reviews, complaint ratios</td>
+            </tr>
+            <tr>
+              <td>Application Experience</td>
+              <td>5%</td>
+              <td>Approval odds, instant numbers, app quality</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Our team includes credit card experts who personally hold and use many of these cards. We update rankings monthly based on new offers, benefit changes, and market shifts.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Frequently Asked Questions</h2>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item border border-gray-200 rounded-xl bg-white overflow-hidden group">
+            <summary class="font-bold text-[#162433] cursor-pointer p-6 list-none flex justify-between items-center hover:bg-gray-50 transition-colors">
+              <span class="pr-4">{faq.question}</span>
+              <svg class="w-5 h-5 text-[#68727C] flex-shrink-0 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="px-6 pb-6 text-[#68727C] leading-relaxed border-t border-gray-100 pt-4">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-xl font-bold text-[#162433] mb-6">Related Credit Card Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/credit-cards/best-cashback" class="p-4 bg-[#F7F8FA] rounded-lg hover:shadow-md transition-shadow">
+          <div class="font-bold text-[#162433] mb-1">Best Cash Back Cards</div>
+          <div class="text-sm text-[#68727C]">Earn up to 5% back on every purchase</div>
+        </a>
+        <a href="/credit-cards/no-annual-fee" class="p-4 bg-[#F7F8FA] rounded-lg hover:shadow-md transition-shadow">
+          <div class="font-bold text-[#162433] mb-1">No Annual Fee Cards</div>
+          <div class="text-sm text-[#68727C]">Great rewards without the yearly cost</div>
+        </a>
+        <a href="/credit-cards/business" class="p-4 bg-[#F7F8FA] rounded-lg hover:shadow-md transition-shadow">
+          <div class="font-bold text-[#162433] mb-1">Business Credit Cards</div>
+          <div class="text-sm text-[#68727C]">Cards designed for business expenses</div>
+        </a>
+      </div>
+    </div>
+  </section>
 </MainLayout>
 
 <style>
@@ -218,26 +596,15 @@ const creditCards = [
     font-weight: 700;
     font-size: 0.875rem;
     transition: all 0.3s ease;
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   }
   
   .filter-btn:hover {
     background-color: #E5E7EB;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
   
   .filter-btn.active {
     background-color: #0D2C4B !important;
     color: #FFFFFF !important;
-    box-shadow: 0 4px 12px rgba(13, 44, 75, 0.3);
-  }
-  
-  .filter-btn.active:hover {
-    background-color: #1a3d5c !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(13, 44, 75, 0.4);
   }
 
   .apply-btn {
@@ -259,5 +626,104 @@ const creditCards = [
   .apply-btn:hover .shine-effect {
     left: 100%;
   }
-</style>
 
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type {
+    margin-top: 0;
+  }
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #0D2C4B;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  .seo-content strong {
+    color: #162433;
+    font-weight: 600;
+  }
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+  }
+  .seo-content th {
+    background: #0D2C4B;
+    color: white;
+    padding: 0.875rem 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  .seo-content td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  .seo-content tr:hover td {
+    background: #F9FAFB;
+  }
+
+  .info-box {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 {
+    color: #1D4ED8;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+  }
+  .info-box p {
+    margin: 0;
+    color: #1E40AF;
+  }
+
+  .warning-box {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border: 1px solid #FDE68A;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .warning-box h4 {
+    color: #B45309;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+  }
+  .warning-box p {
+    margin: 0;
+    color: #92400E;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
