@@ -26,17 +26,17 @@
 
 ```
 Company Name: Screened
-Legal Entity: Screened, LLC
+Legal Entity: Interactive Apps LLC
 Website: https://www.screened.com
 
 Address:
-[Your Street Address]
-[City, State ZIP Code]
+1309 Coffeen Avenue STE 1200
+Sheridan, Wyoming 82801
 United States
 
 Contact:
-Phone: [Your Phone Number]
-Email: contact@screened.com
+Phone: +1 (307) 998 3039
+Email: spencer@interactiveecommerce.com
 Support: support@screened.com
 
 Social Media:
@@ -622,8 +622,8 @@ git push origin main
 ## Contact for SEO Questions
 
 For SEO-related questions or updates to this guide:
-- Email: [Your email]
-- Slack: #seo-team
+- Email: spencer@interactiveecommerce.com
+- Phone: +1 (307) 998 3039
 - Documentation: This file (`SEO-GUIDE.md`)
 
 ---
