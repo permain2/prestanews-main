@@ -383,3 +383,5 @@ Building credit takes time:
 5. **Make a plan** for consistent, responsible use
 
 Building credit is a marathon, not a sprint. Start today, stay consistent, and watch your credit score grow month by month. Your future financial self will thank you.
+
+

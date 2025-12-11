@@ -1,7 +1,13 @@
 import type { APIRoute } from 'astro';
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 
 export const prerender = false;
+
+// Initialize Redis with Upstash credentials
+const redis = new Redis({
+  url: import.meta.env.UPSTASH_REDIS_REST_URL,
+  token: import.meta.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -20,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
     const normalizedEmail = email.toLowerCase().trim();
 
     // Check if already subscribed
-    const exists = await kv.sismember('subscribers', normalizedEmail);
+    const exists = await redis.sismember('subscribers', normalizedEmail);
     if (exists) {
       return new Response(JSON.stringify({ 
         success: true, 
@@ -32,10 +38,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Add to subscribers set
-    await kv.sadd('subscribers', normalizedEmail);
+    await redis.sadd('subscribers', normalizedEmail);
 
     // Store metadata (signup date, source)
-    await kv.hset(`subscriber:${normalizedEmail}`, {
+    await redis.hset(`subscriber:${normalizedEmail}`, {
       email: normalizedEmail,
       source,
       subscribedAt: new Date().toISOString(),
@@ -43,7 +49,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     // Increment counter
-    await kv.incr('subscriber_count');
+    await redis.incr('subscriber_count');
 
     return new Response(JSON.stringify({ 
       success: true, 

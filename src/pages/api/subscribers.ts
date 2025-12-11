@@ -1,7 +1,13 @@
 import type { APIRoute } from 'astro';
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 
 export const prerender = false;
+
+// Initialize Redis with Upstash credentials
+const redis = new Redis({
+  url: import.meta.env.UPSTASH_REDIS_REST_URL,
+  token: import.meta.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
 // Simple admin key - change this to something secure!
 const ADMIN_KEY = import.meta.env.ADMIN_API_KEY || 'your-secret-key-change-me';
@@ -23,18 +29,18 @@ export const GET: APIRoute = async ({ request }) => {
     const format = url.searchParams.get('format') || 'json';
 
     // Get all subscriber emails
-    const emails = await kv.smembers('subscribers') as string[];
+    const emails = await redis.smembers('subscribers') as string[];
     
     // Get metadata for each subscriber
     const subscribers = await Promise.all(
       emails.map(async (email) => {
-        const meta = await kv.hgetall(`subscriber:${email}`) as Record<string, string> | null;
+        const meta = await redis.hgetall(`subscriber:${email}`) as Record<string, string> | null;
         return meta || { email, subscribedAt: 'unknown', source: 'unknown' };
       })
     );
 
     // Get total count
-    const count = await kv.get('subscriber_count') || emails.length;
+    const count = await redis.get('subscriber_count') || emails.length;
 
     if (format === 'csv') {
       // Return CSV for easy import to email tools

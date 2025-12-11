@@ -102,3 +102,5 @@ After launch, monitor in Google Search Console:
 - `src/pages/[...slug].astro` - Catch-all redirect handler
 - `public/legacy/placeholder.svg` - Placeholder for image requests
 - `media-subdomain/` - Separate config for media subdomain
+
+

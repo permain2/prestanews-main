@@ -369,3 +369,5 @@ Your policy covers your belongings first. You may then have a claim against your
 5. **Buy coverage** before you need it
 
 Renters insurance costs less than a streaming subscription but protects everything you own. Don't wait until after a loss to realize its value.
+
+

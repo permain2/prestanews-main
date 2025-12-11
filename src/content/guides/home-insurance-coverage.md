@@ -315,3 +315,5 @@ For wind/hail and hurricanes in some states:
 5. **Shop for better rates** - At least every 2-3 years
 
 Understanding your homeowners insurance ensures you're protected when disaster strikes. Take time to review your coverage and make sure it meets your needs.
+
+

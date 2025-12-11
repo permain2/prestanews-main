@@ -256,3 +256,5 @@ Understand which card to use for each purchase category to maximize rewards.
 6. **Set up autopay** and start earning rewards
 
 The perfect credit card isn't about having the most premium option—it's about finding the card that maximizes value for your specific spending patterns and lifestyle. Use this framework to make an informed decision that serves your financial goals.
+
+
