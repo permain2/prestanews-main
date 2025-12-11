@@ -30,6 +30,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "@upstash/redis": "^1.35.7",
     "astro": "^5.16.4",
+    "marked": "^17.0.1",
     "motion": "^12.23.26",
     "motion-plus": "https://api.motion.dev/registry.tgz?package=motion-plus&version=latest&token=1cde2e908ab66e52efa9947f4b0639e05b95b47da187cbee7ec4a1c671605565",
     "react": "^19.2.1",

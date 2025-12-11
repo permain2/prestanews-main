@@ -18,13 +18,13 @@
 import MainLayout from './MainLayout.astro';
 import ComparisonShowcase from '../components/ComparisonShowcase.tsx';
 import AnimatedFAQ from '../components/AnimatedFAQ.tsx';
-import PremiumContentSection from '../components/PremiumContentSection.tsx';
 import ComparisonTOCToggle from '../components/ComparisonTOCToggle.tsx';
 import CursorTrailDark from '../components/CursorTrailDark.tsx';
 import ArticleSchema from '../components/seo/ArticleSchema.astro';
 import FAQSchema from '../components/seo/FAQSchema.astro';
 import AggregateRatingSchema from '../components/seo/AggregateRatingSchema.astro';
 import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
+import { marked } from 'marked';
 
 interface Provider {
   name: string;
@@ -63,6 +63,7 @@ interface Props {
   faqs?: FAQ[];
   researchIntro?: string;
   tocItems?: TOCItem[];
+  content?: string; // Markdown content as string
 }
 
 const { 
@@ -76,8 +77,12 @@ const {
   providers,
   faqs = [],
   researchIntro,
-  tocItems
+  tocItems,
+  content
 } = Astro.props;
+
+// Process markdown content if provided
+const processedContent = content ? await marked.parse(content) : null;
 
 // Get current URL for schema
 const currentUrl = Astro.url.pathname;
@@ -177,9 +182,17 @@ const breadcrumbItems = [
 
   <!-- Premium SEO Content Section -->
   <div id="guide">
-    <PremiumContentSection client:visible>
-      <slot />
-    </PremiumContentSection>
+    <section class="premium-content-section">
+      <div class="content-container">
+        {processedContent ? (
+          <div class="premium-content" set:html={processedContent} />
+        ) : (
+          <div class="premium-content">
+            <slot />
+          </div>
+        )}
+      </div>
+    </section>
   </div>
 
   <!-- Animated FAQ Section -->
@@ -270,6 +283,138 @@ const breadcrumbItems = [
       .research-intro-text {
         font-size: 0.9375rem;
         text-align: left;
+      }
+    }
+
+    /* Premium Content Section */
+    .premium-content-section {
+      padding: 4rem 0;
+      background: #ffffff;
+    }
+
+    .content-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .premium-content {
+      color: #374151;
+      font-size: 1.0625rem;
+      line-height: 1.85;
+    }
+
+    .premium-content h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 3rem 0 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .premium-content h2:first-child {
+      margin-top: 0;
+    }
+
+    .premium-content h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin: 2rem 0 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .premium-content p {
+      margin: 0 0 1.5rem;
+    }
+
+    .premium-content ul,
+    .premium-content ol {
+      margin: 0 0 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .premium-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .premium-content strong {
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .premium-content a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .premium-content a:hover {
+      text-decoration: underline;
+    }
+
+    .premium-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9375rem;
+    }
+
+    .premium-content th,
+    .premium-content td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .premium-content th {
+      font-weight: 600;
+      color: #1e293b;
+      background: #f8fafc;
+    }
+
+    .premium-content blockquote {
+      border-left: 4px solid #3b82f6;
+      padding-left: 1.5rem;
+      margin: 1.5rem 0;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .premium-content code {
+      background: #f1f5f9;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+      font-size: 0.875em;
+    }
+
+    @media (max-width: 768px) {
+      .premium-content-section {
+        padding: 2.5rem 0;
+      }
+
+      .premium-content {
+        font-size: 1rem;
+      }
+
+      .premium-content h2 {
+        font-size: 1.5rem;
+        margin: 2.5rem 0 1rem;
+      }
+
+      .premium-content h3 {
+        font-size: 1.125rem;
+      }
+
+      .premium-content table {
+        font-size: 0.8125rem;
+      }
+
+      .premium-content th,
+      .premium-content td {
+        padding: 0.5rem 0.75rem;
       }
     }
 

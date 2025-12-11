@@ -128,21 +128,8 @@ const faqs = [
     answer: "Standard RV insurance typically excludes commercial use including rentals. If you rent your RV through platforms like Outdoorsy or RVShare, you'll need commercial RV insurance or coverage provided by the rental platform. Verify coverage before renting."
   }
 ];
----
 
-<ComparisonLayout
-  title="Best RV Insurance Companies of 2025"
-  description="Compare the best RV insurance providers including Progressive, Good Sam, and National General. Expert reviews of coverage options, costs, and full-timer policies."
-  category="insurance"
-  categoryLabel="RV INSURANCE"
-  heroImage="/blog-images/rv-insurance.jpg"
-  researchIntro="We obtained 127 quotes for Class A, B, and C motorhomes plus travel trailers across 8 states. Premiums varied by up to 62% for identical coverage—the difference between $847 and $1,372 annually for a $150K Class A. These insurers offer the best RV-specific coverage at competitive rates."
-  author="Emily Johnson"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
->
-
+const content = `
 ## Understanding RV Insurance
 
 RV insurance protects your recreational vehicle investment from accidents, theft, weather damage, and liability claims. Unlike auto insurance, RV policies must account for your vehicle's dual nature as both transportation and living space.
@@ -246,6 +233,20 @@ For most RV owners, **Progressive** offers the most comprehensive coverage optio
 Specialized RV enthusiasts benefit from **Good Sam's** deep expertise in the RV lifestyle, while those with vintage or custom RVs should explore **Foremost's** specialty vehicle coverage.
 
 *Insurance costs vary significantly based on RV type, value, usage, and location. Get quotes from multiple providers for accurate pricing.*
+`;
+---
 
-</ComparisonLayout>
+<ComparisonLayout
+  title="Best RV Insurance Companies of 2025"
+  description="Compare the best RV insurance providers including Progressive, Good Sam, and National General. Expert reviews of coverage options, costs, and full-timer policies."
+  category="insurance"
+  categoryLabel="RV INSURANCE"
+  heroImage="/blog-images/rv-insurance.jpg"
+  researchIntro="We obtained 127 quotes for Class A, B, and C motorhomes plus travel trailers across 8 states. Premiums varied by up to 62% for identical coverage—the difference between $847 and $1,372 annually for a $150K Class A. These insurers offer the best RV-specific coverage at competitive rates."
+  author="Emily Johnson"
+  date="Dec 11, 2025"
+  providers={providers}
+  faqs={faqs}
+  content={content}
+/>
 
