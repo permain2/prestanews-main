@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrestaNews Project Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #0D2C4B;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #3B82F6;
+        }
+        h2 {
+            color: #0D2C4B;
+            margin: 2rem 0 1rem;
+            padding: 0.5rem 1rem;
+            background: #e8f4ff;
+            border-left: 4px solid #3B82F6;
+        }
+        h3 {
+            color: #1a3a5c;
+            margin: 1.5rem 0 0.5rem;
+        }
+        .section {
+            background: white;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .task-list {
+            list-style: none;
+        }
+        .task-list li {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .task-list input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+        }
+        .completed {
+            background: #d4edda !important;
+            text-decoration: line-through;
+            color: #155724;
+        }
+        .pending {
+            background: #fff3cd !important;
+        }
+        .idea {
+            background: #e7e3ff !important;
+            border-left: 3px solid #6f42c1;
+        }
+        code {
+            background: #e9ecef;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        .file-path {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+        th {
+            background: #0D2C4B;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .nav-toc {
+            background: #0D2C4B;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .nav-toc h2 {
+            color: white;
+            background: none;
+            border: none;
+            margin: 0 0 1rem 0;
+            padding: 0;
+        }
+        .nav-toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+        .nav-toc a {
+            color: #a8d4ff;
+            text-decoration: none;
+        }
+        .nav-toc a:hover {
+            text-decoration: underline;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .badge-done { background: #28a745; color: white; }
+        .badge-pending { background: #ffc107; color: #333; }
+        .badge-idea { background: #6f42c1; color: white; }
+        .badge-important { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PrestaNews / Screened - Project Documentation</h1>
+        <p><strong>Domain:</strong> prestanews.com (redirects to screened branding)<br>
+        <strong>Last Updated:</strong> December 2025</p>
+
+        <nav class="nav-toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#seo-guide">1. SEO Guide</a></li>
+                <li><a href="#writing-bot">2. Writing Bot & Vocabulary System</a></li>
+                <li><a href="#image-tools">3. Image Scraping & Background Removal</a></li>
+                <li><a href="#site-structure">4. Site Structure</a></li>
+                <li><a href="#tech-stack">5. Tech Stack & Hosting</a></li>
+                <li><a href="#email-system">6. Email Opt-ins System</a></li>
+                <li><a href="#backlinks">7. Backlink Strategy</a></li>
+                <li><a href="#tasks">8. Task Tracking</a></li>
+            </ul>
+        </nav>
+
+        <!-- SECTION 1: SEO GUIDE -->
+        <section id="seo-guide" class="section">
+            <h2>1. SEO Guide</h2>
+            <p>Full SEO guide available in: <code>SEO-GUIDE.md</code></p>
+            
+            <h3>Key Points Summary</h3>
+            <ul>
+                <li><strong>Title Tags:</strong> 50-60 characters, primary keyword near start</li>
+                <li><strong>Meta Descriptions:</strong> 150-160 characters, include CTA</li>
+                <li><strong>H1 Tags:</strong> One per page, matches content intent</li>
+                <li><strong>Content Length:</strong> 1,500-3,000 words for articles</li>
+                <li><strong>Internal Linking:</strong> 3-5 internal links per article</li>
+                <li><strong>Images:</strong> Alt text required, WebP format preferred</li>
+            </ul>
+
+            <h3>Article Publishing Checklist</h3>
+            <pre><code>Pre-Writing:
+- [ ] Keyword research completed
+- [ ] Competitor top 3 articles analyzed
+- [ ] Content outline with H2/H3 structure
+
+Content Creation:
+- [ ] Title 50-60 chars with primary keyword
+- [ ] Meta description 150-160 chars
+- [ ] Hero image optimized (WebP, alt text)
+- [ ] 3-5 internal links added
+- [ ] Author assigned with bio link
+
+Technical:
+- [ ] Schema markup verified
+- [ ] Mobile preview checked
+- [ ] Page speed acceptable</code></pre>
+
+            <h3>Schema Types Used</h3>
+            <table>
+                <tr><th>Page Type</th><th>Schema</th><th>Component</th></tr>
+                <tr><td>Articles</td><td>Article + BreadcrumbList</td><td>ArticleSchema.astro</td></tr>
+                <tr><td>Reviews</td><td>Review + AggregateRating</td><td>ReviewSchema.astro</td></tr>
+                <tr><td>Homepage</td><td>Organization + WebSite</td><td>OrganizationSchema.astro</td></tr>
+                <tr><td>FAQ Sections</td><td>FAQPage</td><td>FAQSchema.astro</td></tr>
+            </table>
+        </section>
+
+        <!-- SECTION 2: WRITING BOT -->
+        <section id="writing-bot" class="section">
+            <h2>2. Writing Bot & Vocabulary System</h2>
+            
+            <h3>How It Works</h3>
+            <p>Use AI (Claude/GPT) with specific vocabulary and style guidelines to generate consistent, on-brand content that matches The Points Guy style.</p>
+
+            <h3>Vocabulary Guidelines</h3>
+            <table>
+                <tr><th>Use This</th><th>Instead Of</th></tr>
+                <tr><td>premium travel rewards</td><td>fancy credit card benefits</td></tr>
+                <tr><td>welcome bonus</td><td>sign-up offer</td></tr>
+                <tr><td>annual fee</td><td>yearly cost</td></tr>
+                <tr><td>earning rate</td><td>how much you get back</td></tr>
+                <tr><td>redemption value</td><td>how much points are worth</td></tr>
+                <tr><td>lounge access</td><td>airport lounge entry</td></tr>
+                <tr><td>elite status</td><td>top tier membership</td></tr>
+                <tr><td>transfer partners</td><td>airline/hotel partners</td></tr>
+            </table>
+
+            <h3>Creating New Review Articles</h3>
+            <pre><code>Prompt Template for AI:
+
+"Write a credit card review for [CARD NAME] in the style of 
+The Points Guy / NerdWallet. Include:
+
+1. Card Overview (2-3 paragraphs)
+2. Key Features (welcome bonus, earning rates, annual fee)
+3. Pros list (4-6 items)
+4. Cons list (2-4 items)
+5. Who Should Apply section
+6. Redemption Value Analysis
+7. Bottom Line recommendation
+
+Use professional, authoritative tone. Include specific 
+numbers and percentages. Mention competitor comparisons 
+where relevant.
+
+Output in Markdown format with YAML frontmatter for Astro."</code></pre>
+
+            <h3>Review File Template</h3>
+            <p class="file-path">Location: <code>src/content/reviews/[card-slug].md</code></p>
+            <pre><code>---
+title: "[Card Name] Review: [Value Proposition]"
+description: "[150 char meta description]"
+pubDate: 2025-12-10
+heroImage: "/credit-cards/[card-slug].png"
+tags: ["credit-cards"]
+rating: 4.5
+pros:
+  - "Pro 1"
+  - "Pro 2"
+cons:
+  - "Con 1"
+affiliateLink: "https://..."
+category: "credit_cards"
+---
+
+[Article content in Markdown...]</code></pre>
+        </section>
+
+        <!-- SECTION 3: IMAGE TOOLS -->
+        <section id="image-tools" class="section">
+            <h2>3. Image Scraping & Background Removal</h2>
+
+            <h3>Credit Card Images</h3>
+            <p>Card images stored in: <code>/public/credit-cards/</code></p>
+            
+            <h4>Sources for Card Images</h4>
+            <ul>
+                <li><strong>Official Sites:</strong> Card issuer websites (often have press kits)</li>
+                <li><strong>NerdWallet/TPG:</strong> Reference for which images to look for</li>
+                <li><strong>Google Images:</strong> Search "[Card Name] credit card png transparent"</li>
+            </ul>
+
+            <h4>Card Image Mapping</h4>
+            <p class="file-path">File: <code>src/utils/cardImageMap.ts</code></p>
+            <pre><code>// Maps card names to image paths
+const cardImages = {
+  "amex-platinum": "/credit-cards/amex-platinum.png",
+  "chase-sapphire-preferred": "/credit-cards/chase-sapphire-preferred.png",
+  // ... etc
+};
+
+// Name variations for lookup
+const nameVariations = {
+  "american express platinum": "amex-platinum",
+  "platinum card from american express": "amex-platinum",
+  // ... etc
+};
+
+// Usage in components:
+import { getCardImage } from '../utils/cardImageMap';
+const imagePath = getCardImage("American Express Platinum Card®");</code></pre>
+
+            <h3>Insurance Company Logos</h3>
+            <p>Logo images stored in: <code>/public/insurance-logos/</code></p>
+            <p><span class="badge badge-pending">PENDING</span> Current logos are AI-generated placeholders. Need real company logos.</p>
+
+            <h4>Logo Sources</h4>
+            <ul>
+                <li><strong>Official Company Sites:</strong> Check press/media pages</li>
+                <li><strong>Brandfetch:</strong> brandfetch.com (some free, some paid)</li>
+                <li><strong>Seeklogo:</strong> seeklogo.com</li>
+                <li><strong>Wikipedia:</strong> Often has SVG logos</li>
+            </ul>
+
+            <h3>Background Removal Tools</h3>
+            <ul>
+                <li><strong>Remove.bg:</strong> remove.bg (free tier available)</li>
+                <li><strong>Photopea:</strong> photopea.com (free Photoshop alternative)</li>
+                <li><strong>GIMP:</strong> Free desktop tool</li>
+                <li><strong>macOS Preview:</strong> Instant Alpha tool for simple backgrounds</li>
+            </ul>
+
+            <h3>Image Optimization</h3>
+            <pre><code># Convert to WebP (recommended)
+npx @aspect/image-optimizer public/credit-cards/*.png
+
+# Or use online tools:
+# - squoosh.app
+# - tinypng.com</code></pre>
+        </section>
+
+        <!-- SECTION 4: SITE STRUCTURE -->
+        <section id="site-structure" class="section">
+            <h2>4. Site Structure</h2>
+
+            <h3>Directory Structure</h3>
+            <pre><code>src/
+├── components/          # Reusable UI components
+│   ├── Header.astro
+│   ├── Footer.astro
+│   ├── NewsletterBox.tsx
+│   ├── CreditCardReview.tsx
+│   ├── seo/            # Schema markup components
+│   └── calculators/    # Interactive tools
+│
+├── content/            # Markdown content (Astro Collections)
+│   ├── blog/           # Blog articles
+│   └── reviews/        # Credit card reviews
+│
+├── layouts/            # Page layouts
+│   ├── MainLayout.astro
+│   ├── BlogPost.astro
+│   └── ReviewPost.astro
+│
+├── pages/              # Route pages
+│   ├── index.astro     # Homepage
+│   ├── credit-cards/   # Credit card category pages
+│   ├── insurance/      # Insurance category pages
+│   ├── blog/           # Blog listing & posts
+│   ├── reviews/        # Reviews listing & posts
+│   └── api/            # API endpoints
+│
+├── styles/             # Global CSS
+└── utils/              # Utility functions
+
+public/
+├── credit-cards/       # Credit card images
+├── insurance-logos/    # Insurance company logos
+├── team/               # Team member photos
+├── blog-images/        # Blog article images
+└── category-images/    # Category header images</code></pre>
+
+            <h3>Content Collections</h3>
+            <p class="file-path">Defined in: <code>src/content.config.ts</code></p>
+            <table>
+                <tr><th>Collection</th><th>Path</th><th>Schema</th></tr>
+                <tr><td>blog</td><td>src/content/blog/</td><td>title, description, pubDate, heroImage, author, tags</td></tr>
+                <tr><td>reviews</td><td>src/content/reviews/</td><td>title, description, pubDate, heroImage, rating, pros, cons, affiliateLink</td></tr>
+            </table>
+
+            <h3>Key Pages</h3>
+            <table>
+                <tr><th>URL</th><th>File</th><th>Purpose</th></tr>
+                <tr><td>/</td><td>index.astro</td><td>Homepage with hero, offers, articles</td></tr>
+                <tr><td>/credit-cards</td><td>credit-cards/index.astro</td><td>Credit card category hub</td></tr>
+                <tr><td>/credit-cards/best-travel-cards</td><td>credit-cards/best-travel-cards.astro</td><td>Travel cards comparison</td></tr>
+                <tr><td>/insurance</td><td>insurance/index.astro</td><td>Insurance category hub</td></tr>
+                <tr><td>/insurance/life</td><td>insurance/life.astro</td><td>Life insurance comparison</td></tr>
+                <tr><td>/blog</td><td>blog/index.astro</td><td>Blog article listing</td></tr>
+                <tr><td>/reviews</td><td>reviews/index.astro</td><td>Review article listing</td></tr>
+            </table>
+        </section>
+
+        <!-- SECTION 5: TECH STACK -->
+        <section id="tech-stack" class="section">
+            <h2>5. Tech Stack & Hosting</h2>
+
+            <h3>Technology Stack</h3>
+            <table>
+                <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+                <tr><td>Framework</td><td>Astro 4.x</td><td>Static site generation with islands</td></tr>
+                <tr><td>UI Components</td><td>React 18</td><td>Interactive components (forms, animations)</td></tr>
+                <tr><td>Animations</td><td>Motion.dev (Framer Motion)</td><td>Smooth animations and transitions</td></tr>
+                <tr><td>Styling</td><td>Tailwind CSS</td><td>Utility-first CSS framework</td></tr>
+                <tr><td>Content</td><td>Markdown + MDX</td><td>Blog and review articles</td></tr>
+                <tr><td>Database</td><td>Upstash Redis</td><td>Newsletter subscriber storage</td></tr>
+                <tr><td>Hosting</td><td>Vercel</td><td>Deployment and serverless functions</td></tr>
+                <tr><td>Domain</td><td>prestanews.com</td><td>Primary domain</td></tr>
+            </table>
+
+            <h3>Local Development</h3>
+            <pre><code># Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview</code></pre>
+
+            <h3>Deployment Process</h3>
+            <ol>
+                <li>Push to <code>main</code> branch on GitHub</li>
+                <li>Vercel automatically detects changes</li>
+                <li>Builds Astro site (npm run build)</li>
+                <li>Deploys to Vercel edge network</li>
+                <li>SSL certificate auto-managed</li>
+            </ol>
+
+            <h3>Environment Variables (Vercel)</h3>
+            <pre><code>UPSTASH_REDIS_REST_URL=https://...
+UPSTASH_REDIS_REST_TOKEN=...
+ADMIN_API_KEY=your-secret-key</code></pre>
+
+            <h3>Key Configuration Files</h3>
+            <table>
+                <tr><th>File</th><th>Purpose</th></tr>
+                <tr><td>astro.config.mjs</td><td>Astro configuration, integrations</td></tr>
+                <tr><td>tailwind.config.js</td><td>Tailwind customization</td></tr>
+                <tr><td>vercel.json</td><td>Vercel deployment settings</td></tr>
+                <tr><td>tsconfig.json</td><td>TypeScript configuration</td></tr>
+                <tr><td>package.json</td><td>Dependencies and scripts</td></tr>
+            </table>
+        </section>
+
+        <!-- SECTION 6: EMAIL SYSTEM -->
+        <section id="email-system" class="section">
+            <h2>6. Email Opt-ins System</h2>
+            <p>Full documentation in: <code>NEWSLETTER-SETUP.md</code></p>
+
+            <h3>How It Works</h3>
+            <ol>
+                <li>User enters email in newsletter form (footer, sidebar, hero)</li>
+                <li>Form submits to <code>/api/subscribe</code> endpoint</li>
+                <li>API validates email and checks for duplicates</li>
+                <li>Stores in Upstash Redis with metadata</li>
+                <li>Returns success/error response</li>
+            </ol>
+
+            <h3>API Endpoints</h3>
+            <table>
+                <tr><th>Endpoint</th><th>Method</th><th>Purpose</th></tr>
+                <tr><td>/api/subscribe</td><td>POST</td><td>Add new subscriber</td></tr>
+                <tr><td>/api/subscribers</td><td>GET</td><td>List all subscribers (admin)</td></tr>
+            </table>
+
+            <h3>Data Structure in Redis</h3>
+            <pre><code>Key: subscriber:{email}
+Value: {
+  "email": "user@example.com",
+  "source": "footer",
+  "subscribedAt": "2025-12-10T10:30:00.000Z",
+  "ip": "..."
+}</code></pre>
+
+            <h3>Exporting Subscribers</h3>
+            <pre><code># JSON format
+curl "https://prestanews.com/api/subscribers?key=YOUR_ADMIN_KEY"
+
+# CSV format (for import to email tools)
+curl "https://prestanews.com/api/subscribers?key=YOUR_ADMIN_KEY&format=csv"</code></pre>
+
+            <h3>Sending Emails with Cursor</h3>
+            <p>Since subscribers are stored in Upstash, you can:</p>
+            <ol>
+                <li>Export CSV from the API endpoint</li>
+                <li>Import to Mailchimp, ConvertKit, Beehiiv, etc.</li>
+                <li>Send campaigns through those platforms</li>
+            </ol>
+            <p><span class="badge badge-idea">IDEA</span> Future: Build direct email sending via SendGrid/Resend API</p>
+
+            <h3>Newsletter Components</h3>
+            <table>
+                <tr><th>Component</th><th>Location</th><th>Features</th></tr>
+                <tr><td>NewsletterBox.tsx</td><td>Sidebar widget</td><td>Compact form, inline success state</td></tr>
+                <tr><td>NewsletterHero.tsx</td><td>Dedicated page hero</td><td>Large form with benefits</td></tr>
+                <tr><td>Footer form</td><td>Footer.astro</td><td>Simple HTML form, vanilla JS</td></tr>
+            </table>
+        </section>
+
+        <!-- SECTION 7: BACKLINKS -->
+        <section id="backlinks" class="section">
+            <h2>7. Backlink Strategy</h2>
+
+            <h3>Domain Purchase Rationale</h3>
+            <p><strong>prestanews.com</strong> was purchased because:</p>
+            <ul>
+                <li>Existing domain authority from previous site</li>
+                <li>Backlinks already pointing to it</li>
+                <li>Relevant to finance/news niche</li>
+                <li>Clean history (no spam penalties)</li>
+            </ul>
+
+            <h3>Link Juice Optimization Actions</h3>
+            <ul class="task-list">
+                <li class="completed"><input type="checkbox" checked disabled> Set up proper 301 redirects from old URLs to new structure</li>
+                <li class="completed"><input type="checkbox" checked disabled> Maintain URL structure where possible for existing backlinks</li>
+                <li class="completed"><input type="checkbox" checked disabled> Implement canonical tags on all pages</li>
+                <li class="completed"><input type="checkbox" checked disabled> Submit XML sitemap to Google Search Console</li>
+                <li class="pending"><input type="checkbox" disabled> Audit existing backlinks with Ahrefs/SEMrush</li>
+                <li class="pending"><input type="checkbox" disabled> Reach out to high-value backlink sources for updates</li>
+                <li class="pending"><input type="checkbox" disabled> Build new backlinks through guest posting</li>
+            </ul>
+
+            <h3>Internal Linking Strategy</h3>
+            <ul>
+                <li>Every article links to 3-5 related articles</li>
+                <li>Category pages link to all relevant sub-pages</li>
+                <li>Footer contains links to all main sections</li>
+                <li>Breadcrumbs on all pages for navigation + SEO</li>
+            </ul>
+
+            <h3>Tools for Backlink Analysis</h3>
+            <ul>
+                <li><strong>Ahrefs:</strong> Comprehensive backlink database</li>
+                <li><strong>SEMrush:</strong> Competitor analysis</li>
+                <li><strong>Google Search Console:</strong> Free, shows linking domains</li>
+                <li><strong>Moz Link Explorer:</strong> Domain authority tracking</li>
+            </ul>
+        </section>
+
+        <!-- SECTION 8: TASK TRACKING -->
+        <section id="tasks" class="section">
+            <h2>8. Task Tracking</h2>
+
+            <h3>Completed Tasks <span class="badge badge-done">DONE</span></h3>
+            <ul class="task-list">
+                <li class="completed"><input type="checkbox" checked disabled> Set up Astro project structure</li>
+                <li class="completed"><input type="checkbox" checked disabled> Create MainLayout, Header, Footer components</li>
+                <li class="completed"><input type="checkbox" checked disabled> Build credit card category pages (travel, cashback, business, etc.)</li>
+                <li class="completed"><input type="checkbox" checked disabled> Build insurance category pages (life, car, home, renters)</li>
+                <li class="completed"><input type="checkbox" checked disabled> Implement newsletter signup with Upstash Redis</li>
+                <li class="completed"><input type="checkbox" checked disabled> Add Motion.dev animations to forms</li>
+                <li class="completed"><input type="checkbox" checked disabled> Create card image mapping system (cardImageMap.ts)</li>
+                <li class="completed"><input type="checkbox" checked disabled> Download real credit card images</li>
+                <li class="completed"><input type="checkbox" checked disabled> Update team member photos</li>
+                <li class="completed"><input type="checkbox" checked disabled> Fix header transparency on scroll</li>
+                <li class="completed"><input type="checkbox" checked disabled> Add schema markup components</li>
+                <li class="completed"><input type="checkbox" checked disabled> Deploy to Vercel</li>
+                <li class="completed"><input type="checkbox" checked disabled> Configure custom domain (prestanews.com)</li>
+            </ul>
+
+            <h3>Pending Tasks <span class="badge badge-pending">TODO</span></h3>
+            <ul class="task-list">
+                <li class="pending"><input type="checkbox" disabled> Replace AI-generated insurance logos with real company logos</li>
+                <li class="pending"><input type="checkbox" disabled> Add more credit card review articles</li>
+                <li class="pending"><input type="checkbox" disabled> Build insurance quote comparison tool</li>
+                <li class="pending"><input type="checkbox" disabled> Implement search functionality</li>
+                <li class="pending"><input type="checkbox" disabled> Add user comments/reviews system</li>
+                <li class="pending"><input type="checkbox" disabled> Set up Google Analytics 4</li>
+                <li class="pending"><input type="checkbox" disabled> Submit to Google News</li>
+                <li class="pending"><input type="checkbox" disabled> Create email drip campaign</li>
+                <li class="pending"><input type="checkbox" disabled> Add affiliate disclosure modal</li>
+                <li class="pending"><input type="checkbox" disabled> Implement dark mode toggle</li>
+            </ul>
+
+            <h3>Future Ideas <span class="badge badge-idea">IDEAS</span></h3>
+            <ul class="task-list">
+                <li class="idea"><input type="checkbox" disabled> Points/miles calculator tool</li>
+                <li class="idea"><input type="checkbox" disabled> Credit card recommendation quiz</li>
+                <li class="idea"><input type="checkbox" disabled> Travel rewards booking portal integration</li>
+                <li class="idea"><input type="checkbox" disabled> Push notifications for new deals</li>
+                <li class="idea"><input type="checkbox" disabled> Community forum for points enthusiasts</li>
+                <li class="idea"><input type="checkbox" disabled> Mobile app version</li>
+                <li class="idea"><input type="checkbox" disabled> Video content integration (YouTube embeds)</li>
+                <li class="idea"><input type="checkbox" disabled> Podcast section</li>
+                <li class="idea"><input type="checkbox" disabled> AI-powered card recommendation chatbot</li>
+            </ul>
+        </section>
+
+        <footer style="text-align: center; padding: 2rem; color: #666;">
+            <p>PrestaNews / Screened Project Documentation</p>
+            <p>Last updated: December 2025</p>
+        </footer>
+    </div>
+</body>
+</html>

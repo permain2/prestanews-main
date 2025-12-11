@@ -2,7 +2,7 @@
 title: "Capital One Venture X Review: Is It Worth the Annual Fee?"
 description: "Comprehensive Capital One Venture X credit card review covering rewards, benefits, and whether the $395 annual fee delivers real value for travelers."
 pubDate: 2025-12-10
-heroImage: "/blog-placeholder-3.jpg"
+heroImage: "/credit-cards/capital-one-venture-x.png"
 tags: ["credit-cards"]
 rating: 4.5
 pros:

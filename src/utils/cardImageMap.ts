@@ -10,7 +10,7 @@ const cardImages: Record<string, string> = {
   "amex-gold": "/credit-cards/amex-gold.png",
   "amex-green": "/credit-cards/amex-green.png",
   "amex-everyday": "/credit-cards/amex-everyday.png",
-  "amex-cash-magnet": "/credit-cards/amex-cash-magnet.png",
+  // amex-cash-magnet removed - image was corrupted YouTube thumbnail
   "blue-cash-preferred": "/credit-cards/blue-cash-preferred.png",
   "blue-cash-everyday": "/credit-cards/blue-cash-everyday.png",
   "amex-business-platinum": "/credit-cards/amex-business-platinum.png",
@@ -107,6 +107,8 @@ const nameVariations: Record<string, string> = {
   "hilton honors aspire": "hilton-honors-aspire",
   "hilton aspire": "hilton-honors-aspire",
   "hilton aspire card": "hilton-honors-aspire",
+  "hilton honors american express aspire": "hilton-honors-aspire",
+  "hilton honors american express aspire card": "hilton-honors-aspire",
   
   // Chase Cards
   "chase sapphire preferred": "chase-sapphire-preferred",

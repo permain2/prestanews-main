@@ -3,7 +3,7 @@
 import { SITE_TITLE } from '../consts';
 ---
 
-<header class="bg-white border-b border-gray-200 sticky top-0 z-50" role="banner">
+<header class="header-fixed bg-white border-b border-gray-200 sticky top-0 z-50" role="banner">
   <a href="#main-content" class="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:text-blue-600">
     Skip to main content
   </a>
@@ -75,6 +75,13 @@ import { SITE_TITLE } from '../consts';
 </header>
 
 <style>
+  .header-fixed {
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
   .nav-link {
     color: #000000 !important;
   }
