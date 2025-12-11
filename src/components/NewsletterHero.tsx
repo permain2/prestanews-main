@@ -2,12 +2,11 @@
 
 import { motion, useMotionValue, useTransform, useSpring, animate, AnimatePresence } from "motion/react"
 import { useState, useRef, useEffect, type FormEvent, type MouseEvent } from "react"
-import NewsletterSuccess from "./NewsletterSuccess"
 
 export default function NewsletterHero() {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
-  const [showSuccess, setShowSuccess] = useState(false)
+  const [checkProgress, setCheckProgress] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   
   // Mouse tracking for parallax
@@ -34,6 +33,14 @@ export default function NewsletterHero() {
     })
     return () => controls.stop()
   }, [])
+
+  // Animate checkmark on success
+  useEffect(() => {
+    if (status === "success") {
+      const timer = setTimeout(() => setCheckProgress(1), 200)
+      return () => clearTimeout(timer)
+    }
+  }, [status])
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return
@@ -65,7 +72,6 @@ export default function NewsletterHero() {
       if (response.ok) {
         setStatus("success")
         setEmail("")
-        setShowSuccess(true)
       } else {
         setStatus("error")
         setTimeout(() => setStatus("idle"), 3000)
@@ -76,17 +82,7 @@ export default function NewsletterHero() {
     }
   }
 
-  const handleCloseSuccess = () => {
-    setShowSuccess(false)
-  }
-
   return (
-    <>
-      <AnimatePresence>
-        {showSuccess && (
-          <NewsletterSuccess variant="guides" onClose={handleCloseSuccess} />
-        )}
-      </AnimatePresence>
     <div 
       ref={containerRef}
       className="newsletter-hero-container"
@@ -161,58 +157,165 @@ export default function NewsletterHero() {
           delivered to your inbox every week.
         </motion.p>
 
-        {/* Signup Form */}
-        <motion.form 
-          className="hero-form"
-          onSubmit={handleSubmit}
+        {/* Form Area - Switches between Form and Success */}
+        <motion.div 
+          className="form-area"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <div className="form-container">
-            <div className="input-container">
-              <svg className="email-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-              </svg>
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={status === "loading" || status === "success"}
-                required
-              />
-            </div>
-            <motion.button
-              type="submit"
-              className="submit-button"
-              disabled={status === "loading" || status === "success"}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {status === "loading" ? (
-                <motion.span
-                  className="loading-spinner"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                >
-                  ⟳
-                </motion.span>
-              ) : status === "success" ? (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 500 }}
-                >
-                  ✓ SUBSCRIBED
-                </motion.span>
-              ) : (
-                "SUBSCRIBE FREE"
-              )}
-            </motion.button>
-          </div>
-          <p className="disclaimer">No spam, ever. Unsubscribe at any time.</p>
-        </motion.form>
+          <AnimatePresence mode="wait">
+            {status === "success" ? (
+              /* Inline Success State */
+              <motion.div
+                key="success"
+                className="inline-success-hero"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              >
+                <div className="success-inner">
+                  {/* Animated Check Circle */}
+                  <motion.div 
+                    className="success-check-circle"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15, delay: 0.1 }}
+                  >
+                    <svg viewBox="0 0 52 52" className="check-svg">
+                      <motion.path
+                        d="M14 27L22 35L38 19"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: checkProgress }}
+                        transition={{ duration: 0.4, delay: 0.3 }}
+                      />
+                    </svg>
+                    {/* Ripple */}
+                    <motion.div
+                      className="ripple"
+                      initial={{ scale: 1, opacity: 0.5 }}
+                      animate={{ scale: 2.5, opacity: 0 }}
+                      transition={{ duration: 1, delay: 0.3 }}
+                    />
+                  </motion.div>
+                  
+                  <div className="success-text">
+                    <motion.h3 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      You're In!
+                    </motion.h3>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                    >
+                      Check your inbox for confirmation
+                    </motion.p>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              /* Form State */
+              <motion.form 
+                key="form"
+                className="hero-form"
+                onSubmit={handleSubmit}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+              >
+                <div className="form-container">
+                  <div className="input-container">
+                    <svg className="email-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                    </svg>
+                    <input
+                      type="email"
+                      placeholder="Enter your email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={status === "loading"}
+                      required
+                    />
+                  </div>
+                  <motion.button
+                    type="submit"
+                    className={`submit-button ${status === "error" ? "error" : ""}`}
+                    disabled={status === "loading"}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <AnimatePresence mode="wait">
+                      {status === "loading" ? (
+                        <motion.span
+                          key="loading"
+                          className="loading-spinner"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1, rotate: 360 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ rotate: { duration: 1, repeat: Infinity, ease: "linear" } }}
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <circle cx="12" cy="12" r="10" opacity="0.25" />
+                            <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round" />
+                          </svg>
+                        </motion.span>
+                      ) : status === "error" ? (
+                        <motion.span
+                          key="error"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{ scale: 0 }}
+                        >
+                          TRY AGAIN
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="default"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                        >
+                          SUBSCRIBE FREE
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.button>
+                </div>
+                <AnimatePresence>
+                  {status === "error" ? (
+                    <motion.p 
+                      className="error-message"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                    >
+                      Something went wrong. Please try again.
+                    </motion.p>
+                  ) : (
+                    <motion.p 
+                      className="disclaimer"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      No spam, ever. Unsubscribe at any time.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </motion.div>
 
         {/* Social Proof with Animated Counter */}
         <motion.div 
@@ -350,8 +453,13 @@ export default function NewsletterHero() {
           margin-bottom: 2rem;
         }
 
-        .hero-form {
+        .form-area {
           margin-bottom: 2rem;
+          min-height: 120px;
+        }
+
+        .hero-form {
+          /* inherits from form-area */
         }
 
         .form-container {
@@ -394,6 +502,11 @@ export default function NewsletterHero() {
           color: rgba(255, 255, 255, 0.4);
         }
 
+        .input-container input:focus {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 0.75rem;
+        }
+
         .submit-button {
           padding: 1rem 2rem;
           font-family: 'Poppins', sans-serif;
@@ -408,6 +521,9 @@ export default function NewsletterHero() {
           transition: all 0.2s ease;
           white-space: nowrap;
           min-width: 160px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .submit-button:hover:not(:disabled) {
@@ -420,9 +536,14 @@ export default function NewsletterHero() {
           cursor: default;
         }
 
-        .loading-spinner {
-          display: inline-block;
-          font-size: 1.25rem;
+        .submit-button.error {
+          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          color: white;
+        }
+
+        .loading-spinner svg {
+          width: 20px;
+          height: 20px;
         }
 
         .disclaimer {
@@ -430,6 +551,72 @@ export default function NewsletterHero() {
           font-size: 0.8125rem;
           color: rgba(255, 255, 255, 0.5);
           margin-top: 0.75rem;
+        }
+
+        .error-message {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.8125rem;
+          color: #f87171;
+          margin-top: 0.75rem;
+        }
+
+        /* Inline Success State */
+        .inline-success-hero {
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 1rem;
+          padding: 1.5rem 2rem;
+        }
+
+        .success-inner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1.25rem;
+        }
+
+        .success-check-circle {
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          position: relative;
+        }
+
+        .check-svg {
+          width: 28px;
+          height: 28px;
+        }
+
+        .ripple {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          border: 2px solid #10b981;
+          pointer-events: none;
+        }
+
+        .success-text {
+          text-align: left;
+        }
+
+        .success-text h3 {
+          font-family: 'Sora', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: 0.25rem;
+        }
+
+        .success-text p {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.875rem;
+          color: rgba(255, 255, 255, 0.7);
         }
 
         .social-proof {
@@ -525,6 +712,19 @@ export default function NewsletterHero() {
             width: 100%;
           }
 
+          .inline-success-hero {
+            padding: 1.25rem;
+          }
+
+          .success-inner {
+            flex-direction: column;
+            text-align: center;
+          }
+
+          .success-text {
+            text-align: center;
+          }
+
           .social-proof {
             flex-direction: column;
             gap: 0.5rem;
@@ -541,6 +741,5 @@ export default function NewsletterHero() {
         }
       `}</style>
     </div>
-    </>
   )
 }

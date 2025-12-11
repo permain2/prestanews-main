@@ -3,6 +3,7 @@ import { motion, useInView } from "motion/react";
 import { useRef, useState } from "react";
 import AnimatedCreditCard from "./AnimatedCreditCard";
 import ApplyNowButton from "./ApplyNowButton";
+import { getCardImage } from "../utils/cardImageMap";
 
 interface CreditCardReviewProps {
   card: {
@@ -22,6 +23,10 @@ export default function CreditCardReview({ card, index }: CreditCardReviewProps)
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  // Get real card image if available
+  const cardImagePath = getCardImage(card.name);
 
   return (
     <motion.div
@@ -44,7 +49,50 @@ export default function CreditCardReview({ card, index }: CreditCardReviewProps)
       <div className="grid md:grid-cols-[300px_1fr]">
         {/* Left Panel - Card Image & CTA */}
         <div className="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
-          <AnimatedCreditCard name={card.name} colorIndex={index} />
+          {cardImagePath && !imageError ? (
+            /* Real Card Image */
+            <motion.div
+              className="card-image-container"
+              whileHover={{ 
+                scale: 1.05,
+                rotateY: 5,
+                rotateX: -3,
+              }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 300, 
+                damping: 20 
+              }}
+              style={{ perspective: 1000 }}
+            >
+              <motion.img
+                src={cardImagePath}
+                alt={card.name}
+                className="w-full max-w-[260px] h-auto rounded-xl shadow-xl"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4 }}
+                onError={() => setImageError(true)}
+                style={{
+                  filter: isHovered ? "drop-shadow(0 20px 40px rgba(0,0,0,0.25))" : "drop-shadow(0 10px 20px rgba(0,0,0,0.15))",
+                  transition: "filter 0.3s ease"
+                }}
+              />
+              {/* Shine Effect */}
+              <motion.div
+                className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none"
+                style={{
+                  background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.3) 45%, transparent 50%)",
+                  opacity: isHovered ? 1 : 0,
+                }}
+                animate={isHovered ? { x: ["-100%", "200%"] } : {}}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+              />
+            </motion.div>
+          ) : (
+            /* Fallback to Animated Card */
+            <AnimatedCreditCard name={card.name} colorIndex={index} />
+          )}
           
           <div className="w-full mt-6">
             <ApplyNowButton href="#" />
@@ -168,9 +216,13 @@ export default function CreditCardReview({ card, index }: CreditCardReviewProps)
           </div>
         </div>
       </div>
+      
+      <style>{`
+        .card-image-container {
+          position: relative;
+          transform-style: preserve-3d;
+        }
+      `}</style>
     </motion.div>
   );
 }
-
-
-

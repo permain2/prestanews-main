@@ -1,8 +1,7 @@
 "use client"
 
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "motion/react"
-import { useState, useRef, type FormEvent, type MouseEvent } from "react"
-import NewsletterSuccess from "./NewsletterSuccess"
+import { useState, useRef, useEffect, type FormEvent, type MouseEvent } from "react"
 
 type NewsletterVariant = "guides" | "credit-card" | "insurance"
 
@@ -13,8 +12,8 @@ interface NewsletterBoxProps {
 export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps) {
   const [email, setEmail] = useState("")
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
-  const [showSuccess, setShowSuccess] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [checkProgress, setCheckProgress] = useState(0)
   const cardRef = useRef<HTMLDivElement>(null)
   
   // Mouse tracking for tilt effect
@@ -23,6 +22,14 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
   
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [3, -3]), { stiffness: 300, damping: 30 })
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-3, 3]), { stiffness: 300, damping: 30 })
+
+  // Animate checkmark on success
+  useEffect(() => {
+    if (status === "success") {
+      const timer = setTimeout(() => setCheckProgress(1), 200)
+      return () => clearTimeout(timer)
+    }
+  }, [status])
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return
@@ -55,7 +62,6 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
       if (response.ok) {
         setStatus("success")
         setEmail("")
-        setShowSuccess(true)
       } else {
         setStatus("error")
         setTimeout(() => setStatus("idle"), 3000)
@@ -66,21 +72,10 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
     }
   }
 
-  const handleCloseSuccess = () => {
-    setShowSuccess(false)
-  }
-
   const config = variants[variant]
 
   return (
-    <>
-      <AnimatePresence>
-        {showSuccess && (
-          <NewsletterSuccess variant={variant} onClose={handleCloseSuccess} />
-        )}
-      </AnimatePresence>
-      
-      <motion.div
+    <motion.div
       ref={cardRef}
       className="newsletter-box-wrapper"
       style={{ rotateX, rotateY, transformPerspective: 800 }}
@@ -99,130 +94,265 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
           transition={{ duration: 0.4 }}
         />
         
-        {/* Icon */}
-        <motion.div 
-          className="icon-container"
-          animate={{ 
-            y: isHovered ? -4 : 0,
-            scale: isHovered ? 1.1 : 1 
-          }}
-          transition={{ type: "spring", stiffness: 400, damping: 20 }}
-        >
-          {config.icon}
-        </motion.div>
-
-        {/* Headlines */}
-        <motion.p 
-          className="headline"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          Get the <strong>{config.offer}</strong>
-        </motion.p>
-        <motion.p 
-          className="subheadline"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-        >
-          {config.subtitle}
-        </motion.p>
-
-        {/* Benefits List with Stagger */}
-        <motion.ul 
-          className="benefits-list"
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: {
-              transition: { staggerChildren: 0.08, delayChildren: 0.2 }
-            }
-          }}
-        >
-          {config.benefits.map((benefit, i) => (
-            <motion.li
-              key={i}
-              variants={{
-                hidden: { opacity: 0, x: -10 },
-                visible: { opacity: 1, x: 0 }
-              }}
-              whileHover={{ x: 4, transition: { duration: 0.15 } }}
+        <AnimatePresence mode="wait">
+          {status === "success" ? (
+            /* Inline Success State */
+            <motion.div
+              key="success"
+              className="inline-success"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
-              <span className="benefit-icon">{benefit.icon}</span>
-              <span>{benefit.text}</span>
-            </motion.li>
-          ))}
-        </motion.ul>
+              {/* Animated Check Circle */}
+              <motion.div 
+                className="success-check-circle"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 400, 
+                  damping: 15,
+                  delay: 0.1 
+                }}
+              >
+                <svg viewBox="0 0 52 52" className="check-svg">
+                  <motion.path
+                    d="M14 27L22 35L38 19"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: checkProgress }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                  />
+                </svg>
+                
+                {/* Ripple Effects */}
+                <motion.div
+                  className="ripple"
+                  initial={{ scale: 1, opacity: 0.5 }}
+                  animate={{ scale: 2.5, opacity: 0 }}
+                  transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                />
+                <motion.div
+                  className="ripple"
+                  initial={{ scale: 1, opacity: 0.3 }}
+                  animate={{ scale: 2, opacity: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                />
+              </motion.div>
 
-        {/* Form */}
-        <form className="signup-form" onSubmit={handleSubmit}>
-          <div className="input-group">
-            <motion.div 
-              className="input-wrapper"
-              whileFocus={{ scale: 1.02 }}
-            >
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={status === "loading" || status === "success"}
-                required
-              />
-              <motion.span 
-                className="input-highlight"
-                initial={{ scaleX: 0 }}
-                whileFocus={{ scaleX: 1 }}
-              />
+              {/* Success Message */}
+              <motion.h3 
+                className="success-title"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                You're In!
+              </motion.h3>
+              
+              <motion.p 
+                className="success-subtitle"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                Check your inbox for {config.offer}
+              </motion.p>
+
+              {/* Benefits reminder */}
+              <motion.ul 
+                className="success-benefits"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                {["Weekly insights", "Exclusive deals", "Expert tips"].map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6 + i * 0.1 }}
+                  >
+                    <span className="benefit-check">✓</span>
+                    {item}
+                  </motion.li>
+                ))}
+              </motion.ul>
             </motion.div>
-            
-            <motion.button
-              type="submit"
-              className="submit-btn"
-              disabled={status === "loading" || status === "success"}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+          ) : (
+            /* Form State */
+            <motion.div
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
             >
-              {status === "loading" ? (
-                <motion.span
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                >
-                  ⟳
-                </motion.span>
-              ) : status === "success" ? (
-                <motion.span
+              {/* Icon */}
+              <motion.div 
+                className="icon-container"
+                animate={{ 
+                  y: isHovered ? -4 : 0,
+                  scale: isHovered ? 1.1 : 1 
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              >
+                {config.icon}
+              </motion.div>
+
+              {/* Headlines */}
+              <motion.p 
+                className="headline"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                Get the <strong>{config.offer}</strong>
+              </motion.p>
+              <motion.p 
+                className="subheadline"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+              >
+                {config.subtitle}
+              </motion.p>
+
+              {/* Benefits List with Stagger */}
+              <motion.ul 
+                className="benefits-list"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: {
+                    transition: { staggerChildren: 0.08, delayChildren: 0.2 }
+                  }
+                }}
+              >
+                {config.benefits.map((benefit, i) => (
+                  <motion.li
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, x: -10 },
+                      visible: { opacity: 1, x: 0 }
+                    }}
+                    whileHover={{ x: 4, transition: { duration: 0.15 } }}
+                  >
+                    <span className="benefit-icon">{benefit.icon}</span>
+                    <span>{benefit.text}</span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+
+              {/* Form */}
+              <form className="signup-form" onSubmit={handleSubmit}>
+                <div className="input-group">
+                  <motion.div 
+                    className="input-wrapper"
+                    whileFocus={{ scale: 1.02 }}
+                  >
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      disabled={status === "loading"}
+                      required
+                    />
+                    <motion.span 
+                      className="input-focus-ring"
+                      initial={{ scaleX: 0 }}
+                      whileFocus={{ scaleX: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.div>
+                  
+                  <motion.button
+                    type="submit"
+                    className={`submit-btn ${status === "error" ? "error" : ""}`}
+                    disabled={status === "loading"}
+                    whileHover={{ scale: 1.02, brightness: 1.1 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <AnimatePresence mode="wait">
+                      {status === "loading" ? (
+                        <motion.span
+                          key="loading"
+                          className="btn-loading"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1, rotate: 360 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ rotate: { duration: 1, repeat: Infinity, ease: "linear" } }}
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <circle cx="12" cy="12" r="10" opacity="0.25" />
+                            <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round" />
+                          </svg>
+                        </motion.span>
+                      ) : status === "error" ? (
+                        <motion.span
+                          key="error"
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          exit={{ scale: 0 }}
+                        >
+                          ✕
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="default"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                        >
+                          FREE
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.button>
+                </div>
+                
+                {/* Error Message */}
+                <AnimatePresence>
+                  {status === "error" && (
+                    <motion.p
+                      className="error-message"
+                      initial={{ opacity: 0, y: -10, height: 0 }}
+                      animate={{ opacity: 1, y: 0, height: "auto" }}
+                      exit={{ opacity: 0, y: -10, height: 0 }}
+                    >
+                      Something went wrong. Please try again.
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </form>
+
+              {/* Social Proof */}
+              <motion.p 
+                className="social-proof"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                <motion.span 
+                  className="check-icon"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 500 }}
+                  transition={{ delay: 0.5, type: "spring" }}
                 >
                   ✓
                 </motion.span>
-              ) : (
-                "FREE"
-              )}
-            </motion.button>
-          </div>
-        </form>
-
-        {/* Social Proof with Animated Counter */}
-        <motion.p 
-          className="social-proof"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <motion.span 
-            className="check-icon"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.5, type: "spring" }}
-          >
-            ✓
-          </motion.span>
-          {config.socialProof}
-        </motion.p>
+                {config.socialProof}
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <style>{`
@@ -241,6 +371,7 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
           box-shadow: 
             0 4px 24px rgba(0, 0, 0, 0.3),
             0 1px 0 rgba(255, 255, 255, 0.05) inset;
+          min-height: 320px;
         }
 
         .glow-orb {
@@ -259,6 +390,99 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
         .newsletter-credit-card .glow-orb { --glow-color: #C9A227; }
         .newsletter-insurance .glow-orb { --glow-color: #10b981; }
 
+        /* Inline Success Styles */
+        .inline-success {
+          position: relative;
+          z-index: 1;
+          padding: 1rem 0;
+        }
+
+        .success-check-circle {
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, var(--success-color, #146aff) 0%, var(--success-dark, #0040B1) 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 1rem;
+          position: relative;
+        }
+
+        .newsletter-guides .success-check-circle {
+          --success-color: #146aff;
+          --success-dark: #0040B1;
+        }
+
+        .newsletter-credit-card .success-check-circle {
+          --success-color: #fbbf24;
+          --success-dark: #C9A227;
+        }
+
+        .newsletter-insurance .success-check-circle {
+          --success-color: #10b981;
+          --success-dark: #059669;
+        }
+
+        .check-svg {
+          width: 32px;
+          height: 32px;
+        }
+
+        .ripple {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          border: 2px solid var(--success-color, #146aff);
+          pointer-events: none;
+        }
+
+        .success-title {
+          font-family: 'Sora', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: 0.25rem;
+        }
+
+        .success-subtitle {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.875rem;
+          color: rgba(255, 255, 255, 0.7);
+          margin-bottom: 1rem;
+        }
+
+        .success-benefits {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          text-align: left;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 0.5rem;
+          padding: 0.75rem 1rem;
+        }
+
+        .success-benefits li {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.8125rem;
+          color: rgba(255, 255, 255, 0.85);
+          padding: 0.375rem 0;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .benefit-check {
+          color: var(--success-color, #146aff);
+          font-weight: bold;
+          font-size: 0.875rem;
+        }
+
+        .newsletter-guides .benefit-check { color: #146aff; }
+        .newsletter-credit-card .benefit-check { color: #fbbf24; }
+        .newsletter-insurance .benefit-check { color: #10b981; }
+
+        /* Form Styles */
         .icon-container {
           position: relative;
           z-index: 1;
@@ -367,11 +591,31 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
         .input-wrapper input:focus {
           border-color: var(--focus-color, #146aff);
           background: rgba(255, 255, 255, 0.12);
+          box-shadow: 0 0 0 3px rgba(var(--focus-rgb, 20, 106, 255), 0.15);
         }
 
-        .newsletter-guides .input-wrapper input:focus { --focus-color: #146aff; }
-        .newsletter-credit-card .input-wrapper input:focus { --focus-color: #C9A227; }
-        .newsletter-insurance .input-wrapper input:focus { --focus-color: #10b981; }
+        .newsletter-guides .input-wrapper input:focus { 
+          --focus-color: #146aff; 
+          --focus-rgb: 20, 106, 255;
+        }
+        .newsletter-credit-card .input-wrapper input:focus { 
+          --focus-color: #C9A227; 
+          --focus-rgb: 201, 162, 39;
+        }
+        .newsletter-insurance .input-wrapper input:focus { 
+          --focus-color: #10b981; 
+          --focus-rgb: 16, 185, 129;
+        }
+
+        .input-focus-ring {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: var(--focus-color, #146aff);
+          transform-origin: left;
+        }
 
         .submit-btn {
           padding: 0.75rem 1.25rem;
@@ -385,6 +629,9 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
           transition: all 0.2s ease;
           white-space: nowrap;
           min-width: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .newsletter-guides .submit-btn {
@@ -409,6 +656,23 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
           cursor: default;
         }
 
+        .submit-btn.error {
+          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .btn-loading svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        .error-message {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.75rem;
+          color: #f87171;
+          margin-top: 0.5rem;
+          text-align: left;
+        }
+
         .social-proof {
           position: relative;
           z-index: 1;
@@ -431,6 +695,7 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
         @media (max-width: 480px) {
           .newsletter-box-modern {
             padding: 1.25rem;
+            min-height: 280px;
           }
 
           .headline {
@@ -445,10 +710,19 @@ export default function NewsletterBox({ variant = "guides" }: NewsletterBoxProps
           .submit-btn {
             padding: 0.625rem 1rem;
           }
+          
+          .success-check-circle {
+            width: 56px;
+            height: 56px;
+          }
+          
+          .check-svg {
+            width: 28px;
+            height: 28px;
+          }
         }
       `}</style>
     </motion.div>
-    </>
   )
 }
 

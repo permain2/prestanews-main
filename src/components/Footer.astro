@@ -303,11 +303,12 @@ const currentYear = new Date().getFullYear();
     color: rgba(255, 255, 255, 0.85) !important;
   }
 
-  /* Bottom Newsletter */
+  /* Bottom Newsletter - Enhanced with Motion-inspired animations */
   .footer-bottom-newsletter {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
   }
 
   .bottom-newsletter-input {
@@ -318,22 +319,31 @@ const currentYear = new Date().getFullYear();
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 0.8125rem;
-    width: 140px;
-    transition: border-color 0.2s ease;
+    width: 160px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left center;
   }
 
   .bottom-newsletter-input::placeholder {
     color: rgba(255, 255, 255, 0.35);
+    transition: opacity 0.2s ease;
   }
 
   .bottom-newsletter-input:focus {
     outline: none;
     border-color: #146aff;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(20, 106, 255, 0.2);
+    width: 180px;
+  }
+
+  .bottom-newsletter-input:focus::placeholder {
+    opacity: 0.5;
   }
 
   .bottom-newsletter-btn {
     padding: 0.5rem 1rem;
-    background: #146aff;
+    background: linear-gradient(135deg, #146aff 0%, #0040B1 100%);
     color: white;
     border: none;
     border-radius: 0.375rem;
@@ -341,12 +351,77 @@ const currentYear = new Date().getFullYear();
     font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    position: relative;
+    overflow: hidden;
   }
 
-  .bottom-newsletter-btn:hover {
-    background: #0040B1;
+  .bottom-newsletter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .bottom-newsletter-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20, 106, 255, 0.4);
+  }
+
+  .bottom-newsletter-btn:hover:not(:disabled)::before {
+    left: 100%;
+  }
+
+  .bottom-newsletter-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .bottom-newsletter-btn:disabled {
+    cursor: default;
+    opacity: 0.9;
+  }
+
+  .bottom-newsletter-btn.success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    animation: successPulse 0.5s ease;
+  }
+
+  .bottom-newsletter-btn.error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes successPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  /* Loading spinner for button */
+  .btn-spinner {
+    width: 14px;
+    height: 14px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
   .footer-disclaimer {
@@ -436,19 +511,25 @@ const currentYear = new Date().getFullYear();
 </style>
 
 <script>
-  // Footer newsletter submission
+  // Footer newsletter submission with enhanced animations
   const footerForm = document.getElementById('footer-newsletter');
   if (footerForm) {
     footerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = footerForm.querySelector('button');
+      const btn = footerForm.querySelector('button') as HTMLButtonElement;
       const input = footerForm.querySelector('input') as HTMLInputElement;
       
       if (btn && input && input.value) {
-        const originalText = btn.textContent;
-        btn.textContent = '...';
+        const originalHTML = btn.innerHTML;
+        
+        // Loading state with spinner
+        btn.innerHTML = `<svg class="btn-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10" opacity="0.25" />
+          <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round" />
+        </svg>`;
         btn.disabled = true;
         input.disabled = true;
+        btn.classList.remove('success', 'error');
         
         try {
           const response = await fetch('/api/subscribe', {
@@ -461,30 +542,47 @@ const currentYear = new Date().getFullYear();
           });
           
           if (response.ok) {
-            btn.textContent = '✓ Done';
-            btn.style.background = '#10b981';
+            btn.innerHTML = '✓ Thanks!';
+            btn.classList.add('success');
             input.value = '';
-          } else {
-            btn.textContent = 'Error';
-            btn.style.background = '#ef4444';
+            input.placeholder = 'Subscribed!';
+            
+            // Keep success state
             setTimeout(() => {
-              btn.textContent = originalText;
-              btn.style.background = '';
+              input.placeholder = 'your@email.com';
+            }, 3000);
+          } else {
+            btn.innerHTML = 'Try Again';
+            btn.classList.add('error');
+            setTimeout(() => {
+              btn.innerHTML = originalHTML;
+              btn.classList.remove('error');
               btn.disabled = false;
               input.disabled = false;
             }, 2000);
           }
         } catch (error) {
-          btn.textContent = 'Error';
-          btn.style.background = '#ef4444';
+          btn.innerHTML = 'Error';
+          btn.classList.add('error');
           setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = '';
+            btn.innerHTML = originalHTML;
+            btn.classList.remove('error');
             btn.disabled = false;
             input.disabled = false;
           }, 2000);
         }
       }
     });
+
+    // Add focus/blur animations to input
+    const input = footerForm.querySelector('input');
+    if (input) {
+      input.addEventListener('focus', () => {
+        footerForm.classList.add('focused');
+      });
+      input.addEventListener('blur', () => {
+        footerForm.classList.remove('focused');
+      });
+    }
   }
 </script>
