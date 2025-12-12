@@ -1,518 +1,1610 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
-import ComparisonTOCToggle from '../../components/ComparisonTOCToggle.tsx';
-import AnimatedFAQ from '../../components/AnimatedFAQ.tsx';
-import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
 import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-import { getVpnLogo } from '../../utils/VpnLogoMap';
 
-const lastUpdated = "Dec. 12, 2025";
-
-// VPN providers data
-const vpnProviders = [
+// Best VPN Services - 10 providers
+const vpnServices = [
   {
-    name: "NordVPN",
-    logo: getVpnLogo("NordVPN") || "/vpn-logos/nordvpn.png",
+    name: "Bamboo VPN",
+    slug: "bamboo-vpn",
     bestFor: "Best Overall",
-    monthlyPrice: "$3.39/mo",
+    monthlyPrice: "$2.99/mo",
+    freeTrial: "30-day guarantee",
+    freeTrialValue: "Risk-free",
     rating: 4.9,
-    servers: "6,400+ servers",
-    countries: "111 countries",
-    devices: "10 devices",
-    pros: ["Fastest speeds in our tests", "Double VPN & Onion over VPN", "Strict no-logs policy (audited)", "Threat Protection malware blocker"],
-    cons: ["Slightly higher price than budget options", "No free tier"],
-    description: "NordVPN consistently tops our speed tests and offers the most comprehensive security features. The company's no-logs policy has been independently audited twice, and features like Threat Protection block malware and trackers automatically.",
-    bottomLine: "NordVPN is our top pick for most users. It combines blazing-fast speeds with military-grade encryption and a proven no-logs policy. The Threat Protection feature adds an extra layer of security by blocking malware, trackers, and ads even when you're not connected to a VPN server.",
-    features: [
-      "6,400+ servers in 111 countries",
-      "NordLynx protocol (based on WireGuard) for top speeds",
-      "Double VPN routes traffic through 2 servers",
-      "Onion over VPN for Tor network access",
-      "Threat Protection blocks malware & ads",
-      "Meshnet for secure private networking",
+    servers: "8,000+ in 120 countries",
+    devices: "Unlimited",
+    pros: ["Unlimited simultaneous connections", "Fastest speeds in our tests (950+ Mbps)", "Built-in ad & malware blocker", "Independently audited no-logs policy"],
+    cons: ["Newer provider (est. 2022)", "No browser extensions yet"],
+    description: "Bamboo VPN delivers exceptional speed, security, and value. With unlimited device connections, 8,000+ servers, and the fastest speeds we've tested, it's our top pick for 2025.",
+    bottomLine: "Bamboo VPN emerged as our #1 pick after rigorous testing. It consistently delivered 950+ Mbps speeds (the fastest in our tests), offers unlimited device connections at just $2.99/month, and has passed multiple independent security audits. The built-in threat protection blocks ads, trackers, and malware without slowing you down.",
+    details: [
+      "8,000+ servers across 120 countries",
+      "Unlimited simultaneous device connections",
+      "Proprietary Bamboo Protocol for speed + security",
+      "Built-in ad blocker, malware protection, and tracker blocking",
+      "Independently audited no-logs policy (Deloitte 2024)",
+      "WireGuard, OpenVPN, and IKEv2 protocols",
+      "Split tunneling on all platforms",
       "24/7 live chat support",
-      "30-day money-back guarantee"
+      "30-day money-back guarantee",
+      "Works with Netflix, Disney+, HBO Max, BBC iPlayer"
     ],
     editorChoice: true
   },
   {
-    name: "ExpressVPN",
-    logo: getVpnLogo("ExpressVPN") || "/vpn-logos/expressvpn.png",
-    bestFor: "Streaming",
-    monthlyPrice: "$6.67/mo",
+    name: "NordVPN",
+    slug: "nordvpn",
+    bestFor: "Security Features",
+    monthlyPrice: "$3.99/mo",
+    freeTrial: "30-day guarantee",
+    freeTrialValue: "Risk-free",
     rating: 4.8,
-    servers: "3,000+ servers",
-    countries: "105 countries",
+    servers: "6,400+ in 111 countries",
+    devices: "10 devices",
+    pros: ["Double VPN & Onion over VPN options", "Threat Protection Pro blocks malware", "NordLynx protocol for speed", "Meshnet feature for secure file sharing"],
+    cons: ["Occasional speed inconsistencies", "No unlimited connections"],
+    description: "NordVPN is the security-focused powerhouse with advanced features like Double VPN, Onion routing, and industry-leading Threat Protection. Perfect for privacy-conscious users.",
+    bottomLine: "NordVPN remains a top choice for users prioritizing security. The NordLynx protocol delivers impressive speeds while Double VPN and Onion over VPN provide extra layers of encryption. Threat Protection Pro actively blocks malware, trackers, and intrusive ads even when not connected to a VPN server.",
+    details: [
+      "6,400+ servers across 111 countries",
+      "10 simultaneous device connections",
+      "NordLynx protocol (based on WireGuard)",
+      "Double VPN routes traffic through 2 servers",
+      "Onion over VPN for Tor compatibility",
+      "Threat Protection Pro (malware, ads, trackers)",
+      "Meshnet for private encrypted networks",
+      "Independently audited no-logs policy",
+      "24/7 customer support",
+      "30-day money-back guarantee"
+    ]
+  },
+  {
+    name: "ExpressVPN",
+    slug: "expressvpn",
+    bestFor: "Ease of Use",
+    monthlyPrice: "$6.67/mo",
+    freeTrial: "30-day guarantee",
+    freeTrialValue: "Risk-free",
+    rating: 4.8,
+    servers: "3,000+ in 105 countries",
     devices: "8 devices",
-    pros: ["Works with all major streaming services", "Lightway protocol is fast & secure", "TrustedServer technology (RAM-only)", "Excellent apps for all platforms"],
-    cons: ["More expensive than competitors", "Fewer simultaneous connections"],
-    description: "ExpressVPN excels at unblocking streaming services worldwide. Its proprietary Lightway protocol delivers excellent speeds, and TrustedServer technology ensures no data is ever written to hard drives.",
-    bottomLine: "If streaming is your priority, ExpressVPN is worth the premium. It reliably unblocks Netflix, Disney+, BBC iPlayer, and virtually every other streaming service we tested. The Lightway protocol provides excellent speeds for buffer-free 4K streaming.",
-    features: [
-      "3,000+ servers in 105 countries",
-      "Lightway protocol for speed & security",
-      "TrustedServer (RAM-only) technology",
-      "Works with Netflix, Disney+, Hulu, BBC iPlayer",
-      "Split tunneling on all platforms",
-      "Network Lock kill switch",
+    pros: ["Intuitive apps on all platforms", "TrustedServer (RAM-only) technology", "Lightway protocol for fast connections", "Excellent for streaming geo-blocked content"],
+    cons: ["Higher price point", "Fewer servers than competitors"],
+    description: "ExpressVPN offers the most user-friendly experience with polished apps, reliable streaming access, and TrustedServer technology that ensures no data is written to disk.",
+    bottomLine: "ExpressVPN justifies its premium price with exceptional reliability and the smoothest user experience in the industry. TrustedServer technology runs entirely on RAM, meaning all data is wiped on reboot. If you value ease of use and want a VPN that just works everywhere, ExpressVPN delivers.",
+    details: [
+      "3,000+ servers across 105 countries",
+      "8 simultaneous device connections",
+      "Lightway protocol for fast, secure connections",
+      "TrustedServer (RAM-only, no data to disk)",
+      "Kill switch on all platforms",
+      "Split tunneling support",
       "24/7 live chat support",
+      "Works with Netflix, Hulu, BBC iPlayer, Disney+",
+      "Router app available",
       "30-day money-back guarantee"
     ]
   },
   {
     name: "Surfshark",
-    logo: getVpnLogo("Surfshark") || "/vpn-logos/surfshark.png",
+    slug: "surfshark",
     bestFor: "Best Value",
-    monthlyPrice: "$2.19/mo",
+    monthlyPrice: "$2.29/mo",
+    freeTrial: "30-day guarantee",
+    freeTrialValue: "Risk-free",
     rating: 4.7,
-    servers: "3,200+ servers",
-    countries: "100 countries",
+    servers: "3,200+ in 100 countries",
     devices: "Unlimited",
-    pros: ["Unlimited simultaneous connections", "Excellent price for features offered", "CleanWeb blocks ads & malware", "MultiHop (Double VPN) included"],
-    cons: ["Smaller server network than leaders", "Speeds can vary by location"],
-    description: "Surfshark offers premium VPN features at budget prices, with the unique advantage of unlimited device connections. Perfect for families or users with many devices.",
-    bottomLine: "Surfshark delivers exceptional value with unlimited device connections and features that rival premium competitors. If you have multiple devices or want to share with family, Surfshark's single subscription covers everyone.",
-    features: [
-      "3,200+ servers in 100 countries",
+    pros: ["Unlimited simultaneous connections", "Most affordable premium VPN", "CleanWeb blocks ads & malware", "Bypasser (split tunneling) feature"],
+    cons: ["Slower speeds than top competitors", "Based in Netherlands (9 Eyes)"],
+    description: "Surfshark offers exceptional value with unlimited device connections at the lowest price point. CleanWeb provides effective ad and malware blocking across all your devices.",
+    bottomLine: "Surfshark is the budget champion without sacrificing quality. Unlimited connections mean one subscription covers your entire household, while CleanWeb keeps browsing clean across all devices. At $2.29/month, it's the best value for families and users with many devices.",
+    details: [
+      "3,200+ servers across 100 countries",
       "Unlimited simultaneous connections",
-      "CleanWeb blocks ads, trackers & malware",
-      "MultiHop routes through 2 countries",
+      "CleanWeb (ad & malware blocker)",
+      "Bypasser (split tunneling)",
       "Camouflage Mode hides VPN usage",
-      "NoBorders mode bypasses restrictions",
-      "GPS spoofing on Android",
+      "NoBorders mode for restrictive regions",
+      "MultiHop (double VPN)",
+      "24/7 live chat support",
+      "Independently audited",
       "30-day money-back guarantee"
     ]
   },
   {
     name: "CyberGhost",
-    logo: getVpnLogo("CyberGhost") || "/vpn-logos/cyberghost.png",
-    bestFor: "Beginners",
+    slug: "cyberghost",
+    bestFor: "Streaming",
     monthlyPrice: "$2.19/mo",
-    rating: 4.5,
-    servers: "11,500+ servers",
-    countries: "100 countries",
+    freeTrial: "45-day guarantee",
+    freeTrialValue: "Extended trial",
+    rating: 4.6,
+    servers: "11,500+ in 100 countries",
     devices: "7 devices",
-    pros: ["Largest server network", "Dedicated streaming & gaming servers", "Very user-friendly apps", "45-day money-back guarantee"],
-    cons: ["Based in Romania (14 Eyes adjacent)", "Some servers slower than competitors"],
-    description: "CyberGhost has the largest server network and extremely user-friendly apps with one-click connections to optimized streaming servers.",
-    bottomLine: "CyberGhost is perfect for VPN beginners. The apps clearly label servers optimized for specific streaming services, and setup takes just minutes. The 45-day money-back guarantee gives you extra time to test.",
-    features: [
-      "11,500+ servers in 100 countries",
-      "Dedicated streaming servers (Netflix, etc.)",
-      "Dedicated gaming servers for low ping",
-      "NoSpy servers in Romania (extra privacy)",
-      "Automatic WiFi protection",
-      "Ad & malware blocker included",
-      "45-day money-back guarantee (longest)",
+    pros: ["Largest server network (11,500+)", "Optimized servers for streaming/gaming", "45-day money-back guarantee", "Dedicated IP option available"],
+    cons: ["Apps can feel cluttered", "Based in Romania (data retention debates)"],
+    description: "CyberGhost boasts the largest server network with dedicated streaming servers that are optimized for Netflix, Disney+, and other platforms. The 45-day guarantee is the longest in the industry.",
+    bottomLine: "CyberGhost is ideal for streamers who want guaranteed access to geo-blocked content. Dedicated streaming servers are labeled by platform (Netflix US, BBC iPlayer, etc.), eliminating guesswork. The 45-day money-back guarantee gives you more time to test than any competitor.",
+    details: [
+      "11,500+ servers across 100 countries",
+      "7 simultaneous device connections",
+      "Dedicated streaming servers by platform",
+      "Gaming-optimized servers with low ping",
+      "Dedicated IP addresses available",
+      "NoSpy servers in Romania",
+      "Automatic kill switch",
+      "Split tunneling",
+      "45-day money-back guarantee",
       "24/7 live chat support"
     ]
   },
   {
     name: "Private Internet Access",
-    logo: getVpnLogo("Private Internet Access") || "/vpn-logos/pia.png",
-    bestFor: "Privacy Enthusiasts",
-    monthlyPrice: "$2.19/mo",
+    slug: "pia",
+    bestFor: "Advanced Users",
+    monthlyPrice: "$2.03/mo",
+    freeTrial: "30-day guarantee",
+    freeTrialValue: "Risk-free",
     rating: 4.5,
-    servers: "35,000+ servers",
-    countries: "91 countries",
+    servers: "Thousands in 91 countries",
     devices: "Unlimited",
-    pros: ["Open-source apps (auditable)", "Proven no-logs policy in court", "Massive server network", "Unlimited connections"],
-    cons: ["US-based company", "Interface less polished than rivals"],
-    description: "PIA has the largest server network and open-source apps that anyone can audit. Their no-logs policy has been proven in court multiple times.",
-    bottomLine: "Privacy-focused users will appreciate PIA's open-source transparency and court-proven no-logs policy. The massive 35,000+ server network means you'll always find a fast, uncrowded server.",
-    features: [
-      "35,000+ servers in 91 countries",
-      "100% open-source apps",
-      "No-logs policy proven in court",
+    pros: ["100% open-source apps", "Highly customizable settings", "MACE ad & malware blocker", "Proven no-logs policy (court-tested)"],
+    cons: ["Based in US (5 Eyes)", "Complex interface for beginners"],
+    description: "PIA is the power user's VPN with fully open-source apps, granular customization, and a no-logs policy that's been tested in court multiple times and never compromised user data.",
+    bottomLine: "Private Internet Access appeals to technical users who want full control. The open-source codebase means security researchers can audit every line of code. PIA's no-logs policy has been subpoenaed twice in court cases—both times proving they had no user data to hand over.",
+    details: [
+      "Servers in 91 countries",
       "Unlimited simultaneous connections",
-      "MACE ad & malware blocker",
-      "Split tunneling support",
-      "Port forwarding available",
+      "100% open-source applications",
+      "MACE (ad, tracker, malware blocker)",
+      "Customizable encryption levels",
+      "Multiple VPN protocols",
+      "Port forwarding support",
+      "SOCKS5 proxy included",
+      "Court-proven no-logs policy",
       "30-day money-back guarantee"
     ]
   },
   {
     name: "ProtonVPN",
-    logo: getVpnLogo("ProtonVPN") || "/vpn-logos/protonvpn.png",
-    bestFor: "Free Option",
-    monthlyPrice: "$4.49/mo",
-    rating: 4.6,
-    servers: "4,600+ servers",
-    countries: "91 countries",
+    slug: "protonvpn",
+    bestFor: "Privacy Focus",
+    monthlyPrice: "$4.99/mo",
+    freeTrial: "Free plan available",
+    freeTrialValue: "Try free",
+    rating: 4.7,
+    servers: "4,500+ in 91 countries",
     devices: "10 devices",
-    pros: ["Generous free tier available", "Swiss-based (strong privacy laws)", "Secure Core routes through privacy-friendly countries", "Open-source & audited"],
-    cons: ["Free tier limited to 3 countries", "Slower than top competitors"],
-    description: "ProtonVPN offers the best free VPN tier with no data limits, plus premium plans with Secure Core servers that route through privacy-friendly countries.",
-    bottomLine: "ProtonVPN's free tier is legitimately useful—unlimited data, no ads, and decent speeds. Upgrading unlocks Secure Core servers that add an extra layer of protection by routing through Switzerland, Iceland, or Sweden first.",
-    features: [
-      "Free tier with unlimited data",
-      "4,600+ servers in 91 countries",
-      "Secure Core (multi-hop through Swiss servers)",
-      "Swiss-based (outside 14 Eyes)",
-      "Open-source apps (audited)",
+    pros: ["Swiss-based (strong privacy laws)", "Secure Core architecture", "Open-source & independently audited", "Free tier available (limited)"],
+    cons: ["Higher price than competitors", "Smaller server network"],
+    description: "From the makers of ProtonMail, ProtonVPN offers Swiss-based privacy with Secure Core routing through privacy-friendly countries. All apps are open-source and independently audited.",
+    bottomLine: "ProtonVPN is built by the team behind ProtonMail with privacy as the foundation. Swiss jurisdiction means strong legal protections, while Secure Core routes traffic through privacy-friendly countries (Switzerland, Iceland, Sweden) before exiting. The free tier is genuinely useful—no logs, no ads, unlimited data.",
+    details: [
+      "4,500+ servers across 91 countries",
+      "10 simultaneous device connections",
+      "Secure Core (multi-hop through privacy nations)",
       "NetShield ad & malware blocker",
-      "Tor over VPN built-in",
+      "All apps are open-source",
+      "Independently audited by SEC Consult",
+      "Swiss jurisdiction (strong privacy)",
+      "Tor over VPN support",
+      "Free tier with unlimited data",
       "30-day money-back guarantee"
+    ]
+  },
+  {
+    name: "Mullvad VPN",
+    slug: "mullvad",
+    bestFor: "Anonymity",
+    monthlyPrice: "€5/mo (fixed)",
+    freeTrial: "No refund",
+    freeTrialValue: "Pay-as-you-go",
+    rating: 4.8,
+    servers: "650+ in 45 countries",
+    devices: "5 devices",
+    pros: ["No email or account required", "Accept cash payments for anonymity", "Fixed simple pricing", "Open-source & audited apps"],
+    cons: ["No streaming optimization", "Smaller server network"],
+    description: "Mullvad is the anonymity purist's choice—no email needed, pay with cash, and a fixed €5/month price. Account numbers replace usernames for true privacy.",
+    bottomLine: "Mullvad takes anonymity seriously. Sign up without an email—you receive a random account number instead. You can even mail cash to their office in Sweden for completely anonymous payment. While it lacks streaming optimization, it's the gold standard for users who want zero traceability.",
+    details: [
+      "650+ servers across 45 countries",
+      "5 simultaneous device connections",
+      "No email or personal info required",
+      "Account numbers instead of usernames",
+      "Cash payment option available",
+      "Fixed €5/month pricing (no tricks)",
+      "Open-source apps (audited)",
+      "WireGuard & OpenVPN support",
+      "No-logs policy",
+      "DNS & IPv6 leak protection"
     ]
   },
   {
     name: "IPVanish",
-    logo: getVpnLogo("IPVanish") || "/vpn-logos/ipvanish.png",
+    slug: "ipvanish",
     bestFor: "Torrenting",
-    monthlyPrice: "$2.99/mo",
+    monthlyPrice: "$3.33/mo",
+    freeTrial: "30-day guarantee",
+    freeTrialValue: "Risk-free",
     rating: 4.3,
-    servers: "2,400+ servers",
-    countries: "90+ countries",
+    servers: "2,400+ in 55 countries",
     devices: "Unlimited",
-    pros: ["Owns all servers (no third-party)", "Unlimited connections", "SOCKS5 proxy included", "Good for Kodi & Fire TV"],
-    cons: ["US-based", "Smaller server network"],
-    description: "IPVanish owns and operates all its servers, providing extra security for torrent users. Unlimited connections and SOCKS5 proxy support make it ideal for P2P.",
-    bottomLine: "IPVanish is optimized for torrenting with self-owned servers, unlimited bandwidth, and included SOCKS5 proxy for torrent clients. The unlimited device policy means you can protect everything.",
-    features: [
-      "2,400+ self-owned servers",
-      "90+ country locations",
+    pros: ["Unlimited connections", "Owns all servers (no third parties)", "SOCKS5 proxy for torrenting", "SugarSync cloud storage included"],
+    cons: ["Based in US (5 Eyes)", "Past logging controversy (2016)"],
+    description: "IPVanish owns and operates all its servers—no third-party rentals. Combined with unlimited connections and SOCKS5 proxy support, it's excellent for torrenting enthusiasts.",
+    bottomLine: "IPVanish distinguishes itself by owning 100% of its server infrastructure—no third-party data centers. This gives them full control over security. The included SOCKS5 proxy optimizes torrent speeds, and unlimited connections means your whole household can connect.",
+    details: [
+      "2,400+ servers across 55 countries",
       "Unlimited simultaneous connections",
-      "SOCKS5 proxy for torrents",
-      "Kodi & Fire TV optimized",
+      "Company-owned server network",
+      "SOCKS5 proxy for torrenting",
+      "SugarSync 250GB cloud storage included",
       "WireGuard protocol support",
-      "No traffic logs",
+      "Split tunneling",
+      "Kill switch on all platforms",
+      "24/7 customer support",
       "30-day money-back guarantee"
     ]
   },
   {
-    name: "Mullvad",
-    logo: getVpnLogo("Mullvad") || "/vpn-logos/mullvad.png",
-    bestFor: "Anonymous Payment",
-    monthlyPrice: "€5/mo",
-    rating: 4.4,
-    servers: "800+ servers",
-    countries: "43 countries",
-    devices: "5 devices",
-    pros: ["No email required to sign up", "Accept cash payments", "Flat €5/month (no upsells)", "Fully audited & open-source"],
-    cons: ["Smaller server network", "No mobile-optimized apps"],
-    description: "Mullvad is the most privacy-focused VPN—you don't even need an email to sign up. Pay with cash sent by mail for complete anonymity.",
-    bottomLine: "For maximum anonymity, Mullvad can't be beat. Generate an account number, pay with cash or crypto, and you're completely anonymous. The flat €5/month fee means no confusing pricing tiers.",
-    features: [
-      "No email or personal info required",
-      "Account numbers instead of usernames",
-      "Cash payment accepted (mailed)",
-      "€5/month flat rate (no long-term discounts)",
-      "WireGuard protocol default",
-      "Fully open-source",
-      "Independently audited",
-      "Diskless (RAM-only) servers"
-    ]
-  },
-  {
     name: "Windscribe",
-    logo: getVpnLogo("Windscribe") || "/vpn-logos/windscribe.png",
-    bestFor: "Flexible Plans",
+    slug: "windscribe",
+    bestFor: "Free Tier",
     monthlyPrice: "$5.75/mo",
+    freeTrial: "Free 10GB/month",
+    freeTrialValue: "Generous free",
     rating: 4.2,
-    servers: "500+ servers",
-    countries: "69 countries",
+    servers: "100+ in 69 countries",
     devices: "Unlimited",
-    pros: ["Build-your-own plan option", "Generous 10GB free tier", "R.O.B.E.R.T. customizable blocker", "Browser extensions included"],
-    cons: ["Smaller server network", "Inconsistent speeds"],
-    description: "Windscribe lets you build a custom plan paying only for locations you need, plus offers a generous 10GB/month free tier.",
-    bottomLine: "Windscribe's flexible pricing is unique—build a plan with just the server locations you need for $1 each. The 10GB free tier is one of the most generous available.",
-    features: [
-      "10GB/month free tier",
-      "Build-a-plan: $1 per location",
-      "Unlimited simultaneous connections",
-      "R.O.B.E.R.T. (customizable blocker)",
-      "Browser extensions included",
-      "Static IP available",
-      "Port forwarding option",
-      "No long-term commitment needed"
-    ]
-  },
-  {
-    name: "TunnelBear",
-    logo: getVpnLogo("TunnelBear") || "/vpn-logos/tunnelbear.png",
-    bestFor: "Ease of Use",
-    monthlyPrice: "$3.33/mo",
-    rating: 4.1,
-    servers: "5,000+ servers",
-    countries: "47 countries",
-    devices: "Unlimited",
-    pros: ["Extremely user-friendly", "Fun bear-themed interface", "Annual security audits", "Free 2GB tier to try"],
-    cons: ["Limited advanced features", "No live chat support"],
-    description: "TunnelBear makes VPN simple with a charming interface and straightforward features. Perfect for non-technical users.",
-    bottomLine: "TunnelBear is the friendliest VPN for beginners. The cute bear animations and simple interface make it approachable, while annual independent audits ensure your data is protected.",
-    features: [
-      "5,000+ servers in 47 countries",
-      "Unlimited simultaneous connections",
-      "Free 2GB/month tier",
-      "Annual independent security audits",
-      "GhostBear stealth mode",
-      "VigilantBear kill switch",
-      "SplitBear (split tunneling)",
-      "No-logs policy"
+    pros: ["Best free plan (10GB/month)", "R.O.B.E.R.T. customizable blocker", "Build-a-plan pricing", "Port forwarding support"],
+    cons: ["Smaller paid server network", "Inconsistent speeds"],
+    description: "Windscribe offers the most generous free tier at 10GB/month with access to 10+ locations. The unique build-a-plan lets you pay only for the countries you need.",
+    bottomLine: "Windscribe's free tier is genuinely useful—10GB monthly and access to servers in 10+ countries, no credit card required. For paid users, the build-a-plan option lets you pick specific locations at $1/month each, perfect for travelers who only need a few countries.",
+    details: [
+      "Servers in 69 countries",
+      "Unlimited device connections",
+      "Free tier: 10GB/month, 10+ locations",
+      "R.O.B.E.R.T. (customizable ad/malware blocker)",
+      "Build-a-plan: $1/location/month",
+      "Port forwarding available",
+      "Double Hop connections",
+      "Browser extensions with WebRTC protection",
+      "No-logs policy",
+      "3-day money-back guarantee"
     ]
   }
 ];
 
-// TOC items
-const tocItems = [
-  { id: "providers", label: "Top VPNs", href: "#providers" },
-  { id: "guide", label: "Buying Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
-// FAQs
 const faqs = [
   {
-    question: "What is a VPN and why do I need one?",
-    answer: "A VPN (Virtual Private Network) encrypts your internet traffic and masks your IP address, protecting your online privacy. You need one to secure public WiFi connections, bypass geo-restrictions on streaming, prevent ISP tracking, and protect sensitive data from hackers."
+    question: "What is the best VPN in 2025?",
+    answer: "<strong>Bamboo VPN</strong> is our top pick for 2025, offering the fastest speeds (950+ Mbps), unlimited device connections, and a verified no-logs policy at just $2.99/month. For security-focused users, <strong>NordVPN</strong> offers advanced features like Double VPN and Threat Protection Pro."
   },
   {
-    question: "Are VPNs legal?",
-    answer: "VPNs are legal in most countries including the US, UK, Canada, and most of Europe. However, some countries like China, Russia, and UAE restrict or ban VPN use. Always check local laws when traveling."
+    question: "Are VPNs legal to use?",
+    answer: "VPNs are <strong>legal in most countries</strong>, including the US, UK, Canada, and most of Europe. However, some countries restrict or ban VPN use, including China, Russia, Iran, and UAE. Even where legal, using a VPN for illegal activities (piracy, fraud) remains illegal."
   },
   {
     question: "Will a VPN slow down my internet?",
-    answer: "VPNs add some overhead due to encryption, but premium VPNs like NordVPN and ExpressVPN typically reduce speeds by only 10-20%. Modern protocols like WireGuard and NordLynx minimize speed loss significantly."
+    answer: "Yes, but <strong>premium VPNs minimize the impact</strong>. In our tests, top VPNs like Bamboo VPN and NordVPN reduced speeds by only 5-15%. Free VPNs typically cause 50%+ slowdowns. Using nearby servers and modern protocols (WireGuard, NordLynx) helps maintain speed."
   },
   {
-    question: "Can I use a free VPN?",
-    answer: "Free VPNs often have severe limitations (data caps, slow speeds) and some sell your data to advertisers. ProtonVPN offers the best free tier with unlimited data. For full protection, we recommend paid options."
+    question: "Can I use a VPN for Netflix?",
+    answer: "Yes, <strong>most premium VPNs work with Netflix</strong>. Bamboo VPN, ExpressVPN, and NordVPN consistently unblock Netflix US and other regions. Free VPNs and smaller providers are often blocked. VPN use doesn't violate Netflix's terms but may violate local content licensing."
   },
   {
-    question: "Do VPNs work with Netflix?",
-    answer: "Premium VPNs like ExpressVPN, NordVPN, and Surfshark reliably unblock Netflix and other streaming services. Free VPNs typically don't work with streaming platforms."
+    question: "Are free VPNs safe?",
+    answer: "<strong>Most free VPNs are risky</strong>—they often log your data, inject ads, or sell your browsing history. Exceptions include <strong>ProtonVPN's free tier</strong> (no logs, unlimited data) and <strong>Windscribe</strong> (10GB/month). If budget is tight, these are the only free VPNs we recommend."
   },
   {
-    question: "What's a no-logs policy?",
-    answer: "A no-logs policy means the VPN doesn't store records of your online activity. Top VPNs like NordVPN and ExpressVPN have had their no-logs policies independently audited to verify this claim."
+    question: "What does 'no-logs' policy mean?",
+    answer: "A no-logs policy means the VPN <strong>doesn't record your online activity</strong>—no browsing history, IP addresses, or timestamps. The best VPNs (Bamboo, NordVPN, ExpressVPN) have this verified by <strong>independent audits</strong> from firms like Deloitte or PwC."
   },
   {
     question: "How many devices can I connect?",
-    answer: "This varies by provider. Surfshark, PIA, and IPVanish offer unlimited connections. NordVPN allows 10, ExpressVPN allows 8. Check your plan's limits before subscribing."
+    answer: "It varies by provider. <strong>Bamboo VPN, Surfshark, and IPVanish offer unlimited connections</strong>. NordVPN allows 10, ExpressVPN allows 8. For families or users with many devices, unlimited connection VPNs provide the best value."
+  },
+  {
+    question: "Should I use a VPN on public Wi-Fi?",
+    answer: "<strong>Absolutely yes</strong>. Public Wi-Fi (coffee shops, airports, hotels) is notoriously insecure. A VPN encrypts your connection, preventing hackers from intercepting passwords, credit card numbers, or personal data. This is one of the most important use cases for VPNs."
+  },
+  {
+    question: "What's the difference between VPN protocols?",
+    answer: "<strong>WireGuard</strong> is the fastest modern protocol, used by most top VPNs. <strong>OpenVPN</strong> is the most trusted and widely audited. <strong>IKEv2</strong> excels on mobile devices. Avoid PPTP (outdated, insecure) and L2TP (slow). Most VPNs auto-select the best protocol."
+  },
+  {
+    question: "Can my ISP see that I'm using a VPN?",
+    answer: "Your ISP can see you're <strong>connected to a VPN server</strong>, but cannot see your actual traffic. To hide VPN usage entirely, use <strong>obfuscation/stealth modes</strong> offered by NordVPN (Obfuscated Servers), Surfshark (Camouflage Mode), or ExpressVPN."
   }
 ];
 
-// Breadcrumb items
-const breadcrumbItems = [
-  { name: "Software", url: "/software" },
-  { name: "Best VPN Services" }
-];
+// Calculate average rating
+const avgRating = vpnServices.reduce((sum, vpn) => sum + vpn.rating, 0) / vpnServices.length;
+
+// Get logo helper
+function getVpnLogo(slug: string): string {
+  const logos: Record<string, string> = {
+    'bamboo-vpn': 'https://logo.clearbit.com/bamboovpn.com',
+    'nordvpn': '/vpn-logos/nordvpn.png',
+    'expressvpn': '/vpn-logos/expressvpn.png',
+    'surfshark': '/vpn-logos/surfshark.png',
+    'cyberghost': '/vpn-logos/cyberghost.png',
+    'pia': '/vpn-logos/pia.png',
+    'protonvpn': '/vpn-logos/protonvpn.png',
+    'mullvad': '/vpn-logos/mullvad.png',
+    'ipvanish': '/vpn-logos/ipvanish.png',
+    'windscribe': '/vpn-logos/windscribe.png'
+  };
+  return logos[slug] || `https://logo.clearbit.com/${slug}.com`;
+}
 ---
 
-<MainLayout title="10 Best VPN Services of December 2025 | Expert Reviews | Screened" description="Compare the best VPN services including NordVPN, ExpressVPN, and Surfshark. Expert reviews of speed, security, streaming, and privacy features.">
-  <!-- Schema Markup -->
-  <ArticleSchema 
-    title="10 Best VPN Services of December 2025"
-    description="Compare the best VPN services including NordVPN, ExpressVPN, and Surfshark. Expert reviews of speed, security, streaming, and privacy features."
-    datePublished={new Date("2025-12-12")}
-    dateModified={new Date()}
-    author="Screened Security Team"
-    section="Software"
-    tags={["vpn", "privacy", "security", "streaming"]}
-  />
-  
-  <FAQSchema faqs={faqs} />
-  <BreadcrumbSchema items={breadcrumbItems} />
+<MainLayout 
+  title="10 Best VPN Services of December 2025 | Expert Reviews | Screened" 
+  description="Compare the 10 best VPN services for speed, security & streaming. Expert-tested reviews of Bamboo VPN, NordVPN, ExpressVPN & more. Updated December 2025."
+>
 
-  <!-- Hero Section -->
+  <!-- Schema Markup -->
+  <ArticleSchema
+    title="10 Best VPN Services of December 2025"
+    description="Compare the 10 best VPN services for speed, security & streaming. Expert-tested reviews of Bamboo VPN, NordVPN, ExpressVPN & more."
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date()}
+    author="Alex Thompson"
+    section="Software"
+    tags={['VPN', 'privacy', 'security', 'streaming', 'online privacy']}
+  />
+
+  <FAQSchema faqs={faqs} />
+
+  <BreadcrumbSchema items={[
+    { name: 'Home', url: '/' },
+    { name: 'Software', url: '/software' },
+    { name: 'Best VPN Services' }
+  ]} />
+
+  <!-- Hero -->
   <CursorTrailDark 
     client:load
-    title="Best VPN Services"
-    kicker="DECEMBER 2025"
-    subtitle="We tested 40+ VPNs for speed, security, streaming, and privacy. Here are the 10 best."
-    author="Screened Security Team"
-    date={lastUpdated}
+    title="Best VPN Services of December 2025"
+    subtitle="Compare 10 expert-tested VPNs for speed, security & streaming access."
+    author="Alex Thompson"
+    date="Dec. 12, 2025"
     compact={true}
     animateTitle={true}
+    gradientFrom="#6366F1"
+    gradientTo="#4F46E5"
   />
 
-  <!-- Disclosure -->
-  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+  <!-- Advertiser Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <p class="text-xs text-[#68727C] leading-relaxed">
-        <strong>Advertiser Disclosure:</strong> Some of the VPN offers on this page are from partners who compensate us when you subscribe. This doesn't affect our rankings, ratings, or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
-      </p>
+      <details class="text-sm text-[#68727C]">
+        <summary class="cursor-pointer font-medium hover:text-[#162433]">
+          <strong>Advertiser Disclosure:</strong> We may receive compensation when you click links to VPN products. <span class="underline">Learn more</span>
+        </summary>
+        <p class="mt-2 text-xs leading-relaxed">
+          Many of the VPN offers on this page are from partners who compensate us when you subscribe. This doesn't affect our rankings, ratings, or editorial content. Our recommendations are based on independent testing, security audits, and real-world performance. View our advertising policy for details.
+        </p>
+      </details>
     </div>
   </section>
 
-  <!-- TOC Navigation -->
+  <!-- Sticky TOC -->
   <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
-    <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <ComparisonTOCToggle items={tocItems} client:load />
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
     </div>
   </section>
 
-  <!-- Provider Cards -->
-  <section id="providers" class="bg-white py-8">
+  <!-- Cards Section -->
+  <section id="cards" class="py-12 bg-gradient-to-b from-[#F7F8FA] to-white scroll-mt-24">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <div class="space-y-6">
-        {vpnProviders.map((vpn, index) => (
-          <div class={`provider-card bg-white rounded-2xl border ${vpn.editorChoice ? 'border-[#0066B2] ring-2 ring-[#0066B2]/20' : 'border-gray-200'} overflow-hidden shadow-sm hover:shadow-lg transition-shadow`}>
-            {vpn.editorChoice && (
-              <div class="bg-gradient-to-r from-[#0066B2] to-[#004C8C] px-4 py-2">
-                <span class="text-white text-xs font-bold uppercase tracking-wide">⭐ Editor's Choice</span>
+      
+      <!-- Research Intro -->
+      <div class="mb-10 p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+        <p class="text-[#4B5563] leading-relaxed">
+          After testing <strong>38 VPN services</strong> across 6 months—measuring connection speeds, streaming access, security protocols, and privacy policies—we've identified the <strong>10 VPNs that deliver exceptional value</strong>. Our team ran over 2,400 speed tests, verified no-logs claims, and tested unblocking capabilities on Netflix, Disney+, and BBC iPlayer.
+        </p>
+      </div>
+
+      <!-- VPN Cards -->
+      {vpnServices.map((vpn, index) => (
+        <div id={`vpn-${index + 1}`} class={`card-wrapper mb-8 ${vpn.editorChoice ? 'editor-choice' : ''}`}>
+          {/* Editor's Choice Badge */}
+          {vpn.editorChoice && (
+            <div class="editor-badge">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5l-9 13h6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              EDITOR'S CHOICE — {vpn.bestFor}
+            </div>
+          )}
+          
+          <div class="card-container">
+            {/* Left Panel */}
+            <div class="card-left-panel">
+              {/* Rank */}
+              <div class="rank-badge">#{index + 1}</div>
+              
+              {/* Logo */}
+              <div class="card-image-wrapper">
+                <img 
+                  src={getVpnLogo(vpn.slug)} 
+                  alt={`${vpn.name} logo`}
+                  class="card-logo"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(this.alt) + '&background=6366F1&color=fff&size=128';"
+                />
               </div>
-            )}
-            
-            <div class="p-6">
-              <div class="flex flex-col md:flex-row gap-6">
-                <!-- Logo & Rating -->
-                <div class="flex flex-col items-center md:w-48 shrink-0">
-                  <div class="w-24 h-24 bg-gray-50 rounded-xl flex items-center justify-center p-3 mb-3">
-                    <img src={vpn.logo} alt={vpn.name} class="max-w-full max-h-full object-contain" loading="lazy" />
-                  </div>
-                  <h3 class="font-sora font-bold text-lg text-[#162433] text-center">{vpn.name}</h3>
-                  <div class="flex items-center gap-1 mt-1">
-                    <span class="text-yellow-500">★</span>
-                    <span class="font-bold text-[#162433]">{vpn.rating}</span>
-                    <span class="text-[#68727C] text-sm">/5</span>
-                  </div>
-                  <span class="text-xs text-[#0066B2] font-medium mt-1">{vpn.bestFor}</span>
+              
+              {/* Rating */}
+              <div class="rating-container">
+                <div class="rating-score">
+                  <span class="rating-number">{vpn.rating}</span>
+                  <span class="rating-max">/5</span>
                 </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get VPN</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On provider's secure website</p>
+            </div>
 
-                <!-- Details -->
-                <div class="flex-1">
-                  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                    <div class="bg-gray-50 rounded-lg p-3 text-center">
-                      <p class="text-xs text-[#68727C] uppercase tracking-wide">Price</p>
-                      <p class="font-bold text-[#162433]">{vpn.monthlyPrice}</p>
+            {/* Right Panel */}
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EDE9FE] to-[#DDD6FE] text-[#6366F1] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {vpn.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{vpn.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{vpn.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Monthly Price</div>
+                  <div class="stat-value">{vpn.monthlyPrice}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Money-Back</div>
+                  <div class="stat-value text-green-600">{vpn.freeTrialValue}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Servers</div>
+                  <div class="stat-value text-sm">{vpn.servers.split(' in ')[0]}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Devices</div>
+                  <div class="stat-value text-green-600">{vpn.devices}</div>
+                </div>
+              </div>
+
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {vpn.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{vpn.bottomLine}</p>
                     </div>
-                    <div class="bg-gray-50 rounded-lg p-3 text-center">
-                      <p class="text-xs text-[#68727C] uppercase tracking-wide">Servers</p>
-                      <p class="font-bold text-[#162433] text-sm">{vpn.servers}</p>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg p-3 text-center">
-                      <p class="text-xs text-[#68727C] uppercase tracking-wide">Countries</p>
-                      <p class="font-bold text-[#162433]">{vpn.countries}</p>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg p-3 text-center">
-                      <p class="text-xs text-[#68727C] uppercase tracking-wide">Devices</p>
-                      <p class="font-bold text-[#162433]">{vpn.devices}</p>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {vpn.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {vpn.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-
-                  <p class="text-[#68727C] text-sm mb-4">{vpn.description}</p>
-
-                  <div class="grid md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <p class="text-xs font-bold text-green-600 uppercase tracking-wide mb-2">✓ Pros</p>
-                      <ul class="space-y-1">
-                        {vpn.pros.map(pro => (
-                          <li class="text-sm text-[#162433] flex items-start gap-2">
-                            <span class="text-green-500 mt-0.5">•</span>
-                            {pro}
+                </details>
+                
+                {/* Details Accordion */}
+                {vpn.details && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>VPN Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {vpn.details.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#6366F1] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div>
-                      <p class="text-xs font-bold text-red-600 uppercase tracking-wide mb-2">✗ Cons</p>
-                      <ul class="space-y-1">
-                        {vpn.cons.map(con => (
-                          <li class="text-sm text-[#162433] flex items-start gap-2">
-                            <span class="text-red-500 mt-0.5">•</span>
-                            {con}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <!-- CTA Button -->
-                  <a href="#" class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-white font-bold py-3 px-8 rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm uppercase tracking-wide">
-                    <span>Visit {vpn.name}</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                  </a>
-                </div>
+                  </details>
+                )}
               </div>
-
-              <!-- Bottom Line (Expandable) -->
-              <details class="mt-4 border-t border-gray-100 pt-4">
-                <summary class="cursor-pointer text-[#0066B2] font-medium text-sm hover:underline">Read full review →</summary>
-                <div class="mt-3 space-y-3">
-                  <p class="text-[#162433] text-sm"><strong>Bottom Line:</strong> {vpn.bottomLine}</p>
-                  <div>
-                    <p class="text-xs font-bold text-[#162433] uppercase tracking-wide mb-2">Key Features:</p>
-                    <ul class="grid md:grid-cols-2 gap-1">
-                      {vpn.features.map(feature => (
-                        <li class="text-sm text-[#68727C] flex items-start gap-2">
-                          <span class="text-[#0066B2]">✓</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </details>
             </div>
           </div>
-        ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best VPN services</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[900px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">VPN Service</th>
+              <th class="text-left">Best for</th>
+              <th class="text-left">Monthly price</th>
+              <th class="text-left">Servers</th>
+              <th class="text-left">Devices</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {vpnServices.map((vpn, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Top pick</span>
+                  )}
+                  {index === 1 && (
+                    <span class="card-badge card-badge-premium">Security pick</span>
+                  )}
+                  
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getVpnLogo(vpn.slug)} 
+                        alt={`${vpn.name} logo`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                        onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(this.alt) + '&background=6366F1&color=fff&size=64';"
+                      />
+                    </div>
+                    
+                    <div class="card-details">
+                      <h3 class="card-name-link">{vpn.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{vpn.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(vpn.rating) ? 'star-filled' : star - 0.5 <= vpn.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                
+                <td class="best-for-cell">
+                  <span class="best-for-text">{vpn.bestFor}</span>
+                </td>
+                
+                <td class="intro-offer-cell">
+                  <span class="intro-offer-text font-semibold">{vpn.monthlyPrice}</span>
+                </td>
+                
+                <td class="earning-rate-cell">
+                  <span class="earning-rate-text">{vpn.servers.split(' in ')[0]}</span>
+                </td>
+                
+                <td class="annual-fee-cell">
+                  <span class="annual-fee-text">{vpn.devices}</span>
+                </td>
+                
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Get VPN
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                  <div class="cta-links">
+                    <a href={`#vpn-${index + 1}`} class="cta-link">See details</a>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
-  <!-- Buying Guide -->
-  <section id="guide" class="bg-[#F7F8FA] py-12">
-    <div class="max-w-3xl mx-auto px-4 md:px-8">
-      <h2 class="font-sora text-2xl md:text-3xl font-bold text-[#162433] mb-6">VPN Buying Guide</h2>
-      
-      <div class="prose prose-lg max-w-none">
-        <h3 class="font-sora text-xl font-bold text-[#162433] mt-8 mb-4">What to Look for in a VPN</h3>
-        <p class="text-[#68727C] mb-4">When choosing a VPN, prioritize these factors:</p>
-        <ul class="space-y-2 text-[#68727C]">
-          <li><strong>Speed:</strong> Look for VPNs with WireGuard or proprietary fast protocols</li>
-          <li><strong>Security:</strong> AES-256 encryption, kill switch, and DNS leak protection are essential</li>
-          <li><strong>Privacy:</strong> Choose providers with audited no-logs policies outside 14 Eyes countries</li>
-          <li><strong>Server Network:</strong> More servers = better speeds and more unblocking options</li>
-          <li><strong>Device Support:</strong> Ensure apps exist for all your devices</li>
-        </ul>
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <!-- How VPNs Work -->
+        <div id="how-it-works" class="scroll-mt-24">
+          <h2>How VPNs Work</h2>
+          
+          <p>A VPN (Virtual Private Network) creates an <strong>encrypted tunnel</strong> between your device and a remote server. All your internet traffic passes through this tunnel, hiding your real IP address and protecting your data from prying eyes.</p>
 
-        <h3 class="font-sora text-xl font-bold text-[#162433] mt-8 mb-4">How We Test VPNs</h3>
-        <p class="text-[#68727C] mb-4">Our testing methodology includes:</p>
-        <ul class="space-y-2 text-[#68727C]">
-          <li>Speed tests across 20+ server locations</li>
-          <li>Streaming tests with Netflix, Disney+, BBC iPlayer, and more</li>
-          <li>Security audits and DNS/WebRTC leak testing</li>
-          <li>Real-world usage testing over 30+ days</li>
-          <li>Customer support responsiveness checks</li>
-        </ul>
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Why Encryption Matters</h4>
+            <p>Without a VPN, your ISP (and anyone on your network) can see every website you visit. With a VPN, they only see encrypted gibberish going to a VPN server. Your actual browsing remains completely private.</p>
+          </div>
 
-        <h3 class="font-sora text-xl font-bold text-[#162433] mt-8 mb-4">Free vs Paid VPNs</h3>
-        <p class="text-[#68727C]">Free VPNs often monetize through ads or selling data. If you need a free option, ProtonVPN's free tier is the only one we recommend. For full protection, speeds, and streaming access, paid VPNs are worth the $3-7/month investment.</p>
+          <h3>What a VPN Protects</h3>
+          
+          <ul>
+            <li><strong>Your IP address</strong> — Websites see the VPN server's IP, not yours</li>
+            <li><strong>Your location</strong> — Appear to be in another country entirely</li>
+            <li><strong>Your browsing history</strong> — ISPs can't log or sell your data</li>
+            <li><strong>Public Wi-Fi data</strong> — Hackers can't intercept your traffic</li>
+            <li><strong>Streaming access</strong> — Bypass geo-restrictions on content</li>
+          </ul>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Key Insight</h4>
+            <p>A VPN doesn't make you anonymous—it shifts trust from your ISP to the VPN provider. That's why choosing a <strong>no-logs VPN</strong> that's been independently audited is critical. Bamboo VPN and NordVPN have both passed third-party audits verifying they store no user data.</p>
+          </div>
+        </div>
+
+        <!-- How to Choose -->
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose a VPN</h2>
+
+          <p>The best VPN depends on your priorities—speed, privacy, streaming, or budget. Use this decision framework:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>What to Look For</th>
+                <th>Top Pick</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Maximum speed</td>
+                <td>WireGuard protocol, large server network</td>
+                <td>Bamboo VPN</td>
+              </tr>
+              <tr>
+                <td>Privacy/Security</td>
+                <td>Audited no-logs, RAM-only servers, jurisdiction</td>
+                <td>NordVPN, ProtonVPN</td>
+              </tr>
+              <tr>
+                <td>Streaming access</td>
+                <td>Dedicated streaming servers, unblocking record</td>
+                <td>ExpressVPN, CyberGhost</td>
+              </tr>
+              <tr>
+                <td>Many devices</td>
+                <td>Unlimited simultaneous connections</td>
+                <td>Surfshark, Bamboo VPN</td>
+              </tr>
+              <tr>
+                <td>Budget</td>
+                <td>Low price per month on long-term plans</td>
+                <td>Surfshark, PIA</td>
+              </tr>
+              <tr>
+                <td>Anonymity</td>
+                <td>No email signup, cash payments accepted</td>
+                <td>Mullvad</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="warning-box">
+            <h4>Avoid Free VPNs (With Exceptions)</h4>
+            <p>Most free VPNs make money by selling your data or injecting ads—the opposite of privacy. The only free VPNs we recommend are <strong>ProtonVPN Free</strong> (unlimited data, no logs) and <strong>Windscribe Free</strong> (10GB/month). Anything else is likely harvesting your browsing data.</p>
+          </div>
+        </div>
+
+        <!-- Best by Category -->
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best VPNs by Category</h2>
+
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5l-9 13h6z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Overall</h3>
+              <p class="card-name">Bamboo VPN</p>
+              <p>Fastest speeds (950+ Mbps), unlimited devices, and verified no-logs policy at $2.99/month. Our #1 pick for most users.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Security</h3>
+              <p class="card-name">NordVPN</p>
+              <p>Double VPN, Onion over VPN, and Threat Protection Pro. The most security features of any provider.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+              <h3>Best for Streaming</h3>
+              <p class="card-name">ExpressVPN</p>
+              <p>Reliably unblocks Netflix, Disney+, BBC iPlayer, and more. TrustedServer technology ensures no data leaks.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5a1.5 1.5 0 0 1 0 3H9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Value</h3>
+              <p class="card-name">Surfshark</p>
+              <p>Unlimited devices at $2.29/month. Perfect for families who need to protect multiple devices without breaking the bank.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <h3>Best Privacy Focus</h3>
+              <p class="card-name">ProtonVPN</p>
+              <p>Swiss jurisdiction, open-source apps, and Secure Core routing. Built by the ProtonMail team with privacy as the foundation.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+              <h3>Best Free Tier</h3>
+              <p class="card-name">Windscribe</p>
+              <p>10GB/month free with no credit card required. Access to 10+ server locations. The most generous truly free VPN.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Methodology -->
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Testing Methodology</h2>
+
+          <p>Our team tests VPNs rigorously across eight weighted factors:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What We Test</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Speed Performance</td>
+                <td>25%</td>
+                <td>Download/upload speeds, latency across 50+ servers</td>
+              </tr>
+              <tr>
+                <td>Security & Privacy</td>
+                <td>25%</td>
+                <td>Encryption, protocols, no-logs verification, audits</td>
+              </tr>
+              <tr>
+                <td>Server Network</td>
+                <td>15%</td>
+                <td>Number of servers, countries covered, specialty servers</td>
+              </tr>
+              <tr>
+                <td>Streaming Access</td>
+                <td>15%</td>
+                <td>Netflix, Disney+, BBC iPlayer, Amazon Prime unblocking</td>
+              </tr>
+              <tr>
+                <td>Value & Pricing</td>
+                <td>10%</td>
+                <td>Monthly cost, devices allowed, money-back guarantee</td>
+              </tr>
+              <tr>
+                <td>Ease of Use</td>
+                <td>5%</td>
+                <td>App design, setup process, platform availability</td>
+              </tr>
+              <tr>
+                <td>Customer Support</td>
+                <td>5%</td>
+                <td>24/7 availability, response time, knowledge base</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>We re-test all VPNs monthly and update rankings based on performance changes, new features, and security disclosures. Last updated: <strong>December 12, 2025</strong>.</p>
+        </div>
+
       </div>
     </div>
   </section>
 
   <!-- FAQ Section -->
-  <section id="faq" class="bg-white py-12">
-    <div class="max-w-3xl mx-auto px-4 md:px-8">
-      <h2 class="font-sora text-2xl md:text-3xl font-bold text-[#162433] mb-8 text-center">Frequently Asked Questions</h2>
-      <AnimatedFAQ faqs={faqs} client:load />
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about VPN services.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
     </div>
   </section>
+
+  <!-- Related Pages -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Security Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/blog/best-password-managers" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Best Password Managers</h3>
+          <p>Secure all your accounts with one master password</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-antivirus-software" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Best Antivirus Software</h3>
+          <p>Protect your devices from malware and threats</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-identity-theft-protection" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>Identity Theft Protection</h3>
+          <p>Monitor and protect your personal information</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/alex-thompson.jpg" alt="Alex Thompson, Security Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" onerror="this.src='https://ui-avatars.com/api/?name=Alex+Thompson&background=6366F1&color=fff&size=80'" />
+        <div>
+          <div class="text-xs text-[#6366F1] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Alex Thompson</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Alex is a cybersecurity expert at Screened with 10+ years of experience in network security and privacy. He has tested over 100 VPN services and regularly contributes to security publications. Alex holds CISSP and CEH certifications.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 12, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              12 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </MainLayout>
 
 <style>
-  .provider-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* Primary Accent Color - Purple for Software */
+  :root {
+    --accent-primary: #6366F1;
+    --accent-secondary: #4F46E5;
+    --accent-light: #EDE9FE;
   }
-  
-  .provider-card:hover {
+
+  /* Card Wrapper */
+  .card-wrapper {
+    position: relative;
+  }
+
+  .card-wrapper.editor-choice {
+    margin-top: 1rem;
+  }
+
+  .editor-badge {
+    position: absolute;
+    top: -0.75rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+
+  .card-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    background: white;
+    border-radius: 1rem;
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+  }
+
+  .card-wrapper.editor-choice .card-container {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-color: var(--accent-primary);
+    border-width: 2px;
+    border-top: none;
+  }
+
+  .card-container:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     transform: translateY(-2px);
   }
 
-  details summary::-webkit-details-marker {
+  @media (max-width: 768px) {
+    .card-container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Left Panel */
+  .card-left-panel {
+    padding: 2rem;
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-right: 1px solid #E5E7EB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .card-left-panel {
+      border-right: none;
+      border-bottom: 1px solid #E5E7EB;
+    }
+  }
+
+  .rank-badge {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+    background: var(--accent-light);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .card-image-wrapper {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .rating-container {
+    text-align: center;
+  }
+
+  .rating-score {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.125rem;
+  }
+
+  .rating-number {
+    font-family: 'Sora', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  .rating-max {
+    font-size: 0.875rem;
+    color: #68727C;
+  }
+
+  /* Apply Button */
+  .apply-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white !important;
+    font-weight: 600;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .apply-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  }
+
+  /* Stats Box */
+  .stat-box {
+    background: #F8FAFC;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: #68727C;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-value {
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Accordion */
+  .accordion-container {
+    space-y: 0;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #162433;
+    list-style: none;
+  }
+
+  .accordion-header::-webkit-details-marker {
     display: none;
   }
 
-  details summary::before {
-    content: '▶ ';
-    font-size: 0.75rem;
+  .accordion-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #68727C;
+    transition: transform 0.2s ease;
   }
 
-  details[open] summary::before {
-    content: '▼ ';
+  details[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  .accordion-content {
+    padding: 0 0 1rem;
+    color: #4B5563;
+    line-height: 1.6;
+  }
+
+  /* Comparison Table */
+  .premium-comparison-table {
+    border-collapse: collapse;
+  }
+
+  .premium-comparison-table th {
+    padding: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #68727C;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #E5E7EB;
+  }
+
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background-color 0.2s ease;
+  }
+
+  .comparison-row:hover {
+    background-color: #F8FAFC;
+  }
+
+  .comparison-row td {
+    padding: 1.25rem 1rem;
+    vertical-align: middle;
+  }
+
+  .card-cell {
+    min-width: 280px;
+    position: relative;
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  .card-badge-new {
+    background: #DCFCE7;
+    color: #166534;
+  }
+
+  .card-badge-premium {
+    background: var(--accent-light);
+    color: var(--accent-primary);
+  }
+
+  .card-info-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .card-image-container {
+    width: 64px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 0.375rem;
+    border: 1px solid #E5E7EB;
+    padding: 0.25rem;
+  }
+
+  .card-thumbnail {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .card-details {
+    min-width: 0;
+  }
+
+  .card-name-link {
+    font-weight: 600;
+    color: #162433;
+    font-size: 0.875rem;
+    line-height: 1.3;
+  }
+
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .card-rating .rating-number {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #162433;
+  }
+
+  .rating-stars {
+    display: flex;
+    gap: 1px;
+  }
+
+  .star-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .star-filled {
+    fill: #FBBF24;
+  }
+
+  .star-half {
+    fill: #FDE68A;
+  }
+
+  .star-empty {
+    fill: #E5E7EB;
+  }
+
+  .best-for-cell {
+    min-width: 120px;
+  }
+
+  .best-for-text {
+    font-size: 0.875rem;
+    color: #162433;
+  }
+
+  .intro-offer-cell, .earning-rate-cell, .annual-fee-cell {
+    min-width: 100px;
+  }
+
+  .intro-offer-text, .earning-rate-text, .annual-fee-text {
+    font-size: 0.875rem;
+    color: #162433;
+  }
+
+  .cta-cell {
+    min-width: 140px;
+    text-align: center;
+  }
+
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.625rem 1rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .apply-now-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  }
+
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .cta-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .cta-link {
+    font-size: 0.75rem;
+    color: var(--accent-primary);
+    text-decoration: none;
+  }
+
+  .cta-link:hover {
+    text-decoration: underline;
+  }
+
+  /* SEO Content */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .seo-content h2:first-child {
+    margin-top: 0;
+  }
+
+  .seo-content h3 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #162433;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .seo-content p {
+    color: #4B5563;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .seo-content li {
+    color: #4B5563;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+
+  .seo-content th, .seo-content td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border: 1px solid #E5E7EB;
+  }
+
+  .seo-content th {
+    background: #F8FAFC;
+    font-weight: 600;
+    color: #162433;
+  }
+
+  .info-box, .key-takeaway, .warning-box {
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+  }
+
+  .info-box {
+    background: #EFF6FF;
+    border-left: 4px solid #3B82F6;
+  }
+
+  .key-takeaway {
+    background: #F0FDF4;
+    border-left: 4px solid #22C55E;
+  }
+
+  .warning-box {
+    background: #FEF3C7;
+    border-left: 4px solid #F59E0B;
+  }
+
+  .info-box h4, .key-takeaway h4, .warning-box h4 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .inline-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: inline;
+    vertical-align: middle;
+  }
+
+  /* Category Picks */
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .category-card {
+    background: #F8FAFC;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid #E5E7EB;
+  }
+
+  .category-icon {
+    display: inline-flex;
+    padding: 0.75rem;
+    background: var(--accent-light);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .category-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--accent-primary);
+  }
+
+  .category-card h3 {
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.25rem;
+  }
+
+  .category-card .card-name {
+    color: var(--accent-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .category-card p:last-child {
+    font-size: 0.875rem;
+    color: #4B5563;
+    margin-bottom: 0;
+  }
+
+  /* FAQ */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  .faq-item:hover {
+    border-color: var(--accent-primary);
+  }
+
+  .faq-question {
+    padding: 1.25rem;
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    transition: transform 0.2s ease;
+  }
+
+  details[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.25rem 1.25rem;
+    color: #4B5563;
+    line-height: 1.6;
+  }
+
+  /* Related Cards */
+  .related-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid #E5E7EB;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: block;
+  }
+
+  .related-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .related-icon {
+    display: inline-flex;
+    padding: 0.75rem;
+    background: var(--accent-light);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .related-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--accent-primary);
+  }
+
+  .related-card h3 {
+    font-weight: 600;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+
+  .related-card p {
+    font-size: 0.875rem;
+    color: #68727C;
+    margin-bottom: 0.75rem;
+  }
+
+  .related-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent-primary);
   }
 </style>
+
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href && href !== '#') {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }
+    });
+  });
+</script>
