@@ -40,8 +40,12 @@ const companies = [
   // Student Loan Companies
   { name: 'SoFi', domain: 'sofi.com', slug: 'sofi' },
   { name: 'Earnest', domain: 'earnest.com', slug: 'earnest' },
+  { name: 'Discover Student Loans', domain: 'discover.com', slug: 'discover-student-loans' },
   { name: 'College Ave', domain: 'collegeavestudentloans.com', slug: 'college-ave' },
   { name: 'Sallie Mae', domain: 'salliemae.com', slug: 'sallie-mae' },
+  { name: 'Citizens Bank', domain: 'citizensbank.com', slug: 'citizens-bank' },
+  { name: 'Ascent', domain: 'ascentfunding.com', slug: 'ascent' },
+  { name: 'MPOWER Financing', domain: 'mpowerfinancing.com', slug: 'mpower-financing' },
   
   // Savings Accounts
   { name: 'Marcus by Goldman Sachs', domain: 'marcus.com', slug: 'marcus' },

@@ -353,7 +353,7 @@ const faqs = [
               {/* Insurer Logo */}
               <div class="company-logo-wrapper relative mt-8 mb-6">
                 <img 
-                  src={getRVInsuranceLogo(insurer.slug)} 
+                  src={getRVInsuranceLogo(insurer.slug) || "/legacy/placeholder.svg"} 
                   alt={`${insurer.name} logo`}
                   class="w-48 h-auto rounded-xl shadow-lg group-hover:scale-105 transition-all duration-500"
                   loading={index < 3 ? "eager" : "lazy"}
@@ -361,7 +361,7 @@ const faqs = [
               </div>
               
               {/* CTA Button */}
-              <a href="#" class="w-full bg-gradient-to-r from-[#1D4ED8] to-[#1E40AF] text-white font-bold py-3 px-6 rounded-xl text-center hover:from-[#1E40AF] hover:to-[#1E3A8A] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+              <a href="#" class="quote-btn w-full">
                 <span>Get Quote</span>
                 <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
@@ -503,12 +503,23 @@ const faqs = [
               <th class="text-center p-4 font-semibold">AM Best</th>
               <th class="text-center p-4 font-semibold">Best For</th>
               <th class="text-center p-4 font-semibold">Rating</th>
+              <th class="text-center p-4 font-semibold">Get Quote</th>
             </tr>
           </thead>
           <tbody>
             {insurers.map((insurer, index) => (
               <tr class={`border-b border-gray-100 hover:bg-[#EFF6FF] transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-[#F8FAFC]'}`}>
-                <td class="p-4 font-semibold text-[#162433]">{insurer.name}</td>
+                <td class="p-4 font-semibold text-[#162433]">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src={getRVInsuranceLogo(insurer.slug) || "/legacy/placeholder.svg"}
+                      alt={`${insurer.name} logo`}
+                      class="w-24 h-auto rounded-md bg-white"
+                      loading="lazy"
+                    />
+                    <span>{insurer.name}</span>
+                  </div>
+                </td>
                 <td class="p-4 text-center font-bold text-[#1D4ED8]">{insurer.monthlyRange}</td>
                 <td class="p-4 text-center text-[#4B5563]">{insurer.amBest}</td>
                 <td class="p-4 text-center text-[#4B5563]">{insurer.bestFor}</td>
@@ -517,6 +528,12 @@ const faqs = [
                     <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                     {insurer.rating}
                   </span>
+                </td>
+                <td class="p-4 text-center">
+                  <a href="#" class="quote-btn quote-btn--sm inline-flex">
+                    <span>Get Quote</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                  </a>
                 </td>
               </tr>
             ))}
@@ -640,3 +657,37 @@ const faqs = [
     </div>
   </section>
 </MainLayout>
+
+<style>
+  /* Quote Button (blue) - ensures white text even with global link styling */
+  .quote-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.25rem;
+    background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 16px rgba(29, 78, 216, 0.25);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  .quote-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(29, 78, 216, 0.35);
+  }
+
+  .quote-btn--sm {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.75rem;
+    border-radius: 10px;
+  }
+</style>
