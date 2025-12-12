@@ -209,11 +209,15 @@ src/pages/sitemap.astro        → Sitemap page
 
 ### Comparison Table Styling
 
+**ALL tables use the same Navy gradient - no category-specific colors!**
+
 ```css
-/* Table Header */
+/* Table Header - CONSISTENT ACROSS ALL PAGES */
 .premium-comparison-table thead th {
   background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
   color: white;
+  border-radius: 8px 0 0 0; /* first-child */
+  border-radius: 0 8px 0 0; /* last-child */
 }
 
 /* Row Hover */

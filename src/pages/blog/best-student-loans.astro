@@ -350,7 +350,7 @@ const pageUrl = "/blog/best-student-loans";
     title={pageTitle}
     kicker=""
     subtitle="Compare 8 top private student loan lenders for rates, fees, repayment flexibility, and who they’re best for."
-    author="Jessica Martinez"
+  author="Jessica Martinez"
     date="Dec. 11, 2025"
     compact={true}
     animateTitle={true}
@@ -388,7 +388,7 @@ const pageUrl = "/blog/best-student-loans";
           style={`animation-delay: ${index * 50}ms`}
         >
           {lender.editorChoice && (
-            <div class="bg-gradient-to-r from-[#059669] to-[#047857] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               EDITOR'S CHOICE — Best Overall Value
             </div>
@@ -398,7 +398,7 @@ const pageUrl = "/blog/best-student-loans";
             <!-- Left -->
             <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
               <div class="absolute top-4 left-4 flex items-center gap-2">
-                <span class="w-10 h-10 rounded-full bg-[#059669] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
               </div>
 
               <div class="absolute top-4 right-4 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
@@ -434,7 +434,7 @@ const pageUrl = "/blog/best-student-loans";
             <div class="p-6 md:p-8">
               <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
-                  <span class="inline-block bg-gradient-to-r from-[#ECFDF5] to-[#D1FAE5] text-[#059669] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
                     {lender.bestFor}
                   </span>
                   <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{lender.name}</h3>
@@ -445,9 +445,9 @@ const pageUrl = "/blog/best-student-loans";
 
               <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
                 <div class="bg-gradient-to-br from-[#F0FDF4] to-[#DCFCE7] rounded-xl p-3 text-center">
-                  <div class="text-xs text-[#059669] font-medium mb-1">Rates from</div>
-                  <div class="font-bold text-[#166534] text-lg">{lender.rateFrom}</div>
-                  <div class="text-xs text-[#059669]">APR</div>
+                  <div class="text-xs text-[#0066B2] font-medium mb-1">Rates from</div>
+                  <div class="font-bold text-green-600 text-lg">{lender.rateFrom}</div>
+                  <div class="text-xs text-[#0066B2]">APR</div>
                 </div>
                 <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
                   <div class="text-xs text-[#68727C] font-medium mb-1">Fees</div>
@@ -459,7 +459,7 @@ const pageUrl = "/blog/best-student-loans";
                 </div>
                 <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
                   <div class="text-xs text-[#68727C] font-medium mb-1">Type</div>
-                  <div class="font-bold text-[#059669]">Private</div>
+                  <div class="font-bold text-[#0066B2]">Private</div>
                 </div>
               </div>
 
@@ -524,7 +524,7 @@ const pageUrl = "/blog/best-student-loans";
                     <ul class="space-y-3">
                       {lender.loanDetails.map(detail => (
                         <li class="flex items-start gap-3 text-sm text-[#4B5563]">
-                          <span class="w-1.5 h-1.5 rounded-full bg-[#059669] mt-2 flex-shrink-0"></span>
+                          <span class="w-1.5 h-1.5 rounded-full bg-[#0066B2] mt-2 flex-shrink-0"></span>
                           <span>{detail}</span>
                         </li>
                       ))}
@@ -843,7 +843,7 @@ const pageUrl = "/blog/best-student-loans";
       <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
         <img src="/team/jessica-martinez.jpg" alt="Jessica Martinez, Personal Finance Writer" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
         <div>
-          <div class="text-xs text-[#059669] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
           <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Jessica Martinez</h3>
           <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
             Jessica is a personal finance writer at Screened specializing in banking, savings, and borrowing decisions. She focuses on helping readers compare real-world costs (not just headline APRs) and avoid expensive traps like interest capitalization.
@@ -872,7 +872,7 @@ const pageUrl = "/blog/best-student-loans";
     gap: 0.5rem;
     width: 100%;
     padding: 1rem 1.5rem;
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
     color: white;
     font-weight: 700;
     font-size: 0.875rem;
@@ -880,7 +880,7 @@ const pageUrl = "/blog/best-student-loans";
     letter-spacing: 0.05em;
     border-radius: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
     position: relative;
     overflow: hidden;
   }
@@ -920,7 +920,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .comparison-table th {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
     color: white;
     padding: 1rem;
     font-weight: 600;
@@ -942,7 +942,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .comparison-table tbody tr:hover td {
-    background: #ECFDF5;
+    background: #EBF5FF;
   }
 
   .seo-content h2 {
@@ -961,7 +961,7 @@ const pageUrl = "/blog/best-student-loans";
     font-family: 'Lexend', sans-serif;
     font-weight: 600;
     font-size: 1.25rem;
-    color: #059669;
+    color: #0066B2;
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
@@ -996,7 +996,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .seo-content th {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
     color: white;
     padding: 1rem;
     text-align: left;
@@ -1018,10 +1018,10 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .info-box {
-    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
     border: 1px solid #A7F3D0;
   }
-  .info-box h4 { color: #059669; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box h4 { color: #0066B2; margin: 0 0 0.5rem 0; font-weight: 600; }
   .info-box p { margin: 0; color: #065F46; }
 
   .warning-box {
@@ -1042,7 +1042,7 @@ const pageUrl = "/blog/best-student-loans";
     padding: 1rem 1.5rem;
     font-size: 0.9375rem;
   }
-  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+  .warning-box p { margin: 0; color: #475569; padding: 1.25rem 1.5rem; }
 
   .category-picks {
     display: grid;
@@ -1060,7 +1060,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .category-card:hover {
-    border-color: #059669;
+    border-color: #0066B2;
     box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
     transform: translateY(-2px);
   }
@@ -1072,14 +1072,14 @@ const pageUrl = "/blog/best-student-loans";
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
     margin-bottom: 1rem;
   }
 
   .category-icon svg {
     width: 24px;
     height: 24px;
-    stroke: #059669;
+    stroke: #0066B2;
   }
 
   .inline-icon {
@@ -1099,7 +1099,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .category-card .card-name {
-    color: #059669;
+    color: #0066B2;
     font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
@@ -1127,7 +1127,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .faq-item[open] {
-    border-color: #059669;
+    border-color: #0066B2;
     box-shadow: 0 8px 24px rgba(5, 150, 105, 0.1);
   }
 
@@ -1169,7 +1169,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .related-card:hover {
-    border-color: #059669;
+    border-color: #0066B2;
     box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
     transform: translateY(-4px);
   }
@@ -1178,7 +1178,7 @@ const pageUrl = "/blog/best-student-loans";
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1188,7 +1188,7 @@ const pageUrl = "/blog/best-student-loans";
   .related-icon svg {
     width: 24px;
     height: 24px;
-    stroke: #059669;
+    stroke: #0066B2;
   }
 
   .related-card h3 {
@@ -1204,13 +1204,13 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .related-link {
-    color: #059669;
+    color: #0066B2;
     font-weight: 600;
     font-size: 0.875rem;
     transition: color 0.2s ease;
   }
 
-  .related-card:hover .related-link { color: #047857; }
+  .related-card:hover .related-link { color: #004C8C; }
 
   .accordion-container {
     display: flex;
@@ -1236,7 +1236,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .accordion-header::-webkit-details-marker { display: none; }
-  .accordion-header:hover { color: #059669; }
+  .accordion-header:hover { color: #0066B2; }
 
   .accordion-icon {
     width: 20px;
@@ -1247,7 +1247,7 @@ const pageUrl = "/blog/best-student-loans";
   }
 
   .accordion-item[open] .accordion-icon { transform: rotate(180deg); }
-  .accordion-item[open] .accordion-header { color: #059669; }
+  .accordion-item[open] .accordion-header { color: #0066B2; }
 
   .accordion-content {
     padding: 0 0 1rem 0;

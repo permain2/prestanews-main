@@ -349,12 +349,12 @@
         <div class="stat-label">Pages Exist ✓</div>
       </div>
       <div class="stat">
-        <div class="stat-number warning" id="not-in-nav">23</div>
-        <div class="stat-label">Not in Navigation</div>
+        <div class="stat-number success" id="nav-fixed">5</div>
+        <div class="stat-label">Nav Issues Fixed ✓</div>
       </div>
       <div class="stat">
-        <div class="stat-number danger" id="missing-pages">3</div>
-        <div class="stat-label">Missing Pages</div>
+        <div class="stat-number success" id="tables-fixed">5</div>
+        <div class="stat-label">Table Colors Fixed ✓</div>
       </div>
       <div class="stat">
         <div class="stat-number" id="checked-count">0</div>
@@ -913,12 +913,123 @@
       </div>
     </div>
     
-    <!-- MISSING PAGES (Referenced but don't exist) -->
+    <!-- FIXED ISSUES -->
+    <div class="section">
+      <div class="section-header" style="background: linear-gradient(135deg, #22C55E 0%, #16a34a 100%); color: white;">
+        <div class="section-title">
+          ✅ Fixed Navigation Issues
+          <span class="section-count">5 items fixed</span>
+        </div>
+      </div>
+      <div class="section-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">✓</th>
+              <th>Issue</th>
+              <th>Location</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Travel section added to Header Menu</td>
+              <td>Header.astro</td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Pet Insurance added to Footer</td>
+              <td>Footer.astro</td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Consumer Health Data Privacy added to Footer</td>
+              <td>Footer.astro</td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Extended Warranty added to Credit Cards dropdown</td>
+              <td>Header.astro</td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Pet Insurance & Health Data Privacy added to Sitemap</td>
+              <td>sitemap.astro</td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- TABLE COLOR FIXES -->
+    <div class="section">
+      <div class="section-header" style="background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%); color: white;">
+        <div class="section-title">
+          🎨 Table Colors: ONE Consistent Color
+          <span class="section-count">5 pages</span>
+        </div>
+      </div>
+      <div class="section-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">✓</th>
+              <th>Page</th>
+              <th>Color Applied</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Best Travel Cards</td>
+              <td><span style="background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%); color: white; padding: 2px 8px; border-radius: 4px;">Navy #0D2C4B → #1a4a7a</span></td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Best Extended Warranty</td>
+              <td><span style="background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%); color: white; padding: 2px 8px; border-radius: 4px;">Navy #0D2C4B → #1a4a7a</span></td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Pet Insurance</td>
+              <td><span style="background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%); color: white; padding: 2px 8px; border-radius: 4px;">Navy #0D2C4B → #1a4a7a</span></td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Best Home Warranties</td>
+              <td><span style="background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%); color: white; padding: 2px 8px; border-radius: 4px;">Navy #0D2C4B → #1a4a7a</span></td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" checked disabled></td>
+              <td>Best Online Savings Accounts</td>
+              <td><span style="background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%); color: white; padding: 2px 8px; border-radius: 4px;">Navy #0D2C4B → #1a4a7a</span></td>
+              <td><span class="status-badge status-exists">✓ Fixed</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding: 1rem; background: #f8fafc; border-top: 1px solid #e5e7eb;">
+          <strong>Standard:</strong> ALL comparison tables use Navy gradient <code>#0D2C4B → #1a4a7a</code> with white text
+        </div>
+      </div>
+    </div>
+    
+    <!-- REMAINING ISSUES -->
     <div class="section">
       <div class="section-header missing">
         <div class="section-title">
-          ⚠️ Action Required: Navigation Gaps
-          <span class="section-count">3 items</span>
+          ⚠️ Remaining: Consider These
+          <span class="section-count">1 item</span>
         </div>
       </div>
       <div class="section-content">
@@ -928,27 +1039,15 @@
               <th class="checkbox-cell">Fix</th>
               <th>Issue</th>
               <th>Location</th>
-              <th>Action Required</th>
+              <th>Recommendation</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="checkbox-cell"><input type="checkbox" data-page="fix-travel-menu" onchange="updateProgress()"></td>
-              <td>Travel section not in Header Menu</td>
-              <td>Header.astro</td>
-              <td><span class="status-badge status-missing">Add Travel dropdown to menu</span></td>
-            </tr>
-            <tr>
               <td class="checkbox-cell"><input type="checkbox" data-page="fix-savings-duplicate" onchange="updateProgress()"></td>
               <td>Savings Accounts exists in 2 locations</td>
               <td>/finance/ AND /blog/</td>
-              <td><span class="status-badge status-not-in-nav">Consolidate or redirect</span></td>
-            </tr>
-            <tr>
-              <td class="checkbox-cell"><input type="checkbox" data-page="fix-pet-insurance-footer" onchange="updateProgress()"></td>
-              <td>Pet Insurance not in Footer</td>
-              <td>Footer.astro</td>
-              <td><span class="status-badge status-not-in-nav">Add to Insurance footer section</span></td>
+              <td><span class="status-badge status-not-in-nav">Consider consolidating or redirect</span></td>
             </tr>
           </tbody>
         </table>
@@ -1036,36 +1135,34 @@
     
     <!-- Summary -->
     <div style="background: white; border-radius: 12px; padding: 2rem; margin-top: 2rem;">
-      <h2 style="margin-bottom: 1rem; color: #0D2C4B;">📊 Navigation Audit Summary</h2>
+      <h2 style="margin-bottom: 1rem; color: #0D2C4B;">📊 Navigation Audit Summary - UPDATED</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
         <div>
-          <h3 style="color: #22C55E; margin-bottom: 0.5rem;">✅ What's Working</h3>
+          <h3 style="color: #22C55E; margin-bottom: 0.5rem;">✅ Fixed Issues</h3>
           <ul style="color: #475569; line-height: 1.8;">
-            <li>All 62 pages exist and are accessible</li>
-            <li>Header menu covers main categories</li>
-            <li>Footer has legal + company links</li>
-            <li>Sitemap includes Travel section</li>
-            <li>Blog posts auto-listed via content collection</li>
+            <li>✓ Travel dropdown added to Header Menu</li>
+            <li>✓ Pet Insurance added to Footer</li>
+            <li>✓ Health Data Privacy added to Footer</li>
+            <li>✓ Extended Warranty added to Credit Cards dropdown</li>
+            <li>✓ Pet Insurance + Health Data added to Sitemap</li>
           </ul>
         </div>
         <div>
-          <h3 style="color: #F59E0B; margin-bottom: 0.5rem;">⚠️ Needs Attention</h3>
+          <h3 style="color: #0066B2; margin-bottom: 0.5rem;">🎨 Table Colors: ONE Color</h3>
           <ul style="color: #475569; line-height: 1.8;">
-            <li>Travel section missing from Header Menu</li>
-            <li>Pet Insurance not in Footer</li>
-            <li>Consumer Health Data Privacy not linked</li>
-            <li>Duplicate savings accounts pages</li>
-            <li>best-extended-warranty not in Credit Cards dropdown</li>
+            <li>✓ ALL pages: Navy gradient (#0D2C4B → #1a4a7a)</li>
+            <li>✓ Consistent branding across all categories</li>
+            <li>✓ White text on dark background</li>
+            <li>✓ Rounded corners on header (8px)</li>
+            <li>No category-specific colors</li>
           </ul>
         </div>
         <div>
-          <h3 style="color: #0066B2; margin-bottom: 0.5rem;">💡 Recommendations</h3>
+          <h3 style="color: #F59E0B; margin-bottom: 0.5rem;">⚠️ Optional: Consider</h3>
           <ul style="color: #475569; line-height: 1.8;">
-            <li>Add Travel dropdown to header menu</li>
-            <li>Add Pet Insurance to footer Insurance section</li>
-            <li>Add Health Data Privacy to legal footer</li>
-            <li>Redirect /blog/best-online-savings-accounts → /finance/</li>
-            <li>Add Lifestyle hub to navigation if active</li>
+            <li>Duplicate: /blog/best-online-savings-accounts (consider redirect)</li>
+            <li>Lifestyle hub exists but not in navigation</li>
+            <li>Pet hub exists but may not be needed</li>
           </ul>
         </div>
       </div>
