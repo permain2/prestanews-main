@@ -28,38 +28,43 @@ function ToggleItem({
     isSelected: boolean
     onClick: () => void
 }) {
+    const className = `toggle-item${item.hideOnMobile ? ' hide-on-mobile' : ''}`
+    
     return (
-        <a
+        <motion.a
             href={item.href}
-            onClick={onClick}
-            className={`relative flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 rounded-lg whitespace-nowrap ${
-                item.hideOnMobile ? "hidden md:flex" : "flex"
-            } ${
-                isSelected
-                    ? "text-white"
-                    : "text-[#68727C] hover:text-[#0D2C4B] hover:bg-gray-100"
-            }`}
+            onClick={(e) => {
+                e.preventDefault()
+                onClick()
+                const element = document.querySelector(item.href)
+                if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" })
+                }
+            }}
+            initial={{ scale: 1 }}
+            whileTap={{ scale: 0.95 }}
+            className={className}
         >
-            {isSelected && (
-                <motion.div
-                    layoutId="rv-toc-pill"
-                    className="absolute inset-0 bg-gradient-to-r from-[#0D2C4B] to-[#1a4a70] rounded-lg"
-                    initial={false}
-                    transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30,
-                    }}
-                />
-            )}
-            <span className="relative z-10">{item.label}</span>
-        </a>
+            <span>{item.label}</span>
+            <AnimatePresence initial={false}>
+                {isSelected && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="selected-indicator"
+                        layoutId="rv-toc-selected-indicator"
+                    />
+                )}
+            </AnimatePresence>
+        </motion.a>
     )
 }
 
 export default function TOCToggleGroupRV() {
-    const [selected, setSelected] = useState(tocItems[0].id)
+    const [activeSection, setActiveSection] = useState("cards")
 
+    // Track scroll position to highlight active section
     useEffect(() => {
         const handleScroll = () => {
             const sections = tocItems.map(item => ({
@@ -67,34 +72,129 @@ export default function TOCToggleGroupRV() {
                 element: document.getElementById(item.id)
             })).filter(s => s.element)
 
-            const scrollPosition = window.scrollY + 200
+            const scrollPosition = window.scrollY + 150
 
             for (let i = sections.length - 1; i >= 0; i--) {
                 const section = sections[i]
                 if (section.element && section.element.offsetTop <= scrollPosition) {
-                    setSelected(section.id)
+                    setActiveSection(section.id)
                     break
                 }
             }
         }
 
-        window.addEventListener('scroll', handleScroll, { passive: true })
-        return () => window.removeEventListener('scroll', handleScroll)
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
     return (
-        <nav className="flex items-center gap-1 overflow-x-auto scrollbar-hide" aria-label="Page sections">
-            <AnimatePresence mode="wait">
+        <nav className="toc-toggle-container" role="navigation" aria-label="Page sections">
+            <div className="toc-toggle-group">
                 {tocItems.map((item) => (
                     <ToggleItem
                         key={item.id}
                         item={item}
-                        isSelected={selected === item.id}
-                        onClick={() => setSelected(item.id)}
+                        isSelected={activeSection === item.id}
+                        onClick={() => setActiveSection(item.id)}
                     />
                 ))}
-            </AnimatePresence>
+            </div>
+
+            <style>{`
+                .toc-toggle-container {
+                    width: 100%;
+                    overflow-x: auto;
+                    scrollbar-width: none;
+                    -ms-overflow-style: none;
+                }
+
+                .toc-toggle-container::-webkit-scrollbar {
+                    display: none;
+                }
+
+                .toc-toggle-group {
+                    display: flex;
+                    width: 100%;
+                    padding: 6px;
+                    background: linear-gradient(135deg, #0D2C4B 0%, #1a3a5c 100%);
+                    border-radius: 12px;
+                    gap: 4px;
+                    box-shadow: 
+                        0 0 0 1px rgba(255, 255, 255, 0.05),
+                        0 4px 20px rgba(0, 0, 0, 0.15);
+                }
+
+                .toggle-item {
+                    flex: 1 1 0;
+                    color: rgba(255, 255, 255, 0.7);
+                    padding: 12px 8px;
+                    border-radius: 8px;
+                    display: inline-flex;
+                    font-size: 0.8125rem;
+                    font-weight: 600;
+                    line-height: 1;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    text-decoration: none;
+                    white-space: nowrap;
+                    cursor: pointer;
+                    transition: color 0.2s ease;
+                }
+
+                .toggle-item:hover {
+                    color: rgba(255, 255, 255, 0.95);
+                }
+
+                .toggle-item > span {
+                    position: relative;
+                    z-index: 1;
+                }
+
+                .selected-indicator {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+                }
+
+                .toggle-item:has(.selected-indicator) {
+                    color: #ffffff;
+                }
+
+                @media (max-width: 768px) {
+                    .toc-toggle-group {
+                        padding: 5px;
+                        gap: 3px;
+                        border-radius: 10px;
+                    }
+
+                    .toggle-item {
+                        padding: 10px 6px;
+                        font-size: 0.6875rem;
+                        border-radius: 6px;
+                    }
+
+                    .toggle-item.hide-on-mobile {
+                        display: none;
+                    }
+
+                    .selected-indicator {
+                        border-radius: 6px;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .toggle-item {
+                        padding: 8px 4px;
+                        font-size: 0.625rem;
+                    }
+                }
+            `}</style>
         </nav>
     )
 }
-

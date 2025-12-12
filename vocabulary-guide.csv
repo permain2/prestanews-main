@@ -1,0 +1,111 @@
+Category,Use This,Not This,Context/Reason
+credit-cards,welcome bonus,sign-up offer,Industry standard term
+credit-cards,annual fee,yearly cost,Professional terminology
+credit-cards,earning rate,how much you get back,Technical accuracy
+credit-cards,redemption value,what points are worth,TPG standard
+credit-cards,transfer partners,airline/hotel partners,More specific
+credit-cards,lounge access,airport lounge entry,Cleaner phrasing
+credit-cards,elite status,top tier membership,Industry term
+credit-cards,points valuation,points worth,More professional
+credit-cards,statement credit,money back on statement,Industry term
+credit-cards,foreign transaction fee,international fee,Correct term
+credit-cards,authorized user,additional cardholder,Industry standard
+credit-cards,credit limit,spending limit,Technical term
+credit-cards,utilization rate,how much credit you use,Industry metric
+credit-cards,intro APR,introductory rate,Correct abbreviation
+credit-cards,balance transfer,move debt between cards,Industry term
+credit-cards,cash advance,ATM withdrawal from card,Industry term
+credit-cards,minimum spend,spending requirement,Cleaner phrasing
+credit-cards,bonus categories,earning categories,TPG standard
+credit-cards,rotating categories,quarterly categories,Industry term
+credit-cards,flat-rate rewards,same rate on everything,Cleaner phrasing
+credit-cards,co-branded card,airline/hotel card,Industry term
+credit-cards,issuer,card company,Technical accuracy
+insurance,coverage options,what you get,Professional term
+insurance,policy benefits,insurance perks,Industry standard
+insurance,premium costs,insurance cost,Correct terminology
+insurance,deductible amounts,what you pay first,Technical term
+insurance,claim process,how to file,Professional phrasing
+insurance,underwriting,approval process,Industry term
+insurance,risk assessment,risk evaluation,Technical term
+insurance,coverage limits,maximum payout,Industry standard
+insurance,liability coverage,protection if you cause damage,Correct term
+insurance,comprehensive coverage,full coverage,Industry standard
+insurance,collision coverage,accident coverage,Correct term
+insurance,actual cash value,depreciated value,Industry term
+insurance,replacement cost,new item value,Correct terminology
+insurance,policy term,coverage period,Industry standard
+insurance,exclusions,what's not covered,Technical term
+insurance,rider,add-on coverage,Industry term
+insurance,waiting period,time before coverage starts,Correct term
+insurance,pre-existing condition,prior health issue,Sensitive terminology
+insurance,AM Best rating,insurance company rating,Industry standard
+insurance,claims ratio,percentage of claims paid,Technical metric
+insurance,financial strength,company stability,Professional term
+finance,APY (Annual Percentage Yield),interest rate,Correct measure for savings
+finance,compound interest,interest on interest,Technical accuracy
+finance,FDIC insured,federally insured,Correct term
+finance,credit utilization,how much credit you use,Industry metric
+finance,debt-to-income ratio,debt compared to income,Technical term
+finance,amortization,loan payoff schedule,Industry term
+finance,refinancing options,refinance choices,Professional phrasing
+finance,principal balance,amount owed,Technical term
+finance,variable rate,changing rate,Industry term
+finance,fixed rate,locked rate,Industry term
+finance,origination fee,loan setup fee,Industry term
+finance,closing costs,fees to finalize,Real estate standard
+finance,escrow,held funds,Industry term
+finance,equity,ownership value,Technical term
+finance,liquidity,access to cash,Financial term
+finance,diversification,spreading investments,Industry standard
+finance,asset allocation,investment mix,Technical term
+finance,compound growth,growth on growth,Financial concept
+finance,emergency fund,rainy day savings,Professional term
+finance,high-yield savings,high-interest savings,Industry standard
+finance,money market account,MMA,Industry abbreviation
+finance,certificate of deposit,CD,Industry abbreviation
+general,comprehensive analysis,full review,Professional tone
+general,in-depth review,detailed look,Authoritative
+general,expert recommendation,we recommend,Builds trust
+general,data-driven insights,based on data,Credibility
+general,comparative analysis,side-by-side comparison,Professional
+general,bottom line,final verdict,TPG style
+general,key takeaways,main points,Professional summary
+general,value proposition,what you get for your money,Business term
+general,cost-benefit analysis,weighing pros and cons,Professional
+general,ROI (return on investment),what you get back,Technical term
+general,optimal value,best deal,More professional
+general,budget-friendly,cheap,Positive framing
+general,premium option,expensive choice,Positive framing
+general,entry-level,basic,Neutral framing
+general,mid-tier,middle option,Neutral framing
+general,we recommend,you should get,Authoritative voice
+general,based on our analysis,we think,Data-backed claim
+general,in our testing,we found,First-hand experience
+general,according to our research,studies show,Credibility
+avoid,best ever,any,Hyperbole - unprofessional
+avoid,amazing deal,any,Subjective/salesy
+avoid,you won't believe,any,Clickbait
+avoid,free money,any,Misleading
+avoid,guaranteed returns,any,Potentially illegal claim
+avoid,no risk,any,Misleading
+avoid,get rich quick,any,Scammy tone
+avoid,cheap insurance,any,Negative connotation
+avoid,act now,any,High-pressure sales
+avoid,limited time,any,False urgency (unless true)
+avoid,once in a lifetime,any,Exaggeration
+avoid,secret,any,Clickbait
+avoid,hack,any,Overused/clickbait
+avoid,trick,any,Negative connotation
+avoid,loophole,any,Potentially illegal implication
+tone,you/your,consumers/customers,Personal and direct
+tone,we found,it was found,Authoritative voice
+tone,our analysis shows,analysis shows,Takes ownership
+tone,in our experience,reportedly,First-hand credibility
+tone,straightforward,simple,More professional
+tone,competitive rates,good rates,Industry phrasing
+tone,streamlined process,easy process,Professional tone
+tone,robust features,lots of features,Technical accuracy
+tone,seamless integration,works well with,Tech industry term
+tone,intuitive interface,easy to use,UX terminology
+
