@@ -1,6 +1,6 @@
 /**
  * Vpn Logo Map
- * Uses local files for Bamboo VPN and Brandfetch CDN for others
+ * Uses local file for Bamboo VPN and Clearbit for others
  * 
  * Usage:
  *   import { getVpnLogo } from '../utils/VpnLogoMap';
@@ -13,46 +13,46 @@ export const vpnLogos: Record<string, string> = {
   "bamboo-vpn": "/vpn-logos/bamboo-vpn.webp",
   "bamboovpn": "/vpn-logos/bamboo-vpn.webp",
   
-  // NordVPN - Brandfetch
-  "NordVPN": "https://cdn.brandfetch.io/idPhnhFqWu/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "nordvpn": "https://cdn.brandfetch.io/idPhnhFqWu/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // NordVPN - Clearbit
+  "NordVPN": "https://logo.clearbit.com/nordvpn.com",
+  "nordvpn": "https://logo.clearbit.com/nordvpn.com",
   
-  // ExpressVPN - Brandfetch
-  "ExpressVPN": "https://cdn.brandfetch.io/id_KsIGT_o/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "expressvpn": "https://cdn.brandfetch.io/id_KsIGT_o/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // ExpressVPN - Clearbit
+  "ExpressVPN": "https://logo.clearbit.com/expressvpn.com",
+  "expressvpn": "https://logo.clearbit.com/expressvpn.com",
   
-  // Surfshark - Brandfetch
-  "Surfshark": "https://cdn.brandfetch.io/idD62_6P6x/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "surfshark": "https://cdn.brandfetch.io/idD62_6P6x/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // Surfshark - Clearbit
+  "Surfshark": "https://logo.clearbit.com/surfshark.com",
+  "surfshark": "https://logo.clearbit.com/surfshark.com",
   
-  // CyberGhost - Brandfetch
-  "CyberGhost": "https://cdn.brandfetch.io/idxBHnKmgU/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "cyberghost": "https://cdn.brandfetch.io/idxBHnKmgU/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // CyberGhost - Clearbit
+  "CyberGhost": "https://logo.clearbit.com/cyberghostvpn.com",
+  "cyberghost": "https://logo.clearbit.com/cyberghostvpn.com",
   
-  // Private Internet Access - Brandfetch
-  "Private Internet Access": "https://cdn.brandfetch.io/iduS-B8h2w/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "pia": "https://cdn.brandfetch.io/iduS-B8h2w/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "private internet access": "https://cdn.brandfetch.io/iduS-B8h2w/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // Private Internet Access - Clearbit
+  "Private Internet Access": "https://logo.clearbit.com/privateinternetaccess.com",
+  "pia": "https://logo.clearbit.com/privateinternetaccess.com",
+  "private internet access": "https://logo.clearbit.com/privateinternetaccess.com",
   
-  // ProtonVPN - Brandfetch
-  "ProtonVPN": "https://cdn.brandfetch.io/idaXGCYW-C/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "protonvpn": "https://cdn.brandfetch.io/idaXGCYW-C/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // ProtonVPN - Clearbit
+  "ProtonVPN": "https://logo.clearbit.com/protonvpn.com",
+  "protonvpn": "https://logo.clearbit.com/protonvpn.com",
   
-  // IPVanish - Brandfetch
-  "IPVanish": "https://cdn.brandfetch.io/idj2wOH0Cz/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "ipvanish": "https://cdn.brandfetch.io/idj2wOH0Cz/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // IPVanish - Clearbit
+  "IPVanish": "https://logo.clearbit.com/ipvanish.com",
+  "ipvanish": "https://logo.clearbit.com/ipvanish.com",
   
-  // Windscribe - Brandfetch
-  "Windscribe": "https://cdn.brandfetch.io/idnSz3JYFV/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "windscribe": "https://cdn.brandfetch.io/idnSz3JYFV/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // Windscribe - Clearbit
+  "Windscribe": "https://logo.clearbit.com/windscribe.com",
+  "windscribe": "https://logo.clearbit.com/windscribe.com",
   
-  // Mullvad - Brandfetch
-  "Mullvad": "https://cdn.brandfetch.io/idiCIYbxBD/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "mullvad": "https://cdn.brandfetch.io/idiCIYbxBD/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
+  // Mullvad - Clearbit
+  "Mullvad": "https://logo.clearbit.com/mullvad.net",
+  "mullvad": "https://logo.clearbit.com/mullvad.net",
   
-  // TunnelBear - Brandfetch
-  "TunnelBear": "https://cdn.brandfetch.io/idwWJPVf7h/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B",
-  "tunnelbear": "https://cdn.brandfetch.io/idwWJPVf7h/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B"
+  // TunnelBear - Clearbit
+  "TunnelBear": "https://logo.clearbit.com/tunnelbear.com",
+  "tunnelbear": "https://logo.clearbit.com/tunnelbear.com"
 };
 
 export function getVpnLogo(nameOrSlug: string): string | null {
