@@ -1,0 +1,518 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import ComparisonTOCToggle from '../../components/ComparisonTOCToggle.tsx';
+import AnimatedFAQ from '../../components/AnimatedFAQ.tsx';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getVpnLogo } from '../../utils/VpnLogoMap';
+
+const lastUpdated = "Dec. 12, 2025";
+
+// VPN providers data
+const vpnProviders = [
+  {
+    name: "NordVPN",
+    logo: getVpnLogo("NordVPN") || "/vpn-logos/nordvpn.png",
+    bestFor: "Best Overall",
+    monthlyPrice: "$3.39/mo",
+    rating: 4.9,
+    servers: "6,400+ servers",
+    countries: "111 countries",
+    devices: "10 devices",
+    pros: ["Fastest speeds in our tests", "Double VPN & Onion over VPN", "Strict no-logs policy (audited)", "Threat Protection malware blocker"],
+    cons: ["Slightly higher price than budget options", "No free tier"],
+    description: "NordVPN consistently tops our speed tests and offers the most comprehensive security features. The company's no-logs policy has been independently audited twice, and features like Threat Protection block malware and trackers automatically.",
+    bottomLine: "NordVPN is our top pick for most users. It combines blazing-fast speeds with military-grade encryption and a proven no-logs policy. The Threat Protection feature adds an extra layer of security by blocking malware, trackers, and ads even when you're not connected to a VPN server.",
+    features: [
+      "6,400+ servers in 111 countries",
+      "NordLynx protocol (based on WireGuard) for top speeds",
+      "Double VPN routes traffic through 2 servers",
+      "Onion over VPN for Tor network access",
+      "Threat Protection blocks malware & ads",
+      "Meshnet for secure private networking",
+      "24/7 live chat support",
+      "30-day money-back guarantee"
+    ],
+    editorChoice: true
+  },
+  {
+    name: "ExpressVPN",
+    logo: getVpnLogo("ExpressVPN") || "/vpn-logos/expressvpn.png",
+    bestFor: "Streaming",
+    monthlyPrice: "$6.67/mo",
+    rating: 4.8,
+    servers: "3,000+ servers",
+    countries: "105 countries",
+    devices: "8 devices",
+    pros: ["Works with all major streaming services", "Lightway protocol is fast & secure", "TrustedServer technology (RAM-only)", "Excellent apps for all platforms"],
+    cons: ["More expensive than competitors", "Fewer simultaneous connections"],
+    description: "ExpressVPN excels at unblocking streaming services worldwide. Its proprietary Lightway protocol delivers excellent speeds, and TrustedServer technology ensures no data is ever written to hard drives.",
+    bottomLine: "If streaming is your priority, ExpressVPN is worth the premium. It reliably unblocks Netflix, Disney+, BBC iPlayer, and virtually every other streaming service we tested. The Lightway protocol provides excellent speeds for buffer-free 4K streaming.",
+    features: [
+      "3,000+ servers in 105 countries",
+      "Lightway protocol for speed & security",
+      "TrustedServer (RAM-only) technology",
+      "Works with Netflix, Disney+, Hulu, BBC iPlayer",
+      "Split tunneling on all platforms",
+      "Network Lock kill switch",
+      "24/7 live chat support",
+      "30-day money-back guarantee"
+    ]
+  },
+  {
+    name: "Surfshark",
+    logo: getVpnLogo("Surfshark") || "/vpn-logos/surfshark.png",
+    bestFor: "Best Value",
+    monthlyPrice: "$2.19/mo",
+    rating: 4.7,
+    servers: "3,200+ servers",
+    countries: "100 countries",
+    devices: "Unlimited",
+    pros: ["Unlimited simultaneous connections", "Excellent price for features offered", "CleanWeb blocks ads & malware", "MultiHop (Double VPN) included"],
+    cons: ["Smaller server network than leaders", "Speeds can vary by location"],
+    description: "Surfshark offers premium VPN features at budget prices, with the unique advantage of unlimited device connections. Perfect for families or users with many devices.",
+    bottomLine: "Surfshark delivers exceptional value with unlimited device connections and features that rival premium competitors. If you have multiple devices or want to share with family, Surfshark's single subscription covers everyone.",
+    features: [
+      "3,200+ servers in 100 countries",
+      "Unlimited simultaneous connections",
+      "CleanWeb blocks ads, trackers & malware",
+      "MultiHop routes through 2 countries",
+      "Camouflage Mode hides VPN usage",
+      "NoBorders mode bypasses restrictions",
+      "GPS spoofing on Android",
+      "30-day money-back guarantee"
+    ]
+  },
+  {
+    name: "CyberGhost",
+    logo: getVpnLogo("CyberGhost") || "/vpn-logos/cyberghost.png",
+    bestFor: "Beginners",
+    monthlyPrice: "$2.19/mo",
+    rating: 4.5,
+    servers: "11,500+ servers",
+    countries: "100 countries",
+    devices: "7 devices",
+    pros: ["Largest server network", "Dedicated streaming & gaming servers", "Very user-friendly apps", "45-day money-back guarantee"],
+    cons: ["Based in Romania (14 Eyes adjacent)", "Some servers slower than competitors"],
+    description: "CyberGhost has the largest server network and extremely user-friendly apps with one-click connections to optimized streaming servers.",
+    bottomLine: "CyberGhost is perfect for VPN beginners. The apps clearly label servers optimized for specific streaming services, and setup takes just minutes. The 45-day money-back guarantee gives you extra time to test.",
+    features: [
+      "11,500+ servers in 100 countries",
+      "Dedicated streaming servers (Netflix, etc.)",
+      "Dedicated gaming servers for low ping",
+      "NoSpy servers in Romania (extra privacy)",
+      "Automatic WiFi protection",
+      "Ad & malware blocker included",
+      "45-day money-back guarantee (longest)",
+      "24/7 live chat support"
+    ]
+  },
+  {
+    name: "Private Internet Access",
+    logo: getVpnLogo("Private Internet Access") || "/vpn-logos/pia.png",
+    bestFor: "Privacy Enthusiasts",
+    monthlyPrice: "$2.19/mo",
+    rating: 4.5,
+    servers: "35,000+ servers",
+    countries: "91 countries",
+    devices: "Unlimited",
+    pros: ["Open-source apps (auditable)", "Proven no-logs policy in court", "Massive server network", "Unlimited connections"],
+    cons: ["US-based company", "Interface less polished than rivals"],
+    description: "PIA has the largest server network and open-source apps that anyone can audit. Their no-logs policy has been proven in court multiple times.",
+    bottomLine: "Privacy-focused users will appreciate PIA's open-source transparency and court-proven no-logs policy. The massive 35,000+ server network means you'll always find a fast, uncrowded server.",
+    features: [
+      "35,000+ servers in 91 countries",
+      "100% open-source apps",
+      "No-logs policy proven in court",
+      "Unlimited simultaneous connections",
+      "MACE ad & malware blocker",
+      "Split tunneling support",
+      "Port forwarding available",
+      "30-day money-back guarantee"
+    ]
+  },
+  {
+    name: "ProtonVPN",
+    logo: getVpnLogo("ProtonVPN") || "/vpn-logos/protonvpn.png",
+    bestFor: "Free Option",
+    monthlyPrice: "$4.49/mo",
+    rating: 4.6,
+    servers: "4,600+ servers",
+    countries: "91 countries",
+    devices: "10 devices",
+    pros: ["Generous free tier available", "Swiss-based (strong privacy laws)", "Secure Core routes through privacy-friendly countries", "Open-source & audited"],
+    cons: ["Free tier limited to 3 countries", "Slower than top competitors"],
+    description: "ProtonVPN offers the best free VPN tier with no data limits, plus premium plans with Secure Core servers that route through privacy-friendly countries.",
+    bottomLine: "ProtonVPN's free tier is legitimately useful—unlimited data, no ads, and decent speeds. Upgrading unlocks Secure Core servers that add an extra layer of protection by routing through Switzerland, Iceland, or Sweden first.",
+    features: [
+      "Free tier with unlimited data",
+      "4,600+ servers in 91 countries",
+      "Secure Core (multi-hop through Swiss servers)",
+      "Swiss-based (outside 14 Eyes)",
+      "Open-source apps (audited)",
+      "NetShield ad & malware blocker",
+      "Tor over VPN built-in",
+      "30-day money-back guarantee"
+    ]
+  },
+  {
+    name: "IPVanish",
+    logo: getVpnLogo("IPVanish") || "/vpn-logos/ipvanish.png",
+    bestFor: "Torrenting",
+    monthlyPrice: "$2.99/mo",
+    rating: 4.3,
+    servers: "2,400+ servers",
+    countries: "90+ countries",
+    devices: "Unlimited",
+    pros: ["Owns all servers (no third-party)", "Unlimited connections", "SOCKS5 proxy included", "Good for Kodi & Fire TV"],
+    cons: ["US-based", "Smaller server network"],
+    description: "IPVanish owns and operates all its servers, providing extra security for torrent users. Unlimited connections and SOCKS5 proxy support make it ideal for P2P.",
+    bottomLine: "IPVanish is optimized for torrenting with self-owned servers, unlimited bandwidth, and included SOCKS5 proxy for torrent clients. The unlimited device policy means you can protect everything.",
+    features: [
+      "2,400+ self-owned servers",
+      "90+ country locations",
+      "Unlimited simultaneous connections",
+      "SOCKS5 proxy for torrents",
+      "Kodi & Fire TV optimized",
+      "WireGuard protocol support",
+      "No traffic logs",
+      "30-day money-back guarantee"
+    ]
+  },
+  {
+    name: "Mullvad",
+    logo: getVpnLogo("Mullvad") || "/vpn-logos/mullvad.png",
+    bestFor: "Anonymous Payment",
+    monthlyPrice: "€5/mo",
+    rating: 4.4,
+    servers: "800+ servers",
+    countries: "43 countries",
+    devices: "5 devices",
+    pros: ["No email required to sign up", "Accept cash payments", "Flat €5/month (no upsells)", "Fully audited & open-source"],
+    cons: ["Smaller server network", "No mobile-optimized apps"],
+    description: "Mullvad is the most privacy-focused VPN—you don't even need an email to sign up. Pay with cash sent by mail for complete anonymity.",
+    bottomLine: "For maximum anonymity, Mullvad can't be beat. Generate an account number, pay with cash or crypto, and you're completely anonymous. The flat €5/month fee means no confusing pricing tiers.",
+    features: [
+      "No email or personal info required",
+      "Account numbers instead of usernames",
+      "Cash payment accepted (mailed)",
+      "€5/month flat rate (no long-term discounts)",
+      "WireGuard protocol default",
+      "Fully open-source",
+      "Independently audited",
+      "Diskless (RAM-only) servers"
+    ]
+  },
+  {
+    name: "Windscribe",
+    logo: getVpnLogo("Windscribe") || "/vpn-logos/windscribe.png",
+    bestFor: "Flexible Plans",
+    monthlyPrice: "$5.75/mo",
+    rating: 4.2,
+    servers: "500+ servers",
+    countries: "69 countries",
+    devices: "Unlimited",
+    pros: ["Build-your-own plan option", "Generous 10GB free tier", "R.O.B.E.R.T. customizable blocker", "Browser extensions included"],
+    cons: ["Smaller server network", "Inconsistent speeds"],
+    description: "Windscribe lets you build a custom plan paying only for locations you need, plus offers a generous 10GB/month free tier.",
+    bottomLine: "Windscribe's flexible pricing is unique—build a plan with just the server locations you need for $1 each. The 10GB free tier is one of the most generous available.",
+    features: [
+      "10GB/month free tier",
+      "Build-a-plan: $1 per location",
+      "Unlimited simultaneous connections",
+      "R.O.B.E.R.T. (customizable blocker)",
+      "Browser extensions included",
+      "Static IP available",
+      "Port forwarding option",
+      "No long-term commitment needed"
+    ]
+  },
+  {
+    name: "TunnelBear",
+    logo: getVpnLogo("TunnelBear") || "/vpn-logos/tunnelbear.png",
+    bestFor: "Ease of Use",
+    monthlyPrice: "$3.33/mo",
+    rating: 4.1,
+    servers: "5,000+ servers",
+    countries: "47 countries",
+    devices: "Unlimited",
+    pros: ["Extremely user-friendly", "Fun bear-themed interface", "Annual security audits", "Free 2GB tier to try"],
+    cons: ["Limited advanced features", "No live chat support"],
+    description: "TunnelBear makes VPN simple with a charming interface and straightforward features. Perfect for non-technical users.",
+    bottomLine: "TunnelBear is the friendliest VPN for beginners. The cute bear animations and simple interface make it approachable, while annual independent audits ensure your data is protected.",
+    features: [
+      "5,000+ servers in 47 countries",
+      "Unlimited simultaneous connections",
+      "Free 2GB/month tier",
+      "Annual independent security audits",
+      "GhostBear stealth mode",
+      "VigilantBear kill switch",
+      "SplitBear (split tunneling)",
+      "No-logs policy"
+    ]
+  }
+];
+
+// TOC items
+const tocItems = [
+  { id: "providers", label: "Top VPNs", href: "#providers" },
+  { id: "guide", label: "Buying Guide", href: "#guide" },
+  { id: "faq", label: "FAQ", href: "#faq" }
+];
+
+// FAQs
+const faqs = [
+  {
+    question: "What is a VPN and why do I need one?",
+    answer: "A VPN (Virtual Private Network) encrypts your internet traffic and masks your IP address, protecting your online privacy. You need one to secure public WiFi connections, bypass geo-restrictions on streaming, prevent ISP tracking, and protect sensitive data from hackers."
+  },
+  {
+    question: "Are VPNs legal?",
+    answer: "VPNs are legal in most countries including the US, UK, Canada, and most of Europe. However, some countries like China, Russia, and UAE restrict or ban VPN use. Always check local laws when traveling."
+  },
+  {
+    question: "Will a VPN slow down my internet?",
+    answer: "VPNs add some overhead due to encryption, but premium VPNs like NordVPN and ExpressVPN typically reduce speeds by only 10-20%. Modern protocols like WireGuard and NordLynx minimize speed loss significantly."
+  },
+  {
+    question: "Can I use a free VPN?",
+    answer: "Free VPNs often have severe limitations (data caps, slow speeds) and some sell your data to advertisers. ProtonVPN offers the best free tier with unlimited data. For full protection, we recommend paid options."
+  },
+  {
+    question: "Do VPNs work with Netflix?",
+    answer: "Premium VPNs like ExpressVPN, NordVPN, and Surfshark reliably unblock Netflix and other streaming services. Free VPNs typically don't work with streaming platforms."
+  },
+  {
+    question: "What's a no-logs policy?",
+    answer: "A no-logs policy means the VPN doesn't store records of your online activity. Top VPNs like NordVPN and ExpressVPN have had their no-logs policies independently audited to verify this claim."
+  },
+  {
+    question: "How many devices can I connect?",
+    answer: "This varies by provider. Surfshark, PIA, and IPVanish offer unlimited connections. NordVPN allows 10, ExpressVPN allows 8. Check your plan's limits before subscribing."
+  }
+];
+
+// Breadcrumb items
+const breadcrumbItems = [
+  { name: "Software", url: "/software" },
+  { name: "Best VPN Services" }
+];
+---
+
+<MainLayout title="10 Best VPN Services of December 2025 | Expert Reviews | Screened" description="Compare the best VPN services including NordVPN, ExpressVPN, and Surfshark. Expert reviews of speed, security, streaming, and privacy features.">
+  <!-- Schema Markup -->
+  <ArticleSchema 
+    title="10 Best VPN Services of December 2025"
+    description="Compare the best VPN services including NordVPN, ExpressVPN, and Surfshark. Expert reviews of speed, security, streaming, and privacy features."
+    datePublished={new Date("2025-12-12")}
+    dateModified={new Date()}
+    author="Screened Security Team"
+    section="Software"
+    tags={["vpn", "privacy", "security", "streaming"]}
+  />
+  
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={breadcrumbItems} />
+
+  <!-- Hero Section -->
+  <CursorTrailDark 
+    client:load
+    title="Best VPN Services"
+    kicker="DECEMBER 2025"
+    subtitle="We tested 40+ VPNs for speed, security, streaming, and privacy. Here are the 10 best."
+    author="Screened Security Team"
+    date={lastUpdated}
+    compact={true}
+    animateTitle={true}
+  />
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Some of the VPN offers on this page are from partners who compensate us when you subscribe. This doesn't affect our rankings, ratings, or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <ComparisonTOCToggle items={tocItems} client:load />
+    </div>
+  </section>
+
+  <!-- Provider Cards -->
+  <section id="providers" class="bg-white py-8">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="space-y-6">
+        {vpnProviders.map((vpn, index) => (
+          <div class={`provider-card bg-white rounded-2xl border ${vpn.editorChoice ? 'border-[#0066B2] ring-2 ring-[#0066B2]/20' : 'border-gray-200'} overflow-hidden shadow-sm hover:shadow-lg transition-shadow`}>
+            {vpn.editorChoice && (
+              <div class="bg-gradient-to-r from-[#0066B2] to-[#004C8C] px-4 py-2">
+                <span class="text-white text-xs font-bold uppercase tracking-wide">⭐ Editor's Choice</span>
+              </div>
+            )}
+            
+            <div class="p-6">
+              <div class="flex flex-col md:flex-row gap-6">
+                <!-- Logo & Rating -->
+                <div class="flex flex-col items-center md:w-48 shrink-0">
+                  <div class="w-24 h-24 bg-gray-50 rounded-xl flex items-center justify-center p-3 mb-3">
+                    <img src={vpn.logo} alt={vpn.name} class="max-w-full max-h-full object-contain" loading="lazy" />
+                  </div>
+                  <h3 class="font-sora font-bold text-lg text-[#162433] text-center">{vpn.name}</h3>
+                  <div class="flex items-center gap-1 mt-1">
+                    <span class="text-yellow-500">★</span>
+                    <span class="font-bold text-[#162433]">{vpn.rating}</span>
+                    <span class="text-[#68727C] text-sm">/5</span>
+                  </div>
+                  <span class="text-xs text-[#0066B2] font-medium mt-1">{vpn.bestFor}</span>
+                </div>
+
+                <!-- Details -->
+                <div class="flex-1">
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                    <div class="bg-gray-50 rounded-lg p-3 text-center">
+                      <p class="text-xs text-[#68727C] uppercase tracking-wide">Price</p>
+                      <p class="font-bold text-[#162433]">{vpn.monthlyPrice}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3 text-center">
+                      <p class="text-xs text-[#68727C] uppercase tracking-wide">Servers</p>
+                      <p class="font-bold text-[#162433] text-sm">{vpn.servers}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3 text-center">
+                      <p class="text-xs text-[#68727C] uppercase tracking-wide">Countries</p>
+                      <p class="font-bold text-[#162433]">{vpn.countries}</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3 text-center">
+                      <p class="text-xs text-[#68727C] uppercase tracking-wide">Devices</p>
+                      <p class="font-bold text-[#162433]">{vpn.devices}</p>
+                    </div>
+                  </div>
+
+                  <p class="text-[#68727C] text-sm mb-4">{vpn.description}</p>
+
+                  <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <p class="text-xs font-bold text-green-600 uppercase tracking-wide mb-2">✓ Pros</p>
+                      <ul class="space-y-1">
+                        {vpn.pros.map(pro => (
+                          <li class="text-sm text-[#162433] flex items-start gap-2">
+                            <span class="text-green-500 mt-0.5">•</span>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p class="text-xs font-bold text-red-600 uppercase tracking-wide mb-2">✗ Cons</p>
+                      <ul class="space-y-1">
+                        {vpn.cons.map(con => (
+                          <li class="text-sm text-[#162433] flex items-start gap-2">
+                            <span class="text-red-500 mt-0.5">•</span>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- CTA Button -->
+                  <a href="#" class="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-white font-bold py-3 px-8 rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm uppercase tracking-wide">
+                    <span>Visit {vpn.name}</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Bottom Line (Expandable) -->
+              <details class="mt-4 border-t border-gray-100 pt-4">
+                <summary class="cursor-pointer text-[#0066B2] font-medium text-sm hover:underline">Read full review →</summary>
+                <div class="mt-3 space-y-3">
+                  <p class="text-[#162433] text-sm"><strong>Bottom Line:</strong> {vpn.bottomLine}</p>
+                  <div>
+                    <p class="text-xs font-bold text-[#162433] uppercase tracking-wide mb-2">Key Features:</p>
+                    <ul class="grid md:grid-cols-2 gap-1">
+                      {vpn.features.map(feature => (
+                        <li class="text-sm text-[#68727C] flex items-start gap-2">
+                          <span class="text-[#0066B2]">✓</span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Buying Guide -->
+  <section id="guide" class="bg-[#F7F8FA] py-12">
+    <div class="max-w-3xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl md:text-3xl font-bold text-[#162433] mb-6">VPN Buying Guide</h2>
+      
+      <div class="prose prose-lg max-w-none">
+        <h3 class="font-sora text-xl font-bold text-[#162433] mt-8 mb-4">What to Look for in a VPN</h3>
+        <p class="text-[#68727C] mb-4">When choosing a VPN, prioritize these factors:</p>
+        <ul class="space-y-2 text-[#68727C]">
+          <li><strong>Speed:</strong> Look for VPNs with WireGuard or proprietary fast protocols</li>
+          <li><strong>Security:</strong> AES-256 encryption, kill switch, and DNS leak protection are essential</li>
+          <li><strong>Privacy:</strong> Choose providers with audited no-logs policies outside 14 Eyes countries</li>
+          <li><strong>Server Network:</strong> More servers = better speeds and more unblocking options</li>
+          <li><strong>Device Support:</strong> Ensure apps exist for all your devices</li>
+        </ul>
+
+        <h3 class="font-sora text-xl font-bold text-[#162433] mt-8 mb-4">How We Test VPNs</h3>
+        <p class="text-[#68727C] mb-4">Our testing methodology includes:</p>
+        <ul class="space-y-2 text-[#68727C]">
+          <li>Speed tests across 20+ server locations</li>
+          <li>Streaming tests with Netflix, Disney+, BBC iPlayer, and more</li>
+          <li>Security audits and DNS/WebRTC leak testing</li>
+          <li>Real-world usage testing over 30+ days</li>
+          <li>Customer support responsiveness checks</li>
+        </ul>
+
+        <h3 class="font-sora text-xl font-bold text-[#162433] mt-8 mb-4">Free vs Paid VPNs</h3>
+        <p class="text-[#68727C]">Free VPNs often monetize through ads or selling data. If you need a free option, ProtonVPN's free tier is the only one we recommend. For full protection, speeds, and streaming access, paid VPNs are worth the $3-7/month investment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="bg-white py-12">
+    <div class="max-w-3xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl md:text-3xl font-bold text-[#162433] mb-8 text-center">Frequently Asked Questions</h2>
+      <AnimatedFAQ faqs={faqs} client:load />
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .provider-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .provider-card:hover {
+    transform: translateY(-2px);
+  }
+
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details summary::before {
+    content: '▶ ';
+    font-size: 0.75rem;
+  }
+
+  details[open] summary::before {
+    content: '▼ ';
+  }
+</style>
