@@ -1,4 +1,6 @@
----
+const fs = require('fs');
+
+const content = `---
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
 import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
@@ -153,43 +155,19 @@ const creditCards = [
 const faqs = [
   {
     question: "How does credit card extended warranty protection work?",
-    answer: "Credit card extended warranty protection <strong>automatically extends the manufacturer's warranty</strong> on eligible purchases made with your card. When your item fails after the manufacturer's warranty expires but within the extended period, you file a claim with your card issuer's benefits administrator. They'll typically repair, replace, or reimburse you up to the coverage limit."
+    answer: "Credit card extended warranty protection automatically extends the manufacturer's warranty on eligible purchases made with your card. When your item fails after the manufacturer's warranty expires but within the extended period, you file a claim with your card issuer's benefits administrator."
   },
   {
     question: "What items are covered by credit card extended warranty?",
-    answer: "Most credit card extended warranties cover <strong>electronics</strong> (laptops, TVs, smartphones), <strong>home appliances</strong> (refrigerators, washing machines), tools, furniture, and sporting goods. Items must typically have an original manufacturer's warranty of 3-5 years or less and be purchased new."
+    answer: "Most credit card extended warranties cover electronics (laptops, TVs, smartphones), home appliances (refrigerators, washing machines), tools, furniture, and sporting goods. Items typically must have an original manufacturer's warranty of 3-5 years or less."
   },
   {
     question: "How long does credit card warranty extension last?",
-    answer: "Most cards add <strong>1 year</strong> to the manufacturer's warranty, while premium cards like the Amex Platinum and Citi Double Cash offer up to <strong>2 years extension</strong>. A product with a 1-year manufacturer warranty could have total coverage of 2-3 years with card protection."
+    answer: "Most cards add 1 year to the manufacturer's warranty, while premium cards like the Amex Platinum and Citi Double Cash offer up to 2 years extension. A product with a 1-year manufacturer warranty could have total coverage of 2-3 years."
   },
   {
     question: "Is credit card extended warranty worth it vs. store warranty?",
-    answer: "Credit card extended warranty is almost always the better value since it's <strong>completely free</strong> (included with your card). Store warranties typically cost 10-30% of the item's purchase price. A $2,000 laptop might have a $300 store warranty, while credit card protection is automatic and free."
-  },
-  {
-    question: "How do I file an extended warranty claim?",
-    answer: "To file a claim: <strong>1)</strong> Contact your card's benefits administrator, <strong>2)</strong> Provide proof of purchase showing your card was used, <strong>3)</strong> Submit the original manufacturer's warranty documentation, <strong>4)</strong> Provide evidence the item failed (repair estimate, photos). Claims must typically be filed within 60-90 days of the failure."
-  },
-  {
-    question: "What's the difference between extended warranty and purchase protection?",
-    answer: "<strong>Extended warranty</strong> covers mechanical/electrical failures after the manufacturer's warranty expires. <strong>Purchase protection</strong> covers theft and accidental damage during a limited window (typically 90-120 days from purchase). They're complementary benefits—purchase protection helps if you drop your new laptop, while extended warranty helps if it stops working 18 months later."
-  },
-  {
-    question: "What items are NOT covered by credit card extended warranty?",
-    answer: "Extended warranty typically excludes: <strong>used or refurbished items</strong>, items purchased for resale or commercial use, motor vehicles and boats, real estate, items with warranties longer than 3-5 years, and consumables like batteries or ink cartridges. Always check your card's specific terms."
-  },
-  {
-    question: "Do all credit cards offer extended warranty protection?",
-    answer: "No—extended warranty is primarily found on <strong>Visa Signature, World Mastercard, and American Express</strong> cards. Basic cards and many store credit cards don't include this benefit. Premium and travel cards typically offer the most comprehensive coverage with higher claim limits."
-  },
-  {
-    question: "Can I stack credit card extended warranty with AppleCare or other plans?",
-    answer: "Generally, <strong>credit card extended warranty kicks in after other coverage expires</strong>. So if you have AppleCare (2 years) and a card with +1 year extension, you'd potentially have 3 years of total coverage. However, the credit card typically won't cover anything AppleCare would have covered during its active period."
-  },
-  {
-    question: "What documentation do I need to save for warranty claims?",
-    answer: "Always save: <strong>1)</strong> Original receipt showing the card used, <strong>2)</strong> Manufacturer's warranty documentation, <strong>3)</strong> Product serial number, <strong>4)</strong> Your credit card statement showing the purchase. Many experts recommend photographing receipts since thermal paper fades over time."
+    answer: "Credit card extended warranty is almost always the better value since it's free (included with your card). Store warranties typically cost 10-30% of the item's purchase price, while credit card protection is automatic and free."
   }
 ];
 
@@ -268,19 +246,19 @@ const heroImage = "/category-images/extended-warranty.jpg";
                 {getCardImage(card.name) ? (
                   <img 
                     src={getCardImage(card.name)} 
-                    alt={`${card.name} credit card`}
+                    alt={\`\${card.name} credit card\`}
                     class="w-72 h-auto rounded-xl shadow-2xl group-hover:scale-105 transition-all duration-500"
                     loading={index < 3 ? "eager" : "lazy"}
                   />
                 ) : (
-                  <div class={`w-72 h-44 rounded-xl shadow-2xl relative overflow-hidden group-hover:scale-105 transition-all duration-500 ${
+                  <div class={\`w-72 h-44 rounded-xl shadow-2xl relative overflow-hidden group-hover:scale-105 transition-all duration-500 \${
                     card.slug.includes('chase') ? 'bg-gradient-to-br from-[#003087] via-[#0047AB] to-[#003087]' :
                     card.slug.includes('amex') ? 'bg-gradient-to-br from-[#1a1a1a] via-[#2d2d2d] to-[#1a1a1a]' :
                     card.slug.includes('capital') ? 'bg-gradient-to-br from-[#004C4C] via-[#006666] to-[#004C4C]' :
                     card.slug.includes('citi') ? 'bg-gradient-to-br from-[#003DA5] via-[#0052CC] to-[#003DA5]' :
                     card.slug.includes('wells') ? 'bg-gradient-to-br from-[#BB0000] via-[#CC0000] to-[#BB0000]' :
                     'bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#1a1a1a]'
-                  }`}>
+                  }\`}>
                     <div class="absolute top-5 left-5 w-12 h-9 rounded bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 opacity-90"></div>
                     <div class="absolute bottom-4 left-5 right-5">
                       <div class="text-white/90 text-xs font-medium leading-tight truncate">{card.name}</div>
@@ -445,7 +423,7 @@ const heroImage = "/category-images/extended-warranty.jpg";
                 <td class="text-green-600 font-semibold">{card.warrantyExtension}</td>
                 <td>{card.claimLimit}</td>
                 <td>{card.annualMax}</td>
-                <td class={`${card.annualFee === '$0' ? 'text-green-600 font-semibold' : ''}`}>{card.annualFee}</td>
+                <td class={\`\${card.annualFee === '$0' ? 'text-green-600 font-semibold' : ''}\`}>{card.annualFee}</td>
               </tr>
             ))}
           </tbody>
@@ -454,198 +432,25 @@ const heroImage = "/category-images/extended-warranty.jpg";
     </div>
   </section>
 
-  <!-- SEO Content Sections -->
-  <section class="py-16 bg-[#F7F8FA]">
+  <section id="what-is" class="py-16 bg-[#F7F8FA]">
     <div class="max-w-4xl mx-auto px-4 md:px-8">
-      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+      <div class="bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        <h2 class="font-sora text-2xl font-bold text-[#162433] mb-6">Understanding Credit Card Extended Warranty Protection</h2>
         
-        <!-- How Extended Warranty Works -->
-        <div id="how-rewards-work" class="scroll-mt-24">
-          <h2>How Credit Card Extended Warranty Works</h2>
-          
-          <p>Credit card extended warranty protection is one of the most valuable yet <strong>underutilized credit card benefits</strong>. This free perk automatically extends the manufacturer's warranty on eligible purchases, potentially saving you hundreds or thousands of dollars on repairs and replacements.</p>
+        <p class="text-[#4B5563] leading-relaxed mb-6">Credit card extended warranty protection is one of the most valuable yet <strong>underutilized credit card benefits</strong>. This free perk automatically extends the manufacturer's warranty on eligible purchases, potentially saving you hundreds or thousands of dollars on repairs and replacements.</p>
 
-          <div class="info-box">
-            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> The Hidden Value of Extended Warranty</h4>
-            <p>Store-bought extended warranties typically cost 10-30% of an item's price. A $2,000 laptop might have a $300 store warranty, while your credit card's protection is completely free. Over a lifetime of purchases, this benefit can save you thousands.</p>
-          </div>
-
-          <h3>What's Covered?</h3>
-          <ul>
-            <li><strong>Electronics:</strong> Laptops, TVs, smartphones, tablets, gaming consoles, cameras</li>
-            <li><strong>Home appliances:</strong> Refrigerators, washing machines, dryers, dishwashers, microwaves</li>
-            <li><strong>Tools and equipment:</strong> Power tools, lawn equipment, workshop machinery</li>
-            <li><strong>Furniture:</strong> Items with mechanical or electrical components</li>
-            <li><strong>Jewelry and watches:</strong> Items with manufacturer warranties</li>
-          </ul>
-
-          <h3>What's NOT Covered?</h3>
-          <ul>
-            <li>Used, refurbished, or pre-owned items</li>
-            <li>Items purchased for resale or commercial use</li>
-            <li>Motor vehicles, boats, aircraft, and their parts</li>
-            <li>Real estate and fixtures</li>
-            <li>Items with warranties longer than 3-5 years (varies by card)</li>
-            <li>Consumables (batteries, ink cartridges, filters)</li>
-          </ul>
-
-          <h3>The Claims Process</h3>
-          <p>Filing a claim is straightforward but requires documentation:</p>
-          <ol class="numbered-list">
-            <li>Contact your card's benefits administrator (number on back of card)</li>
-            <li>Provide proof of purchase showing your card was used</li>
-            <li>Submit the original manufacturer's warranty documentation</li>
-            <li>Provide evidence the item failed (repair estimate, photos)</li>
-            <li>Complete claim forms within the required timeframe (usually 60-90 days)</li>
-          </ol>
-
-          <div class="warning-box">
-            <h4>⚠️ Important: Save Your Receipts</h4>
-            <p>Thermal paper receipts fade over time. Take photos of your receipts immediately after purchase and store them digitally. Many people lose out on claims simply because they can't prove the purchase.</p>
-          </div>
-        </div>
-        
-        <!-- How to Choose -->
-        <div id="how-to-choose" class="mt-12 scroll-mt-24">
-          <h2>How to Choose the Right Card for Extended Warranty</h2>
-          
-          <p>When selecting a credit card for its extended warranty benefits, consider these key factors:</p>
-
-          <h3>1. Warranty Extension Length</h3>
-          <p>Most cards add <strong>1 year</strong> to the manufacturer's warranty, but premium cards like the <strong>Amex Platinum</strong> and <strong>Citi Double Cash</strong> offer up to <strong>2 years extension</strong>. For expensive electronics with short warranties, the longer extension provides significantly more value.</p>
-
-          <h3>2. Per-Claim and Annual Limits</h3>
-          <p>Premium cards typically offer <strong>$10,000 per claim</strong> with <strong>$50,000 annual maximums</strong>. If you purchase high-value items like professional camera equipment or home theater systems, ensure your card's limits provide adequate coverage.</p>
-
-          <h3>3. Purchase Protection Bundle</h3>
-          <p>Some cards bundle extended warranty with <strong>purchase protection</strong> (covers theft/damage for 90-120 days) and <strong>return protection</strong>. This complete package provides comprehensive coverage from day one through the extended warranty period.</p>
-
-          <h3>4. Annual Fee vs. Protection Value</h3>
-          <p>Calculate your potential savings: If you buy $5,000+ in electronics annually, a card with premium protection may justify its annual fee through this benefit alone. For occasional purchases, no-annual-fee options like the Citi Double Cash provide excellent value.</p>
-
-          <div class="comparison-mini-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>If You...</th>
-                  <th>Best Card Type</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Buy $5K+ electronics/year</td>
-                  <td>Premium (Chase Sapphire Reserve, Amex Platinum)</td>
-                </tr>
-                <tr>
-                  <td>Run a small business</td>
-                  <td>Business (Chase Ink Preferred)</td>
-                </tr>
-                <tr>
-                  <td>Want free protection</td>
-                  <td>No-fee (Citi Double Cash, Wells Fargo Active Cash)</td>
-                </tr>
-                <tr>
-                  <td>Travel frequently too</td>
-                  <td>Travel + Protection (Capital One Venture X)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="bg-[#EBF5FF] border-l-4 border-[#0066B2] p-6 rounded-r-xl my-6">
+          <h4 class="font-bold text-[#162433] mb-2">💡 The Hidden Value of Extended Warranty</h4>
+          <p class="text-sm text-[#4B5563]">Store-bought extended warranties typically cost 10-30% of an item's price. A $2,000 laptop might have a $300 store warranty, while your credit card's protection is completely free.</p>
         </div>
 
-        <!-- Best By Category -->
-        <div id="best-by-category" class="mt-12 scroll-mt-24">
-          <h2>Best Extended Warranty Cards by Category</h2>
-          
-          <div class="category-grid">
-            <div class="category-card">
-              <div class="category-icon">🏆</div>
-              <h4>Best Overall</h4>
-              <p class="category-winner">Chase Sapphire Reserve®</p>
-              <p class="category-reason">$10K per claim, 120-day purchase protection, primary rental car insurance bundled</p>
-            </div>
-            <div class="category-card">
-              <div class="category-icon">⏰</div>
-              <h4>Longest Extension</h4>
-              <p class="category-winner">American Express Platinum®</p>
-              <p class="category-reason">Up to 2 years added—double most competitors</p>
-            </div>
-            <div class="category-card">
-              <div class="category-icon">💼</div>
-              <h4>Best for Business</h4>
-              <p class="category-winner">Chase Ink Business Preferred®</p>
-              <p class="category-reason">Premium protection at just $95/year, plus 3X on tech purchases</p>
-            </div>
-            <div class="category-card">
-              <div class="category-icon">🆓</div>
-              <h4>Best No Annual Fee</h4>
-              <p class="category-winner">Citi Double Cash Card</p>
-              <p class="category-reason">2-year extension with $0 fee—best free option</p>
-            </div>
-            <div class="category-card">
-              <div class="category-icon">✈️</div>
-              <h4>Best for Travelers</h4>
-              <p class="category-winner">Capital One Venture X</p>
-              <p class="category-reason">Warranty + lounge access + travel credits at effectively $0/year</p>
-            </div>
-            <div class="category-card">
-              <div class="category-icon">📱</div>
-              <h4>Best Cell Phone Coverage</h4>
-              <p class="category-winner">Wells Fargo Active Cash®</p>
-              <p class="category-reason">$600/claim cell protection included with 2% cash back</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Methodology -->
-        <div id="methodology" class="mt-12 scroll-mt-24">
-          <h2>Our Methodology</h2>
-          
-          <p>We evaluated 40+ credit cards across these weighted criteria to identify the best options for extended warranty protection:</p>
-
-          <div class="methodology-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Factor</th>
-                  <th>Weight</th>
-                  <th>What We Evaluated</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Warranty Extension</td>
-                  <td>25%</td>
-                  <td>Length of extension, eligible warranty periods</td>
-                </tr>
-                <tr>
-                  <td>Coverage Limits</td>
-                  <td>25%</td>
-                  <td>Per-claim max, annual max, category restrictions</td>
-                </tr>
-                <tr>
-                  <td>Claims Experience</td>
-                  <td>20%</td>
-                  <td>Process ease, approval rates, customer reviews</td>
-                </tr>
-                <tr>
-                  <td>Additional Protections</td>
-                  <td>15%</td>
-                  <td>Purchase protection, return protection, cell phone</td>
-                </tr>
-                <tr>
-                  <td>Overall Value</td>
-                  <td>15%</td>
-                  <td>Annual fee vs. benefits, rewards program quality</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>Our team has filed 12 extended warranty claims totaling over $8,000 in successful reimbursements. We prioritize cards with straightforward claims processes and high approval rates.</p>
-          
-          <p class="text-sm text-[#68727C] mt-4">Last updated: December 12, 2025</p>
-        </div>
+        <h3 class="font-sora text-xl font-bold text-[#162433] mb-4 mt-8">What Items Are Covered?</h3>
+        <ul class="list-disc pl-6 mb-6 space-y-2 text-[#4B5563]">
+          <li><strong>Electronics:</strong> Laptops, TVs, smartphones, tablets, gaming consoles</li>
+          <li><strong>Home appliances:</strong> Refrigerators, washing machines, dryers, dishwashers</li>
+          <li><strong>Tools and equipment:</strong> Power tools, lawn equipment, workshop machinery</li>
+          <li><strong>Jewelry and watches:</strong> Items with manufacturer warranties</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -744,107 +549,9 @@ const heroImage = "/category-images/extended-warranty.jpg";
   .comparison-row td {
     @apply py-4 px-3 align-middle text-sm;
   }
-
-  /* SEO Content Styles */
-  .seo-content h2 {
-    @apply font-sora text-2xl font-bold text-[#162433] mb-6 mt-8;
-  }
-  
-  .seo-content h2:first-child {
-    @apply mt-0;
-  }
-  
-  .seo-content h3 {
-    @apply font-sora text-xl font-bold text-[#162433] mb-4 mt-6;
-  }
-  
-  .seo-content p {
-    @apply text-[#4B5563] leading-relaxed mb-4;
-  }
-  
-  .seo-content ul {
-    @apply list-disc pl-6 mb-6 space-y-2 text-[#4B5563];
-  }
-  
-  .seo-content li {
-    @apply leading-relaxed;
-  }
-
-  .seo-content ol.numbered-list {
-    @apply list-decimal pl-6 mb-6 space-y-2 text-[#4B5563];
-  }
-  
-  .info-box {
-    @apply bg-[#EBF5FF] border-l-4 border-[#0066B2] p-6 rounded-r-xl my-6;
-  }
-  
-  .info-box h4 {
-    @apply font-bold text-[#162433] mb-2 flex items-center gap-2;
-  }
-  
-  .info-box p {
-    @apply text-sm text-[#4B5563] mb-0;
-  }
-
-  .warning-box {
-    @apply bg-[#FEF3C7] border-l-4 border-[#F59E0B] p-6 rounded-r-xl my-6;
-  }
-  
-  .warning-box h4 {
-    @apply font-bold text-[#92400E] mb-2;
-  }
-  
-  .warning-box p {
-    @apply text-sm text-[#92400E] mb-0;
-  }
-  
-  .inline-icon {
-    @apply w-5 h-5 inline-block;
-  }
-
-  /* Category Grid */
-  .category-grid {
-    @apply grid md:grid-cols-2 lg:grid-cols-3 gap-4 my-8;
-  }
-  
-  .category-card {
-    @apply bg-[#F8FAFC] rounded-xl p-5 border border-gray-200 hover:border-[#0066B2] hover:shadow-md transition-all;
-  }
-  
-  .category-icon {
-    @apply text-2xl mb-2;
-  }
-  
-  .category-card h4 {
-    @apply font-bold text-[#162433] text-sm mb-1;
-  }
-  
-  .category-winner {
-    @apply text-[#0066B2] font-semibold text-sm mb-1;
-  }
-  
-  .category-reason {
-    @apply text-xs text-[#68727C] leading-relaxed;
-  }
-
-  /* Mini Tables */
-  .comparison-mini-table, .methodology-table {
-    @apply my-6 overflow-x-auto;
-  }
-  
-  .comparison-mini-table table, .methodology-table table {
-    @apply w-full text-sm;
-  }
-  
-  .comparison-mini-table thead th, .methodology-table thead th {
-    @apply py-3 px-4 text-left text-xs font-bold text-[#68727C] uppercase tracking-wider bg-[#F8FAFC] border-b-2 border-gray-200;
-  }
-  
-  .comparison-mini-table tbody td, .methodology-table tbody td {
-    @apply py-3 px-4 border-b border-gray-100 text-[#4B5563];
-  }
-  
-  .comparison-mini-table tbody tr:hover, .methodology-table tbody tr:hover {
-    @apply bg-[#F8FAFC];
-  }
 </style>
+`;
+
+fs.writeFileSync('src/pages/credit-cards/best-extended-warranty.astro', content);
+console.log('Extended warranty page created successfully!');
+
