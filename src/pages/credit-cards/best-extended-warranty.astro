@@ -693,39 +693,87 @@ const heroImage = "/category-images/extended-warranty.jpg";
 
 <style>
   .apply-btn {
-    @apply flex items-center justify-center gap-2 bg-gradient-to-r from-[#0066B2] to-[#004C8C] text-white font-bold py-3.5 px-6 rounded-xl hover:from-[#005299] hover:to-[#003D70] transition-all duration-300 shadow-lg hover:shadow-xl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(to right, #0066B2, #004C8C);
+    color: white;
+    font-weight: 700;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .apply-btn:hover {
+    background: linear-gradient(to right, #005299, #003D70);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   }
 
   .stat-box {
-    @apply bg-[#F8FAFC] rounded-xl p-3 text-center border border-gray-100;
+    background: #F8FAFC;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid #F1F5F9;
   }
   
   .stat-label {
-    @apply text-xs text-[#68727C] mb-1 font-medium;
+    font-size: 0.75rem;
+    color: #68727C;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
   }
   
   .stat-value {
-    @apply text-sm font-bold text-[#162433];
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #162433;
   }
 
   .accordion-item {
-    @apply border-b border-gray-100 last:border-b-0;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
   }
   
   .accordion-header {
-    @apply flex items-center justify-between w-full py-3 text-left font-semibold text-[#162433] text-sm cursor-pointer hover:text-[#0066B2] transition-colors;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 0;
+    text-align: left;
+    font-weight: 600;
+    color: #162433;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header:hover {
+    color: #0066B2;
   }
   
   .accordion-icon {
-    @apply w-5 h-5 text-gray-400 transition-transform duration-200;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #9CA3AF;
+    transition: transform 0.2s ease;
   }
   
   details[open] .accordion-icon {
-    @apply rotate-180;
+    transform: rotate(180deg);
   }
   
   .accordion-content {
-    @apply pb-4 text-sm text-[#4B5563] leading-relaxed;
+    padding-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #4B5563;
+    line-height: 1.625;
   }
 
   .premium-comparison-table {
@@ -734,117 +782,221 @@ const heroImage = "/category-images/extended-warranty.jpg";
   }
   
   .premium-comparison-table thead th {
-    @apply py-4 px-3 text-xs font-bold text-[#68727C] uppercase tracking-wider border-b-2 border-gray-200 bg-[#F8FAFC];
+    padding: 1rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #68727C;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #E5E7EB;
+    background: #F8FAFC;
   }
   
   .comparison-row {
-    @apply border-b border-gray-100 hover:bg-[#F8FAFC] transition-colors;
+    border-bottom: 1px solid #F1F5F9;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover {
+    background: #F8FAFC;
   }
   
   .comparison-row td {
-    @apply py-4 px-3 align-middle text-sm;
+    padding: 1rem 0.75rem;
+    vertical-align: middle;
+    font-size: 0.875rem;
   }
 
   /* SEO Content Styles */
   .seo-content h2 {
-    @apply font-sora text-2xl font-bold text-[#162433] mb-6 mt-8;
+    font-family: var(--font-sora);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
   }
   
   .seo-content h2:first-child {
-    @apply mt-0;
+    margin-top: 0;
   }
   
   .seo-content h3 {
-    @apply font-sora text-xl font-bold text-[#162433] mb-4 mt-6;
+    font-family: var(--font-sora);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
   }
   
   .seo-content p {
-    @apply text-[#4B5563] leading-relaxed mb-4;
+    color: #4B5563;
+    line-height: 1.625;
+    margin-bottom: 1rem;
   }
   
   .seo-content ul {
-    @apply list-disc pl-6 mb-6 space-y-2 text-[#4B5563];
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #4B5563;
   }
   
-  .seo-content li {
-    @apply leading-relaxed;
+  .seo-content ul li {
+    line-height: 1.625;
+    margin-bottom: 0.5rem;
   }
 
   .seo-content ol.numbered-list {
-    @apply list-decimal pl-6 mb-6 space-y-2 text-[#4B5563];
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #4B5563;
+  }
+  
+  .seo-content ol.numbered-list li {
+    line-height: 1.625;
+    margin-bottom: 0.5rem;
   }
   
   .info-box {
-    @apply bg-[#EBF5FF] border-l-4 border-[#0066B2] p-6 rounded-r-xl my-6;
+    background: #EBF5FF;
+    border-left: 4px solid #0066B2;
+    padding: 1.5rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin: 1.5rem 0;
   }
   
   .info-box h4 {
-    @apply font-bold text-[#162433] mb-2 flex items-center gap-2;
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
   
   .info-box p {
-    @apply text-sm text-[#4B5563] mb-0;
+    font-size: 0.875rem;
+    color: #4B5563;
+    margin-bottom: 0;
   }
 
   .warning-box {
-    @apply bg-[#FEF3C7] border-l-4 border-[#F59E0B] p-6 rounded-r-xl my-6;
+    background: #FEF3C7;
+    border-left: 4px solid #F59E0B;
+    padding: 1.5rem;
+    border-radius: 0 0.75rem 0.75rem 0;
+    margin: 1.5rem 0;
   }
   
   .warning-box h4 {
-    @apply font-bold text-[#92400E] mb-2;
+    font-weight: 700;
+    color: #92400E;
+    margin-bottom: 0.5rem;
   }
   
   .warning-box p {
-    @apply text-sm text-[#92400E] mb-0;
+    font-size: 0.875rem;
+    color: #92400E;
+    margin-bottom: 0;
   }
   
   .inline-icon {
-    @apply w-5 h-5 inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: inline-block;
   }
 
   /* Category Grid */
   .category-grid {
-    @apply grid md:grid-cols-2 lg:grid-cols-3 gap-4 my-8;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  
+  @media (min-width: 768px) {
+    .category-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .category-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
   
   .category-card {
-    @apply bg-[#F8FAFC] rounded-xl p-5 border border-gray-200 hover:border-[#0066B2] hover:shadow-md transition-all;
+    background: #F8FAFC;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    border: 1px solid #E5E7EB;
+    transition: all 0.2s ease;
+  }
+  
+  .category-card:hover {
+    border-color: #0066B2;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
   
   .category-icon {
-    @apply text-2xl mb-2;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
   }
   
   .category-card h4 {
-    @apply font-bold text-[#162433] text-sm mb-1;
+    font-weight: 700;
+    color: #162433;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
   }
   
   .category-winner {
-    @apply text-[#0066B2] font-semibold text-sm mb-1;
+    color: #0066B2;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
   }
   
   .category-reason {
-    @apply text-xs text-[#68727C] leading-relaxed;
+    font-size: 0.75rem;
+    color: #68727C;
+    line-height: 1.5;
   }
 
   /* Mini Tables */
   .comparison-mini-table, .methodology-table {
-    @apply my-6 overflow-x-auto;
+    margin: 1.5rem 0;
+    overflow-x: auto;
   }
   
   .comparison-mini-table table, .methodology-table table {
-    @apply w-full text-sm;
+    width: 100%;
+    font-size: 0.875rem;
   }
   
   .comparison-mini-table thead th, .methodology-table thead th {
-    @apply py-3 px-4 text-left text-xs font-bold text-[#68727C] uppercase tracking-wider bg-[#F8FAFC] border-b-2 border-gray-200;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #68727C;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #F8FAFC;
+    border-bottom: 2px solid #E5E7EB;
   }
   
   .comparison-mini-table tbody td, .methodology-table tbody td {
-    @apply py-3 px-4 border-b border-gray-100 text-[#4B5563];
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #F1F5F9;
+    color: #4B5563;
   }
   
   .comparison-mini-table tbody tr:hover, .methodology-table tbody tr:hover {
-    @apply bg-[#F8FAFC];
+    background: #F8FAFC;
   }
 </style>

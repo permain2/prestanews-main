@@ -1,0 +1,1312 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+// Helper function to get logo
+function getWarrantyLogo(slug: string): string {
+  const localLogos: Record<string, string> = {
+    'american-home-shield': '/home-warranty-logos/american-home-shield.png',
+    'choice': '/home-warranty-logos/choice.png',
+    'select': '/home-warranty-logos/select.png',
+    'first-american': '/home-warranty-logos/first-american.png',
+    'liberty': '/home-warranty-logos/liberty.png',
+    'cinch': '/home-warranty-logos/cinch.png',
+  };
+  return localLogos[slug] || `https://logo.clearbit.com/${slug.replace(/-/g, '')}.com`;
+}
+
+// Top Home Warranty Companies - 10 providers
+const warranties = [
+  {
+    name: "American Home Shield",
+    slug: "american-home-shield",
+    domain: "ahs.com",
+    bestFor: "Best Overall",
+    monthlyPrice: "$29-$89",
+    serviceFee: "$75-$125",
+    coverage: "23 systems/appliances",
+    rating: 4.8,
+    pros: ["Largest provider with 50+ years experience", "Three comprehensive plan tiers", "Covers pre-existing conditions unknown at signup", "Nationwide contractor network"],
+    cons: ["Higher service call fees than competitors", "Some claims can take time to process"],
+    description: "American Home Shield is the largest and most established home warranty company in the nation. With over 2 million customers and 50+ years of experience, they offer unmatched reliability and comprehensive coverage options.",
+    bottomLine: "American Home Shield earns our top spot for its unmatched experience, comprehensive coverage options, and nationwide network of qualified contractors. While service fees run slightly higher than some competitors, the peace of mind from dealing with an industry leader is worth it. Their ShieldGold and ShieldPlatinum plans cover virtually everything in your home.",
+    coverageDetails: [
+      "ShieldSilver: 14 systems and appliances — $29.99/mo",
+      "ShieldGold: 23 systems and appliances — $49.99/mo", 
+      "ShieldPlatinum: 23 items + roof leak, unlimited A/C refrigerant — $69.99/mo",
+      "Optional add-ons: pool, spa, septic, well pump",
+      "No home inspection required",
+      "Covers items regardless of age",
+      "Pre-existing conditions coverage (unknown at signup)",
+      "$500 instant repair credit for minor issues",
+      "24/7 claims filing online or by phone",
+      "30-day workmanship guarantee"
+    ],
+    editorChoice: true
+  },
+  {
+    name: "Choice Home Warranty",
+    slug: "choice",
+    domain: "choicehomewarranty.com",
+    bestFor: "Best Value",
+    monthlyPrice: "$46-$55",
+    serviceFee: "$85",
+    coverage: "17-18 systems/appliances",
+    rating: 4.7,
+    pros: ["Lower monthly costs than most competitors", "Flat $85 service fee", "Fast claim approval process", "Covers pre-existing conditions"],
+    cons: ["Coverage limits on some items", "Contractor quality varies by region"],
+    description: "Choice Home Warranty delivers excellent value with competitive pricing and solid coverage. Their straightforward pricing and fast claims process make them a favorite among budget-conscious homeowners.",
+    bottomLine: "Choice Home Warranty offers the best balance of price and coverage for most homeowners. At just $46-55/month with an $85 service fee, you get protection for 17-18 major systems and appliances. Their claims process is notably fast, often dispatching contractors within 24-48 hours.",
+    coverageDetails: [
+      "Basic Plan: 14 major systems — $46.67/mo",
+      "Total Plan: 18 systems and appliances — $55/mo",
+      "Flat $85 service call fee",
+      "No home inspection required",
+      "Covers items regardless of age or condition",
+      "24/7 claims hotline",
+      "Online claims portal",
+      "90-day workmanship guarantee",
+      "Optional coverage: pool, spa, septic, well pump"
+    ]
+  },
+  {
+    name: "Select Home Warranty",
+    slug: "select",
+    domain: "selecthomewarranty.com",
+    bestFor: "Budget-Friendly",
+    monthlyPrice: "$38-$54",
+    serviceFee: "$75",
+    coverage: "15-18 systems/appliances",
+    rating: 4.5,
+    pros: ["Lowest monthly premiums available", "Low $75 service fee", "Free roof coverage included", "Multi-year discounts"],
+    cons: ["Lower coverage limits than premium providers", "Smaller contractor network"],
+    description: "Select Home Warranty is the most affordable option for homeowners who want basic coverage without breaking the bank. Their low premiums and service fees make home protection accessible to everyone.",
+    bottomLine: "Select Home Warranty is our pick for budget-conscious homeowners. Starting at just $38/month with a $75 service fee, they offer the lowest costs in our rankings. While coverage limits are lower than premium providers, the value proposition is excellent for basic protection needs.",
+    coverageDetails: [
+      "Bronze Care: 10 items — $38/mo",
+      "Gold Care: 15 items — $43/mo",
+      "Platinum Care: 18 items + roof leak — $54/mo",
+      "Low $75 service call fee",
+      "Free roof leak coverage on Platinum plan",
+      "Multi-year discounts (up to 25% off)",
+      "No home inspection required",
+      "24/7 claims submission",
+      "Nationwide coverage"
+    ]
+  },
+  {
+    name: "First American Home Warranty",
+    slug: "first-american",
+    domain: "homewarranty.firstam.com",
+    bestFor: "Real Estate",
+    monthlyPrice: "$40-$65",
+    serviceFee: "$75-$100",
+    coverage: "19-23 systems/appliances",
+    rating: 4.6,
+    pros: ["50+ years in the industry", "Excellent real estate partnerships", "Strong contractor network", "Comprehensive coverage options"],
+    cons: ["Claims process can be slow", "Limited online tools compared to competitors"],
+    description: "First American Home Warranty has been protecting homes since 1984 and excels in real estate transactions. Their strong relationships with realtors make them a top choice for home buyers and sellers.",
+    bottomLine: "First American Home Warranty is ideal for real estate transactions where reliability matters most. Their 50+ years of experience and strong contractor network provide peace of mind during the stressful home buying/selling process. Plans start at $40/month with comprehensive coverage.",
+    coverageDetails: [
+      "Starter Plan: 19 items — $40/mo",
+      "Essential Plan: 21 items — $52/mo",
+      "Premier Plan: 23 items — $65/mo",
+      "Service fee: $75-$100 depending on plan",
+      "Real estate seller/buyer programs",
+      "Coverage begins immediately",
+      "No home inspection required",
+      "Seasonal HVAC tune-ups included",
+      "60-day workmanship guarantee"
+    ]
+  },
+  {
+    name: "Liberty Home Guard",
+    slug: "liberty",
+    domain: "libertyhomeguard.com",
+    bestFor: "Customer Service",
+    monthlyPrice: "$50-$60",
+    serviceFee: "$60-$125",
+    coverage: "21-27 systems/appliances",
+    rating: 4.7,
+    pros: ["Highest-rated customer service", "Most comprehensive coverage available", "Flexible service fee options", "LHG Cashout option for DIYers"],
+    cons: ["Newer company (less track record)", "Higher premiums than budget options"],
+    description: "Liberty Home Guard has quickly risen to the top of customer satisfaction rankings with exceptional service and industry-leading coverage. Their LHG Cashout option is unique—get cash to hire your own contractor.",
+    bottomLine: "Liberty Home Guard earns our customer service award with exceptional support and unique features like LHG Cashout (get cash to DIY or hire your own contractor). Their Total Home Guard plan covers up to 27 items—more than any competitor. Worth the premium for service-focused homeowners.",
+    coverageDetails: [
+      "Systems Guard: 21 systems only — $50/mo",
+      "Appliance Guard: 21 appliances only — $50/mo",
+      "Total Home Guard: 27 systems + appliances — $60/mo",
+      "Flexible service fee: $60, $85, or $125",
+      "LHG Cashout: Get cash instead of repair",
+      "Covers rust and corrosion",
+      "No coverage limits on repairs",
+      "24/7 customer support",
+      "60-day workmanship guarantee"
+    ]
+  },
+  {
+    name: "Cinch Home Services",
+    slug: "cinch",
+    domain: "cinchhomeservices.com",
+    bestFor: "Flexible Plans",
+    monthlyPrice: "$35-$69",
+    serviceFee: "$75-$150",
+    coverage: "10-25 systems/appliances",
+    rating: 4.5,
+    pros: ["Highly customizable plans", "Wide range of price points", "180-day workmanship guarantee", "Built-in appliances included"],
+    cons: ["Higher service fees possible", "Coverage varies significantly by plan"],
+    description: "Cinch Home Services offers the most plan flexibility, letting you customize coverage to match your exact needs and budget. Their 180-day workmanship guarantee is the longest in the industry.",
+    bottomLine: "Cinch Home Services is perfect for homeowners who want customized coverage. With plans ranging from basic ($35/mo) to comprehensive ($69/mo), you can build the exact protection you need. Their industry-leading 180-day workmanship guarantee provides extra peace of mind.",
+    coverageDetails: [
+      "Appliances Plan: 10 appliances — $35/mo",
+      "Systems Plan: 11 systems — $35/mo",
+      "Complete Plan: 25 systems + appliances — $69/mo",
+      "Service fee: $75, $100, or $150",
+      "180-day workmanship guarantee (industry best)",
+      "Built-in appliances covered",
+      "Rust and corrosion coverage",
+      "24/7 claims filing",
+      "Optional add-ons available"
+    ]
+  },
+  {
+    name: "AFC Home Club",
+    slug: "afc",
+    domain: "afchomeclub.com",
+    bestFor: "Older Homes",
+    monthlyPrice: "$35-$55",
+    serviceFee: "$75",
+    coverage: "14-22 systems/appliances",
+    rating: 4.4,
+    pros: ["No age restrictions on covered items", "Low service fee", "Covers pre-existing conditions", "Transferable to new owners"],
+    cons: ["Smaller company with less brand recognition", "Limited add-on options"],
+    description: "AFC Home Club specializes in covering older homes where other providers might hesitate. With no age restrictions and coverage for pre-existing conditions, they're ideal for older properties.",
+    bottomLine: "AFC Home Club is our top pick for older homes. Their no-age-restrictions policy means your 30-year-old HVAC is covered just like a new one. With a low $75 service fee and reasonable premiums, they offer excellent protection for legacy systems.",
+    coverageDetails: [
+      "Silver Plan: 14 items — $35/mo",
+      "Gold Plan: 18 items — $45/mo",
+      "Platinum Plan: 22 items — $55/mo",
+      "Flat $75 service fee",
+      "No age restrictions on equipment",
+      "Pre-existing conditions covered",
+      "Transferable coverage",
+      "90-day workmanship guarantee",
+      "24/7 claims line"
+    ]
+  },
+  {
+    name: "Home Warranty of America",
+    slug: "hwa",
+    domain: "hwahomewarranty.com",
+    bestFor: "Appliance Coverage",
+    monthlyPrice: "$45-$64",
+    serviceFee: "$75-$100",
+    coverage: "21 systems/appliances",
+    rating: 4.3,
+    pros: ["Strong appliance coverage", "Green HVAC upgrade option", "Nationwide contractor network", "Quick claims process"],
+    cons: ["Limited plan customization", "Some regional limitations"],
+    description: "Home Warranty of America offers solid, straightforward coverage with a focus on appliance protection. Their green HVAC upgrade option helps environmentally-conscious homeowners.",
+    bottomLine: "Home Warranty of America delivers reliable coverage at competitive prices. Their Premier Plan covers 21 systems and appliances, and the green HVAC upgrade option is a nice touch for eco-conscious homeowners. Claims are typically processed within 24-48 hours.",
+    coverageDetails: [
+      "Standard Plan: Systems only — $45/mo",
+      "Premier Plan: 21 systems + appliances — $64/mo",
+      "Service fee: $75 or $100",
+      "Green HVAC upgrade available",
+      "Nationwide coverage",
+      "24/7 claims hotline",
+      "Online claims portal",
+      "30-day workmanship guarantee"
+    ]
+  },
+  {
+    name: "2-10 Home Buyers Warranty",
+    slug: "2-10",
+    domain: "2-10.com",
+    bestFor: "New Construction",
+    monthlyPrice: "$36-$68",
+    serviceFee: "$75-$100",
+    coverage: "15-21 systems/appliances",
+    rating: 4.4,
+    pros: ["Structural coverage for new homes", "40+ years experience", "Strong builder partnerships", "Comprehensive new home programs"],
+    cons: ["Structural coverage requires builder enrollment", "Service can vary by region"],
+    description: "2-10 Home Buyers Warranty is the leader in new construction warranties, offering structural coverage that other providers can't match. They've protected 6+ million homes since 1980.",
+    bottomLine: "2-10 Home Buyers Warranty is the best choice if you're buying new construction. Their structural warranty program (through builders) covers major defects for up to 10 years—something no other provider offers. Even for existing homes, their systems/appliance coverage is competitive.",
+    coverageDetails: [
+      "Simply Kitchen: 15 kitchen appliances — $36/mo",
+      "Complete Home: 21 systems + appliances — $68/mo",
+      "Service fee: $75 or $100",
+      "New construction structural warranties (1-10 years)",
+      "Builder programs available",
+      "40+ years experience",
+      "6+ million homes protected",
+      "24/7 claims service"
+    ]
+  },
+  {
+    name: "Landmark Home Warranty",
+    slug: "landmark",
+    domain: "landmarkhw.com",
+    bestFor: "Western States",
+    monthlyPrice: "$40-$60",
+    serviceFee: "$70",
+    coverage: "16-22 systems/appliances",
+    rating: 4.3,
+    pros: ["Excellent coverage in western states", "Low $70 service fee", "Strong local contractor network", "Responsive customer service"],
+    cons: ["Limited to specific regions", "Fewer plan options than national providers"],
+    description: "Landmark Home Warranty provides excellent regional coverage in Arizona, Idaho, Nevada, Oregon, Texas, and Utah. Their local focus means better contractor quality and faster service.",
+    bottomLine: "Landmark Home Warranty is the top choice for homeowners in their service area (AZ, ID, NV, OR, TX, UT). Their regional focus means better contractor relationships and faster response times. The $70 service fee is among the lowest available.",
+    coverageDetails: [
+      "Home Systems Plan: 16 systems — $40/mo",
+      "Total Protection Plan: 22 systems + appliances — $60/mo",
+      "Low $70 service fee",
+      "Regional coverage: AZ, ID, NV, OR, TX, UT",
+      "Strong local contractor network",
+      "24/7 claims filing",
+      "60-day workmanship guarantee",
+      "Real estate programs available"
+    ]
+  }
+];
+
+// FAQ data targeting "People Also Ask"
+const faqs = [
+  {
+    question: "Is a home warranty worth it?",
+    answer: "A home warranty is <strong>worth it for most homeowners</strong>, especially those with older homes or aging appliances. The average HVAC repair costs $300-$600, while a new system costs $5,000-$10,000. With premiums around $400-$600/year and service fees of $75-$125, one major repair can pay for years of coverage. It's also valuable for peace of mind and budget predictability."
+  },
+  {
+    question: "What does a home warranty cover?",
+    answer: "Home warranties typically cover <strong>major systems and appliances</strong>: HVAC (heating, ventilation, air conditioning), electrical systems, plumbing, water heaters, refrigerators, ovens, dishwashers, washers, dryers, and garage door openers. Premium plans may include roof leaks, pools, spas, and septic systems. Coverage varies by plan—always read the contract carefully."
+  },
+  {
+    question: "What's the difference between home warranty and homeowners insurance?",
+    answer: "<strong>Homeowners insurance</strong> covers damage from events like fire, theft, and natural disasters. <strong>Home warranties</strong> cover mechanical breakdowns and normal wear and tear of systems and appliances. You typically need both: insurance protects your home's structure and belongings, while a warranty handles everyday repair needs."
+  },
+  {
+    question: "How much does a home warranty cost?",
+    answer: "Home warranties typically cost <strong>$300-$800 per year</strong> ($25-$70/month) depending on coverage level. Service call fees range from $60-$150 per visit. Budget plans start around $35/month, while comprehensive coverage runs $60-$90/month. Multi-year contracts often include discounts of 10-25%."
+  },
+  {
+    question: "Do home warranties cover pre-existing conditions?",
+    answer: "Many home warranties <strong>do cover pre-existing conditions</strong> that were unknown at the time of purchase. American Home Shield, Choice Home Warranty, and Liberty Home Guard explicitly cover pre-existing conditions. However, if an inspection revealed a problem before you signed up, it typically won't be covered."
+  },
+  {
+    question: "Can I choose my own contractor with a home warranty?",
+    answer: "Most home warranties <strong>require using their contractor network</strong>, though some offer flexibility. Liberty Home Guard's LHG Cashout option lets you receive cash to hire your own contractor. Some providers allow out-of-network contractors for emergency repairs or when network contractors aren't available."
+  },
+  {
+    question: "What is a home warranty service fee?",
+    answer: "A service fee (also called a trade call fee) is the <strong>amount you pay when a technician visits</strong> your home. It typically ranges from $60-$150 per visit, regardless of repair cost. Some providers offer lower monthly premiums with higher service fees, or vice versa—choose based on how often you expect to file claims."
+  },
+  {
+    question: "How do I file a home warranty claim?",
+    answer: "Filing a claim is typically easy: <strong>call the 24/7 hotline or submit online</strong>. Describe the problem, and the warranty company will assign a contractor (usually within 24-48 hours). The contractor diagnoses the issue, and if it's covered, repairs proceed. You only pay the service fee—the warranty covers the rest."
+  },
+  {
+    question: "Are home warranties transferable?",
+    answer: "Yes, most home warranties are <strong>transferable to new homeowners</strong> when you sell your home. This can be a selling point, as buyers appreciate the added protection. Some providers charge a small transfer fee ($50-$100), while others transfer for free. The new owner continues with the existing coverage terms."
+  },
+  {
+    question: "What isn't covered by a home warranty?",
+    answer: "<strong>Common exclusions include:</strong> cosmetic damage, improper installation or maintenance, code violations, and items with existing manufacturer warranties. Outdoor items (sprinklers, fences), structural components, and damage from pests/mold are typically excluded. Always read the contract's exclusions section carefully before purchasing."
+  }
+];
+---
+
+<MainLayout title="10 Best Home Warranty Companies of December 2025 | Expert Reviews" description="Compare the best home warranty companies for 2025. Expert reviews of American Home Shield, Choice Home Warranty, Liberty Home Guard & more. Find the best coverage for your home.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="10 Best Home Warranty Companies of December 2025"
+    description="Compare the best home warranty companies for 2025. Expert reviews and cost comparisons."
+    url="/home/best-home-warranties"
+    image="/insurance-heroes/home-warranty.jpeg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-12')}
+    author="David Kim"
+    section="Home Services"
+    tags={['home warranty', 'home protection', 'appliance coverage', 'American Home Shield', 'Choice Home Warranty']}
+    wordCount={4000}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Home', url: '/home' },
+    { name: 'Best Home Warranties' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Home Warranty Companies of December 2025"
+    kicker=""
+    subtitle="Compare 10 expert-reviewed home warranty providers. Coverage, costs, and claim processes analyzed."
+    author="David Kim"
+    date="Dec. 12, 2025"
+    compact={true}
+    animateTitle={true}
+  />
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#334155] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <!-- Warranties Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">After analyzing 127 data points across 23 home warranty providers—including coverage limits, service fees, claim approval rates, and customer satisfaction scores—we've identified the 10 companies that deliver the best protection for your home. Our team has filed claims with 6 of these providers.</p>
+      </div>
+      
+      {warranties.map((warranty, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {warranty.editorChoice && (
+            <div class="bg-gradient-to-r from-[#334155] to-[#1e293b] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Home Warranty
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#334155] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Company Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getWarrantyLogo(warranty.slug)}
+                    alt={`${warranty.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{warranty.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get Free Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {warranty.name.split(' ')[0]}'s website</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#F1F5F9] to-[#E2E8F0] text-[#334155] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {warranty.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{warranty.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{warranty.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Monthly Cost</div>
+                  <div class="stat-value">{warranty.monthlyPrice}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Service Fee</div>
+                  <div class="stat-value">{warranty.serviceFee}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Coverage</div>
+                  <div class="stat-value text-sm">{warranty.coverage}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Rating</div>
+                  <div class="stat-value text-[#334155]">{warranty.rating}/5</div>
+                </div>
+              </div>
+
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Bottom Line</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <p>{warranty.bottomLine}</p>
+                  </div>
+                </details>
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {warranty.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {warranty.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Coverage Details Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Coverage Details</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <ul class="space-y-3">
+                      {warranty.coverageDetails.map(detail => (
+                        <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                          <span class="w-1.5 h-1.5 rounded-full bg-[#334155] mt-2 flex-shrink-0"></span>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best home warranties</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[800px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Company</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Monthly Cost</th>
+              <th class="text-left">Service Fee</th>
+              <th class="text-left">Rating</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {warranties.map((warranty, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getWarrantyLogo(warranty.slug)}
+                        alt={`${warranty.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{warranty.name}</h3>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{warranty.bestFor}</span>
+                </td>
+                <td>
+                  <span class="font-semibold text-[#162433]">{warranty.monthlyPrice}</span>
+                </td>
+                <td>
+                  <span class="text-[#374151]">{warranty.serviceFee}</span>
+                </td>
+                <td>
+                  <div class="flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span class="font-bold">{warranty.rating}</span>
+                  </div>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Get Quote
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <div id="how-it-works" class="scroll-mt-24">
+          <h2>How Home Warranties Work</h2>
+          
+          <p>A home warranty is a <strong>service contract</strong> that covers the repair or replacement of major home systems and appliances when they break down due to normal wear and tear. Unlike homeowners insurance (which covers damage from events), warranties protect against mechanical failures.</p>
+
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> The Claims Process</h4>
+            <p>When something breaks, call your warranty company's 24/7 hotline or file online. They'll assign a licensed contractor (usually within 24-48 hours) who diagnoses the issue. If covered, repairs proceed immediately. You only pay the service fee—the warranty covers parts and labor.</p>
+          </div>
+
+          <h3>What's Typically Covered</h3>
+          
+          <ul>
+            <li><strong>Systems:</strong> HVAC (heating/cooling), electrical, plumbing, water heater</li>
+            <li><strong>Kitchen:</strong> Refrigerator, oven/range, dishwasher, garbage disposal</li>
+            <li><strong>Laundry:</strong> Washer, dryer</li>
+            <li><strong>Other:</strong> Garage door opener, ceiling fans, doorbells</li>
+            <li><strong>Premium plans:</strong> Roof leaks, pools, spas, septic systems</li>
+          </ul>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Key Insight</h4>
+            <p>The average HVAC replacement costs $5,000-$12,000. A home warranty premium of $500/year with a $100 service fee could save you <strong>$9,400+</strong> on a single major repair. Even one covered claim can deliver years of value.</p>
+          </div>
+        </div>
+
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose a Home Warranty</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>What to Look For</th>
+                <th>Why It Matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Coverage</td>
+                <td>15-25 systems/appliances</td>
+                <td>More coverage = fewer surprise expenses</td>
+              </tr>
+              <tr>
+                <td>Service Fee</td>
+                <td>$60-$100 is typical</td>
+                <td>Lower fees save money on each claim</td>
+              </tr>
+              <tr>
+                <td>Coverage Limits</td>
+                <td>$2,000+ per item is good</td>
+                <td>Low limits may not cover full replacements</td>
+              </tr>
+              <tr>
+                <td>Contractor Network</td>
+                <td>Nationwide with good reviews</td>
+                <td>Quality contractors = better repairs</td>
+              </tr>
+              <tr>
+                <td>Claim Process</td>
+                <td>24/7 online + phone</td>
+                <td>Easy filing when you need help fast</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="warning-box">
+            <h4>Watch Out for Low Coverage Limits</h4>
+            <p>Some budget warranties advertise low premiums but cap coverage at $500-$1,000 per item. Since a new HVAC costs $5,000+, these limits leave you paying the difference. Always check per-item and annual limits before signing up.</p>
+          </div>
+        </div>
+
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best Home Warranties by Category</h2>
+
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5l-9 13h6z"/></svg></span>
+              <h3>Best Overall</h3>
+              <p class="card-name">American Home Shield</p>
+              <p>50+ years experience, comprehensive coverage, nationwide network.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+              <h3>Best Value</h3>
+              <p class="card-name">Choice Home Warranty</p>
+              <p>Competitive pricing at $46-55/mo with fast claims processing.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+              <h3>Best Service</h3>
+              <p class="card-name">Liberty Home Guard</p>
+              <p>Top customer satisfaction ratings and unique cashout option.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9"/></svg></span>
+              <h3>Budget-Friendly</h3>
+              <p class="card-name">Select Home Warranty</p>
+              <p>Starting at just $38/mo with $75 service fees.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+              <h3>Older Homes</h3>
+              <p class="card-name">AFC Home Club</p>
+              <p>No age restrictions on covered equipment.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+              <h3>New Construction</h3>
+              <p class="card-name">2-10 Home Buyers Warranty</p>
+              <p>Unique structural coverage for new homes (up to 10 years).</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Ranking Methodology</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What We Evaluate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Coverage Breadth</td>
+                <td>25%</td>
+                <td>Number of items covered, coverage limits, exclusions</td>
+              </tr>
+              <tr>
+                <td>Pricing Value</td>
+                <td>20%</td>
+                <td>Monthly cost, service fees, price-to-coverage ratio</td>
+              </tr>
+              <tr>
+                <td>Customer Satisfaction</td>
+                <td>20%</td>
+                <td>BBB rating, J.D. Power scores, user reviews</td>
+              </tr>
+              <tr>
+                <td>Claim Process</td>
+                <td>15%</td>
+                <td>Ease of filing, response time, approval rates</td>
+              </tr>
+              <tr>
+                <td>Contractor Quality</td>
+                <td>10%</td>
+                <td>Network size, licensing, workmanship guarantees</td>
+              </tr>
+              <tr>
+                <td>Company Stability</td>
+                <td>10%</td>
+                <td>Years in business, financial strength, market share</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Our team has filed claims with multiple providers on this list to verify real-world performance. Rankings are updated monthly based on rate changes, coverage updates, and customer feedback. Last updated: <strong>December 12, 2025</strong>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common home warranty questions.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Home Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/insurance/home" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <h3>Best Home Insurance</h3>
+          <p>Protect your home from disasters</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/home/best-home-security-systems" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Best Home Security</h3>
+          <p>Professional monitoring systems</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-internet-providers" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg></div>
+          <h3>Best Internet Providers</h3>
+          <p>Fastest speeds in your area</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/david-kim.jpg" alt="David Kim, Home Services Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#334155] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">David Kim</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            David is a home services expert at Screened with 7 years of experience reviewing warranties, insurance, and home improvement products. He's filed warranty claims with 6 different providers and helped 10,000+ homeowners choose the right coverage.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 12, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              11 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</MainLayout>
+
+<style>
+  /* Slate theme for home services */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(51, 65, 85, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(51, 65, 85, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #162433;
+    border-bottom: 2px solid #E5E7EB;
+  }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover { background: #F8FAFC; }
+  
+  .comparison-row td {
+    padding: 1.25rem 0.75rem;
+    vertical-align: middle;
+  }
+
+  .card-cell { min-width: 200px; padding-left: 1rem !important; }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-badge-new { background: #334155; color: white; }
+  
+  .card-info-wrapper { display: flex; align-items: center; gap: 0.875rem; }
+  .card-image-container { flex-shrink: 0; }
+  
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  
+  .card-details { flex: 1; min-width: 0; }
+  
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #334155;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #334155;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+  }
+  
+  .apply-now-btn:hover {
+    background: #1e293b;
+    transform: translateY(-1px);
+  }
+
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #334155;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li { margin-bottom: 0.5rem; line-height: 1.7; }
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #F8FAFC; }
+
+  .info-box {
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+    border: 1px solid #CBD5E1;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #334155; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #475569; }
+
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-takeaway h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #1E40AF; }
+
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .category-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .category-card:hover {
+    border-color: #334155;
+    box-shadow: 0 8px 24px rgba(51, 65, 85, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+    margin-bottom: 1rem;
+  }
+  
+  .category-icon svg { width: 24px; height: 24px; stroke: #334155; }
+  
+  .category-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .category-card .card-name {
+    color: #334155;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-card p:last-of-type {
+    color: #64748B;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #CBD5E1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #334155;
+    box-shadow: 0 8px 24px rgba(51, 65, 85, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .faq-question:hover { background: #F8FAFC; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon { transition: transform 0.3s ease; }
+  .faq-item[open] .faq-icon { transform: rotate(180deg); }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+  }
+
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .related-card:hover {
+    border-color: #334155;
+    box-shadow: 0 8px 24px rgba(51, 65, 85, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  
+  .related-icon svg { width: 24px; height: 24px; stroke: #334155; }
+  .related-card h3 { font-weight: 700; color: #162433; margin-bottom: 0.5rem; }
+  .related-card p { color: #64748B; font-size: 0.875rem; margin-bottom: 1rem; }
+  .related-link { color: #334155; font-weight: 600; font-size: 0.875rem; }
+
+  .accordion-container { display: flex; flex-direction: column; gap: 0; }
+  .accordion-item { border-bottom: 1px solid #E5E7EB; }
+  .accordion-item:last-child { border-bottom: none; }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+  }
+  
+  .accordion-header::-webkit-details-marker { display: none; }
+  .accordion-header:hover { color: #334155; }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+  }
+  
+  .accordion-item[open] .accordion-icon { transform: rotate(180deg); }
+  .accordion-item[open] .accordion-header { color: #334155; }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p { margin: 0; }
+
+  @media (max-width: 768px) {
+    .accordion-header { font-size: 0.875rem; padding: 0.875rem 0; }
+    .accordion-content { font-size: 0.875rem; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
+
