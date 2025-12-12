@@ -2,6 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
 import HeroTypewriter from '../components/HeroTypewriter.tsx';
+import PointsValuations from '../components/PointsValuations.tsx';
 import OffersSection from '../components/OffersSection.tsx';
 import OrganizationSchema from '../components/seo/OrganizationSchema.astro';
 import WebsiteSchema from '../components/seo/WebsiteSchema.astro';
@@ -164,8 +165,11 @@ const authors = [
     </div>
   </section>
 
-  <!-- Top Credit Card Offers - Animated -->
-  <OffersSection client:visible />
+  <!-- Points Valuations Carousel -->
+  <PointsValuations client:visible />
+
+  <!-- Top Credit Card Offers -->
+  <OffersSection client:load />
 
 
   <!-- Popular Comparisons - Premium Editorial -->
