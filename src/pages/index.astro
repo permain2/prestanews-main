@@ -2,6 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
 import HeroTypewriter from '../components/HeroTypewriter.tsx';
+import OffersSection from '../components/OffersSection.tsx';
 import OrganizationSchema from '../components/seo/OrganizationSchema.astro';
 import WebsiteSchema from '../components/seo/WebsiteSchema.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
@@ -163,69 +164,8 @@ const authors = [
     </div>
   </section>
 
-  <!-- Top Credit Card Offers -->
-  <section class="offers-section">
-    <div class="offers-container">
-      <h2 class="offers-title">Great offers from our partners</h2>
-      
-      <div class="offers-grid">
-        <!-- Card 1 -->
-        <div class="offer-card">
-          <div class="offer-badge">Best for Travel</div>
-          <div class="offer-card-image">
-            <img src="/credit-cards/chase-sapphire-preferred.png" alt="Chase Sapphire Preferred" />
-          </div>
-          <div class="offer-content">
-            <h3 class="offer-name">Chase Sapphire Preferred®</h3>
-            <p class="offer-description">Earn 75,000 bonus points after qualifying spend.</p>
-            <div class="offer-highlight">
-              <span class="highlight-number">75,000</span>
-              <span class="highlight-label">bonus points</span>
-            </div>
-            <a href="https://www.chase.com/personal/credit-cards/sapphire/sapphire-preferred?utm_source=prestanews&utm_medium=affiliate" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="offer-card">
-          <div class="offer-badge">Best for Miles</div>
-          <div class="offer-card-image">
-            <img src="/credit-cards/capital-one-venture-x.png" alt="Capital One Venture X" />
-          </div>
-          <div class="offer-content">
-            <h3 class="offer-name">Capital One Venture X</h3>
-            <p class="offer-description">Earn 100,000 bonus miles with limited-time offer.</p>
-            <div class="offer-highlight">
-              <span class="highlight-number">100,000</span>
-              <span class="highlight-label">bonus miles</span>
-            </div>
-            <a href="https://www.capitalone.com/credit-cards/venture-x/?utm_source=prestanews&utm_medium=affiliate" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="offer-card">
-          <div class="offer-badge">Best for Cash Back</div>
-          <div class="offer-card-image">
-            <img src="/credit-cards/citi-double-cash.png" alt="Citi Double Cash" />
-          </div>
-          <div class="offer-content">
-            <h3 class="offer-name">Citi Double Cash® Card</h3>
-            <p class="offer-description">Earn 2% cash back on every purchase, everywhere.</p>
-            <div class="offer-highlight">
-              <span class="highlight-number">2%</span>
-              <span class="highlight-label">unlimited cash back</span>
-            </div>
-            <a href="https://www.citi.com/credit-cards/citi-double-cash-credit-card?utm_source=prestanews&utm_medium=affiliate" class="offer-cta" target="_blank" rel="noopener noreferrer">Apply Now</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="offers-footer">
-        <a href="/credit-cards" class="see-all-btn">See All Credit Cards →</a>
-      </div>
-    </div>
-  </section>
+  <!-- Top Credit Card Offers - Animated -->
+  <OffersSection client:visible />
 
 
   <!-- Popular Comparisons - Premium Editorial -->
@@ -621,238 +561,6 @@ const authors = [
     object-fit: cover;
   }
 
-  /* Offers Section - Apple-like Premium Design */
-  .offers-section {
-    background: linear-gradient(180deg, #0f1c28 0%, #162433 50%, #1a2c3d 100%);
-    padding: 5rem 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .offers-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20, 106, 255, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 40% at 20% 100%, rgba(41, 131, 107, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(20, 106, 255, 0.06) 0%, transparent 50%);
-  }
-
-  .offers-container {
-    max-width: 76rem;
-    margin: 0 auto;
-    padding: 0 2rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .offers-title {
-    font-family: 'Lexend', sans-serif;
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 600;
-    color: white;
-    text-align: center;
-    margin-bottom: 3rem;
-    letter-spacing: -0.02em;
-  }
-
-  .offers-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    perspective: 1000px;
-  }
-
-  .offer-card {
-    background: white;
-    border-radius: 1.25rem;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 10px 15px -3px rgba(0, 0, 0, 0.15),
-      0 20px 40px -10px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform-style: preserve-3d;
-    will-change: transform, box-shadow;
-  }
-
-  .offer-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 
-      0 8px 12px -4px rgba(0, 0, 0, 0.12),
-      0 20px 30px -8px rgba(0, 0, 0, 0.2),
-      0 40px 60px -15px rgba(0, 0, 0, 0.25);
-  }
-
-  .offer-badge {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #0D2C4B;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.6875rem;
-    font-weight: 700;
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    z-index: 2;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .offer-card-image {
-    aspect-ratio: 16/10;
-    overflow: hidden;
-    position: relative;
-    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-  }
-
-  .offer-card-image::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.02) 100%);
-    pointer-events: none;
-  }
-
-  .offer-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .offer-card:hover .offer-card-image img {
-    transform: scale(1.05);
-  }
-
-  .offer-content {
-    padding: 1.75rem;
-    background: white;
-    position: relative;
-  }
-
-  .offer-name {
-    font-family: 'Lexend', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #162433;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-  }
-
-  .offer-description {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.875rem;
-    color: #68727C;
-    margin-bottom: 1.25rem;
-    line-height: 1.5;
-  }
-
-  .offer-highlight {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .highlight-number {
-    font-family: 'Lexend', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #0D2C4B;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #0D2C4B 0%, #146aff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .highlight-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.875rem;
-    color: #68727C;
-  }
-
-  .offer-cta {
-    display: block;
-    width: 100%;
-    padding: 1rem;
-    background: linear-gradient(135deg, #146aff 0%, #0052cc 100%);
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 0.75rem;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 4px 12px rgba(20, 106, 255, 0.25);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .offer-cta::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .offer-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(20, 106, 255, 0.35);
-  }
-
-  .offer-cta:hover::before {
-    opacity: 1;
-  }
-
-  .offer-cta span {
-    position: relative;
-    z-index: 1;
-  }
-
-  .offers-footer {
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  .see-all-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.9375rem;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .see-all-btn:hover {
-    background: white;
-    color: #162433;
-    border-color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  }
-
-
   /* Latest Section */
   .latest-section {
     background: white;
@@ -1193,11 +901,6 @@ const authors = [
       gap: 2rem;
     }
 
-    .offers-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-
     .latest-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -1222,38 +925,6 @@ const authors = [
 
     .quick-link-pill {
       flex-shrink: 0;
-    }
-
-    .offers-grid {
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-      max-width: 85%;
-      margin: 0 auto;
-    }
-
-    .offer-card {
-      border-radius: 1rem;
-    }
-
-    .offer-card:hover {
-      transform: translateY(-4px) scale(1.01);
-    }
-
-    .offer-content {
-      padding: 1.25rem;
-    }
-
-    .offer-name {
-      font-size: 1.125rem;
-    }
-
-    .highlight-number {
-      font-size: 1.75rem;
-    }
-
-    .offer-cta {
-      padding: 0.875rem;
-      font-size: 0.875rem;
     }
 
     /* Comparisons Mobile */
