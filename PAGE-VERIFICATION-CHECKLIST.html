@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screened.com Page Verification Checklist</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+      min-height: 100vh;
+      padding: 2rem;
+      color: #162433;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-size: 2.5rem;
+    }
+    
+    .subtitle {
+      color: #94a3b8;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .stats-bar {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .stat {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #0D2C4B;
+    }
+    
+    .stat-number.success { color: #22C55E; }
+    .stat-number.warning { color: #F59E0B; }
+    .stat-number.danger { color: #EF4444; }
+    
+    .stat-label {
+      color: #64748b;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    
+    .section {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-header {
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .section-header.menu { background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%); color: white; }
+    .section-header.footer { background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%); color: white; }
+    .section-header.sitemap { background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; }
+    .section-header.missing { background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%); color: white; }
+    .section-header.extra { background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 100%); color: white; }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .section-count {
+      background: rgba(255,255,255,0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+    }
+    
+    .section-content {
+      padding: 0;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      background: #f8fafc;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #475569;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    
+    tr:hover {
+      background: #f8fafc;
+    }
+    
+    .checkbox-cell {
+      width: 50px;
+      text-align: center;
+    }
+    
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #22C55E;
+    }
+    
+    .page-link {
+      color: #0066B2;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .page-link:hover {
+      text-decoration: underline;
+    }
+    
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .status-exists {
+      background: #dcfce7;
+      color: #166534;
+    }
+    
+    .status-missing {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    
+    .status-in-nav {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .status-not-in-nav {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .nav-location {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+    
+    .nav-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .nav-badge {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 0.125rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+    }
+    
+    .nav-badge.menu { background: #dbeafe; color: #1e40af; }
+    .nav-badge.footer { background: #e0e7ff; color: #3730a3; }
+    .nav-badge.sitemap { background: #dcfce7; color: #166534; }
+    
+    .file-path {
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.75rem;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+    
+    .legend {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .legend-dot.menu { background: #0066B2; }
+    .legend-dot.footer { background: #0D2C4B; }
+    .legend-dot.sitemap { background: #059669; }
+    .legend-dot.missing { background: #EF4444; }
+    .legend-dot.extra { background: #7C3AED; }
+    
+    .progress-bar {
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22C55E 0%, #16a34a 100%);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background: #22C55E;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #16a34a;
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #0D2C4B;
+      border: 2px solid #e5e7eb;
+    }
+    
+    .btn-secondary:hover {
+      background: #f8fafc;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+      
+      table {
+        font-size: 0.875rem;
+      }
+      
+      td, th {
+        padding: 0.5rem;
+      }
+      
+      .nav-badges {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Page Verification Checklist</h1>
+    <p class="subtitle">Screened.com Navigation Audit - December 12, 2025</p>
+    
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-number" id="total-pages">65</div>
+        <div class="stat-label">Total Pages</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number success" id="pages-exist">62</div>
+        <div class="stat-label">Pages Exist ✓</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number warning" id="not-in-nav">23</div>
+        <div class="stat-label">Not in Navigation</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number danger" id="missing-pages">3</div>
+        <div class="stat-label">Missing Pages</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="checked-count">0</div>
+        <div class="stat-label">Verified</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot menu"></div> Header Menu</div>
+      <div class="legend-item"><div class="legend-dot footer"></div> Footer</div>
+      <div class="legend-item"><div class="legend-dot sitemap"></div> Sitemap Page</div>
+      <div class="legend-item"><div class="legend-dot missing"></div> Missing Page</div>
+      <div class="legend-item"><div class="legend-dot extra"></div> Not in Navigation</div>
+    </div>
+    
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-primary" onclick="checkAll()">✓ Check All Existing</button>
+      <button class="btn btn-secondary" onclick="uncheckAll()">✗ Uncheck All</button>
+      <button class="btn btn-secondary" onclick="exportReport()">📄 Export Report</button>
+    </div>
+    
+    <!-- HEADER MENU PAGES -->
+    <div class="section">
+      <div class="section-header menu">
+        <div class="section-title">
+          📱 Header Menu Pages
+          <span class="section-count">25 links</span>
+        </div>
+      </div>
+      <div class="section-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">✓</th>
+              <th>Page</th>
+              <th>URL Path</th>
+              <th>Status</th>
+              <th>File Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Credit Cards Dropdown -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="credit-cards" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/credit-cards" class="page-link" target="_blank">Credit Cards (Hub)</a></td>
+              <td>/credit-cards</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/credit-cards/index.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="best-travel-cards" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/credit-cards/best-travel-cards" class="page-link" target="_blank">Best Travel Cards</a></td>
+              <td>/credit-cards/best-travel-cards</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/credit-cards/best-travel-cards.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="best-cashback" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/credit-cards/best-cashback" class="page-link" target="_blank">Best Cash Back</a></td>
+              <td>/credit-cards/best-cashback</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/credit-cards/best-cashback.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="business" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/credit-cards/business" class="page-link" target="_blank">Business Cards</a></td>
+              <td>/credit-cards/business</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/credit-cards/business.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="no-annual-fee" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/credit-cards/no-annual-fee" class="page-link" target="_blank">No Annual Fee</a></td>
+              <td>/credit-cards/no-annual-fee</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/credit-cards/no-annual-fee.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="balance-transfer" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/credit-cards/balance-transfer" class="page-link" target="_blank">Balance Transfer</a></td>
+              <td>/credit-cards/balance-transfer</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/credit-cards/balance-transfer.astro</span></td>
+            </tr>
+            
+            <!-- Insurance Dropdown -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/insurance" class="page-link" target="_blank">Insurance (Hub)</a></td>
+              <td>/insurance</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/insurance/index.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="car-insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/insurance/car" class="page-link" target="_blank">Car Insurance</a></td>
+              <td>/insurance/car</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/insurance/car.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="home-insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/insurance/home" class="page-link" target="_blank">Home Insurance</a></td>
+              <td>/insurance/home</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/insurance/home.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="life-insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/insurance/life" class="page-link" target="_blank">Life Insurance</a></td>
+              <td>/insurance/life</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/insurance/life.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="pet-insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/insurance/pet" class="page-link" target="_blank">Pet Insurance</a></td>
+              <td>/insurance/pet</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/insurance/pet.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="renters-insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/insurance/renters" class="page-link" target="_blank">Renters Insurance</a></td>
+              <td>/insurance/renters</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/insurance/renters.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="rv-insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-rv-insurance" class="page-link" target="_blank">RV Insurance</a></td>
+              <td>/blog/best-rv-insurance</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-rv-insurance.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="disability-insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-disability-insurance" class="page-link" target="_blank">Disability Insurance</a></td>
+              <td>/blog/best-disability-insurance</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-disability-insurance.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="business-insurance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-small-business-insurance" class="page-link" target="_blank">Business Insurance</a></td>
+              <td>/blog/best-small-business-insurance</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-small-business-insurance.astro</span></td>
+            </tr>
+            
+            <!-- Finance Dropdown -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="finance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/finance" class="page-link" target="_blank">Finance (Hub)</a></td>
+              <td>/finance</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/finance/index.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="savings-accounts" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/finance/best-online-savings-accounts" class="page-link" target="_blank">Savings Accounts</a></td>
+              <td>/finance/best-online-savings-accounts</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/finance/best-online-savings-accounts.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="student-loans" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-student-loans" class="page-link" target="_blank">Student Loans</a></td>
+              <td>/blog/best-student-loans</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-student-loans.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="auto-refinance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-auto-refinance-lenders" class="page-link" target="_blank">Auto Refinance</a></td>
+              <td>/blog/best-auto-refinance-lenders</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-auto-refinance-lenders.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="mortgage-refinance" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-mortgage-refinance-companies" class="page-link" target="_blank">Mortgage Refinance</a></td>
+              <td>/blog/best-mortgage-refinance-companies</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-mortgage-refinance-companies.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="gold-ira" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-gold-ira-companies" class="page-link" target="_blank">Gold IRA</a></td>
+              <td>/blog/best-gold-ira-companies</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-gold-ira-companies.astro</span></td>
+            </tr>
+            
+            <!-- Home Dropdown -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="home" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/home" class="page-link" target="_blank">Home (Hub)</a></td>
+              <td>/home</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/home/index.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="home-warranties" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/home/best-home-warranties" class="page-link" target="_blank">Home Warranties</a></td>
+              <td>/home/best-home-warranties</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/home/best-home-warranties.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extended-car-warranty" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-extended-car-warranty" class="page-link" target="_blank">Extended Car Warranty</a></td>
+              <td>/blog/best-extended-car-warranty</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-extended-car-warranty.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="security-cameras" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-home-security-cameras" class="page-link" target="_blank">Security Cameras</a></td>
+              <td>/blog/best-home-security-cameras</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-home-security-cameras.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="internet-providers" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-internet-providers" class="page-link" target="_blank">Internet Providers</a></td>
+              <td>/blog/best-internet-providers</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-internet-providers.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="car-transport" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-car-transport-companies" class="page-link" target="_blank">Car Transport</a></td>
+              <td>/blog/best-car-transport-companies</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/best-car-transport-companies.astro</span></td>
+            </tr>
+            
+            <!-- Software Dropdown -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="software" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/software" class="page-link" target="_blank">Software (Hub)</a></td>
+              <td>/software</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/software/index.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="vpn-services" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/software/best-vpn-services" class="page-link" target="_blank">Best VPN Services</a></td>
+              <td>/software/best-vpn-services</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/software/best-vpn-services.astro</span></td>
+            </tr>
+            
+            <!-- Blog -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="blog" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog" class="page-link" target="_blank">Blog</a></td>
+              <td>/blog</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/index.astro</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- FOOTER PAGES -->
+    <div class="section">
+      <div class="section-header footer">
+        <div class="section-title">
+          📋 Footer Pages
+          <span class="section-count">18 links</span>
+        </div>
+      </div>
+      <div class="section-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">✓</th>
+              <th>Page</th>
+              <th>URL Path</th>
+              <th>Status</th>
+              <th>File Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Resources -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-blog" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog" class="page-link" target="_blank">Blog</a></td>
+              <td>/blog</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/blog/index.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-reviews" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/reviews" class="page-link" target="_blank">Reviews</a></td>
+              <td>/reviews</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/reviews/index.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-newsletter" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/newsletter" class="page-link" target="_blank">Newsletter</a></td>
+              <td>/newsletter</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/newsletter.astro</span></td>
+            </tr>
+            
+            <!-- Company -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-about" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/about" class="page-link" target="_blank">About Us</a></td>
+              <td>/about</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/about.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-contact" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/contact" class="page-link" target="_blank">Contact</a></td>
+              <td>/contact</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/contact.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-careers" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/careers" class="page-link" target="_blank">Careers</a></td>
+              <td>/careers</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/careers.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-sitemap" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/sitemap" class="page-link" target="_blank">Sitemap</a></td>
+              <td>/sitemap</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/sitemap.astro</span></td>
+            </tr>
+            
+            <!-- Legal -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-privacy" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/privacy" class="page-link" target="_blank">Privacy Policy</a></td>
+              <td>/privacy</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/privacy.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-terms" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/terms" class="page-link" target="_blank">Terms of Use</a></td>
+              <td>/terms</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/terms.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-do-not-sell" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/do-not-sell" class="page-link" target="_blank">Do Not Sell</a></td>
+              <td>/do-not-sell</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/do-not-sell.astro</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="footer-advertising" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/advertising" class="page-link" target="_blank">Advertising</a></td>
+              <td>/advertising</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="file-path">src/pages/advertising.astro</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- SITEMAP PAGES -->
+    <div class="section">
+      <div class="section-header sitemap">
+        <div class="section-title">
+          🗺️ Sitemap Page Sections
+          <span class="section-count">24 links</span>
+        </div>
+      </div>
+      <div class="section-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">✓</th>
+              <th>Page</th>
+              <th>URL Path</th>
+              <th>Status</th>
+              <th>Sitemap Section</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Travel Section -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="sitemap-travel" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/travel" class="page-link" target="_blank">Travel (Hub)</a></td>
+              <td>/travel</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="nav-badge sitemap">Travel</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="sitemap-airlines" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/travel/airlines" class="page-link" target="_blank">Airlines</a></td>
+              <td>/travel/airlines</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="nav-badge sitemap">Travel</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="sitemap-hotels" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/travel/hotels" class="page-link" target="_blank">Hotels</a></td>
+              <td>/travel/hotels</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="nav-badge sitemap">Travel</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="sitemap-lounges" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/travel/airport-lounges" class="page-link" target="_blank">Airport Lounges</a></td>
+              <td>/travel/airport-lounges</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="nav-badge sitemap">Travel</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="sitemap-cruises" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/travel/cruises" class="page-link" target="_blank">Cruises</a></td>
+              <td>/travel/cruises</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="nav-badge sitemap">Travel</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="sitemap-destinations" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/travel/destinations" class="page-link" target="_blank">Destinations</a></td>
+              <td>/travel/destinations</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="nav-badge sitemap">Travel</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- PAGES NOT IN NAVIGATION -->
+    <div class="section">
+      <div class="section-header extra">
+        <div class="section-title">
+          📌 Pages NOT in Navigation (Consider Adding)
+          <span class="section-count">15 pages</span>
+        </div>
+      </div>
+      <div class="section-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">✓</th>
+              <th>Page</th>
+              <th>URL Path</th>
+              <th>Status</th>
+              <th>Recommendation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-home-warranty-companies" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/best-home-warranty-companies" class="page-link" target="_blank">Best Home Warranty Companies</a></td>
+              <td>/blog/best-home-warranty-companies</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-not-in-nav">Add to Home dropdown</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-extended-warranty" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/credit-cards/best-extended-warranty" class="page-link" target="_blank">Best Extended Warranty Cards</a></td>
+              <td>/credit-cards/best-extended-warranty</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-not-in-nav">Add to Credit Cards dropdown</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-lifestyle" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/lifestyle" class="page-link" target="_blank">Lifestyle Hub</a></td>
+              <td>/lifestyle</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-not-in-nav">Add to Header Menu</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-pet" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/pet" class="page-link" target="_blank">Pet Hub</a></td>
+              <td>/pet</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-not-in-nav">Consider if needed</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-brand" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/brand" class="page-link" target="_blank">Brand Page</a></td>
+              <td>/brand</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-not-in-nav">Internal only</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-health-privacy" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/consumer-health-data-privacy" class="page-link" target="_blank">Consumer Health Data Privacy</a></td>
+              <td>/consumer-health-data-privacy</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-not-in-nav">Add to Legal links</span></td>
+            </tr>
+            
+            <!-- Blog Content (Markdown) -->
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-blog-amex-platinum" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/amex-platinum-vs-chase-sapphire-reserve-comparison" class="page-link" target="_blank">Amex Platinum vs Chase Sapphire</a></td>
+              <td>/blog/amex-platinum-vs-chase-sapphire-reserve-comparison</td>
+              <td><span class="status-badge status-exists">✓ Blog Post</span></td>
+              <td><span class="status-badge status-in-nav">Auto-listed on /blog</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-blog-delta-wifi" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/blog/delta-free-wi-fi-now-available-on-1000-planes" class="page-link" target="_blank">Delta Free Wi-Fi</a></td>
+              <td>/blog/delta-free-wi-fi-now-available-on-1000-planes</td>
+              <td><span class="status-badge status-exists">✓ Blog Post</span></td>
+              <td><span class="status-badge status-in-nav">Auto-listed on /blog</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-careers-junior" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/careers/junior-developer" class="page-link" target="_blank">Junior Developer Position</a></td>
+              <td>/careers/junior-developer</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-in-nav">Linked from /careers</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-careers-writer" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/careers/senior-content-writer" class="page-link" target="_blank">Senior Content Writer</a></td>
+              <td>/careers/senior-content-writer</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-in-nav">Linked from /careers</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-careers-seo" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/careers/seo-specialist" class="page-link" target="_blank">SEO Specialist</a></td>
+              <td>/careers/seo-specialist</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-in-nav">Linked from /careers</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="extra-careers-travel" onchange="updateProgress()"></td>
+              <td><a href="http://localhost:4321/careers/travel-editor" class="page-link" target="_blank">Travel Editor</a></td>
+              <td>/careers/travel-editor</td>
+              <td><span class="status-badge status-exists">✓ Exists</span></td>
+              <td><span class="status-badge status-in-nav">Linked from /careers</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- MISSING PAGES (Referenced but don't exist) -->
+    <div class="section">
+      <div class="section-header missing">
+        <div class="section-title">
+          ⚠️ Action Required: Navigation Gaps
+          <span class="section-count">3 items</span>
+        </div>
+      </div>
+      <div class="section-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">Fix</th>
+              <th>Issue</th>
+              <th>Location</th>
+              <th>Action Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="fix-travel-menu" onchange="updateProgress()"></td>
+              <td>Travel section not in Header Menu</td>
+              <td>Header.astro</td>
+              <td><span class="status-badge status-missing">Add Travel dropdown to menu</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="fix-savings-duplicate" onchange="updateProgress()"></td>
+              <td>Savings Accounts exists in 2 locations</td>
+              <td>/finance/ AND /blog/</td>
+              <td><span class="status-badge status-not-in-nav">Consolidate or redirect</span></td>
+            </tr>
+            <tr>
+              <td class="checkbox-cell"><input type="checkbox" data-page="fix-pet-insurance-footer" onchange="updateProgress()"></td>
+              <td>Pet Insurance not in Footer</td>
+              <td>Footer.astro</td>
+              <td><span class="status-badge status-not-in-nav">Add to Insurance footer section</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- COMPLETE PAGE INVENTORY -->
+    <div class="section">
+      <div class="section-header" style="background: linear-gradient(135deg, #475569 0%, #334155 100%); color: white;">
+        <div class="section-title">
+          📁 Complete Page Inventory
+          <span class="section-count">62 total pages</span>
+        </div>
+      </div>
+      <div class="section-content">
+        <table>
+          <thead>
+            <tr>
+              <th class="checkbox-cell">✓</th>
+              <th>Page Name</th>
+              <th>URL Path</th>
+              <th>In Nav</th>
+              <th>File Path</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- All pages alphabetically -->
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/about" class="page-link" target="_blank">About</a></td><td>/about</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/about.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/advertising" class="page-link" target="_blank">Advertising</a></td><td>/advertising</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/advertising.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog" class="page-link" target="_blank">Blog Index</a></td><td>/blog</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/blog/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-auto-refinance-lenders" class="page-link" target="_blank">Best Auto Refinance</a></td><td>/blog/best-auto-refinance-lenders</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-auto-refinance-lenders.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-car-transport-companies" class="page-link" target="_blank">Best Car Transport</a></td><td>/blog/best-car-transport-companies</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-car-transport-companies.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-disability-insurance" class="page-link" target="_blank">Best Disability Insurance</a></td><td>/blog/best-disability-insurance</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-disability-insurance.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-extended-car-warranty" class="page-link" target="_blank">Best Extended Car Warranty</a></td><td>/blog/best-extended-car-warranty</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-extended-car-warranty.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-gold-ira-companies" class="page-link" target="_blank">Best Gold IRA</a></td><td>/blog/best-gold-ira-companies</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-gold-ira-companies.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-home-security-cameras" class="page-link" target="_blank">Best Home Security</a></td><td>/blog/best-home-security-cameras</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-home-security-cameras.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-home-warranty-companies" class="page-link" target="_blank">Best Home Warranty</a></td><td>/blog/best-home-warranty-companies</td><td><div class="nav-badges"><span class="nav-badge" style="background:#fee2e2;color:#991b1b;">Not in nav</span></div></td><td><span class="file-path">src/pages/blog/best-home-warranty-companies.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-internet-providers" class="page-link" target="_blank">Best Internet Providers</a></td><td>/blog/best-internet-providers</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-internet-providers.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-mortgage-refinance-companies" class="page-link" target="_blank">Best Mortgage Refinance</a></td><td>/blog/best-mortgage-refinance-companies</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-mortgage-refinance-companies.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-online-savings-accounts" class="page-link" target="_blank">Best Savings (Blog)</a></td><td>/blog/best-online-savings-accounts</td><td><div class="nav-badges"><span class="nav-badge" style="background:#fef3c7;color:#92400e;">Duplicate</span></div></td><td><span class="file-path">src/pages/blog/best-online-savings-accounts.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-rv-insurance" class="page-link" target="_blank">Best RV Insurance</a></td><td>/blog/best-rv-insurance</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-rv-insurance.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-small-business-insurance" class="page-link" target="_blank">Best Business Insurance</a></td><td>/blog/best-small-business-insurance</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-small-business-insurance.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/blog/best-student-loans" class="page-link" target="_blank">Best Student Loans</a></td><td>/blog/best-student-loans</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/blog/best-student-loans.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/brand" class="page-link" target="_blank">Brand</a></td><td>/brand</td><td><div class="nav-badges"><span class="nav-badge" style="background:#f1f5f9;color:#475569;">Internal</span></div></td><td><span class="file-path">src/pages/brand.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/careers" class="page-link" target="_blank">Careers</a></td><td>/careers</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/careers.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/contact" class="page-link" target="_blank">Contact</a></td><td>/contact</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/contact.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/consumer-health-data-privacy" class="page-link" target="_blank">Health Data Privacy</a></td><td>/consumer-health-data-privacy</td><td><div class="nav-badges"><span class="nav-badge" style="background:#fee2e2;color:#991b1b;">Not in nav</span></div></td><td><span class="file-path">src/pages/consumer-health-data-privacy.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/credit-cards" class="page-link" target="_blank">Credit Cards Hub</a></td><td>/credit-cards</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/credit-cards/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/credit-cards/balance-transfer" class="page-link" target="_blank">Balance Transfer</a></td><td>/credit-cards/balance-transfer</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/credit-cards/balance-transfer.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/credit-cards/best-cashback" class="page-link" target="_blank">Best Cash Back</a></td><td>/credit-cards/best-cashback</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/credit-cards/best-cashback.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/credit-cards/best-extended-warranty" class="page-link" target="_blank">Best Extended Warranty</a></td><td>/credit-cards/best-extended-warranty</td><td><div class="nav-badges"><span class="nav-badge" style="background:#fee2e2;color:#991b1b;">Not in nav</span></div></td><td><span class="file-path">src/pages/credit-cards/best-extended-warranty.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/credit-cards/best-travel-cards" class="page-link" target="_blank">Best Travel Cards</a></td><td>/credit-cards/best-travel-cards</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/credit-cards/best-travel-cards.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/credit-cards/business" class="page-link" target="_blank">Business Cards</a></td><td>/credit-cards/business</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/credit-cards/business.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/credit-cards/no-annual-fee" class="page-link" target="_blank">No Annual Fee</a></td><td>/credit-cards/no-annual-fee</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/credit-cards/no-annual-fee.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/do-not-sell" class="page-link" target="_blank">Do Not Sell</a></td><td>/do-not-sell</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span></div></td><td><span class="file-path">src/pages/do-not-sell.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/finance" class="page-link" target="_blank">Finance Hub</a></td><td>/finance</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/finance/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/finance/best-online-savings-accounts" class="page-link" target="_blank">Best Savings (Finance)</a></td><td>/finance/best-online-savings-accounts</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/finance/best-online-savings-accounts.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/home" class="page-link" target="_blank">Home Hub</a></td><td>/home</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/home/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/home/best-home-warranties" class="page-link" target="_blank">Best Home Warranties</a></td><td>/home/best-home-warranties</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/home/best-home-warranties.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/insurance" class="page-link" target="_blank">Insurance Hub</a></td><td>/insurance</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/insurance/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/insurance/car" class="page-link" target="_blank">Car Insurance</a></td><td>/insurance/car</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/insurance/car.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/insurance/home" class="page-link" target="_blank">Home Insurance</a></td><td>/insurance/home</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/insurance/home.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/insurance/life" class="page-link" target="_blank">Life Insurance</a></td><td>/insurance/life</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/insurance/life.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/insurance/pet" class="page-link" target="_blank">Pet Insurance</a></td><td>/insurance/pet</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span></div></td><td><span class="file-path">src/pages/insurance/pet.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/insurance/renters" class="page-link" target="_blank">Renters Insurance</a></td><td>/insurance/renters</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/insurance/renters.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/lifestyle" class="page-link" target="_blank">Lifestyle Hub</a></td><td>/lifestyle</td><td><div class="nav-badges"><span class="nav-badge" style="background:#fee2e2;color:#991b1b;">Not in nav</span></div></td><td><span class="file-path">src/pages/lifestyle/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/newsletter" class="page-link" target="_blank">Newsletter</a></td><td>/newsletter</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/newsletter.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/pet" class="page-link" target="_blank">Pet Hub</a></td><td>/pet</td><td><div class="nav-badges"><span class="nav-badge" style="background:#fee2e2;color:#991b1b;">Not in nav</span></div></td><td><span class="file-path">src/pages/pet/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/privacy" class="page-link" target="_blank">Privacy Policy</a></td><td>/privacy</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/privacy.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/reviews" class="page-link" target="_blank">Reviews</a></td><td>/reviews</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/reviews/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/sitemap" class="page-link" target="_blank">Sitemap</a></td><td>/sitemap</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span></div></td><td><span class="file-path">src/pages/sitemap.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/software" class="page-link" target="_blank">Software Hub</a></td><td>/software</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/software/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/software/best-vpn-services" class="page-link" target="_blank">Best VPN Services</a></td><td>/software/best-vpn-services</td><td><div class="nav-badges"><span class="nav-badge menu">Menu</span><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/software/best-vpn-services.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/terms" class="page-link" target="_blank">Terms of Use</a></td><td>/terms</td><td><div class="nav-badges"><span class="nav-badge footer">Footer</span><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/terms.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/travel" class="page-link" target="_blank">Travel Hub</a></td><td>/travel</td><td><div class="nav-badges"><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/travel/index.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/travel/airlines" class="page-link" target="_blank">Airlines</a></td><td>/travel/airlines</td><td><div class="nav-badges"><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/travel/airlines.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/travel/airport-lounges" class="page-link" target="_blank">Airport Lounges</a></td><td>/travel/airport-lounges</td><td><div class="nav-badges"><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/travel/airport-lounges.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/travel/cruises" class="page-link" target="_blank">Cruises</a></td><td>/travel/cruises</td><td><div class="nav-badges"><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/travel/cruises.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/travel/destinations" class="page-link" target="_blank">Destinations</a></td><td>/travel/destinations</td><td><div class="nav-badges"><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/travel/destinations.astro</span></td></tr>
+            <tr><td class="checkbox-cell"><input type="checkbox" onchange="updateProgress()"></td><td><a href="http://localhost:4321/travel/hotels" class="page-link" target="_blank">Hotels</a></td><td>/travel/hotels</td><td><div class="nav-badges"><span class="nav-badge sitemap">Sitemap</span></div></td><td><span class="file-path">src/pages/travel/hotels.astro</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Summary -->
+    <div style="background: white; border-radius: 12px; padding: 2rem; margin-top: 2rem;">
+      <h2 style="margin-bottom: 1rem; color: #0D2C4B;">📊 Navigation Audit Summary</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+        <div>
+          <h3 style="color: #22C55E; margin-bottom: 0.5rem;">✅ What's Working</h3>
+          <ul style="color: #475569; line-height: 1.8;">
+            <li>All 62 pages exist and are accessible</li>
+            <li>Header menu covers main categories</li>
+            <li>Footer has legal + company links</li>
+            <li>Sitemap includes Travel section</li>
+            <li>Blog posts auto-listed via content collection</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color: #F59E0B; margin-bottom: 0.5rem;">⚠️ Needs Attention</h3>
+          <ul style="color: #475569; line-height: 1.8;">
+            <li>Travel section missing from Header Menu</li>
+            <li>Pet Insurance not in Footer</li>
+            <li>Consumer Health Data Privacy not linked</li>
+            <li>Duplicate savings accounts pages</li>
+            <li>best-extended-warranty not in Credit Cards dropdown</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color: #0066B2; margin-bottom: 0.5rem;">💡 Recommendations</h3>
+          <ul style="color: #475569; line-height: 1.8;">
+            <li>Add Travel dropdown to header menu</li>
+            <li>Add Pet Insurance to footer Insurance section</li>
+            <li>Add Health Data Privacy to legal footer</li>
+            <li>Redirect /blog/best-online-savings-accounts → /finance/</li>
+            <li>Add Lifestyle hub to navigation if active</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+      const total = checkboxes.length;
+      const percentage = Math.round((checked / total) * 100);
+      
+      document.getElementById('checked-count').textContent = checked;
+      document.getElementById('progress-fill').style.width = percentage + '%';
+      
+      // Save to localStorage
+      const state = {};
+      checkboxes.forEach(cb => {
+        if (cb.dataset.page) {
+          state[cb.dataset.page] = cb.checked;
+        }
+      });
+      localStorage.setItem('pageVerificationState', JSON.stringify(state));
+    }
+    
+    function checkAll() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(cb => cb.checked = true);
+      updateProgress();
+    }
+    
+    function uncheckAll() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(cb => cb.checked = false);
+      updateProgress();
+    }
+    
+    function exportReport() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+      const total = checkboxes.length;
+      
+      let report = `Screened.com Page Verification Report\n`;
+      report += `Generated: ${new Date().toLocaleString()}\n`;
+      report += `Progress: ${checked}/${total} verified (${Math.round((checked/total)*100)}%)\n\n`;
+      
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => {
+        const title = section.querySelector('.section-title')?.textContent || 'Unknown';
+        report += `\n${title}\n${'='.repeat(50)}\n`;
+        
+        const rows = section.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+          const checkbox = row.querySelector('input[type="checkbox"]');
+          const status = checkbox?.checked ? '✓' : '○';
+          const name = row.querySelector('.page-link')?.textContent || row.querySelector('td:nth-child(2)')?.textContent || '';
+          const url = row.querySelector('td:nth-child(3)')?.textContent || '';
+          if (name) {
+            report += `${status} ${name} - ${url}\n`;
+          }
+        });
+      });
+      
+      const blob = new Blob([report], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `page-verification-report-${new Date().toISOString().split('T')[0]}.txt`;
+      a.click();
+    }
+    
+    // Load saved state on page load
+    window.addEventListener('load', () => {
+      const saved = localStorage.getItem('pageVerificationState');
+      if (saved) {
+        const state = JSON.parse(saved);
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+          if (cb.dataset.page && state[cb.dataset.page]) {
+            cb.checked = true;
+          }
+        });
+      }
+      updateProgress();
+    });
+  </script>
+</body>
+</html>
+

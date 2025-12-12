@@ -6,9 +6,48 @@ import FAQSchema from '../../components/seo/FAQSchema.astro';
 import ArticleSchema from '../../components/seo/ArticleSchema.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { getSavingsLogo } from '../../utils/SavingsLogoMap';
+import { getProvidersBySubcategory, getFaqsByArticle, urlFor } from '../../lib/sanity';
 
-// Top Online Savings Accounts - 12 accounts
-const savingsAccounts = [
+// Try to fetch from Sanity, but use fallbacks if empty or error
+let sanityProviders = [];
+let sanityFaqs = [];
+
+try {
+  sanityProviders = await getProvidersBySubcategory('savings');
+  sanityFaqs = await getFaqsByArticle('best-online-savings-accounts');
+} catch (error) {
+  console.error('Failed to fetch from Sanity:', error);
+}
+
+// Transform Sanity data to template format
+const sanityData = sanityProviders.map(provider => ({
+  name: provider.name,
+  slug: provider.slug?.current || provider.name.toLowerCase().replace(/\s+/g, '-'),
+  bestFor: provider.bestFor,
+  apy: provider.apy || '',
+  apyNote: provider.apyNote || '',
+  minDeposit: provider.minBalance || '$0',
+  monthlyFee: '$0',
+  minForAPY: provider.requirements || '',
+  rating: provider.rating,
+  fdic: provider.fdic !== false,
+  pros: provider.pros || [],
+  cons: provider.cons || [],
+  description: provider.description,
+  bottomLine: provider.bottomLine || '',
+  accountDetails: provider.details || [],
+  editorChoice: provider.editorChoice || false,
+  _sanityLogo: provider.logo ? urlFor(provider.logo).width(400).url() : null,
+  _logoPath: provider.logoPath,
+}));
+
+const sanityFaqData = sanityFaqs.map(faq => ({
+  question: faq.question,
+  answer: faq.answer,
+}));
+
+// Legacy data (remove after migration)
+const savingsAccountsLegacy = [
   {
     name: "SoFi Checking and Savings",
     slug: "sofi",
@@ -358,7 +397,7 @@ const savingsAccounts = [
 ];
 
 // FAQ data targeting "People Also Ask"
-const faqs = [
+const faqsLegacy = [
   {
     question: "What is the best high-yield savings account right now?",
     answer: "<strong>SoFi Checking and Savings</strong> is our top pick for December 2025, offering up to 4.00% APY with direct deposit, no fees, and no minimums. For pure savings with no checking, <strong>Marcus by Goldman Sachs</strong> offers 4.40% APY. If you have larger balances, <strong>Wealthfront</strong> (4.50% APY) and <strong>CIT Bank</strong> (4.65% APY with $5K+) offer even higher rates."
@@ -400,6 +439,11 @@ const faqs = [
     answer: "Absolutely—many savers use <strong>multiple accounts strategically</strong>. You might use Marcus for emergency savings, Wealthfront for large balances, and SoFi for everyday spending. This also maximizes FDIC coverage if you have over $250,000 in savings."
   }
 ];
+
+// Use Sanity data if available, otherwise use fallback
+const savingsAccounts = sanityData && sanityData.length > 0 ? sanityData : savingsAccountsLegacy;
+const faqs = sanityFaqData && sanityFaqData.length > 0 ? sanityFaqData : faqsLegacy;
+const finalFaqs = faqs;
 ---
 
 <MainLayout title="12 Best Online Savings Accounts of December 2025 | Highest APY" description="Compare the best high-yield savings accounts for 2025. Expert reviews of SoFi, Marcus, Ally, Wealthfront & more. Find accounts with APYs up to 4.65%.">
@@ -417,7 +461,7 @@ const faqs = [
     tags={['savings accounts', 'high-yield savings', 'APY', 'online banking', 'FDIC insured']}
     wordCount={4200}
   />
-  <FAQSchema faqs={faqs} />
+  <FAQSchema faqs={finalFaqs} />
   <BreadcrumbSchema items={[
     { name: 'Finance', url: '/finance' },
     { name: 'Best Online Savings Accounts' }
@@ -439,7 +483,7 @@ const faqs = [
   <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <p class="text-xs text-[#68727C] leading-relaxed">
-        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#059669] hover:underline">advertising policy</a>.
+        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#0066B2] hover:underline">advertising policy</a>.
       </p>
     </div>
   </section>
@@ -463,7 +507,7 @@ const faqs = [
           
           {/* Editor's Choice Badge */}
           {account.editorChoice && (
-            <div class="bg-gradient-to-r from-[#059669] to-[#047857] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+            <div class="bg-gradient-to-r from-[#0066B2] to-[#004C8C] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               EDITOR'S CHOICE — Best Overall Savings Account
             </div>
@@ -475,7 +519,7 @@ const faqs = [
               
               {/* Rank Badge */}
               <div class="absolute top-4 left-4 flex items-center gap-2">
-                <span class="w-10 h-10 rounded-full bg-[#059669] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+                <span class="w-10 h-10 rounded-full bg-[#0066B2] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
               </div>
 
               {/* Bank Logo */}
@@ -510,13 +554,13 @@ const faqs = [
               {/* Header */}
               <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
-                  <span class="inline-block bg-gradient-to-r from-[#ECFDF5] to-[#D1FAE5] text-[#059669] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                  <span class="inline-block bg-gradient-to-r from-[#E0F2FE] to-[#BAE6FD] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
                     {account.bestFor}
                   </span>
                   <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{account.name}</h3>
                 </div>
                 {account.fdic && (
-                  <span class="inline-flex items-center gap-1 bg-[#F0FDF4] text-[#166534] text-xs font-semibold px-2 py-1 rounded">
+                  <span class="inline-flex items-center gap-1 bg-[#F0F9FF] text-[#0369A1] text-xs font-semibold px-2 py-1 rounded">
                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
                     FDIC Insured
                   </span>
@@ -530,7 +574,7 @@ const faqs = [
               <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
                 <div class="stat-box">
                   <div class="stat-label">APY</div>
-                  <div class="stat-value text-[#059669]">{account.apy}</div>
+                  <div class="stat-value text-[#0066B2]">{account.apy}</div>
                 </div>
                 <div class="stat-box">
                   <div class="stat-label">Min for APY</div>
@@ -538,7 +582,7 @@ const faqs = [
                 </div>
                 <div class="stat-box">
                   <div class="stat-label">Monthly Fee</div>
-                  <div class="stat-value text-[#059669]">{account.monthlyFee}</div>
+                  <div class="stat-value text-[#0066B2]">{account.monthlyFee}</div>
                 </div>
                 <div class="stat-box">
                   <div class="stat-label">$10K Earns</div>
@@ -617,7 +661,7 @@ const faqs = [
                       <ul class="space-y-3">
                         {account.accountDetails.map(detail => (
                           <li class="flex items-start gap-3 text-sm text-[#4B5563]">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#059669] mt-2 flex-shrink-0"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#0066B2] mt-2 flex-shrink-0"></span>
                             <span>{detail}</span>
                           </li>
                         ))}
@@ -910,7 +954,7 @@ const faqs = [
       </div>
       
       <div class="space-y-4">
-        {faqs.map((faq, index) => (
+        {finalFaqs.map((faq, index) => (
           <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
             <summary class="faq-question">
               <span class="pr-4" set:html={faq.question}></span>
@@ -956,7 +1000,7 @@ const faqs = [
       <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
         <img src="/team/jessica-martinez.jpg" alt="Jessica Martinez, Banking Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
         <div>
-          <div class="text-xs text-[#059669] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
           <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Jessica Martinez</h3>
           <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
             Jessica is a banking and savings expert at Screened with over 6 years of experience in personal finance. She maintains high-yield savings accounts at 5 different banks and tracks rate changes weekly. Her work has been featured in NerdWallet and Bankrate.
@@ -987,7 +1031,7 @@ const faqs = [
     gap: 0.5rem;
     width: 100%;
     padding: 1rem 1.5rem;
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
     color: white;
     font-weight: 700;
     font-size: 0.875rem;
@@ -995,7 +1039,7 @@ const faqs = [
     letter-spacing: 0.05em;
     border-radius: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
     position: relative;
     overflow: hidden;
   }
@@ -1013,7 +1057,7 @@ const faqs = [
   
   .apply-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(5, 150, 105, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
   }
   
   .apply-btn:hover::before {
@@ -1068,9 +1112,18 @@ const faqs = [
     padding: 1rem 0.75rem;
     font-weight: 600;
     font-size: 0.8125rem;
-    color: #162433;
-    border-bottom: 2px solid #E5E7EB;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-bottom: none;
     white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+  
+  .premium-comparison-table thead th:last-child {
+    border-radius: 0 8px 0 0;
   }
   
   .comparison-row {
@@ -1079,7 +1132,7 @@ const faqs = [
   }
   
   .comparison-row:hover {
-    background: #F0FDF4;
+    background: #F0F9FF;
   }
   
   .comparison-row td {
@@ -1104,7 +1157,7 @@ const faqs = [
   }
   
   .card-badge-new {
-    background: #059669;
+    background: #0066B2;
     color: white;
   }
   
@@ -1135,7 +1188,7 @@ const faqs = [
   .card-name-link {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #059669;
+    color: #0066B2;
     margin: 0 0 0.375rem 0;
     line-height: 1.3;
   }
@@ -1162,14 +1215,14 @@ const faqs = [
     height: 14px;
   }
   
-  .star-filled { fill: #059669; }
+  .star-filled { fill: #0066B2; }
   .star-half { fill: #6EE7B7; }
   .star-empty { fill: #D1D5DB; }
 
   .apy-text {
     font-size: 1rem;
     font-weight: 700;
-    color: #059669;
+    color: #0066B2;
   }
   
   .apy-note {
@@ -1184,7 +1237,7 @@ const faqs = [
     justify-content: center;
     gap: 0.5rem;
     padding: 0.625rem 1.25rem;
-    background: #059669;
+    background: #0066B2;
     color: white;
     font-weight: 600;
     font-size: 0.875rem;
@@ -1194,9 +1247,9 @@ const faqs = [
   }
   
   .apply-now-btn:hover {
-    background: #047857;
+    background: #004C8C;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
   }
 
   .lock-icon {
@@ -1221,7 +1274,7 @@ const faqs = [
     font-family: 'Lexend', sans-serif;
     font-weight: 600;
     font-size: 1.25rem;
-    color: #047857;
+    color: #004C8C;
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
@@ -1256,7 +1309,7 @@ const faqs = [
   }
   
   .seo-content th {
-    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
     color: white;
     padding: 1rem;
     text-align: left;
@@ -1269,16 +1322,16 @@ const faqs = [
     color: #374151;
   }
   
-  .seo-content tr:hover td { background: #F0FDF4; }
+  .seo-content tr:hover td { background: #F0F9FF; }
 
   .info-box {
-    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-    border: 1px solid #A7F3D0;
+    background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
+    border: 1px solid #7DD3FC;
     border-radius: 16px;
     padding: 1.5rem;
     margin: 2rem 0;
   }
-  .info-box h4 { color: #047857; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
   .info-box p { margin: 0; color: #065F46; }
 
   .warning-box {
@@ -1334,8 +1387,8 @@ const faqs = [
   }
   
   .category-card:hover {
-    border-color: #059669;
-    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
+    border-color: #0066B2;
+    box-shadow: 0 8px 24px rgba(0, 102, 178, 0.15);
     transform: translateY(-2px);
   }
   
@@ -1346,14 +1399,14 @@ const faqs = [
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
     margin-bottom: 1rem;
   }
   
   .category-icon svg {
     width: 24px;
     height: 24px;
-    stroke: #059669;
+    stroke: #0066B2;
   }
   
   .category-card h3 {
@@ -1364,7 +1417,7 @@ const faqs = [
   }
   
   .category-card .card-name {
-    color: #059669;
+    color: #0066B2;
     font-weight: 600;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
@@ -1388,13 +1441,13 @@ const faqs = [
   }
   
   .faq-item:hover {
-    border-color: #A7F3D0;
+    border-color: #7DD3FC;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   }
   
   .faq-item[open] {
-    border-color: #059669;
-    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.1);
+    border-color: #0066B2;
+    box-shadow: 0 8px 24px rgba(0, 102, 178, 0.1);
   }
   
   .faq-question {
@@ -1409,7 +1462,7 @@ const faqs = [
     transition: background 0.2s ease;
   }
   
-  .faq-question:hover { background: #F0FDF4; }
+  .faq-question:hover { background: #F0F9FF; }
   .faq-question::-webkit-details-marker { display: none; }
   
   .faq-icon {
@@ -1441,8 +1494,8 @@ const faqs = [
   }
   
   .related-card:hover {
-    border-color: #059669;
-    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
+    border-color: #0066B2;
+    box-shadow: 0 8px 24px rgba(0, 102, 178, 0.15);
     transform: translateY(-4px);
   }
   
@@ -1450,7 +1503,7 @@ const faqs = [
     width: 48px;
     height: 48px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1460,7 +1513,7 @@ const faqs = [
   .related-icon svg {
     width: 24px;
     height: 24px;
-    stroke: #059669;
+    stroke: #0066B2;
   }
   
   .related-card h3 {
@@ -1476,7 +1529,7 @@ const faqs = [
   }
   
   .related-link {
-    color: #059669;
+    color: #0066B2;
     font-weight: 600;
     font-size: 0.875rem;
   }
@@ -1515,7 +1568,7 @@ const faqs = [
   }
   
   .accordion-header:hover {
-    color: #059669;
+    color: #0066B2;
   }
   
   .accordion-icon {
@@ -1531,7 +1584,7 @@ const faqs = [
   }
   
   .accordion-item[open] .accordion-header {
-    color: #059669;
+    color: #0066B2;
   }
   
   .accordion-content {
