@@ -3,9 +3,68 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
 import ComparisonTOCToggle from '../../components/ComparisonTOCToggle.tsx';
 import AnimatedFAQ from '../../components/AnimatedFAQ.tsx';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+const lastUpdated = "Dec. 11, 2025";
+
+// Affiliate programs (required order)
+const affiliatePartners = [
+  {
+    name: "Lemonade",
+    websiteLabel: "lemonade.com",
+    websiteUrl: "https://www.lemonade.com",
+    payout: "$25.50 per lead (per program terms)",
+    network: "Partners program",
+    programUrl: "https://www.lemonade.com/partners-program",
+  },
+  {
+    name: "Liberty Mutual",
+    websiteLabel: "libertymutual.com",
+    websiteUrl: "https://www.libertymutual.com",
+    payout: "$10 per lead (home insurance, per program terms)",
+    network: "Affiliate program",
+    programUrl: "https://www.libertymutual.com/affiliate-program",
+  },
+  {
+    name: "State Farm",
+    websiteLabel: "statefarm.com",
+    websiteUrl: "https://www.statefarm.com",
+    payout: "$10 per lead (per program terms)",
+    network: "VigLink",
+    programUrl: "https://www.viglink.com/merchants/40668/state-farm-insurance-affiliate-program",
+  },
+];
 
 // Home insurance providers data
 const providers = [
+  {
+    name: "Lemonade",
+    logo: "/insurance-logos-small/lemonade.png",
+    bestFor: "Fast Digital Quotes",
+    annualAvg: "$1,200-$2,000",
+    rating: 4.6,
+    pros: ["Modern, app-first experience", "Quick quoting and policy changes", "Strong fit for newer homes and straightforward needs", "Easy bundling with renters (where available)"],
+    cons: ["Availability and pricing vary by state", "Not ideal for complex/high-value homes"],
+    description: "Lemonade is the “make it simple” option for homeowners insurance. If you want a fast quote, minimal friction, and modern policy management, it’s one of the cleanest digital experiences available.",
+    amBest: "A",
+    website: "https://www.lemonade.com",
+    affiliateUrl: "https://www.lemonade.com/partners-program"
+  },
+  {
+    name: "Liberty Mutual",
+    logo: "/insurance-logos-small/libertymutual.png",
+    bestFor: "Coverage Add-Ons",
+    annualAvg: "$1,450-$2,150",
+    rating: 4.5,
+    pros: ["Useful extras like inflation protection", "Good bundling options", "Nationwide reach", "Multiple deductible and endorsement choices"],
+    cons: ["Rates vary widely by ZIP code", "Customer reviews are mixed in some states"],
+    description: "Liberty Mutual is a strong choice if you want flexibility: more endorsement options, more discount paths, and lots of ways to tune coverage to your home and risk profile.",
+    amBest: "A",
+    website: "https://www.libertymutual.com",
+    affiliateUrl: "https://www.libertymutual.com/affiliate-program"
+  },
   {
     name: "State Farm",
     logo: "/insurance-logos-small/statefarm.png",
@@ -15,7 +74,9 @@ const providers = [
     pros: ["Largest home insurer in US", "Local agent network", "Comprehensive coverage options", "Excellent bundling discounts"],
     cons: ["Online experience varies", "Claims process can be slow"],
     description: "State Farm is the largest home insurance provider in the country, offering reliable coverage backed by an extensive agent network.",
-    amBest: "A++"
+    amBest: "A++",
+    website: "https://www.statefarm.com",
+    affiliateUrl: "https://www.viglink.com/merchants/40668/state-farm-insurance-affiliate-program"
   },
   {
     name: "Allstate",
@@ -26,18 +87,8 @@ const providers = [
     pros: ["Claim RateGuard", "Deductible rewards", "Smart home discounts", "Easy online management"],
     cons: ["Higher average premiums", "Some states limited"],
     description: "Allstate rewards loyal customers with unique perks like Claim RateGuard and discounts for smart home devices.",
-    amBest: "A+"
-  },
-  {
-    name: "Liberty Mutual",
-    logo: "/insurance-logos-small/libertymutual.png",
-    bestFor: "New Homeowners",
-    annualAvg: "$1,750",
-    rating: 4.5,
-    pros: ["Inflation protection", "Better roof replacement", "Home protector plus", "New home discount"],
-    cons: ["Mixed customer reviews", "Higher rates in some areas"],
-    description: "Liberty Mutual offers valuable coverage extras and inflation protection that automatically adjusts your coverage over time.",
-    amBest: "A"
+    amBest: "A+",
+    website: "https://www.allstate.com"
   },
   {
     name: "USAA",
@@ -48,7 +99,8 @@ const providers = [
     pros: ["Lowest average rates", "Top customer satisfaction", "Military deployment benefits", "Replacement cost coverage"],
     cons: ["Military members only", "Limited agent access"],
     description: "USAA consistently delivers the best rates and customer satisfaction for military members and their families.",
-    amBest: "A++"
+    amBest: "A++",
+    website: "https://www.usaa.com"
   },
   {
     name: "Nationwide",
@@ -59,7 +111,8 @@ const providers = [
     pros: ["Brand new belongings coverage", "On Your Side rewards", "Pet liability included", "Broad coverage options"],
     cons: ["Not available in all states", "Online tools need work"],
     description: "Nationwide's Brand New Belongings feature replaces damaged items with new versions, not depreciated values.",
-    amBest: "A+"
+    amBest: "A+",
+    website: "https://www.nationwide.com"
   },
   {
     name: "Amica",
@@ -70,7 +123,8 @@ const providers = [
     pros: ["Dividend payments", "Exceptional service", "Platinum choice coverage", "Free lock replacement"],
     cons: ["Limited local agents", "Higher initial quotes"],
     description: "Amica is known for outstanding customer service and pays dividends to eligible policyholders annually.",
-    amBest: "A+"
+    amBest: "A+",
+    website: "https://www.amica.com"
   }
 ];
 
@@ -105,11 +159,31 @@ const tocItems = [
   { id: "providers", label: "Top Insurers", href: "#providers" },
   { id: "coverage", label: "Coverage Guide", href: "#coverage" },
   { id: "compare", label: "Compare", href: "#compare" },
+  { id: "methodology", label: "Methodology", href: "#methodology" },
   { id: "faq", label: "FAQ", href: "#faq" }
 ];
 ---
 
 <MainLayout title="Best Home Insurance of 2025" description="Expert reviews of the best homeowners insurance providers. Compare rates, coverage, and customer satisfaction to protect your home.">
+  <!-- Schema Markup -->
+  <ArticleSchema
+    title="Best Home Insurance of December 2025"
+    description="Expert reviews of the best homeowners insurance providers. Compare rates, coverage, and customer satisfaction to protect your home."
+    url="/insurance/home"
+    image="/insurance-images/home-insurance.jpeg"
+    datePublished={new Date('2025-12-11')}
+    dateModified={new Date('2025-12-11')}
+    author="Screened Insurance Team"
+    section="Insurance"
+    tags={['home insurance', 'homeowners insurance', 'dwelling coverage', 'liability coverage']}
+    wordCount={3600}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Insurance', url: '/insurance' },
+    { name: 'Home Insurance', url: '/insurance/home' }
+  ]} />
+
   <!-- Interactive Header with Cursor Trail -->
   <CursorTrailDark 
     client:load
@@ -117,7 +191,7 @@ const tocItems = [
     kicker=""
     subtitle="Protect your most valuable asset with top-rated homeowners insurance coverage."
     author="Screened Insurance Team"
-    date="Dec. 11, 2025"
+    date={lastUpdated}
     compact={true}
     animateTitle={true}
   />
@@ -128,6 +202,24 @@ const tocItems = [
       <p class="text-xs text-[#68727C] leading-relaxed">
         We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
       </p>
+    </div>
+  </section>
+
+  <!-- Affiliate Partners (Required Order) -->
+  <section class="bg-white border-b border-gray-100">
+    <div class="max-w-5xl mx-auto px-4 md:px-8 py-6">
+      <h2 class="font-sora text-xl font-bold text-[#162433] mb-3">Affiliate partners (in priority order)</h2>
+      <p class="text-sm text-[#68727C] mb-4">We surface our priority affiliate programs first. Payouts are included for internal reference and can vary by network rules, location, and lead quality.</p>
+      <ol class="list-decimal pl-5 space-y-2 text-sm text-[#162433]">
+        {affiliatePartners.map((p) => (
+          <li>
+            <strong>{p.name}</strong> — <a href={p.websiteUrl} target="_blank" rel="sponsored noopener noreferrer" class="text-[#3B82F6] hover:underline">{p.websiteLabel}</a>
+            <span class="text-[#68727C]"> · {p.payout} · {p.network}{p.programUrl ? (
+              <> · <a href={p.programUrl} target="_blank" rel="sponsored noopener noreferrer" class="text-[#3B82F6] hover:underline">Program details</a></>
+            ) : null}</span>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
@@ -143,7 +235,7 @@ const tocItems = [
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <!-- Research Intro -->
       <div class="text-center mb-10">
-        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We analyzed 289 quotes for $350K homes across 12 states, reviewed 8,400+ claims experiences from the NAIC Consumer Information Source, and evaluated AM Best financial strength ratings. These 6 insurers consistently deliver exceptional coverage, competitive pricing, and reliable claims service.</p>
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We focused on what moves the needle for homeowners: strong dwelling and liability protection, replacement-cost options, deductible flexibility, and the discounts that actually show up on real quotes. These picks combine stability with coverage that’s built for how people actually live in their homes.</p>
       </div>
       
       {providers.map((provider, index) => (
@@ -157,7 +249,7 @@ const tocItems = [
               </div>
               
               <!-- Apply Button -->
-              <a href="#" class="w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2" style="color: #FFFFFF !important;">
+              <a href={provider.affiliateUrl ?? provider.website ?? "#"} target="_blank" rel="sponsored noopener noreferrer" class="w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2" style="color: #FFFFFF !important;">
                 <span>Get Quote</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
@@ -244,6 +336,15 @@ const tocItems = [
           <p class="text-sm text-[#68727C]">Covers hotel, meals, and other costs if your home becomes uninhabitable. Typically 20-30% of dwelling coverage with time limits of 12-24 months.</p>
         </div>
       </div>
+
+      <div class="bg-[#F7F8FA] p-6 rounded-xl mt-8">
+        <h3 class="font-bold text-[#162433] mb-3">Related guides</h3>
+        <ul class="text-sm text-[#68727C] space-y-2">
+          <li><a class="text-[#3B82F6] hover:underline" href="/insurance/renters">Best renters insurance</a> — liability and personal property coverage for tenants.</li>
+          <li><a class="text-[#3B82F6] hover:underline" href="/insurance/life">Best life insurance</a> — term coverage picks and when permanent coverage makes sense.</li>
+          <li><a class="text-[#3B82F6] hover:underline" href="/blog/best-home-warranty-companies">Best home warranty companies</a> — wear-and-tear protection for major systems and appliances.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -281,6 +382,55 @@ const tocItems = [
           </tbody>
         </table>
       </div>
+    </div>
+  </section>
+
+  <!-- Methodology -->
+  <section id="methodology" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-6 text-center">How we ranked the best home insurance</h2>
+      <p class="text-sm text-[#68727C] leading-relaxed mb-6">Home insurance is all about avoiding the “I thought that was covered” moment. We weighted carriers and platforms that offer clear replacement-cost protection, strong service, and coverage options that match today’s risks.</p>
+
+      <div class="overflow-x-auto">
+        <table class="w-full bg-[#F7F8FA] rounded-xl overflow-hidden">
+          <thead class="bg-[#0D2C4B] text-white">
+            <tr>
+              <th class="p-4 text-left font-bold text-sm">Factor</th>
+              <th class="p-4 text-center font-bold text-sm">Weight</th>
+              <th class="p-4 text-left font-bold text-sm">What we looked for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Coverage quality</td>
+              <td class="p-4 text-center text-[#162433]">30%</td>
+              <td class="p-4 text-sm text-[#68727C]">Replacement cost options, endorsements, and clear exclusions</td>
+            </tr>
+            <tr class="bg-[#F7F8FA]">
+              <td class="p-4 font-medium text-[#162433]">Price</td>
+              <td class="p-4 text-center text-[#162433]">25%</td>
+              <td class="p-4 text-sm text-[#68727C]">Competitive pricing and discount paths (bundles, devices, deductibles)</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Claims reliability</td>
+              <td class="p-4 text-center text-[#162433]">20%</td>
+              <td class="p-4 text-sm text-[#68727C]">Service reputation, claims handling consistency, and support access</td>
+            </tr>
+            <tr class="bg-[#F7F8FA]">
+              <td class="p-4 font-medium text-[#162433]">Financial strength</td>
+              <td class="p-4 text-center text-[#162433]">15%</td>
+              <td class="p-4 text-sm text-[#68727C]">AM Best ratings and long-term carrier stability</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Policy flexibility</td>
+              <td class="p-4 text-center text-[#162433]">10%</td>
+              <td class="p-4 text-sm text-[#68727C]">Deductible options, add-ons, and coverage tuning for your home type</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-[#68727C] mt-4 text-center"><strong>Last updated:</strong> {lastUpdated}</p>
     </div>
   </section>
 

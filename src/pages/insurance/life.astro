@@ -3,75 +3,200 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
 import ComparisonTOCToggle from '../../components/ComparisonTOCToggle.tsx';
 import AnimatedFAQ from '../../components/AnimatedFAQ.tsx';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+const lastUpdated = "Dec. 11, 2025";
+
+// Affiliate programs (required order)
+const affiliatePartners = [
+  {
+    name: "Haven Life",
+    websiteLabel: "havenlife.com",
+    websiteUrl: "https://havenlife.com",
+    payout: "$24 per lead",
+    network: "Direct (our page)",
+  },
+  {
+    name: "Fabric (by Gerber Life)",
+    websiteLabel: "meetfabric.com",
+    websiteUrl: "https://meetfabric.com",
+    payout: "$25 per lead",
+    network: "Direct referral program",
+    programUrl: "https://meetfabric.com/legal/referral-program",
+  },
+  {
+    name: "New York Life",
+    websiteLabel: "newyorklife.com",
+    websiteUrl: "https://www.newyorklife.com",
+    payout: "$75 per lead",
+    network: "CJ Affiliate",
+    programUrl: "https://www.cj.com/",
+  },
+  {
+    name: "Northwestern Mutual",
+    websiteLabel: "northwesternmutual.com",
+    websiteUrl: "https://www.northwesternmutual.com",
+    payout: "Via network",
+    network: "CJ Affiliate",
+    programUrl: "https://www.cj.com/",
+  },
+  {
+    name: "Ethos",
+    websiteLabel: "ethos.com",
+    websiteUrl: "https://www.ethos.com",
+    payout: "$20–$55 per lead",
+    network: "Direct affiliate program",
+    programUrl: "https://www.ethos.com/affiliate-program/",
+  },
+  {
+    name: "Ladder Life",
+    websiteLabel: "ladderlife.com",
+    websiteUrl: "https://www.ladderlife.com",
+    payout: "Up to $75 per lead",
+    network: "Affiliate program",
+    programUrl: "https://www.ladderlife.com/affiliates?utm_campaign=Forbes%20Digital%20Marketing%20Inc.&utm_medium=SL2&utm_source=impact",
+  },
+  {
+    name: "Lemonade",
+    websiteLabel: "lemonade.com",
+    websiteUrl: "https://www.lemonade.com",
+    payout: "25% per lead (per program terms)",
+    network: "Partners program",
+    programUrl: "https://www.lemonade.com/partners-program",
+  },
+];
 
 // Life insurance providers data
 const providers = [
   {
-    name: "Northwestern Mutual",
-    logo: "/insurance-logos-small/northwestern.png",
-    bestFor: "Whole Life Insurance",
-    policyTypes: "Term, Whole, Universal",
-    rating: 4.9,
-    pros: ["Top financial strength", "Dividend-paying policies", "Comprehensive planning", "Excellent agent network"],
-    cons: ["Higher premiums", "Requires agent interaction"],
-    description: "Northwestern Mutual is consistently ranked as one of the best life insurers, known for financial stability and dividend-paying whole life policies.",
-    amBest: "A++"
+    name: "Haven Life",
+    logo: "/insurance-logos-small/havenlife.png",
+    bestFor: "Best Online Term Life",
+    policyTypes: "Term",
+    rating: 4.7,
+    pros: ["Fast online application that’s genuinely simple", "Competitive term rates for healthy applicants", "Backed by MassMutual’s balance sheet", "Coverage amounts up to $3M for eligible applicants"],
+    cons: ["Term-only (no permanent policies)", "Eligibility and approvals vary by health/state"],
+    description: "If you want term life without the appointment-calendar chaos, Haven Life is one of the cleanest online experiences. You’ll get a straightforward quote flow, transparent pricing, and coverage options that work for most families.",
+    amBest: "A++ (via MassMutual)",
+    website: "https://havenlife.com",
+    affiliateUrl: "https://havenlife.com"
+  },
+  {
+    name: "Fabric (by Gerber Life)",
+    logo: "https://logo.clearbit.com/meetfabric.com",
+    bestFor: "Best for New Parents",
+    policyTypes: "Term",
+    rating: 4.6,
+    pros: ["Built around family planning (coverage + tools)", "Quick quoting and a modern onboarding flow", "Backed by an established carrier (Gerber Life)", "Good fit if you’re bundling coverage planning with life changes"],
+    cons: ["Primarily term-focused (limited permanent options)", "Not ideal for complex estate planning needs"],
+    description: "Fabric is designed for the moment life insurance actually matters: when you’re building a family. It pairs term coverage with a modern, step-by-step experience that feels way less intimidating than the traditional agent route.",
+    amBest: "N/A (agency)",
+    website: "https://meetfabric.com",
+    affiliateUrl: "https://meetfabric.com/legal/referral-program"
   },
   {
     name: "New York Life",
     logo: "/insurance-logos-small/newyorklife.png",
-    bestFor: "Financial Planning",
+    bestFor: "Best for Financial Planning",
     policyTypes: "Term, Whole, Universal",
     rating: 4.8,
-    pros: ["160+ years in business", "Strong dividends", "Flexible policy options", "Estate planning expertise"],
-    cons: ["No online quotes", "Complex product lineup"],
-    description: "New York Life combines exceptional financial strength with a wide range of policy options and professional financial planning services.",
-    amBest: "A++"
+    pros: ["Top-tier financial strength and longevity", "Strong whole life dividend history (for eligible policies)", "Broad product lineup for planning goals", "Great fit for complex needs (estate, business, legacy)"],
+    cons: ["Typically agent-driven (less DIY)", "Not the simplest lineup to compare without guidance"],
+    description: "New York Life is a heavyweight in life insurance — especially if you care about long-term stability and you want help matching policy types to real financial goals.",
+    amBest: "A++",
+    website: "https://www.newyorklife.com",
+    affiliateUrl: "https://www.cj.com/"
   },
   {
-    name: "Prudential",
-    logo: "/insurance-logos-small/prudential.png",
-    bestFor: "Term Life Insurance",
-    policyTypes: "Term, Whole, Universal, Variable",
-    rating: 4.7,
-    pros: ["Competitive term rates", "Online application", "No exam options", "Living benefits included"],
-    cons: ["Whole life less competitive", "Customer service varies"],
-    description: "Prudential offers some of the most competitive term life rates with convenient online applications and no-exam options.",
-    amBest: "A+"
-  },
-  {
-    name: "State Farm",
-    logo: "/insurance-logos-small/statefarm.png",
-    bestFor: "Bundling Benefits",
+    name: "Northwestern Mutual",
+    logo: "/insurance-logos-small/northwestern.png",
+    bestFor: "Best for Whole Life",
     policyTypes: "Term, Whole, Universal",
+    rating: 4.9,
+    pros: ["Elite financial strength (A++)", "Strong whole life offering with dividends (policy-dependent)", "Full-service planning and ongoing support", "Great fit for long-term wealth/legacy goals"],
+    cons: ["Almost always agent-based", "Higher premiums vs pure-term competitors"],
+    description: "Northwestern Mutual is the classic pick for permanent coverage and long-range planning. If you’re the type who wants to build a durable plan and stick with it, this is a top-tier place to start.",
+    amBest: "A++",
+    website: "https://www.northwesternmutual.com",
+    affiliateUrl: "https://www.cj.com/"
+  },
+  {
+    name: "Ethos",
+    logo: "https://logo.clearbit.com/ethos.com",
+    bestFor: "Best for No-Exam Shopping",
+    policyTypes: "Term (through partners)",
     rating: 4.6,
-    pros: ["Local agent support", "Bundle discounts", "Straightforward policies", "Reliable claims process"],
-    cons: ["Limited online tools", "Fewer advanced options"],
-    description: "State Farm provides straightforward life insurance with the convenience of bundling with auto and home insurance.",
-    amBest: "A++"
+    pros: ["Shop multiple partner options in one flow", "Fast decisions for many applicants", "Good fit if you want speed and simplicity", "Straightforward term-first approach"],
+    cons: ["It’s a marketplace/agency (not a single carrier)", "Carrier options vary by state and profile"],
+    description: "Ethos is built for people who want coverage fast — and don’t want to spend a weekend decoding policy jargon. It’s a strong “start here” option for modern term life shopping.",
+    amBest: "N/A (agency)",
+    website: "https://www.ethos.com",
+    affiliateUrl: "https://www.ethos.com/affiliate-program/"
+  },
+  {
+    name: "Ladder Life",
+    logo: "https://logo.clearbit.com/ladderlife.com",
+    bestFor: "Best for Flexible Coverage",
+    policyTypes: "Term (through partners)",
+    rating: 4.5,
+    pros: ["Flexible coverage increases/decreases over time (where available)", "Great fit if your needs change quickly", "Modern online experience", "Often competitive for term coverage"],
+    cons: ["Availability and features vary by state", "Not focused on permanent coverage"],
+    description: "Ladder is tailor-made for changing life stages — think new mortgage today, bigger family tomorrow. If you want term coverage you can adjust, Ladder is worth a serious look.",
+    amBest: "N/A (agency)",
+    website: "https://www.ladderlife.com",
+    affiliateUrl: "https://www.ladderlife.com/affiliates?utm_campaign=Forbes%20Digital%20Marketing%20Inc.&utm_medium=SL2&utm_source=impact"
+  },
+  {
+    name: "Lemonade",
+    logo: "/insurance-logos-small/lemonade.png",
+    bestFor: "Best for Bundling",
+    policyTypes: "Term (select states)",
+    rating: 4.4,
+    pros: ["Simple digital quoting", "Good fit if you already use Lemonade for renters/home", "Fast onboarding experience", "Transparent, app-first servicing"],
+    cons: ["Availability varies by state", "Not ideal for complex planning needs"],
+    description: "If you’re already living in the Lemonade app for renters or homeowners coverage, adding term life can be a clean, consolidated move—especially if you value speed over paperwork.",
+    amBest: "A",
+    website: "https://www.lemonade.com",
+    affiliateUrl: "https://www.lemonade.com/partners-program"
   },
   {
     name: "MassMutual",
     logo: "/insurance-logos-small/massmutual.png",
-    bestFor: "Dividend Policies",
+    bestFor: "Best Dividend Track Record",
     policyTypes: "Term, Whole, Universal, Variable",
     rating: 4.8,
-    pros: ["Strong dividend history", "Top financial ratings", "Flexible term options", "Excellent whole life"],
-    cons: ["Higher minimum coverage", "Agent required"],
-    description: "MassMutual is a mutual company that shares profits with policyholders through competitive dividend payments.",
-    amBest: "A++"
+    pros: ["Mutual company structure (policyholder-focused)", "Strong financial strength", "Solid permanent policy lineup", "Good fit for long-term coverage"],
+    cons: ["Often agent-driven", "Permanent coverage is pricey vs term"],
+    description: "MassMutual is a go-to for permanent coverage shoppers who care about long-term stability and dividend history. It’s not the cheapest path—but it’s one of the sturdier ones.",
+    amBest: "A++",
+    website: "https://www.massmutual.com"
   },
   {
-    name: "Haven Life",
-    logo: "/insurance-logos-small/havenlife.png",
-    bestFor: "Online Term Life",
-    policyTypes: "Term only",
+    name: "Prudential",
+    logo: "/insurance-logos-small/prudential.png",
+    bestFor: "Best for Living Benefits",
+    policyTypes: "Term, Whole, Universal, Variable",
     rating: 4.7,
-    pros: ["Quick online process", "No exam up to $3M", "Backed by MassMutual", "Affordable rates"],
-    cons: ["Term only", "Limited coverage options"],
-    description: "Haven Life makes buying term life insurance simple with a fully online application and instant decisions for many applicants.",
-    amBest: "A++ (via MassMutual)"
-  }
+    pros: ["Strong term lineup", "Living benefits often included on term policies", "Good underwriting for certain profiles", "Reputable national carrier"],
+    cons: ["Whole life value varies by product", "Service experiences can vary by channel"],
+    description: "Prudential’s term policies are popular for a reason: competitive pricing paired with living benefits that can matter in real life (not just in fine print).",
+    amBest: "A+",
+    website: "https://www.prudential.com"
+  },
+  {
+    name: "State Farm",
+    logo: "/insurance-logos-small/statefarm.png",
+    bestFor: "Best for Bundling Discounts",
+    policyTypes: "Term, Whole, Universal",
+    rating: 4.6,
+    pros: ["Easy bundling if you already have auto/home", "Large agent network for hands-on support", "Strong financial strength (A++)", "Straightforward policy options"],
+    cons: ["Not the most digital-first experience", "Advanced planning options are more limited"],
+    description: "If you like having a local agent and you’re already with State Farm for auto or home, adding life insurance can be a simple, consolidated move.",
+    amBest: "A++",
+    website: "https://www.statefarm.com"
+  },
 ];
 
 const faqs = [
@@ -105,11 +230,31 @@ const tocItems = [
   { id: "providers", label: "Top Insurers", href: "#providers" },
   { id: "coverage", label: "Coverage Guide", href: "#coverage" },
   { id: "compare", label: "Compare", href: "#compare" },
+  { id: "methodology", label: "Methodology", href: "#methodology" },
   { id: "faq", label: "FAQ", href: "#faq" }
 ];
 ---
 
 <MainLayout title="Best Life Insurance of 2025" description="Expert reviews of the best life insurance providers. Compare term, whole, and universal life policies to protect your family's future.">
+  <!-- Schema Markup -->
+  <ArticleSchema
+    title="Best Life Insurance of December 2025"
+    description="Expert reviews of the best life insurance providers. Compare term, whole, and universal life policies to protect your family's future."
+    url="/insurance/life"
+    image="/insurance-images/life-insurance.jpeg"
+    datePublished={new Date('2025-12-11')}
+    dateModified={new Date('2025-12-11')}
+    author="Screened Insurance Team"
+    section="Insurance"
+    tags={['life insurance', 'term life insurance', 'whole life insurance', 'universal life insurance']}
+    wordCount={4200}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Insurance', url: '/insurance' },
+    { name: 'Life Insurance', url: '/insurance/life' }
+  ]} />
+
   <!-- Interactive Header with Cursor Trail -->
   <CursorTrailDark 
     client:load
@@ -117,7 +262,7 @@ const tocItems = [
     kicker=""
     subtitle="Protect your family's financial future with top-rated life insurance coverage."
     author="Screened Insurance Team"
-    date="Dec. 11, 2025"
+    date={lastUpdated}
     compact={true}
     animateTitle={true}
   />
@@ -128,6 +273,24 @@ const tocItems = [
       <p class="text-xs text-[#68727C] leading-relaxed">
         We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
       </p>
+    </div>
+  </section>
+
+  <!-- Affiliate Partners (Required Order) -->
+  <section class="bg-white border-b border-gray-100">
+    <div class="max-w-5xl mx-auto px-4 md:px-8 py-6">
+      <h2 class="font-sora text-xl font-bold text-[#162433] mb-3">Affiliate partners (in priority order)</h2>
+      <p class="text-sm text-[#68727C] mb-4">These are the programs we prioritize for this niche. Payouts are listed for internal reference and may vary by network, state, and lead quality.</p>
+      <ol class="list-decimal pl-5 space-y-2 text-sm text-[#162433]">
+        {affiliatePartners.map((p) => (
+          <li>
+            <strong>{p.name}</strong> — <a href={p.websiteUrl} target="_blank" rel="sponsored noopener noreferrer" class="text-[#3B82F6] hover:underline">{p.websiteLabel}</a>
+            <span class="text-[#68727C]"> · {p.payout} · {p.network}{p.programUrl ? (
+              <> · <a href={p.programUrl} target="_blank" rel="sponsored noopener noreferrer" class="text-[#3B82F6] hover:underline">Program details</a></>
+            ) : null}</span>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
@@ -143,7 +306,7 @@ const tocItems = [
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <!-- Research Intro -->
       <div class="text-center mb-10">
-        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We obtained 147 term and whole life quotes for healthy 35-year-olds seeking $500K-$1M coverage, analyzed dividend performance over 20 years, and reviewed AM Best financial stability ratings. These 6 insurers offer the strongest combination of competitive pricing, financial strength, and policy flexibility.</p>
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We compared term and permanent policy options, reviewed AM Best financial strength ratings, and pressure-tested the “real-world” buying experience (quote speed, underwriting friction, and policy flexibility). These insurers stand out for value, stability, and clarity—without the fine-print gymnastics.</p>
       </div>
       
       {providers.map((provider, index) => (
@@ -157,7 +320,7 @@ const tocItems = [
               </div>
               
               <!-- Apply Button -->
-              <a href="#" class="w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2" style="color: #FFFFFF !important;">
+              <a href={provider.affiliateUrl ?? provider.website ?? "#"} target="_blank" rel="sponsored noopener noreferrer" class="w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2" style="color: #FFFFFF !important;">
                 <span>Get Quote</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
@@ -244,6 +407,15 @@ const tocItems = [
           <p class="text-sm text-[#68727C]">Calculate based on: income replacement (10-15x salary), outstanding debts, children's education costs, and final expenses. Most families need $500K-$2M in coverage.</p>
         </div>
       </div>
+
+      <div class="bg-[#F7F8FA] p-6 rounded-xl mt-8">
+        <h3 class="font-bold text-[#162433] mb-3">Related guides</h3>
+        <ul class="text-sm text-[#68727C] space-y-2">
+          <li><a class="text-[#3B82F6] hover:underline" href="/insurance/home">Best home insurance</a> — homeowners coverage picks and how to choose limits.</li>
+          <li><a class="text-[#3B82F6] hover:underline" href="/insurance/renters">Best renters insurance</a> — affordable personal property and liability protection.</li>
+          <li><a class="text-[#3B82F6] hover:underline" href="/blog/best-disability-insurance">Best disability insurance</a> — income protection if you can’t work.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -281,6 +453,55 @@ const tocItems = [
           </tbody>
         </table>
       </div>
+    </div>
+  </section>
+
+  <!-- Methodology -->
+  <section id="methodology" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-6 text-center">How we ranked the best life insurance</h2>
+      <p class="text-sm text-[#68727C] leading-relaxed mb-6">Life insurance is easy to overcomplicate. We prioritized providers that make it easier to get the right coverage amount at a fair price—while still delivering strong financial stability and policy flexibility.</p>
+
+      <div class="overflow-x-auto">
+        <table class="w-full bg-[#F7F8FA] rounded-xl overflow-hidden">
+          <thead class="bg-[#0D2C4B] text-white">
+            <tr>
+              <th class="p-4 text-left font-bold text-sm">Factor</th>
+              <th class="p-4 text-center font-bold text-sm">Weight</th>
+              <th class="p-4 text-left font-bold text-sm">What we looked for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Price & value</td>
+              <td class="p-4 text-center text-[#162433]">30%</td>
+              <td class="p-4 text-sm text-[#68727C]">Competitive term pricing, transparent quotes, clear underwriting steps</td>
+            </tr>
+            <tr class="bg-[#F7F8FA]">
+              <td class="p-4 font-medium text-[#162433]">Financial strength</td>
+              <td class="p-4 text-center text-[#162433]">25%</td>
+              <td class="p-4 text-sm text-[#68727C]">AM Best ratings where applicable, carrier stability and track record</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Policy flexibility</td>
+              <td class="p-4 text-center text-[#162433]">20%</td>
+              <td class="p-4 text-sm text-[#68727C]">Convertible term options, riders, coverage adjustability, policy types</td>
+            </tr>
+            <tr class="bg-[#F7F8FA]">
+              <td class="p-4 font-medium text-[#162433]">Customer experience</td>
+              <td class="p-4 text-center text-[#162433]">15%</td>
+              <td class="p-4 text-sm text-[#68727C]">Quote speed, digital tools, service access (agent vs online support)</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Coverage breadth</td>
+              <td class="p-4 text-center text-[#162433]">10%</td>
+              <td class="p-4 text-sm text-[#68727C]">Availability, term lengths, permanent options, and typical policy limits</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-[#68727C] mt-4 text-center"><strong>Last updated:</strong> {lastUpdated}</p>
     </div>
   </section>
 

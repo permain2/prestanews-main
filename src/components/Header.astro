@@ -38,12 +38,73 @@ import { SITE_TITLE } from '../consts';
         />
       </a>
 
-      <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center gap-8" role="navigation" aria-label="Main navigation">
-        <a href="/credit-cards" class="nav-link font-roboto font-bold text-sm uppercase tracking-wide transition-colors">Credit Cards</a>
-        <a href="/insurance" class="nav-link font-roboto font-bold text-sm uppercase tracking-wide transition-colors">Insurance</a>
+      <!-- Desktop Navigation with Mega Menu -->
+      <nav class="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
+        <!-- Credit Cards Dropdown -->
+        <div class="nav-dropdown">
+          <a href="/credit-cards" class="nav-link font-roboto font-bold text-sm uppercase tracking-wide transition-colors flex items-center gap-1">
+            Credit Cards
+            <svg class="w-3 h-3 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="/credit-cards/best-travel-cards" class="dropdown-item">Best Travel Cards</a>
+            <a href="/credit-cards/best-cashback" class="dropdown-item">Best Cash Back</a>
+            <a href="/credit-cards/business" class="dropdown-item">Business Cards</a>
+            <a href="/credit-cards/no-annual-fee" class="dropdown-item">No Annual Fee</a>
+            <a href="/credit-cards/balance-transfer" class="dropdown-item">Balance Transfer</a>
+          </div>
+        </div>
+
+        <!-- Insurance Dropdown -->
+        <div class="nav-dropdown">
+          <a href="/insurance" class="nav-link font-roboto font-bold text-sm uppercase tracking-wide transition-colors flex items-center gap-1">
+            Insurance
+            <svg class="w-3 h-3 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="/insurance/car" class="dropdown-item">Car Insurance</a>
+            <a href="/insurance/home" class="dropdown-item">Home Insurance</a>
+            <a href="/insurance/life" class="dropdown-item">Life Insurance</a>
+            <a href="/insurance/pet" class="dropdown-item">Pet Insurance</a>
+            <a href="/insurance/renters" class="dropdown-item">Renters Insurance</a>
+            <div class="dropdown-divider"></div>
+            <a href="/blog/best-rv-insurance" class="dropdown-item">RV Insurance</a>
+            <a href="/blog/best-disability-insurance" class="dropdown-item">Disability Insurance</a>
+            <a href="/blog/best-small-business-insurance" class="dropdown-item">Business Insurance</a>
+          </div>
+        </div>
+
+        <!-- Finance Dropdown -->
+        <div class="nav-dropdown">
+          <a href="/finance" class="nav-link font-roboto font-bold text-sm uppercase tracking-wide transition-colors flex items-center gap-1">
+            Finance
+            <svg class="w-3 h-3 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="/finance/best-online-savings-accounts" class="dropdown-item">Savings Accounts</a>
+            <a href="/blog/best-student-loans" class="dropdown-item">Student Loans</a>
+            <a href="/blog/best-auto-refinance-lenders" class="dropdown-item">Auto Refinance</a>
+            <a href="/blog/best-mortgage-refinance-companies" class="dropdown-item">Mortgage Refinance</a>
+            <a href="/blog/best-gold-ira-companies" class="dropdown-item">Gold IRA</a>
+          </div>
+        </div>
+
+        <!-- Home Dropdown -->
+        <div class="nav-dropdown">
+          <a href="/home" class="nav-link font-roboto font-bold text-sm uppercase tracking-wide transition-colors flex items-center gap-1">
+            Home
+            <svg class="w-3 h-3 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="/home/best-home-warranties" class="dropdown-item">Home Warranties</a>
+            <a href="/blog/best-extended-car-warranty" class="dropdown-item">Extended Car Warranty</a>
+            <a href="/blog/best-home-security-cameras" class="dropdown-item">Security Cameras</a>
+            <a href="/blog/best-internet-providers" class="dropdown-item">Internet Providers</a>
+            <a href="/blog/best-car-transport-companies" class="dropdown-item">Car Transport</a>
+          </div>
+        </div>
+
         <a href="/blog" class="nav-link font-roboto font-bold text-sm uppercase tracking-wide transition-colors">Blog</a>
-        <a href="/reviews" class="nav-link font-roboto font-bold text-sm uppercase tracking-wide transition-colors">Reviews</a>
       </nav>
 
       <!-- Right Side Actions -->
@@ -63,13 +124,57 @@ import { SITE_TITLE } from '../consts';
   </div>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200" role="dialog" aria-label="Mobile navigation menu">
-    <nav class="px-4 py-4 space-y-4" role="navigation" aria-label="Mobile navigation">
-      <a href="/credit-cards" class="block font-roboto font-bold text-sm uppercase tracking-wide" style="color: #000000 !important;">Credit Cards</a>
-      <a href="/insurance" class="block font-roboto font-bold text-sm uppercase tracking-wide" style="color: #000000 !important;">Insurance</a>
-      <a href="/blog" class="block font-roboto font-bold text-sm uppercase tracking-wide" style="color: #000000 !important;">Blog</a>
-      <a href="/reviews" class="block font-roboto font-bold text-sm uppercase tracking-wide" style="color: #000000 !important;">Reviews</a>
-      <a href="/newsletter" class="btn-primary">SUBSCRIBE</a>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 max-h-[80vh] overflow-y-auto" role="dialog" aria-label="Mobile navigation menu">
+    <nav class="px-4 py-4 space-y-1" role="navigation" aria-label="Mobile navigation">
+      <!-- Credit Cards -->
+      <details class="mobile-dropdown">
+        <summary class="mobile-nav-link">Credit Cards</summary>
+        <div class="mobile-dropdown-content">
+          <a href="/credit-cards/best-travel-cards">Travel Cards</a>
+          <a href="/credit-cards/best-cashback">Cash Back</a>
+          <a href="/credit-cards/business">Business</a>
+          <a href="/credit-cards/no-annual-fee">No Annual Fee</a>
+          <a href="/credit-cards/balance-transfer">Balance Transfer</a>
+        </div>
+      </details>
+
+      <!-- Insurance -->
+      <details class="mobile-dropdown">
+        <summary class="mobile-nav-link">Insurance</summary>
+        <div class="mobile-dropdown-content">
+          <a href="/insurance/car">Car Insurance</a>
+          <a href="/insurance/home">Home Insurance</a>
+          <a href="/insurance/life">Life Insurance</a>
+          <a href="/insurance/pet">Pet Insurance</a>
+          <a href="/insurance/renters">Renters Insurance</a>
+          <a href="/blog/best-rv-insurance">RV Insurance</a>
+        </div>
+      </details>
+
+      <!-- Finance -->
+      <details class="mobile-dropdown">
+        <summary class="mobile-nav-link">Finance</summary>
+        <div class="mobile-dropdown-content">
+          <a href="/finance/best-online-savings-accounts">Savings Accounts</a>
+          <a href="/blog/best-student-loans">Student Loans</a>
+          <a href="/blog/best-auto-refinance-lenders">Auto Refinance</a>
+          <a href="/blog/best-gold-ira-companies">Gold IRA</a>
+        </div>
+      </details>
+
+      <!-- Home -->
+      <details class="mobile-dropdown">
+        <summary class="mobile-nav-link">Home</summary>
+        <div class="mobile-dropdown-content">
+          <a href="/home/best-home-warranties">Home Warranties</a>
+          <a href="/blog/best-extended-car-warranty">Car Warranty</a>
+          <a href="/blog/best-home-security-cameras">Security Cameras</a>
+          <a href="/blog/best-internet-providers">Internet Providers</a>
+        </div>
+      </details>
+
+      <a href="/blog" class="block font-roboto font-bold text-sm uppercase tracking-wide py-3" style="color: #000000 !important;">Blog</a>
+      <a href="/newsletter" class="btn-primary mt-2">SUBSCRIBE</a>
     </nav>
   </div>
 </header>
@@ -86,6 +191,118 @@ import { SITE_TITLE } from '../consts';
     color: #000000 !important;
   }
   .nav-link:hover {
+    color: #0D2C4B !important;
+  }
+
+  /* Dropdown Menu Styles */
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .dropdown-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .nav-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+    border: 1px solid #E5E7EB;
+  }
+
+  .nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dropdown-item {
+    display: block;
+    padding: 0.625rem 1rem;
+    color: #374151 !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+    text-decoration: none !important;
+  }
+
+  .dropdown-item:hover {
+    background: #F3F4F6;
+    color: #0D2C4B !important;
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background: #E5E7EB;
+    margin: 0.5rem 0;
+  }
+
+  /* Mobile Dropdown Styles */
+  .mobile-dropdown {
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #000000 !important;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobile-nav-link::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-nav-link::after {
+    content: '+';
+    font-size: 1.25rem;
+    font-weight: 400;
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-dropdown[open] .mobile-nav-link::after {
+    content: '−';
+  }
+
+  .mobile-dropdown-content {
+    padding: 0.5rem 0 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mobile-dropdown-content a {
+    color: #4B5563 !important;
+    font-size: 0.9375rem;
+    padding: 0.375rem 0;
+    text-decoration: none !important;
+  }
+
+  .mobile-dropdown-content a:hover {
     color: #0D2C4B !important;
   }
 </style>

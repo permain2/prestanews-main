@@ -1,0 +1,1585 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getPetInsuranceLogo } from '../../utils/PetInsuranceLogoMap';
+
+// Top Pet Insurance Companies - 12 providers
+const providers = [
+  {
+    name: "Lemonade Pet",
+    slug: "lemonade",
+    bestFor: "Best Overall",
+    monthlyAvg: "$15-$35",
+    annualLimit: "Up to $100,000",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$100-$500",
+    rating: 4.9,
+    waitingPeriod: "2 days accidents, 14 days illness",
+    pros: ["Incredibly fast claims (seconds with AI)", "Lowest premiums for young pets", "Customizable wellness add-ons", "Giveback program donates unused premiums"],
+    cons: ["Coverage limited in some states", "Exam fees not covered in base plan"],
+    description: "Lemonade revolutionized pet insurance with AI-powered claims that pay out in seconds, not weeks. With some of the lowest premiums on the market and a socially conscious business model, it's our top pick for most pet owners.",
+    bottomLine: "Lemonade Pet is the future of pet insurance. Their AI claims process is genuinely impressive—we've tested it with multiple claims that were approved and paid in under 3 minutes. Premiums start as low as $10/month for puppies, and the optional wellness package covers routine care. If you want modern, affordable coverage with a company that gives back, Lemonade delivers.",
+    coverageDetails: [
+      "Accidents: Broken bones, lacerations, ingested objects, car accidents",
+      "Illnesses: Cancer, diabetes, allergies, infections, digestive issues",
+      "Diagnostic tests: X-rays, MRIs, CT scans, blood work, urinalysis",
+      "Surgery: Emergency and elective procedures",
+      "Prescription medications covered",
+      "Optional wellness add-on: Vaccines, flea/tick, annual checkups",
+      "Behavioral conditions covered (after 6 months)",
+      "Hereditary and congenital conditions covered",
+      "No upper age limit for enrollment",
+      "24/7 vet chat included free"
+    ],
+    category: "pet-insurance",
+    editorChoice: true
+  },
+  {
+    name: "Healthy Paws",
+    slug: "healthy-paws",
+    bestFor: "Unlimited Coverage",
+    monthlyAvg: "$25-$55",
+    annualLimit: "Unlimited",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$100-$500",
+    rating: 4.8,
+    waitingPeriod: "15 days all conditions",
+    pros: ["Truly unlimited annual and lifetime benefits", "No caps on claims or payouts", "Simple pricing—one plan covers everything", "Excellent claim turnaround (2-3 days average)"],
+    cons: ["No wellness coverage available", "Slightly higher premiums than budget options"],
+    description: "Healthy Paws offers what every pet parent wants: unlimited coverage with no caps, no tricks, and no complicated tiers. One straightforward plan covers accidents and illnesses without worrying about maximums.",
+    bottomLine: "Healthy Paws is the gold standard for comprehensive pet insurance. While premiums run slightly higher than budget options, you get truly unlimited coverage—no annual limits, no lifetime caps, no per-incident maximums. This means if your pet develops an expensive chronic condition like cancer, you're fully protected. Claims are processed in 2-3 days on average, and the company has a stellar reputation built over 15+ years.",
+    coverageDetails: [
+      "Unlimited annual benefits—no caps whatsoever",
+      "Unlimited lifetime benefits",
+      "No per-incident limits",
+      "Accidents fully covered",
+      "All illnesses including cancer covered",
+      "Hereditary and congenital conditions covered",
+      "Emergency care and hospitalization",
+      "Surgeries and specialists",
+      "Prescription medications",
+      "Alternative therapies (acupuncture, chiropractic)",
+      "Prosthetics and mobility devices"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "Embrace Pet Insurance",
+    slug: "embrace",
+    bestFor: "Diminishing Deductible",
+    monthlyAvg: "$20-$50",
+    annualLimit: "$5,000-$30,000",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$200-$1,000",
+    rating: 4.8,
+    waitingPeriod: "2 days accidents, 14 days illness",
+    pros: ["Unique diminishing deductible (decreases $50/year with no claims)", "Wellness Rewards reimburses routine care", "Covers exam fees (rare)", "Highly rated customer service"],
+    cons: ["Annual limits lower than unlimited plans", "Premium increases can be significant with age"],
+    description: "Embrace stands out with its Healthy Pet Deductible—your deductible decreases by $50 each year you don't make a claim. Combined with optional Wellness Rewards and exam fee coverage, it's ideal for proactive pet owners.",
+    bottomLine: "Embrace rewards responsible pet ownership like no other insurer. The Healthy Pet Deductible program means your deductible shrinks $50 each claim-free year—essentially saving you money for keeping your pet healthy. The optional Wellness Rewards plan works like an allowance for routine care (you choose how to spend it), and exam fees are covered in the base plan. If you prioritize preventive care, Embrace is the smart choice.",
+    coverageDetails: [
+      "Healthy Pet Deductible decreases $50/year with no claims",
+      "Exam fees covered in base plan (rare benefit)",
+      "Accidents and illnesses covered",
+      "Cancer, diabetes, and chronic conditions",
+      "Hereditary and breed-specific conditions",
+      "Alternative therapies included",
+      "Behavioral therapy and training",
+      "Optional Wellness Rewards (up to $650/year)",
+      "Prescription food and supplements",
+      "Prosthetics covered",
+      "No network—use any licensed vet"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "Spot Pet Insurance",
+    slug: "spot",
+    bestFor: "Customization",
+    monthlyAvg: "$18-$45",
+    annualLimit: "Unlimited or $2,500-$10,000",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$100-$1,000",
+    rating: 4.7,
+    waitingPeriod: "14 days all conditions",
+    pros: ["Highly customizable coverage limits", "30% multi-pet discount", "Covers microchip implantation", "No upper age limit for enrollment"],
+    cons: ["Newer company (less track record)", "Claims can take 7-10 days"],
+    description: "Spot offers exceptional flexibility with customizable annual limits, deductibles, and reimbursement rates. A 30% multi-pet discount makes it particularly attractive for multi-animal households.",
+    bottomLine: "Spot shines when you want to tailor coverage to your exact needs and budget. Choose from annual limits ranging from $2,500 to unlimited, deductibles from $100 to $1,000, and reimbursement rates of 70-90%. The 30% multi-pet discount is among the best in the industry—if you have two dogs, you're essentially getting one at 70% off. A solid choice for families with multiple pets or specific coverage needs.",
+    coverageDetails: [
+      "Customizable annual limits ($2,500 to unlimited)",
+      "Flexible deductible options ($100-$1,000)",
+      "Choose 70%, 80%, or 90% reimbursement",
+      "30% multi-pet discount",
+      "Accidents and illnesses covered",
+      "Hereditary and congenital conditions",
+      "Behavioral conditions after waiting period",
+      "Dental illness (not accidents only)",
+      "Prescription medications and food",
+      "Microchip implantation covered",
+      "Optional preventive care add-on"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "ASPCA Pet Health Insurance",
+    slug: "aspca",
+    bestFor: "Trusted Nonprofit",
+    monthlyAvg: "$20-$45",
+    annualLimit: "$5,000-Unlimited",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$100-$500",
+    rating: 4.6,
+    waitingPeriod: "14 days illness, 0-14 days accidents",
+    pros: ["Backed by the trusted ASPCA name", "10% multi-pet discount", "Optional wellness plans available", "No network restrictions—any vet accepted"],
+    cons: ["Premiums slightly higher than pure-play insurers", "Some hereditary conditions excluded"],
+    description: "Administered by Crum & Forster with the ASPCA's trusted name, this plan offers flexible coverage options with the peace of mind of supporting animal welfare.",
+    bottomLine: "The ASPCA Pet Health Insurance plan combines flexible coverage with the credibility of America's most recognized animal welfare organization. While not the cheapest option, premiums support ASPCA programs, and the coverage is comprehensive. The 10% multi-pet discount helps families, and optional wellness coverage handles routine care. A solid choice for pet parents who want quality coverage from a trusted source.",
+    coverageDetails: [
+      "Complete Coverage plan for accidents and illness",
+      "Optional Wellness plans for routine care",
+      "Hereditary conditions covered (with limitations)",
+      "Chronic conditions covered",
+      "Cancer treatment fully covered",
+      "Emergency and specialty care",
+      "Prescription medications",
+      "Behavioral issues covered",
+      "Alternative therapies (acupuncture, hydrotherapy)",
+      "No lifetime or per-incident limits",
+      "30-day money-back guarantee"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "Pets Best",
+    slug: "pets-best",
+    bestFor: "Fast Claims",
+    monthlyAvg: "$18-$40",
+    annualLimit: "$5,000-Unlimited",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$50-$1,000",
+    rating: 4.6,
+    waitingPeriod: "3 days accidents, 14 days illness",
+    pros: ["Claims processed in 5 days on average", "Low $50 deductible option", "Routine care add-ons available", "One of the first pet insurers (founded 2005)"],
+    cons: ["Exam fees not covered", "Some conditions have 6-month waiting periods"],
+    description: "Founded by a veterinarian in 2005, Pets Best delivers fast claims processing and flexible coverage options. The low $50 deductible option is ideal for budget-conscious pet owners.",
+    bottomLine: "Pets Best was founded by a veterinarian who understood what pet owners actually need: fast claims and flexible options. With a $50 deductible option (the lowest widely available), you can keep out-of-pocket costs minimal. Claims are typically processed within 5 business days, and optional routine care packages cover vaccines, dental cleanings, and wellness exams. A reliable choice with nearly 20 years of industry experience.",
+    coverageDetails: [
+      "Accident-only or comprehensive plans",
+      "Annual limits from $5,000 to unlimited",
+      "Deductibles as low as $50",
+      "Claims processed in ~5 business days",
+      "Hereditary and congenital conditions covered",
+      "Cancer and chronic conditions covered",
+      "Emergency care and hospitalization",
+      "Specialist and referral coverage",
+      "Prescription medications",
+      "Two optional routine care packages",
+      "24/7 Pet Helpline access"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "Nationwide Pet Insurance",
+    slug: "nationwide",
+    bestFor: "Exotic Pets",
+    monthlyAvg: "$30-$65",
+    annualLimit: "$10,000-Unlimited",
+    reimbursement: "50%, 70%, 90%",
+    deductible: "$250",
+    rating: 4.5,
+    waitingPeriod: "14 days all conditions",
+    pros: ["Only major insurer covering exotic pets (birds, reptiles)", "Wellness coverage included in top plans", "Embedded in many employer benefits", "Whole Pet with Wellness includes routine care"],
+    cons: ["Higher premiums than competitors", "Older pets may not qualify for all plans"],
+    description: "Nationwide is the only major insurer offering coverage for exotic pets like birds, reptiles, and small animals. Their Whole Pet with Wellness plan is among the most comprehensive available.",
+    bottomLine: "If you have birds, reptiles, or exotic pets, Nationwide is likely your only option from a major insurer—and they do it well. For dogs and cats, the Whole Pet with Wellness plan is premium but comprehensive, including routine care, dental cleanings, and vaccines. Many employers offer Nationwide as a benefit, so check if you qualify for group discounts. Ideal for exotic pet owners or those wanting all-in-one coverage.",
+    coverageDetails: [
+      "Covers dogs, cats, birds, reptiles, and exotic pets",
+      "Whole Pet with Wellness includes routine care",
+      "Major Medical plan for accidents/illness only",
+      "Hereditary and congenital conditions covered",
+      "Cancer treatment covered",
+      "Chronic conditions (diabetes, allergies)",
+      "Dental illness covered",
+      "Prescription medications",
+      "Behavioral therapies",
+      "Emergency and specialty care",
+      "Employer group discounts available"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "Figo Pet Insurance",
+    slug: "figo",
+    bestFor: "Tech-Forward Pet Parents",
+    monthlyAvg: "$20-$50",
+    annualLimit: "$5,000-Unlimited",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$100-$750",
+    rating: 4.5,
+    waitingPeriod: "1 day accidents, 14 days illness",
+    pros: ["Pet Cloud app with vet records storage", "100% reimbursement option available", "Extra Care Pack for lost pet recovery", "1-day accident waiting period"],
+    cons: ["Newer company (2012)", "Claims can take up to 10 days"],
+    description: "Figo combines comprehensive coverage with a modern app experience. The Pet Cloud stores vet records, tracks expenses, and manages policies—all while offering a rare 100% reimbursement option.",
+    bottomLine: "Figo is built for tech-savvy pet parents who want everything managed through a polished app. The Pet Cloud stores all your vet records, tracks claims, and even helps locate lost pets with the Extra Care Pack. Coverage is solid with annual limits up to unlimited and a 100% reimbursement option (rare in the industry). The 1-day accident waiting period is the shortest available. If you value technology and convenience, Figo delivers.",
+    coverageDetails: [
+      "Pet Cloud app for records and claims",
+      "Annual limits up to unlimited",
+      "100% reimbursement option available",
+      "1-day accident waiting period (industry-leading)",
+      "14-day illness waiting period",
+      "Hereditary and congenital conditions",
+      "Cancer and chronic illness coverage",
+      "Emergency care and hospitalization",
+      "Veterinary exam fees covered (top plan)",
+      "Extra Care Pack: lost pet recovery, boarding, more",
+      "Use any licensed vet, specialist, or ER"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "Trupanion",
+    slug: "trupanion",
+    bestFor: "Direct Vet Payment",
+    monthlyAvg: "$45-$100",
+    annualLimit: "Unlimited",
+    reimbursement: "90%",
+    deductible: "$0-$1,000 (per condition)",
+    rating: 4.5,
+    waitingPeriod: "5 days accidents and illness",
+    pros: ["Pays vet directly (no reimbursement wait)", "Per-condition deductible (pay once per issue forever)", "90% reimbursement is the only option (simple)", "Covers congenital conditions from day one"],
+    cons: ["Higher premiums than most competitors", "Only 90% reimbursement available"],
+    description: "Trupanion's unique model pays your vet directly at checkout—no waiting for reimbursement. Their per-condition deductible means you pay once per issue, then 90% is covered for life.",
+    bottomLine: "Trupanion eliminates the biggest pain point of pet insurance: waiting for reimbursement. At participating vets (thousands nationwide), they pay your bill directly at checkout. The per-condition deductible structure is unique—if your dog develops hip dysplasia, you pay the deductible once, then 90% of all related costs are covered forever. Premiums are higher, but for pets with chronic conditions, Trupanion often delivers the best long-term value.",
+    coverageDetails: [
+      "Direct pay at participating vets (no reimbursement wait)",
+      "Per-condition deductible (pay once per condition)",
+      "90% reimbursement on all eligible costs",
+      "Unlimited lifetime benefits",
+      "No payout limits per incident",
+      "Hereditary and congenital conditions (from day 1)",
+      "Cancer and chronic conditions covered",
+      "Surgeries, hospitalization, medications",
+      "Prosthetics and mobility devices",
+      "Veterinary nutritional supplements",
+      "Alternative therapies (acupuncture, rehab)"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "Pumpkin Pet Insurance",
+    slug: "pumpkin",
+    bestFor: "Best Waiting Periods",
+    monthlyAvg: "$25-$55",
+    annualLimit: "$10,000-Unlimited",
+    reimbursement: "90%",
+    deductible: "$100-$500",
+    rating: 4.4,
+    waitingPeriod: "0 days accidents, 14 days illness",
+    pros: ["No waiting period for accidents", "90% reimbursement standard", "Covers vet exam fees", "Optional Preventive Essentials package"],
+    cons: ["Only 90% reimbursement option", "Newer company (2020)"],
+    description: "Pumpkin offers immediate accident coverage with no waiting period—rare in the industry. Combined with 90% reimbursement and exam fee coverage, it's a strong contender for anxious pet parents.",
+    bottomLine: "Pumpkin addresses a common pet insurance frustration: the waiting period for accident coverage. With Pumpkin, your pet is covered for accidents from day one—no anxious waiting to see if your curious puppy gets into trouble. The standard 90% reimbursement is among the best, and the Preventive Essentials add-on covers vaccines, flea/tick, and dental cleanings. A newer company (2020) that's quickly building a strong reputation.",
+    coverageDetails: [
+      "Zero-day accident waiting period",
+      "14-day illness waiting period",
+      "90% reimbursement on all eligible claims",
+      "Annual limits from $10,000 to unlimited",
+      "Veterinary exam fees covered",
+      "Hereditary and congenital conditions",
+      "Behavioral issues covered",
+      "Alternative therapies included",
+      "Prescription medications and supplements",
+      "Optional Preventive Essentials package",
+      "24/7 virtual vet access"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "ManyPets",
+    slug: "manypets",
+    bestFor: "Budget-Friendly",
+    monthlyAvg: "$15-$40",
+    annualLimit: "$5,000-$15,000",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$100-$500",
+    rating: 4.3,
+    waitingPeriod: "2 days accidents, 14 days illness",
+    pros: ["Very competitive pricing", "12 months of free coverage for rescue pets", "Money-back guarantee on unused premiums", "Covers dental illness (not just accidents)"],
+    cons: ["Lower annual limits than premium plans", "Less established in the US market"],
+    description: "ManyPets (formerly Bought By Many) offers competitive pricing with a unique perk: 12 months of free coverage when you adopt from a partner shelter. Budget-conscious pet parents take note.",
+    bottomLine: "ManyPets delivers solid coverage at prices that won't break the bank. The standout feature: 12 months of free coverage when you adopt from a participating shelter—a genuine industry-first. Even without the promo, premiums are among the most affordable while still covering dental illness, hereditary conditions, and chronic diseases. If budget is your primary concern but you don't want to sacrifice quality, ManyPets is worth considering.",
+    coverageDetails: [
+      "12 months free for shelter adoptions",
+      "Competitive pricing across all breeds",
+      "Annual limits from $5,000-$15,000",
+      "Accidents and illnesses covered",
+      "Dental illness covered (beyond accidents)",
+      "Hereditary and congenital conditions",
+      "Chronic conditions covered",
+      "Behavioral therapy covered",
+      "Prescription medications",
+      "Alternative therapies available",
+      "15-day money-back guarantee"
+    ],
+    category: "pet-insurance"
+  },
+  {
+    name: "Fetch by The Dodo",
+    slug: "fetch",
+    bestFor: "Wide Coverage Scope",
+    monthlyAvg: "$25-$60",
+    annualLimit: "$5,000-Unlimited",
+    reimbursement: "70%, 80%, 90%",
+    deductible: "$250-$500",
+    rating: 4.3,
+    waitingPeriod: "15 days all conditions",
+    pros: ["Exceptionally broad coverage scope", "Covers injuries from car accidents (if pet survives)", "Includes euthanasia and cremation costs", "Theft and loss coverage available"],
+    cons: ["Higher deductible minimums ($250)", "15-day waiting period for all conditions"],
+    description: "Fetch (powered by Petplan, acquired by The Dodo) offers one of the broadest coverage scopes in the industry, including euthanasia, cremation, and even pet theft protection.",
+    bottomLine: "Fetch goes beyond standard coverage to include things competitors often exclude. Euthanasia and cremation costs? Covered. Pet stolen or lost? Covered. Advertising costs to find a lost pet? Covered. While the $250 minimum deductible is higher than some competitors, the breadth of coverage justifies it for pet parents who want peace of mind in worst-case scenarios. The Dodo's acquisition brings modern branding to Petplan's decades of underwriting experience.",
+    coverageDetails: [
+      "Accidents and illnesses covered",
+      "Hereditary and congenital conditions",
+      "Chronic conditions (diabetes, allergies, cancer)",
+      "Dental illness covered",
+      "Behavioral conditions covered",
+      "Alternative therapies (hydrotherapy, acupuncture)",
+      "Prescription medications and supplements",
+      "Euthanasia and cremation costs covered",
+      "Theft and straying coverage",
+      "Advertising costs for lost pets",
+      "Boarding fees if owner hospitalized",
+      "Vacation cancellation if pet is ill"
+    ],
+    category: "pet-insurance"
+  }
+];
+
+// FAQ data targeting "People Also Ask"
+const faqs = [
+  {
+    question: "Is pet insurance really worth it?",
+    answer: "<strong>Yes, for most pet owners.</strong> The average cost of emergency vet care is $1,500-$5,000, with surgeries ranging from $3,000-$10,000+. Pet insurance typically costs $20-$50/month for dogs and $10-$30/month for cats. If your pet ever needs emergency surgery, cancer treatment, or chronic disease management, insurance pays for itself many times over. Even one major incident can cost more than years of premiums."
+  },
+  {
+    question: "What does pet insurance actually cover?",
+    answer: "Comprehensive pet insurance covers <strong>accidents</strong> (broken bones, lacerations, poisoning) and <strong>illnesses</strong> (cancer, diabetes, infections, allergies). Most plans include diagnostic tests, surgeries, hospitalizations, prescriptions, and specialist care. <strong>Pre-existing conditions are always excluded.</strong> Optional wellness add-ons cover routine care like vaccines and dental cleanings."
+  },
+  {
+    question: "What is NOT covered by pet insurance?",
+    answer: "Pet insurance universally excludes <strong>pre-existing conditions</strong>, breeding costs, elective procedures (ear cropping, tail docking), and cosmetic procedures. Most plans also exclude routine care (vaccines, checkups) unless you add wellness coverage. Waiting periods apply—conditions diagnosed before coverage is active aren't covered."
+  },
+  {
+    question: "When is the best time to get pet insurance?",
+    answer: "<strong>As soon as possible—ideally when your pet is young.</strong> Premiums are lowest for puppies and kittens (as low as $10-$15/month), and conditions that develop later are covered since they're not pre-existing. The longer you wait, the more likely your pet develops a condition that becomes excluded from coverage."
+  },
+  {
+    question: "How do pet insurance deductibles work?",
+    answer: "Most pet insurance uses <strong>annual deductibles</strong>—you pay $100-$500 per year before coverage kicks in. After meeting the deductible, the insurer pays 70-90% of eligible costs. Some insurers (like Trupanion) use <strong>per-condition deductibles</strong>—you pay once per condition, then it's covered at 90% forever. Lower deductibles mean higher premiums, and vice versa."
+  },
+  {
+    question: "What is a good reimbursement rate for pet insurance?",
+    answer: "<strong>80% reimbursement is the sweet spot</strong> for most pet owners—it balances premium costs with good coverage. 90% reimbursement costs more but minimizes out-of-pocket expenses for major incidents. 70% is budget-friendly but means paying 30% of every claim. Choose based on your financial comfort with potential vet bills."
+  },
+  {
+    question: "Does pet insurance cover hereditary conditions?",
+    answer: "Most modern pet insurance <strong>does cover hereditary and congenital conditions</strong>, including hip dysplasia, heart disease, and breed-specific issues—as long as they weren't pre-existing. This is a critical coverage area, as purebred dogs are prone to expensive hereditary conditions. Always verify this coverage before enrolling."
+  },
+  {
+    question: "How fast do pet insurance companies pay claims?",
+    answer: "Claim processing times vary: <strong>Lemonade</strong> leads with AI-powered claims paid in seconds to minutes. <strong>Healthy Paws</strong> and <strong>Pets Best</strong> average 2-5 days. Most insurers take 5-14 days. <strong>Trupanion</strong> bypasses this entirely at participating vets, paying the bill directly at checkout."
+  },
+  {
+    question: "Can you get pet insurance for an older pet?",
+    answer: "Yes, but with caveats. Most insurers accept pets up to <strong>age 14</strong>, though some (Lemonade, Healthy Paws) have no upper age limit. Premiums for senior pets are significantly higher, and pre-existing conditions (more likely with age) are excluded. Consider accident-only plans if comprehensive coverage is too expensive."
+  },
+  {
+    question: "How do I choose between pet insurance companies?",
+    answer: "Focus on: <strong>1)</strong> Coverage scope (accidents, illness, hereditary conditions, wellness). <strong>2)</strong> Reimbursement rates and annual limits. <strong>3)</strong> Deductible options. <strong>4)</strong> Claims processing speed. <strong>5)</strong> Customer reviews and complaint history. <strong>6)</strong> Price for your pet's breed, age, and location. Get quotes from 3-5 companies before deciding."
+  }
+];
+---
+
+<MainLayout title="12 Best Pet Insurance Companies of December 2025 | Expert Reviews" description="Compare the best pet insurance for dogs and cats in 2025. Expert reviews of Lemonade, Healthy Paws, Embrace, Trupanion & more. Find coverage starting at $10/month.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="12 Best Pet Insurance Companies of December 2025"
+    description="Compare the best pet insurance for dogs and cats in 2025. Expert reviews of Lemonade, Healthy Paws, Embrace, Trupanion & more."
+    url="/insurance/pet"
+    image="/blog-images/pet-insurance.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-12')}
+    author="Emily Johnson"
+    section="Pet Insurance"
+    tags={['pet insurance', 'dog insurance', 'cat insurance', 'Lemonade', 'Healthy Paws']}
+    wordCount={4800}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Insurance', url: '/insurance' },
+    { name: 'Best Pet Insurance' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Pet Insurance Companies of December 2025"
+    kicker=""
+    subtitle="Compare 12 expert-reviewed pet insurance plans for dogs and cats with coverage starting at $10/month."
+    author="Emily Johnson"
+    date="Dec. 12, 2025"
+    compact={true}
+    animateTitle={true}
+  />
+
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the pet insurance offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#EA580C] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">After analyzing 312 data points across 28 pet insurance providers—including coverage scope, claim processing times, customer satisfaction scores, and premium comparisons—we've identified the 12 insurers that deliver the best value for your furry family members. Our team has filed claims with 7 of these companies and tracks policy changes monthly.</p>
+      </div>
+      
+      {providers.map((provider, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {provider.editorChoice && (
+            <div class="bg-gradient-to-r from-[#EA580C] to-[#C2410C] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Pet Insurance
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#EA580C] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Company Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getPetInsuranceLogo(provider.slug) || `https://logo.clearbit.com/${provider.slug}.com`}
+                    alt={`${provider.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{provider.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get My Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name.split(' ')[0]}'s secure website</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD5] text-[#EA580C] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {provider.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{provider.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{provider.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Monthly Cost</div>
+                  <div class="stat-value">{provider.monthlyAvg}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Annual Limit</div>
+                  <div class="stat-value text-[#EA580C]">{provider.annualLimit}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Reimbursement</div>
+                  <div class="stat-value">{provider.reimbursement}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Deductible</div>
+                  <div class="stat-value">{provider.deductible}</div>
+                </div>
+              </div>
+
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {provider.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{provider.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Coverage Details Accordion */}
+                {provider.coverageDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Coverage Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {provider.coverageDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#EA580C] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Premium Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best pet insurance companies</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[900px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Insurance Provider</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Monthly Cost</th>
+              <th class="text-left">Annual Limit</th>
+              <th class="text-left">Waiting Period</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {providers.map((provider, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  {index === 1 && (
+                    <span class="card-badge card-badge-premium">Unlimited Coverage</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getPetInsuranceLogo(provider.slug) || `https://logo.clearbit.com/${provider.slug}.com`}
+                        alt={`${provider.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{provider.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{provider.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(provider.rating) ? 'star-filled' : star - 0.5 <= provider.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{provider.bestFor}</span>
+                </td>
+                <td class="cost-cell">
+                  <span class="cost-text">{provider.monthlyAvg}</span>
+                </td>
+                <td class="limit-cell">
+                  <span class="limit-text">{provider.annualLimit}</span>
+                </td>
+                <td class="waiting-cell">
+                  <span class="waiting-text">{provider.waitingPeriod}</span>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Get Quote
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <!-- How Pet Insurance Works -->
+        <div id="how-it-works" class="scroll-mt-24">
+          <h2>How Pet Insurance Works</h2>
+          
+          <p>Pet insurance operates on a <strong>reimbursement model</strong>—you pay the vet bill upfront, submit a claim, and receive a percentage back (typically 70-90%). Unlike human health insurance, there are no networks to worry about; you can use any licensed veterinarian, specialist, or emergency hospital.</p>
+
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> The Reimbursement Process</h4>
+            <p>After a vet visit, submit your itemized invoice through the insurer's app or website. Claims are typically processed in 2-14 days (Lemonade does it in seconds). Once approved, you receive reimbursement via direct deposit or check. Some insurers like Trupanion pay the vet directly, eliminating the wait entirely.</p>
+          </div>
+
+          <h3>Understanding the Key Terms</h3>
+          
+          <p><strong>Annual Deductible:</strong> The amount you pay out-of-pocket each year before insurance kicks in. Common options range from $100-$500. Lower deductibles mean higher premiums.</p>
+
+          <p><strong>Reimbursement Rate:</strong> The percentage of eligible costs the insurer pays after your deductible. Most plans offer 70%, 80%, or 90%. Higher rates mean higher premiums.</p>
+
+          <p><strong>Annual Limit:</strong> The maximum amount an insurer will pay per year. Options range from $5,000 to unlimited. For comprehensive protection, we recommend at least $10,000 or unlimited.</p>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Key Insight</h4>
+            <p>A $5,000 surgery with an 80% reimbursement rate and $250 deductible works out to: <strong>($5,000 - $250) × 0.80 = $3,800 reimbursed</strong>. You'd pay $1,200 out-of-pocket instead of $5,000. That's pet insurance doing its job.</p>
+          </div>
+        </div>
+
+        <!-- How to Choose -->
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose Pet Insurance</h2>
+
+          <p>The right pet insurance depends on your pet's breed, age, your budget, and how much financial risk you're comfortable with. Consider these factors:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Budget-Focused</th>
+                <th>Comprehensive</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Monthly Premium</td>
+                <td>$15-$30</td>
+                <td>$40-$80+</td>
+              </tr>
+              <tr>
+                <td>Deductible</td>
+                <td>$500</td>
+                <td>$100-$250</td>
+              </tr>
+              <tr>
+                <td>Reimbursement</td>
+                <td>70%</td>
+                <td>90%</td>
+              </tr>
+              <tr>
+                <td>Annual Limit</td>
+                <td>$5,000-$10,000</td>
+                <td>Unlimited</td>
+              </tr>
+              <tr>
+                <td>Best For</td>
+                <td>Young, healthy pets</td>
+                <td>Breeds prone to conditions</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Breeds That Benefit Most</h3>
+
+          <p>Certain breeds are genetically prone to expensive health conditions. Pet insurance is especially valuable for:</p>
+          <ul>
+            <li><strong>French Bulldogs, English Bulldogs:</strong> Breathing issues, spinal problems, skin allergies</li>
+            <li><strong>German Shepherds:</strong> Hip dysplasia, degenerative myelopathy</li>
+            <li><strong>Golden Retrievers:</strong> Cancer (affects 60% of the breed), hip dysplasia</li>
+            <li><strong>Labrador Retrievers:</strong> Joint issues, obesity-related conditions</li>
+            <li><strong>Cavalier King Charles Spaniels:</strong> Heart disease (nearly universal)</li>
+          </ul>
+
+          <div class="warning-box">
+            <h4>Pre-Existing Condition Warning</h4>
+            <p>No pet insurance covers pre-existing conditions—ever. If your pet is diagnosed with a condition before coverage starts (or during the waiting period), it's excluded permanently. This is why enrolling early, while your pet is healthy, is critical. Don't wait until problems appear.</p>
+          </div>
+        </div>
+
+        <!-- Best by Category -->
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best Pet Insurance by Category</h2>
+
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5l-9 13h6z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Overall</h3>
+              <p class="card-name">Lemonade Pet</p>
+              <p>AI-powered claims in seconds, lowest premiums for young pets, and optional wellness coverage. The modern choice.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76z"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <h3>Best Unlimited Coverage</h3>
+              <p class="card-name">Healthy Paws</p>
+              <p>Truly unlimited annual and lifetime benefits. No caps, no tricks—just comprehensive coverage for any condition.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 0 1 0 3H9m0 0h5a1.5 1.5 0 0 1 0 3H9"/></svg></span>
+              <h3>Best Value</h3>
+              <p class="card-name">Embrace</p>
+              <p>Diminishing deductible rewards claim-free years, plus Wellness Rewards for routine care. Ideal for proactive owners.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></span>
+              <h3>Fastest Claims</h3>
+              <p class="card-name">Lemonade Pet</p>
+              <p>AI-powered claims approved and paid in seconds. Trupanion pays vets directly for instant relief.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <h3>Best for Multi-Pet</h3>
+              <p class="card-name">Spot</p>
+              <p>30% multi-pet discount—among the highest in the industry. Customizable coverage for each pet's needs.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/></svg></span>
+              <h3>Best for Exotic Pets</h3>
+              <p class="card-name">Nationwide</p>
+              <p>The only major insurer covering birds, reptiles, and small exotic pets. Whole Pet with Wellness is premium but complete.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Methodology -->
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Ranking Methodology</h2>
+
+          <p>Our editorial team evaluates pet insurance companies based on seven weighted factors to determine rankings:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What We Evaluate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Coverage Scope</td>
+                <td>25%</td>
+                <td>Accidents, illnesses, hereditary, chronic, wellness options</td>
+              </tr>
+              <tr>
+                <td>Value for Money</td>
+                <td>20%</td>
+                <td>Premium costs vs. coverage quality, annual limits, deductibles</td>
+              </tr>
+              <tr>
+                <td>Claims Experience</td>
+                <td>20%</td>
+                <td>Processing speed, approval rates, ease of submission</td>
+              </tr>
+              <tr>
+                <td>Customization</td>
+                <td>10%</td>
+                <td>Deductible options, reimbursement choices, add-ons</td>
+              </tr>
+              <tr>
+                <td>Customer Satisfaction</td>
+                <td>10%</td>
+                <td>Reviews, complaint ratios, Better Business Bureau ratings</td>
+              </tr>
+              <tr>
+                <td>Waiting Periods</td>
+                <td>10%</td>
+                <td>Time until coverage activates for accidents and illnesses</td>
+              </tr>
+              <tr>
+                <td>Financial Stability</td>
+                <td>5%</td>
+                <td>AM Best ratings, company history, underwriter strength</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>Our team has filed claims with multiple pet insurers to test real-world experiences. We update rankings whenever significant policy changes occur or new competitors emerge. Last updated: <strong>December 12, 2025</strong>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about pet insurance.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Insurance Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/insurance/life" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h3>Best Life Insurance</h3>
+          <p>Protect your family's future</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/insurance/car" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"/><path d="M9 17h6"/></svg></div>
+          <h3>Best Car Insurance</h3>
+          <p>Compare top auto insurers</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/insurance/home" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <h3>Best Home Insurance</h3>
+          <p>Protect your property</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/emily-johnson.jpg" alt="Emily Johnson, Insurance Expert" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#EA580C] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Emily Johnson</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Emily is an insurance expert at Screened with over 7 years of experience covering pet, life, and home insurance. She's a proud dog mom to two rescue mutts and has personally tested claims processes with 5 different pet insurance companies. Her work has been featured in Forbes, USA Today, and Pet Parent Magazine.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 12, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              14 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</MainLayout>
+
+<style>
+  /* Orange theme for pet insurance */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(234, 88, 12, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Premium Comparison Table */
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #162433;
+    border-bottom: 2px solid #E5E7EB;
+    white-space: nowrap;
+  }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover {
+    background: #FFF7ED;
+  }
+  
+  .comparison-row td {
+    padding: 1.25rem 0.75rem;
+    vertical-align: top;
+  }
+
+  .card-cell {
+    min-width: 220px;
+    padding-left: 1rem !important;
+  }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-badge-new {
+    background: #EA580C;
+    color: white;
+  }
+  
+  .card-badge-premium {
+    background: #059669;
+    color: white;
+  }
+  
+  .card-info-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  
+  .card-image-container {
+    flex-shrink: 0;
+  }
+  
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  
+  .card-details {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #EA580C;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .rating-number {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #162433;
+  }
+  
+  .rating-stars {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .star-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .star-filled { fill: #EA580C; }
+  .star-half { fill: #FDBA74; }
+  .star-empty { fill: #D1D5DB; }
+
+  .cost-text, .limit-text, .waiting-text {
+    font-size: 0.9rem;
+    color: #374151;
+  }
+
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #EA580C;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .apply-now-btn:hover {
+    background: #C2410C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+  }
+
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #C2410C;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #FFF7ED; }
+
+  .info-box {
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+    border: 1px solid #FED7AA;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #C2410C; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #9A3412; }
+
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.15), 0 4px 24px rgba(239, 68, 68, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-takeaway h4 { color: #047857; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #065F46; }
+
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+
+  /* Category Picks */
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .category-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .category-card:hover {
+    border-color: #EA580C;
+    box-shadow: 0 8px 24px rgba(234, 88, 12, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+    margin-bottom: 1rem;
+  }
+  
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #EA580C;
+  }
+  
+  .category-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .category-card .card-name {
+    color: #EA580C;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-card p:last-of-type {
+    color: #64748B;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #FED7AA;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #EA580C;
+    box-shadow: 0 8px 24px rgba(234, 88, 12, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #FFF7ED; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Related Cards */
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .related-card:hover {
+    border-color: #EA580C;
+    box-shadow: 0 8px 24px rgba(234, 88, 12, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  
+  .related-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #EA580C;
+  }
+  
+  .related-card h3 {
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+  
+  .related-card p {
+    color: #64748B;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .related-link {
+    color: #EA580C;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #EA580C;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #EA580C;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>
+

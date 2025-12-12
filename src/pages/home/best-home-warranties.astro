@@ -5,19 +5,7 @@ import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
 import FAQSchema from '../../components/seo/FAQSchema.astro';
 import ArticleSchema from '../../components/seo/ArticleSchema.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
-
-// Helper function to get logo
-function getWarrantyLogo(slug: string): string {
-  const localLogos: Record<string, string> = {
-    'american-home-shield': '/home-warranty-logos/american-home-shield.png',
-    'choice': '/home-warranty-logos/choice.png',
-    'select': '/home-warranty-logos/select.png',
-    'first-american': '/home-warranty-logos/first-american.png',
-    'liberty': '/home-warranty-logos/liberty.png',
-    'cinch': '/home-warranty-logos/cinch.png',
-  };
-  return localLogos[slug] || `https://logo.clearbit.com/${slug.replace(/-/g, '')}.com`;
-}
+import { getHomeWarrantyLogo } from '../../utils/HomeWarrantyLogoMap';
 
 // Top Home Warranty Companies - 10 providers
 const warranties = [
@@ -397,7 +385,7 @@ const faqs = [
               <div class="card-image-wrapper relative mt-8 mb-6">
                 <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
                   <img 
-                    src={getWarrantyLogo(warranty.slug)}
+                    src={getHomeWarrantyLogo(warranty.slug)}
                     alt={`${warranty.name} logo`}
                     class="max-w-full max-h-full object-contain"
                     loading={index < 3 ? "eager" : "lazy"}
@@ -565,7 +553,7 @@ const faqs = [
                   <div class="card-info-wrapper">
                     <div class="card-image-container">
                       <img 
-                        src={getWarrantyLogo(warranty.slug)}
+                        src={getHomeWarrantyLogo(warranty.slug)}
                         alt={`${warranty.name}`}
                         class="card-thumbnail"
                         loading="lazy"

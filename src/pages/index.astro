@@ -57,20 +57,45 @@ const authors = [
           </svg>
           Insurance
         </a>
-        <a href="/insurance/car" class="quick-link-pill">
+        <a href="/finance" class="quick-link-pill">
           <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-            <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-            <path d="M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0H9"></path>
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
           </svg>
-          Car Insurance
+          Finance
         </a>
-        <a href="/insurance/home" class="quick-link-pill">
+        <a href="/home" class="quick-link-pill">
           <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
-          Home Insurance
+          Home
+        </a>
+        <a href="/insurance/pet" class="quick-link-pill">
+          <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"></path>
+            <path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"></path>
+            <path d="M8 14v.5"></path>
+            <path d="M16 14v.5"></path>
+            <path d="M11.25 16.25h1.5L12 17l-.75-.75z"></path>
+            <path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"></path>
+          </svg>
+          Pet Insurance
+        </a>
+        <a href="/finance/best-online-savings-accounts" class="quick-link-pill">
+          <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="3" y1="9" x2="21" y2="9"></line>
+            <line x1="9" y1="21" x2="9" y2="9"></line>
+          </svg>
+          Savings Accounts
+        </a>
+        <a href="/home/best-home-warranties" class="quick-link-pill">
+          <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Home Warranties
         </a>
         <a href="/blog" class="quick-link-pill">
           <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -79,7 +104,7 @@ const authors = [
             <line x1="16" y1="13" x2="8" y2="13"></line>
             <line x1="16" y1="17" x2="8" y2="17"></line>
           </svg>
-          Blog
+          All Guides
         </a>
       </div>
     </div>
@@ -206,7 +231,7 @@ const authors = [
   <section class="categories-section">
     <div class="categories-container">
       <h2 class="categories-title">Explore Our Coverage</h2>
-      <p class="categories-subtitle">Find the best financial products for your needs</p>
+      <p class="categories-subtitle">Find the best financial products and services for your needs</p>
       
       <div class="categories-grid">
         <a href="/credit-cards" class="category-card credit-cards-cat">
@@ -228,7 +253,31 @@ const authors = [
             </svg>
           </div>
           <h3>Insurance</h3>
-          <p>Auto, home, renters & life insurance guides</p>
+          <p>Auto, home, pet, life & renters insurance guides</p>
+          <span class="category-arrow">→</span>
+        </a>
+
+        <a href="/finance" class="category-card finance-cat">
+          <div class="category-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <h3>Finance</h3>
+          <p>Savings accounts, loans & investment guides</p>
+          <span class="category-arrow">→</span>
+        </a>
+
+        <a href="/home" class="category-card home-cat">
+          <div class="category-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <h3>Home</h3>
+          <p>Warranties, security, internet & moving services</p>
           <span class="category-arrow">→</span>
         </a>
 
@@ -253,6 +302,44 @@ const authors = [
           <h3>Reviews</h3>
           <p>In-depth product reviews & ratings</p>
           <span class="category-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Comparisons Section -->
+  <section class="comparisons-section">
+    <div class="comparisons-container">
+      <h2 class="comparisons-title">Popular Comparisons</h2>
+      <p class="comparisons-subtitle">Our most-read expert reviews and comparisons</p>
+      
+      <div class="comparisons-grid">
+        <a href="/credit-cards/best-travel-cards" class="comparison-card">
+          <div class="comparison-badge">Credit Cards</div>
+          <h3>Best Travel Credit Cards</h3>
+          <p>Top cards for earning travel rewards and points in 2025</p>
+          <span class="comparison-cta">Compare Cards →</span>
+        </a>
+
+        <a href="/insurance/pet" class="comparison-card">
+          <div class="comparison-badge insurance-badge">Insurance</div>
+          <h3>Best Pet Insurance</h3>
+          <p>Protect your furry friends with comprehensive coverage</p>
+          <span class="comparison-cta">Compare Plans →</span>
+        </a>
+
+        <a href="/finance/best-online-savings-accounts" class="comparison-card">
+          <div class="comparison-badge finance-badge">Finance</div>
+          <h3>Best Savings Accounts</h3>
+          <p>High-yield online savings accounts with top APY rates</p>
+          <span class="comparison-cta">Compare Rates →</span>
+        </a>
+
+        <a href="/home/best-home-warranties" class="comparison-card">
+          <div class="comparison-badge home-badge">Home</div>
+          <h3>Best Home Warranties</h3>
+          <p>Protect your home systems and appliances from costly repairs</p>
+          <span class="comparison-cta">Compare Plans →</span>
         </a>
       </div>
     </div>
@@ -847,7 +934,7 @@ const authors = [
 
   .categories-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
@@ -904,6 +991,16 @@ const authors = [
   .reviews-cat .category-icon {
     background: #FEF3C7;
     color: #F59E0B;
+  }
+
+  .finance-cat .category-icon {
+    background: #ECFDF5;
+    color: #10B981;
+  }
+
+  .home-cat .category-icon {
+    background: #F0F9FF;
+    color: #0EA5E9;
   }
 
   .category-card h3 {
@@ -1162,6 +1259,141 @@ const authors = [
     text-decoration: underline;
   }
 
+  /* Popular Comparisons Section */
+  .comparisons-section {
+    background: linear-gradient(180deg, #F7F8FA 0%, #FFFFFF 100%);
+    padding: 4rem 0;
+  }
+
+  .comparisons-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .comparisons-title {
+    font-family: 'Lexend', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    color: #162433;
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .comparisons-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #68727C;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .comparisons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .comparison-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.75rem;
+    text-decoration: none;
+    border: 1px solid #E6E8EB;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .comparison-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #146aff, #3B82F6);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .comparison-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .comparison-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+  }
+
+  .comparison-badge {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #3B82F6;
+    background: #EFF6FF;
+    padding: 0.375rem 0.75rem;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+    width: fit-content;
+  }
+
+  .comparison-badge.insurance-badge {
+    color: #22C55E;
+    background: #F0FDF4;
+  }
+
+  .comparison-badge.finance-badge {
+    color: #10B981;
+    background: #ECFDF5;
+  }
+
+  .comparison-badge.home-badge {
+    color: #0EA5E9;
+    background: #F0F9FF;
+  }
+
+  .comparison-card h3 {
+    font-family: 'Lexend', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #162433;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s ease;
+  }
+
+  .comparison-card:hover h3 {
+    color: #146aff;
+  }
+
+  .comparison-card p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    color: #68727C;
+    line-height: 1.5;
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+
+  .comparison-cta {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #146aff;
+    transition: all 0.2s ease;
+  }
+
+  .comparison-card:hover .comparison-cta {
+    transform: translateX(4px);
+  }
+
   /* Responsive */
   @media (max-width: 1024px) {
     .breaking-grid {
@@ -1175,6 +1407,10 @@ const authors = [
     }
 
     .categories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .comparisons-grid {
       grid-template-columns: repeat(2, 1fr);
     }
 
@@ -1214,6 +1450,10 @@ const authors = [
     }
 
     .categories-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .comparisons-grid {
       grid-template-columns: 1fr;
     }
 

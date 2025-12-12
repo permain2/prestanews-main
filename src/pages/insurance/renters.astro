@@ -3,6 +3,39 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
 import ComparisonTOCToggle from '../../components/ComparisonTOCToggle.tsx';
 import AnimatedFAQ from '../../components/AnimatedFAQ.tsx';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+const lastUpdated = "Dec. 11, 2025";
+
+// Affiliate programs (required order)
+const affiliatePartners = [
+  {
+    name: "Lemonade",
+    websiteLabel: "lemonade.com",
+    websiteUrl: "https://www.lemonade.com",
+    payout: "$25.50 per lead (bloggers, per program terms)",
+    network: "Partners program",
+    programUrl: "https://www.lemonade.com/partners-program",
+  },
+  {
+    name: "Liberty Mutual",
+    websiteLabel: "libertymutual.com",
+    websiteUrl: "https://www.libertymutual.com",
+    payout: "$3 per lead (renters, per program terms)",
+    network: "Affiliate program",
+    programUrl: "https://www.libertymutual.com/affiliate-program",
+  },
+  {
+    name: "Farmers",
+    websiteLabel: "farmers.com",
+    websiteUrl: "https://www.farmers.com",
+    payout: "Varies (per program terms)",
+    network: "Strategic partnerships",
+    programUrl: "https://www.farmers.com/strategic-partnerships/",
+  },
+];
 
 // Renters insurance providers data
 const providers = [
@@ -16,7 +49,37 @@ const providers = [
     pros: ["Sign up in 90 seconds", "AI-powered claims", "Giveback program", "Affordable premiums"],
     cons: ["Limited customization", "Not available everywhere"],
     description: "Lemonade revolutionized renters insurance with instant quotes, AI-powered claims processing, and donations to charity.",
-    amBest: "A-"
+    amBest: "A-",
+    website: "https://www.lemonade.com",
+    affiliateUrl: "https://www.lemonade.com/partners-program"
+  },
+  {
+    name: "Liberty Mutual",
+    logo: "/insurance-logos-small/libertymutual.png",
+    bestFor: "Discounts & Add-Ons",
+    monthlyAvg: "$16",
+    coverage: "$20,000+",
+    rating: 4.5,
+    pros: ["Optional add-ons (identity theft, valuables scheduling)", "Solid bundling options with auto/home", "Broad availability nationwide", "Straightforward policy management tools"],
+    cons: ["Pricing varies a lot by ZIP code", "Quote flow can feel less “instant” than app-first insurers"],
+    description: "Liberty Mutual is a strong pick if you want a classic national carrier with lots of add-ons and the ability to bundle policies. It’s not always the cheapest, but it’s competitive when discounts line up.",
+    amBest: "A",
+    website: "https://www.libertymutual.com",
+    affiliateUrl: "https://www.libertymutual.com/affiliate-program"
+  },
+  {
+    name: "Farmers",
+    logo: "/insurance-logos-small/farmers.png",
+    bestFor: "Agent Support",
+    monthlyAvg: "$17",
+    coverage: "$20,000+",
+    rating: 4.4,
+    pros: ["Strong local agent network", "Good fit if you want guided coverage selection", "Multiple discount paths (bundles, safety devices)", "Can be competitive for higher liability limits"],
+    cons: ["Less “one-click” than app-first insurers", "Pricing can be higher without bundling discounts"],
+    description: "Farmers is a solid renters insurance pick for people who want a real agent relationship and more hands-on help choosing coverage limits and add-ons.",
+    amBest: "A",
+    website: "https://www.farmers.com",
+    affiliateUrl: "https://www.farmers.com/strategic-partnerships/"
   },
   {
     name: "State Farm",
@@ -28,7 +91,8 @@ const providers = [
     pros: ["Local agent support", "Great bundling discounts", "Identity theft coverage", "Extensive coverage options"],
     cons: ["Higher average cost", "Slower claims process"],
     description: "State Farm offers reliable coverage with the added benefit of personal agent relationships and excellent bundling discounts.",
-    amBest: "A++"
+    amBest: "A++",
+    website: "https://www.statefarm.com"
   },
   {
     name: "Allstate",
@@ -40,7 +104,8 @@ const providers = [
     pros: ["Extensive add-ons", "Easy online management", "Claim-free rewards", "Equipment breakdown coverage"],
     cons: ["Pricier than competitors", "App could be better"],
     description: "Allstate provides comprehensive customization options and rewards customers who don't file claims.",
-    amBest: "A+"
+    amBest: "A+",
+    website: "https://www.allstate.com"
   },
   {
     name: "Progressive",
@@ -52,7 +117,8 @@ const providers = [
     pros: ["Bundle with auto", "24/7 online service", "Competitive pricing", "Pet liability included"],
     cons: ["Limited agent network", "Basic online experience"],
     description: "Progressive offers solid renters coverage with significant savings when bundled with auto insurance.",
-    amBest: "A+"
+    amBest: "A+",
+    website: "https://www.progressive.com"
   },
   {
     name: "USAA",
@@ -64,19 +130,8 @@ const providers = [
     pros: ["Lowest average rates", "Exceptional service", "Replacement cost coverage", "No claims needed for military moves"],
     cons: ["Military members only", "Limited accessibility"],
     description: "USAA provides the most affordable renters insurance with outstanding service for military families.",
-    amBest: "A++"
-  },
-  {
-    name: "Toggle (Farmers)",
-    logo: "/insurance-logos-small/farmers.png",
-    bestFor: "Customizable Coverage",
-    monthlyAvg: "$14",
-    coverage: "$15,000+",
-    rating: 4.4,
-    pros: ["Itemized coverage", "Easy to customize", "Quick online quotes", "Backed by Farmers"],
-    cons: ["Limited track record", "Fewer coverage options"],
-    description: "Toggle lets you build custom coverage piece by piece, ideal for renters with specific protection needs.",
-    amBest: "A"
+    amBest: "A++",
+    website: "https://www.usaa.com"
   }
 ];
 
@@ -111,11 +166,31 @@ const tocItems = [
   { id: "providers", label: "Top Insurers", href: "#providers" },
   { id: "coverage", label: "Coverage Guide", href: "#coverage" },
   { id: "compare", label: "Compare", href: "#compare" },
+  { id: "methodology", label: "Methodology", href: "#methodology" },
   { id: "faq", label: "FAQ", href: "#faq" }
 ];
 ---
 
 <MainLayout title="Best Renters Insurance of 2025" description="Expert reviews of the best renters insurance providers. Compare rates, coverage, and features to protect your belongings affordably.">
+  <!-- Schema Markup -->
+  <ArticleSchema
+    title="Best Renters Insurance of December 2025"
+    description="Expert reviews of the best renters insurance providers. Compare rates, coverage, and features to protect your belongings affordably."
+    url="/insurance/renters"
+    image="/insurance-images/renters-insurance.jpeg"
+    datePublished={new Date('2025-12-11')}
+    dateModified={new Date('2025-12-11')}
+    author="Screened Insurance Team"
+    section="Insurance"
+    tags={['renters insurance', 'personal property coverage', 'liability coverage', 'loss of use']}
+    wordCount={3400}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Insurance', url: '/insurance' },
+    { name: 'Renters Insurance', url: '/insurance/renters' }
+  ]} />
+
   <!-- Interactive Header with Cursor Trail -->
   <CursorTrailDark 
     client:load
@@ -123,7 +198,7 @@ const tocItems = [
     kicker=""
     subtitle="Protect your belongings with affordable coverage from top-rated insurers."
     author="Screened Insurance Team"
-    date="Dec. 11, 2025"
+    date={lastUpdated}
     compact={true}
     animateTitle={true}
   />
@@ -134,6 +209,24 @@ const tocItems = [
       <p class="text-xs text-[#68727C] leading-relaxed">
         We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
       </p>
+    </div>
+  </section>
+
+  <!-- Affiliate Partners (Required Order) -->
+  <section class="bg-white border-b border-gray-100">
+    <div class="max-w-5xl mx-auto px-4 md:px-8 py-6">
+      <h2 class="font-sora text-xl font-bold text-[#162433] mb-3">Affiliate partners (in priority order)</h2>
+      <p class="text-sm text-[#68727C] mb-4">We list our priority affiliate programs first. Payouts are included for internal reference and may vary based on traffic source and lead quality.</p>
+      <ol class="list-decimal pl-5 space-y-2 text-sm text-[#162433]">
+        {affiliatePartners.map((p) => (
+          <li>
+            <strong>{p.name}</strong> — <a href={p.websiteUrl} target="_blank" rel="sponsored noopener noreferrer" class="text-[#3B82F6] hover:underline">{p.websiteLabel}</a>
+            <span class="text-[#68727C]"> · {p.payout} · {p.network}{p.programUrl ? (
+              <> · <a href={p.programUrl} target="_blank" rel="sponsored noopener noreferrer" class="text-[#3B82F6] hover:underline">Program details</a></>
+            ) : null}</span>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
@@ -149,7 +242,7 @@ const tocItems = [
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <!-- Research Intro -->
       <div class="text-center mb-10">
-        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We obtained 186 quotes for $30K personal property coverage across 10 cities, tested each company's claims process with small claims, and analyzed 3,200+ customer reviews. These 6 insurers deliver the best value—protecting your belongings for as little as $10-$20 per month.</p>
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We compared baseline renters policies around the stuff that actually matters: personal property limits, liability protection, replacement cost options, and how annoying the quote-and-claims process feels in the real world. These picks deliver strong coverage without turning your $12/month policy into a $40/month surprise.</p>
       </div>
       
       {providers.map((provider, index) => (
@@ -163,7 +256,7 @@ const tocItems = [
               </div>
               
               <!-- Apply Button -->
-              <a href="#" class="w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2" style="color: #FFFFFF !important;">
+              <a href={provider.affiliateUrl ?? provider.website ?? "#"} target="_blank" rel="sponsored noopener noreferrer" class="w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2" style="color: #FFFFFF !important;">
                 <span>Get Quote</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
@@ -254,6 +347,15 @@ const tocItems = [
           <p class="text-sm text-[#68727C]">Covers minor injuries to guests regardless of fault. Typically $1,000-$5,000. Helps avoid liability claims for small accidents like a guest tripping on your rug.</p>
         </div>
       </div>
+
+      <div class="bg-[#F7F8FA] p-6 rounded-xl mt-8">
+        <h3 class="font-bold text-[#162433] mb-3">Related guides</h3>
+        <ul class="text-sm text-[#68727C] space-y-2">
+          <li><a class="text-[#3B82F6] hover:underline" href="/insurance/home">Best home insurance</a> — homeowners coverage picks and deductible strategy.</li>
+          <li><a class="text-[#3B82F6] hover:underline" href="/insurance/life">Best life insurance</a> — term vs whole life and how to pick coverage.</li>
+          <li><a class="text-[#3B82F6] hover:underline" href="/blog/best-rv-insurance">Best RV insurance</a> — full-timer vs recreational coverage.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -291,6 +393,55 @@ const tocItems = [
           </tbody>
         </table>
       </div>
+    </div>
+  </section>
+
+  <!-- Methodology -->
+  <section id="methodology" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-6 text-center">How we ranked the best renters insurance</h2>
+      <p class="text-sm text-[#68727C] leading-relaxed mb-6">Renters insurance should be boring—in the best way. We prioritized insurers that keep pricing reasonable while offering strong liability limits, clean replacement-cost options, and a claims process that doesn’t feel like a scavenger hunt.</p>
+
+      <div class="overflow-x-auto">
+        <table class="w-full bg-[#F7F8FA] rounded-xl overflow-hidden">
+          <thead class="bg-[#0D2C4B] text-white">
+            <tr>
+              <th class="p-4 text-left font-bold text-sm">Factor</th>
+              <th class="p-4 text-center font-bold text-sm">Weight</th>
+              <th class="p-4 text-left font-bold text-sm">What we looked for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Coverage value</td>
+              <td class="p-4 text-center text-[#162433]">30%</td>
+              <td class="p-4 text-sm text-[#68727C]">Replacement cost, endorsements, sub-limits transparency</td>
+            </tr>
+            <tr class="bg-[#F7F8FA]">
+              <td class="p-4 font-medium text-[#162433]">Price</td>
+              <td class="p-4 text-center text-[#162433]">25%</td>
+              <td class="p-4 text-sm text-[#68727C]">Competitive pricing for common $20K–$50K property limits</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Liability strength</td>
+              <td class="p-4 text-center text-[#162433]">20%</td>
+              <td class="p-4 text-sm text-[#68727C]">High liability options, medical payments, add-on umbrella paths</td>
+            </tr>
+            <tr class="bg-[#F7F8FA]">
+              <td class="p-4 font-medium text-[#162433]">Claims & service</td>
+              <td class="p-4 text-center text-[#162433]">15%</td>
+              <td class="p-4 text-sm text-[#68727C]">Ease of filing, responsiveness, digital tools vs agent access</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="p-4 font-medium text-[#162433]">Availability</td>
+              <td class="p-4 text-center text-[#162433]">10%</td>
+              <td class="p-4 text-sm text-[#68727C]">Nationwide coverage footprint and common exclusion clarity</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-xs text-[#68727C] mt-4 text-center"><strong>Last updated:</strong> {lastUpdated}</p>
     </div>
   </section>
 
