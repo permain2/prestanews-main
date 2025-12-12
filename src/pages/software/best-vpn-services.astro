@@ -1045,7 +1045,7 @@ function getVpnLogo(slug: string): string {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     border-radius: 1rem;
     padding: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -1055,6 +1055,7 @@ function getVpnLogo(slug: string): string {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    filter: brightness(1.1) contrast(1.05);
   }
 
   .rating-container {
@@ -1235,16 +1236,17 @@ function getVpnLogo(slug: string): string {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     border-radius: 0.375rem;
-    border: 1px solid #E5E7EB;
-    padding: 0.25rem;
+    border: none;
+    padding: 0.375rem;
   }
 
   .card-thumbnail {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    filter: brightness(1.1) contrast(1.05);
   }
 
   .card-details {
