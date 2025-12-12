@@ -52,10 +52,6 @@ class ArticlePipeline {
   constructor(options = {}) {
     this.options = { ...CONFIG, ...options };
     
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/40b69330-b35b-40d3-90e4-c27983ad40d7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'run-pipeline.js:52',message:'ArticlePipeline constructor - initializing components',data:{options:this.options},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H1'})}).catch(()=>{});
-    // #endregion
-    
     // Initialize components
     this.db = new AirtableSync();
     this.research = new SerpResearch();

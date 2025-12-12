@@ -227,118 +227,6 @@ const authors = [
     </div>
   </section>
 
-  <!-- Explore Categories - Premium Editorial Style -->
-  <section class="categories-section">
-    <div class="categories-container">
-      <div class="categories-header">
-        <span class="categories-label">EXPLORE</span>
-        <h2 class="categories-title">Our Coverage</h2>
-      </div>
-      
-      <div class="categories-grid">
-        <a href="/credit-cards" class="category-card">
-          <div class="category-number">01</div>
-          <div class="category-content">
-            <h3>Credit Cards</h3>
-            <p>Expert reviews on travel rewards, cash back, business & premium cards</p>
-            <div class="category-links">
-              <span>Travel</span>
-              <span>Cash Back</span>
-              <span>Business</span>
-            </div>
-          </div>
-          <div class="category-cta">
-            <span>Explore</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-        </a>
-
-        <a href="/insurance" class="category-card">
-          <div class="category-number">02</div>
-          <div class="category-content">
-            <h3>Insurance</h3>
-            <p>Comprehensive guides for auto, home, pet, life & renters coverage</p>
-            <div class="category-links">
-              <span>Auto</span>
-              <span>Home</span>
-              <span>Pet</span>
-              <span>Life</span>
-            </div>
-          </div>
-          <div class="category-cta">
-            <span>Explore</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-        </a>
-
-        <a href="/finance" class="category-card">
-          <div class="category-number">03</div>
-          <div class="category-content">
-            <h3>Finance</h3>
-            <p>High-yield savings, loans, refinancing & investment strategies</p>
-            <div class="category-links">
-              <span>Savings</span>
-              <span>Loans</span>
-              <span>Investing</span>
-            </div>
-          </div>
-          <div class="category-cta">
-            <span>Explore</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-        </a>
-
-        <a href="/home" class="category-card">
-          <div class="category-number">04</div>
-          <div class="category-content">
-            <h3>Home Services</h3>
-            <p>Warranties, security systems, internet providers & moving</p>
-            <div class="category-links">
-              <span>Warranty</span>
-              <span>Security</span>
-              <span>Internet</span>
-            </div>
-          </div>
-          <div class="category-cta">
-            <span>Explore</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-        </a>
-
-        <a href="/software/best-vpn-services" class="category-card">
-          <div class="category-number">05</div>
-          <div class="category-content">
-            <h3>Software</h3>
-            <p>VPN services, security tools & productivity software reviews</p>
-            <div class="category-links">
-              <span>VPN</span>
-              <span>Security</span>
-              <span>Tools</span>
-            </div>
-          </div>
-          <div class="category-cta">
-            <span>Explore</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-        </a>
-
-        <a href="/blog" class="category-card category-highlight">
-          <div class="category-number">→</div>
-          <div class="category-content">
-            <h3>All Guides</h3>
-            <p>Browse our complete library of expert reviews and comparisons</p>
-            <div class="category-links">
-              <span>150+ Articles</span>
-            </div>
-          </div>
-          <div class="category-cta">
-            <span>View All</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
 
   <!-- Popular Comparisons - Premium Editorial -->
   <section class="comparisons-section">
@@ -964,158 +852,6 @@ const authors = [
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   }
 
-  /* Categories Section - Premium Editorial */
-  .categories-section {
-    background: #0D0D0D;
-    padding: 5rem 0;
-    position: relative;
-  }
-
-  .categories-container {
-    max-width: 76rem;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  .categories-header {
-    margin-bottom: 3rem;
-  }
-
-  .categories-label {
-    font-family: 'SF Mono', 'Roboto Mono', monospace;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    color: #666;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  .categories-title {
-    font-family: 'SF Pro Display', 'Lexend', -apple-system, sans-serif;
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-
-  .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    background: #222;
-    border: 1px solid #222;
-  }
-
-  .category-card {
-    background: #0D0D0D;
-    padding: 2.5rem;
-    text-decoration: none;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: start;
-    gap: 1.5rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-  }
-
-  .category-card:hover {
-    background: #1a1a1a;
-  }
-
-  .category-number {
-    font-family: 'SF Mono', 'Roboto Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #444;
-    padding-top: 0.25rem;
-  }
-
-  .category-content {
-    flex: 1;
-  }
-
-  .category-card h3 {
-    font-family: 'SF Pro Display', 'Lexend', -apple-system, sans-serif;
-    font-size: 1.375rem;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 0.625rem;
-    letter-spacing: -0.02em;
-    transition: color 0.3s ease;
-  }
-
-  .category-card:hover h3 {
-    color: #fff;
-  }
-
-  .category-card p {
-    font-family: 'SF Pro Text', 'Poppins', -apple-system, sans-serif;
-    font-size: 0.9375rem;
-    color: #888;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-  }
-
-  .category-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .category-links span {
-    font-family: 'SF Pro Text', 'Poppins', -apple-system, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #555;
-    background: #1a1a1a;
-    padding: 0.375rem 0.75rem;
-    border-radius: 100px;
-    transition: all 0.3s ease;
-  }
-
-  .category-card:hover .category-links span {
-    background: #252525;
-    color: #888;
-  }
-
-  .category-cta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: all 0.3s ease;
-  }
-
-  .category-cta span {
-    font-family: 'SF Pro Text', 'Poppins', -apple-system, sans-serif;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: #fff;
-  }
-
-  .category-cta svg {
-    width: 1rem;
-    height: 1rem;
-    color: #fff;
-  }
-
-  .category-card:hover .category-cta {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .category-highlight {
-    background: linear-gradient(135deg, #1a1a1a 0%, #0D0D0D 100%);
-  }
-
-  .category-highlight .category-number {
-    color: #fff;
-    font-size: 1.25rem;
-  }
 
   /* Latest Section */
   .latest-section {
@@ -1462,10 +1198,6 @@ const authors = [
       gap: 1.5rem;
     }
 
-    .categories-grid {
-      grid-template-columns: 1fr;
-    }
-
     .latest-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -1494,56 +1226,34 @@ const authors = [
 
     .offers-grid {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 1.25rem;
+      max-width: 85%;
+      margin: 0 auto;
+    }
+
+    .offer-card {
+      border-radius: 1rem;
     }
 
     .offer-card:hover {
       transform: translateY(-4px) scale(1.01);
     }
 
-    /* Categories Mobile */
-    .categories-section {
-      padding: 3.5rem 0;
+    .offer-content {
+      padding: 1.25rem;
     }
 
-    .categories-grid {
-      grid-template-columns: 1fr;
-      gap: 0;
-      border: none;
-      background: transparent;
-    }
-
-    .category-card {
-      padding: 1.75rem 1.5rem;
-      border-bottom: 1px solid #222;
-      grid-template-columns: auto 1fr;
-      gap: 1rem;
-    }
-
-    .category-card:last-child {
-      border-bottom: none;
-    }
-
-    .category-cta {
-      display: none;
-    }
-
-    .category-card h3 {
+    .offer-name {
       font-size: 1.125rem;
     }
 
-    .category-card p {
+    .highlight-number {
+      font-size: 1.75rem;
+    }
+
+    .offer-cta {
+      padding: 0.875rem;
       font-size: 0.875rem;
-      display: none;
-    }
-
-    .category-links {
-      margin-top: 0.5rem;
-    }
-
-    .category-links span {
-      font-size: 0.6875rem;
-      padding: 0.25rem 0.5rem;
     }
 
     /* Comparisons Mobile */

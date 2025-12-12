@@ -58,9 +58,6 @@ async function loadConfigs() {
 
 export class ArticleGenerator {
   constructor() {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/40b69330-b35b-40d3-90e4-c27983ad40d7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-generator.js:60',message:'ArticleGenerator constructor called',data:{hasApiKey:!!process.env.ANTHROPIC_API_KEY},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H1'})}).catch(()=>{});
-    // #endregion
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
       throw new Error('ANTHROPIC_API_KEY not configured in .env');
@@ -367,16 +364,10 @@ BANNED PHRASES: ${STYLE_RULES.bannedPhrases.slice(0, 10).join(', ')}`;
   _parseJSON(text) {
     // Try to extract JSON from the response
     const jsonMatch = text.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/40b69330-b35b-40d3-90e4-c27983ad40d7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-generator.js:364',message:'JSON parsing attempt',data:{hasMatch:!!jsonMatch,textLength:text.length,textPreview:text.substring(0,200)},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H5'})}).catch(()=>{});
-    // #endregion
     if (jsonMatch) {
       try {
         return JSON.parse(jsonMatch[0]);
       } catch (e) {
-        // #region agent log
-        fetch('http://127.0.0.1:7244/ingest/40b69330-b35b-40d3-90e4-c27983ad40d7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-generator.js:372',message:'JSON parse failed, attempting fix',data:{error:e.message},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H5'})}).catch(()=>{});
-        // #endregion
         // Try to fix common JSON issues
         let fixed = jsonMatch[0]
           .replace(/,\s*}/g, '}')
@@ -393,14 +384,6 @@ BANNED PHRASES: ${STYLE_RULES.bannedPhrases.slice(0, 10).join(', ')}`;
    */
   _detectCategory(keyword) {
     const lk = keyword.toLowerCase();
-    // #region agent log
-    const allMatches = [];
-    for (const [cat, config] of Object.entries(CATEGORIES.categories)) {
-      const matchedKeywords = config.keywords.filter(k => lk.includes(k));
-      if (matchedKeywords.length > 0) allMatches.push({ cat, matchedKeywords });
-    }
-    fetch('http://127.0.0.1:7244/ingest/40b69330-b35b-40d3-90e4-c27983ad40d7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'article-generator.js:385',message:'Category detection',data:{keyword,allMatches,multipleMatches:allMatches.length>1},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H3'})}).catch(()=>{});
-    // #endregion
     for (const [cat, config] of Object.entries(CATEGORIES.categories)) {
       if (config.keywords.some(k => lk.includes(k))) {
         return cat;

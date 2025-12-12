@@ -69,12 +69,7 @@ export class PagePublisher {
    */
   _getOutputPath(urlPrefix, slug) {
     const relativePath = urlPrefix.startsWith('/') ? urlPrefix.slice(1) : urlPrefix;
-    const outputPath = path.join(this.outputDir, relativePath, `${slug}.astro`);
-    // #region agent log
-    const depth = relativePath.split('/').filter(Boolean).length + 1;
-    fetch('http://127.0.0.1:7244/ingest/40b69330-b35b-40d3-90e4-c27983ad40d7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'page-publisher.js:70',message:'Output path calculation',data:{urlPrefix,relativePath,outputPath,depth,expectedImportDepth:2},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H4'})}).catch(()=>{});
-    // #endregion
-    return outputPath;
+    return path.join(this.outputDir, relativePath, `${slug}.astro`);
   }
 
   /**
@@ -728,14 +723,10 @@ ${this._generateStyles(categoryConfig)}
    * Convert stat name to object key
    */
   _statToKey(statName) {
-    const result = statName
+    return statName
       .toLowerCase()
       .replace(/[^a-z0-9]/g, '')
       .replace(/\s+/g, '');
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/40b69330-b35b-40d3-90e4-c27983ad40d7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'page-publisher.js:725',message:'Stat key conversion',data:{input:statName,output:result},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H2'})}).catch(()=>{});
-    // #endregion
-    return result;
   }
 
   /**
