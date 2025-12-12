@@ -212,23 +212,6 @@ const tocItems = [
     </div>
   </section>
 
-  <!-- Affiliate Partners (Required Order) -->
-  <section class="bg-white border-b border-gray-100">
-    <div class="max-w-5xl mx-auto px-4 md:px-8 py-6">
-      <h2 class="font-sora text-xl font-bold text-[#162433] mb-3">Affiliate partners (in priority order)</h2>
-      <p class="text-sm text-[#68727C] mb-4">We list our priority affiliate programs first. Payouts are included for internal reference and may vary based on traffic source and lead quality.</p>
-      <ol class="list-decimal pl-5 space-y-2 text-sm text-[#162433]">
-        {affiliatePartners.map((p) => (
-          <li>
-            <strong>{p.name}</strong> — <a href={p.websiteUrl} target="_blank" rel="sponsored noopener noreferrer" class="text-[#3B82F6] hover:underline">{p.websiteLabel}</a>
-            <span class="text-[#68727C]"> · {p.payout} · {p.network}{p.programUrl ? (
-              <> · <a href={p.programUrl} target="_blank" rel="sponsored noopener noreferrer" class="text-[#3B82F6] hover:underline">Program details</a></>
-            ) : null}</span>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
 
   <!-- TOC Toggle Navigation -->
   <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
