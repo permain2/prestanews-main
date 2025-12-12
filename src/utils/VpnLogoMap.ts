@@ -1,6 +1,6 @@
 /**
  * Vpn Logo Map
- * Uses local file for Bamboo VPN and Clearbit for others
+ * All logos stored locally for reliability
  * 
  * Usage:
  *   import { getVpnLogo } from '../utils/VpnLogoMap';
@@ -13,46 +13,46 @@ export const vpnLogos: Record<string, string> = {
   "bamboo-vpn": "/vpn-logos/bamboo-vpn.webp",
   "bamboovpn": "/vpn-logos/bamboo-vpn.webp",
   
-  // NordVPN - Clearbit
-  "NordVPN": "https://logo.clearbit.com/nordvpn.com",
-  "nordvpn": "https://logo.clearbit.com/nordvpn.com",
+  // NordVPN
+  "NordVPN": "/vpn-logos/nordvpn.png",
+  "nordvpn": "/vpn-logos/nordvpn.png",
   
-  // ExpressVPN - Clearbit
-  "ExpressVPN": "https://logo.clearbit.com/expressvpn.com",
-  "expressvpn": "https://logo.clearbit.com/expressvpn.com",
+  // ExpressVPN
+  "ExpressVPN": "/vpn-logos/expressvpn.png",
+  "expressvpn": "/vpn-logos/expressvpn.png",
   
-  // Surfshark - Clearbit
-  "Surfshark": "https://logo.clearbit.com/surfshark.com",
-  "surfshark": "https://logo.clearbit.com/surfshark.com",
+  // Surfshark
+  "Surfshark": "/vpn-logos/surfshark.png",
+  "surfshark": "/vpn-logos/surfshark.png",
   
-  // CyberGhost - Clearbit
-  "CyberGhost": "https://logo.clearbit.com/cyberghostvpn.com",
-  "cyberghost": "https://logo.clearbit.com/cyberghostvpn.com",
+  // CyberGhost
+  "CyberGhost": "/vpn-logos/cyberghost.png",
+  "cyberghost": "/vpn-logos/cyberghost.png",
   
-  // Private Internet Access - Clearbit
-  "Private Internet Access": "https://logo.clearbit.com/privateinternetaccess.com",
-  "pia": "https://logo.clearbit.com/privateinternetaccess.com",
-  "private internet access": "https://logo.clearbit.com/privateinternetaccess.com",
+  // Private Internet Access
+  "Private Internet Access": "/vpn-logos/pia.png",
+  "pia": "/vpn-logos/pia.png",
+  "private internet access": "/vpn-logos/pia.png",
   
-  // ProtonVPN - Clearbit
-  "ProtonVPN": "https://logo.clearbit.com/protonvpn.com",
-  "protonvpn": "https://logo.clearbit.com/protonvpn.com",
+  // ProtonVPN
+  "ProtonVPN": "/vpn-logos/protonvpn.png",
+  "protonvpn": "/vpn-logos/protonvpn.png",
   
-  // IPVanish - Clearbit
-  "IPVanish": "https://logo.clearbit.com/ipvanish.com",
-  "ipvanish": "https://logo.clearbit.com/ipvanish.com",
+  // IPVanish
+  "IPVanish": "/vpn-logos/ipvanish.png",
+  "ipvanish": "/vpn-logos/ipvanish.png",
   
-  // Windscribe - Clearbit
-  "Windscribe": "https://logo.clearbit.com/windscribe.com",
-  "windscribe": "https://logo.clearbit.com/windscribe.com",
+  // Windscribe
+  "Windscribe": "/vpn-logos/windscribe.png",
+  "windscribe": "/vpn-logos/windscribe.png",
   
-  // Mullvad - Clearbit
-  "Mullvad": "https://logo.clearbit.com/mullvad.net",
-  "mullvad": "https://logo.clearbit.com/mullvad.net",
+  // Mullvad
+  "Mullvad": "/vpn-logos/mullvad.png",
+  "mullvad": "/vpn-logos/mullvad.png",
   
-  // TunnelBear - Clearbit
-  "TunnelBear": "https://logo.clearbit.com/tunnelbear.com",
-  "tunnelbear": "https://logo.clearbit.com/tunnelbear.com"
+  // TunnelBear
+  "TunnelBear": "/vpn-logos/tunnelbear.png",
+  "tunnelbear": "/vpn-logos/tunnelbear.png"
 };
 
 export function getVpnLogo(nameOrSlug: string): string | null {
