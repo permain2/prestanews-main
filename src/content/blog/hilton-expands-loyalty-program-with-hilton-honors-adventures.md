@@ -2,7 +2,7 @@
 title: "Hilton Expands Loyalty Program with Hilton Honors Adventures"
 description: "Discover how Hilton's new Adventures program transforms loyalty rewards with unique experiences, exclusive access, and enhanced earning potential."
 pubDate: 2025-12-10
-heroImage: "/blog-images/hotel-lobby.jpg"
+heroImage: "/blog-images/hilton-adventures.jpg"
 author: "Emily Johnson"
 authorImage: "/team/emily-johnson.jpg"
 authorRole: "Insurance Editor"

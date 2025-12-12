@@ -2,7 +2,7 @@
 title: "Park Hyatt Tokyo Officially Reopens After Renovation: A New Era of Luxury in Shinjuku"
 description: "Park Hyatt Tokyo unveils stunning renovation with redesigned suites, enhanced amenities, and elevated dining experiences in the heart of Tokyo."
 pubDate: 2025-12-10
-heroImage: "/blog-images/park-hyatt.jpg"
+heroImage: "/blog-images/park-hyatt-tokyo.jpg"
 tags: ["hotels","travel"]
 ---
 
