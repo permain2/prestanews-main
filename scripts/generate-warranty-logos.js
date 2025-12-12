@@ -242,3 +242,4 @@ export default warrantyLogos;
 // Run the script
 generateLogos().catch(console.error);
 
+
