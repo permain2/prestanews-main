@@ -15,7 +15,11 @@
     "seo:article": "node scripts/seo-article-generator.js",
     "seo:serp": "node scripts/analyze-serp.js",
     "seo:workflow": "node scripts/seo-workflow.js",
-    "seo:batch": "node scripts/seo-workflow.js --json scripts/target-keywords.json --limit 5"
+    "seo:batch": "node scripts/seo-workflow.js --json scripts/target-keywords.json --limit 5",
+    "pipeline": "node scripts/automation/run-pipeline.js",
+    "pipeline:batch": "node scripts/automation/run-pipeline.js --batch",
+    "pipeline:import": "node scripts/automation/airtable-sync.js import",
+    "pipeline:stats": "node scripts/automation/airtable-sync.js stats"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.12",
@@ -37,6 +41,8 @@
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
+    "airtable": "^0.12.2",
+    "apify-client": "^2.9.4",
     "dotenv": "^17.2.3",
     "slugify": "^1.6.6"
   }
