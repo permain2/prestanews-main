@@ -1,0 +1,71 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+
+const petPosts = [
+  {
+    title: "Best Pet Insurance",
+    description: "Protect your furry friend with comprehensive pet insurance. Compare Lemonade, Healthy Paws, Embrace, and more.",
+    href: "/pet/best-pet-insurance",
+    category: "Pet Insurance",
+    image: "/blog-images/default-article.jpg"
+  },
+];
+---
+
+<MainLayout title="Best Pet Products 2025 | Screened" description="Compare the best pet insurance, food delivery, and pet care services. Expert reviews.">
+  <CursorTrailDark 
+    client:load
+    title="Pet"
+    subtitle="Expert reviews of pet insurance and pet care services"
+    compact={true}
+  />
+
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {petPosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            image={post.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
+

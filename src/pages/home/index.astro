@@ -1,0 +1,99 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+
+const homePosts = [
+  {
+    title: "Best Home Warranties",
+    description: "Protect your home systems and appliances with top-rated warranty providers. Compare American Home Shield, Choice, and more.",
+    href: "/home/best-home-warranties",
+    category: "Home Warranty",
+    image: "/insurance-heroes/home-warranty.jpeg"
+  },
+  {
+    title: "Best Home Security Systems",
+    description: "Keep your family safe with professional monitoring. Compare ADT, SimpliSafe, Ring, and Vivint for the best protection.",
+    href: "/home/best-home-security-systems",
+    category: "Home Security",
+    image: "/blog-images/default-article.jpg"
+  },
+  {
+    title: "Best Moving Companies",
+    description: "Make your relocation stress-free with trusted movers. Compare International Van Lines, United, and Allied for local and long-distance moves.",
+    href: "/home/best-moving-companies",
+    category: "Moving",
+    image: "/blog-images/default-article.jpg"
+  },
+  {
+    title: "Best Internet Providers",
+    description: "Find the fastest and most reliable internet in your area. Compare Xfinity, AT&T, Verizon, and more.",
+    href: "/blog/best-internet-providers",
+    category: "Internet",
+    image: "/blog-images/default-article.jpg"
+  },
+  {
+    title: "Best Extended Car Warranties",
+    description: "Protect your vehicle beyond the manufacturer warranty. Compare CARCHEX, Endurance, and CarShield.",
+    href: "/blog/best-extended-car-warranty",
+    category: "Auto Warranty",
+    image: "/blog-images/extended-warranty.jpg"
+  },
+];
+---
+
+<MainLayout title="Best Home Services 2025 | Screened" description="Compare the best home warranties, security systems, internet providers, and moving companies. Expert reviews.">
+  <CursorTrailDark 
+    client:load
+    title="Home Services"
+    subtitle="Expert reviews of warranties, security, and home service providers"
+    compact={true}
+  />
+
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {homePosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            image={post.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
+

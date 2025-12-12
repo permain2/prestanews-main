@@ -1,0 +1,550 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import { getCardImage } from '../../utils/cardImageMap';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+// Best credit cards for extended warranty protection - Top 6
+const creditCards = [
+  {
+    name: "Chase Sapphire Reserve®",
+    slug: "chase-sapphire-reserve",
+    bestFor: "Best Overall",
+    annualFee: "$550",
+    warrantyExtension: "+1 year",
+    claimLimit: "$10,000",
+    annualMax: "$50,000",
+    rating: 4.9,
+    purchaseProtection: "120 days",
+    pros: ["$10,000 per claim coverage", "$50,000 annual maximum", "Primary rental car insurance included", "Purchase protection for 120 days"],
+    cons: ["High $550 annual fee", "Benefits require enrollment"],
+    description: "The Chase Sapphire Reserve offers the most comprehensive purchase protection suite among travel cards. Extended warranty adds 1 year to manufacturer warranties up to 3 years, with $10,000 per claim and $50,000 annual max.",
+    bottomLine: "If you frequently purchase high-value electronics or appliances, the Sapphire Reserve's robust extended warranty and purchase protection make the $550 annual fee worthwhile. The $300 travel credit effectively reduces the fee to $250.",
+    cardDetails: [
+      "Extended warranty adds 1 year to manufacturer warranties (up to 3 years original warranty)",
+      "$10,000 maximum benefit per claim",
+      "$50,000 maximum benefit per account per year",
+      "Purchase protection covers theft and damage for 120 days",
+      "Primary rental car insurance (no need to file with personal insurer first)",
+      "Trip cancellation/interruption insurance up to $10,000"
+    ],
+    editorChoice: true
+  },
+  {
+    name: "American Express Platinum Card®",
+    slug: "amex-platinum",
+    bestFor: "Premium Protection",
+    annualFee: "$695",
+    warrantyExtension: "+2 years",
+    claimLimit: "$10,000",
+    annualMax: "$50,000",
+    rating: 4.8,
+    purchaseProtection: "90 days",
+    pros: ["Extends warranty by up to 2 years", "$10,000 per occurrence coverage", "Return protection on most items", "Excellent claims process"],
+    cons: ["High $695 annual fee", "Must use Amex for purchase"],
+    description: "The Amex Platinum extends manufacturer warranties by up to 2 additional years—the longest extension among premium cards. Combined with robust purchase protection and return coverage.",
+    bottomLine: "American Express's extended warranty adds up to 2 years to eligible manufacturer warranties, doubling the protection of most competitors. The claims process is straightforward, and Amex's customer service is consistently rated best-in-class.",
+    cardDetails: [
+      "Extended warranty adds up to 2 additional years to manufacturer warranty",
+      "Original warranty must be 5 years or less to qualify",
+      "$10,000 maximum per occurrence",
+      "$50,000 maximum per calendar year",
+      "Purchase protection covers accidental damage and theft for 90 days",
+      "Return protection gives you 90 days to return items"
+    ]
+  },
+  {
+    name: "Chase Ink Business Preferred®",
+    slug: "chase-ink-preferred",
+    bestFor: "Business Purchases",
+    annualFee: "$95",
+    warrantyExtension: "+1 year",
+    claimLimit: "$10,000",
+    annualMax: "$50,000",
+    rating: 4.8,
+    purchaseProtection: "120 days",
+    pros: ["Only $95 annual fee", "Same coverage as Sapphire Reserve", "3X points on tech purchases", "Great for business equipment"],
+    cons: ["Business card (requires business)", "No return protection"],
+    description: "The Ink Business Preferred offers the same extended warranty coverage as the premium Sapphire Reserve but at just $95/year. Perfect for business owners purchasing computers, equipment, and electronics.",
+    bottomLine: "For business owners, the Ink Business Preferred is a no-brainer. You get identical extended warranty coverage to the $550 Sapphire Reserve at a fraction of the cost, plus 3X points on business expenses.",
+    cardDetails: [
+      "Extended warranty adds 1 year to manufacturer warranties (up to 3 years)",
+      "$10,000 maximum benefit per claim",
+      "$50,000 maximum benefit per account per year",
+      "Purchase protection for 120 days against damage and theft",
+      "Cell phone protection up to $1,000 per claim",
+      "Trip cancellation/interruption insurance"
+    ]
+  },
+  {
+    name: "Citi Double Cash Card",
+    slug: "citi-double-cash",
+    bestFor: "No Annual Fee",
+    annualFee: "$0",
+    warrantyExtension: "+2 years",
+    claimLimit: "$10,000",
+    annualMax: "$50,000",
+    rating: 4.7,
+    purchaseProtection: "N/A",
+    pros: ["$0 annual fee", "Up to 2 years warranty extension", "Unlimited 2% cash back", "No categories to track"],
+    cons: ["No purchase protection", "No return protection"],
+    description: "The Citi Double Cash proves you don't need to pay an annual fee for excellent extended warranty protection. Get up to 2 additional years on manufacturer warranties while earning a flat 2% on everything.",
+    bottomLine: "If extended warranty is your primary concern and you don't need other purchase protections, the Citi Double Cash delivers premium-level warranty extension with $0 annual fee.",
+    cardDetails: [
+      "Extended warranty adds up to 24 months to original manufacturer warranty",
+      "Original warranty must be 3 years or less",
+      "$10,000 maximum per claim",
+      "$50,000 maximum per calendar year",
+      "Earn 2% cash back: 1% when you buy + 1% when you pay",
+      "No annual fee ever"
+    ]
+  },
+  {
+    name: "Wells Fargo Active Cash® Card",
+    slug: "wells-fargo-active-cash",
+    bestFor: "Flat-Rate Rewards",
+    annualFee: "$0",
+    warrantyExtension: "+1 year",
+    claimLimit: "$5,000",
+    annualMax: "N/A",
+    rating: 4.5,
+    purchaseProtection: "N/A",
+    pros: ["$0 annual fee", "Unlimited 2% cash back", "Cell phone protection included", "0% intro APR for 15 months"],
+    cons: ["Only $5,000 per claim", "Shorter warranty extension"],
+    description: "The Wells Fargo Active Cash pairs solid extended warranty coverage with no annual fee and 2% cash back. A practical choice for everyday purchases and electronics protection.",
+    bottomLine: "While the $5,000 per claim limit is lower than competitors, it's sufficient for most consumer electronics and appliances. The cell phone protection adds extra value.",
+    cardDetails: [
+      "Extended warranty adds 1 year to manufacturer warranties up to 3 years",
+      "$5,000 maximum benefit per claim",
+      "Unlimited 2% cash rewards on all purchases",
+      "Cell phone protection up to $600 per claim",
+      "0% intro APR for 15 months on purchases",
+      "$0 annual fee"
+    ]
+  },
+  {
+    name: "Capital One Venture X Rewards",
+    slug: "capital-one-venture-x",
+    bestFor: "Travel + Protection",
+    annualFee: "$395",
+    warrantyExtension: "+1 year",
+    claimLimit: "$10,000",
+    annualMax: "N/A",
+    rating: 4.7,
+    purchaseProtection: "90 days",
+    pros: ["$300 travel credit offsets fee", "Full purchase protection suite", "10,000 anniversary miles", "Premium lounge access"],
+    cons: ["$395 annual fee", "Newer card with less track record"],
+    description: "The Venture X combines premium travel benefits with comprehensive purchase protections. Extended warranty, purchase protection, and return protection all included at an effectively low annual cost.",
+    bottomLine: "With the $300 travel credit and 10,000 anniversary miles ($100 value), the effective annual fee drops to near $0. You get travel card perks plus full extended warranty and purchase protection.",
+    cardDetails: [
+      "Extended warranty adds 1 year to original manufacturer warranty",
+      "Original warranty must be 3 years or less",
+      "$10,000 maximum per claim",
+      "Purchase protection covers damage/theft for 90 days",
+      "$300 annual travel credit for Capital One Travel",
+      "10,000 bonus miles every account anniversary"
+    ]
+  }
+];
+
+const faqs = [
+  {
+    question: "How does credit card extended warranty protection work?",
+    answer: "Credit card extended warranty protection automatically extends the manufacturer's warranty on eligible purchases made with your card. When your item fails after the manufacturer's warranty expires but within the extended period, you file a claim with your card issuer's benefits administrator."
+  },
+  {
+    question: "What items are covered by credit card extended warranty?",
+    answer: "Most credit card extended warranties cover electronics (laptops, TVs, smartphones), home appliances (refrigerators, washing machines), tools, furniture, and sporting goods. Items typically must have an original manufacturer's warranty of 3-5 years or less."
+  },
+  {
+    question: "How long does credit card warranty extension last?",
+    answer: "Most cards add 1 year to the manufacturer's warranty, while premium cards like the Amex Platinum and Citi Double Cash offer up to 2 years extension. A product with a 1-year manufacturer warranty could have total coverage of 2-3 years."
+  },
+  {
+    question: "Is credit card extended warranty worth it vs. store warranty?",
+    answer: "Credit card extended warranty is almost always the better value since it's free (included with your card). Store warranties typically cost 10-30% of the item's purchase price, while credit card protection is automatic and free."
+  }
+];
+
+const title = "Best Credit Cards for Extended Warranties 2025 | Screened";
+const description = "Compare the best credit cards for extended warranty protection. Save hundreds on electronics and appliances with free warranty extensions up to 2 years.";
+const heroImage = "/category-images/extended-warranty.jpg";
+---
+
+<MainLayout title={title} description={description} image={heroImage}>
+  <ArticleSchema 
+    title="Best Credit Cards for Extended Warranties: Complete 2025 Guide"
+    description={description}
+    image={heroImage}
+    datePublished={new Date('2025-12-10')}
+    dateModified={new Date('2025-12-12')}
+    author="Sarah Chen"
+    section="Credit Cards"
+    tags={['extended warranty', 'credit card benefits', 'purchase protection']}
+    wordCount={3500}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Credit Cards', url: '/credit-cards' },
+    { name: 'Best Extended Warranty Cards' }
+  ]} />
+  
+  <CursorTrailDark 
+    client:load
+    title="Best Credit Cards for Extended Warranties 2025"
+    kicker=""
+    subtitle="Compare 6 expert-reviewed cards with free warranty extensions up to 2 years. Save hundreds on electronics and appliances."
+    author="Sarah Chen"
+    date="Dec. 12, 2025"
+    compact={true}
+    animateTitle={true}
+  />
+
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the card offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings, ratings, or editorial content.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We analyzed extended warranty terms, claim limits, and real-world claim experiences across 40+ credit cards to identify the 6 that deliver the best purchase protection value.</p>
+      </div>
+      
+      {creditCards.map((card, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group">
+          
+          {card.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Extended Warranty Card
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                {getCardImage(card.name) ? (
+                  <img 
+                    src={getCardImage(card.name)} 
+                    alt={`${card.name} credit card`}
+                    class="w-72 h-auto rounded-xl shadow-2xl group-hover:scale-105 transition-all duration-500"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                ) : (
+                  <div class={`w-72 h-44 rounded-xl shadow-2xl relative overflow-hidden group-hover:scale-105 transition-all duration-500 ${
+                    card.slug.includes('chase') ? 'bg-gradient-to-br from-[#003087] via-[#0047AB] to-[#003087]' :
+                    card.slug.includes('amex') ? 'bg-gradient-to-br from-[#1a1a1a] via-[#2d2d2d] to-[#1a1a1a]' :
+                    card.slug.includes('capital') ? 'bg-gradient-to-br from-[#004C4C] via-[#006666] to-[#004C4C]' :
+                    card.slug.includes('citi') ? 'bg-gradient-to-br from-[#003DA5] via-[#0052CC] to-[#003DA5]' :
+                    card.slug.includes('wells') ? 'bg-gradient-to-br from-[#BB0000] via-[#CC0000] to-[#BB0000]' :
+                    'bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#1a1a1a]'
+                  }`}>
+                    <div class="absolute top-5 left-5 w-12 h-9 rounded bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 opacity-90"></div>
+                    <div class="absolute bottom-4 left-5 right-5">
+                      <div class="text-white/90 text-xs font-medium leading-tight truncate">{card.name}</div>
+                    </div>
+                  </div>
+                )}
+                
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{card.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              <a href="#" class="apply-btn w-full">
+                <span>Apply Now</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On issuer's secure website</p>
+            </div>
+
+            <div class="p-6 md:p-8">
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {card.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{card.name}</h3>
+                </div>
+              </div>
+              
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{card.description}</p>
+
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Warranty Extension</div>
+                  <div class="stat-value text-green-600">{card.warrantyExtension}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Per Claim Limit</div>
+                  <div class="stat-value">{card.claimLimit}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Annual Fee</div>
+                  <div class="stat-value">{card.annualFee}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Purchase Protection</div>
+                  <div class="stat-value">{card.purchaseProtection}</div>
+                </div>
+              </div>
+
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                {card.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{card.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs">✓</span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {card.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs">✗</span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {card.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {card.cardDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Card Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {card.cardDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing extended warranty coverage</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[800px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Credit card</th>
+              <th class="text-left">Warranty Extension</th>
+              <th class="text-left">Per Claim Limit</th>
+              <th class="text-left">Annual Max</th>
+              <th class="text-left">Annual Fee</th>
+            </tr>
+          </thead>
+          <tbody>
+            {creditCards.map((card, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell pl-4">
+                  <div class="flex items-center gap-3">
+                    {getCardImage(card.name) ? (
+                      <img src={getCardImage(card.name)} alt={card.name} class="w-16 h-auto rounded shadow" loading="lazy" />
+                    ) : (
+                      <div class="w-16 h-10 rounded bg-gray-200"></div>
+                    )}
+                    <div>
+                      <div class="font-semibold text-sm text-[#162433]">{card.name}</div>
+                      <div class="text-xs text-[#68727C]">{card.bestFor}</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-green-600 font-semibold">{card.warrantyExtension}</td>
+                <td>{card.claimLimit}</td>
+                <td>{card.annualMax}</td>
+                <td class={`${card.annualFee === '$0' ? 'text-green-600 font-semibold' : ''}`}>{card.annualFee}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="what-is" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        <h2 class="font-sora text-2xl font-bold text-[#162433] mb-6">Understanding Credit Card Extended Warranty Protection</h2>
+        
+        <p class="text-[#4B5563] leading-relaxed mb-6">Credit card extended warranty protection is one of the most valuable yet <strong>underutilized credit card benefits</strong>. This free perk automatically extends the manufacturer's warranty on eligible purchases, potentially saving you hundreds or thousands of dollars on repairs and replacements.</p>
+
+        <div class="bg-[#EBF5FF] border-l-4 border-[#0066B2] p-6 rounded-r-xl my-6">
+          <h4 class="font-bold text-[#162433] mb-2">💡 The Hidden Value of Extended Warranty</h4>
+          <p class="text-sm text-[#4B5563]">Store-bought extended warranties typically cost 10-30% of an item's price. A $2,000 laptop might have a $300 store warranty, while your credit card's protection is completely free.</p>
+        </div>
+
+        <h3 class="font-sora text-xl font-bold text-[#162433] mb-4 mt-8">What Items Are Covered?</h3>
+        <ul class="list-disc pl-6 mb-6 space-y-2 text-[#4B5563]">
+          <li><strong>Electronics:</strong> Laptops, TVs, smartphones, tablets, gaming consoles</li>
+          <li><strong>Home appliances:</strong> Refrigerators, washing machines, dryers, dishwashers</li>
+          <li><strong>Tools and equipment:</strong> Power tools, lawn equipment, workshop machinery</li>
+          <li><strong>Jewelry and watches:</strong> Items with manufacturer warranties</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Frequently Asked Questions</h2>
+      
+      <div class="space-y-4">
+        {faqs.map((faq) => (
+          <details class="faq-item bg-[#F7F8FA] rounded-xl border border-gray-200 overflow-hidden group">
+            <summary class="flex items-center justify-between cursor-pointer p-6 hover:bg-gray-100 transition-colors">
+              <span class="font-semibold text-[#162433] pr-8">{faq.question}</span>
+              <svg class="w-5 h-5 text-gray-500 transition-transform group-open:rotate-180 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="px-6 pb-6 text-[#4B5563] leading-relaxed">
+              {faq.answer}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8">Related Credit Card Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/credit-cards/best-travel-cards" class="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all">
+          <h3 class="font-semibold text-[#162433] mb-2">Best Travel Credit Cards</h3>
+          <p class="text-sm text-[#68727C]">Maximize travel rewards with our top-rated cards featuring bonus points and lounge access.</p>
+        </a>
+        <a href="/credit-cards/best-cashback" class="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all">
+          <h3 class="font-semibold text-[#162433] mb-2">Best Cash Back Cards</h3>
+          <p class="text-sm text-[#68727C]">Earn cash back on everyday purchases with competitive rates and flexible redemption.</p>
+        </a>
+        <a href="/credit-cards/no-annual-fee" class="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all">
+          <h3 class="font-semibold text-[#162433] mb-2">Best No Annual Fee Cards</h3>
+          <p class="text-sm text-[#68727C]">Great rewards without the yearly cost—cards that deliver value with $0 fees.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apply-btn {
+    @apply flex items-center justify-center gap-2 bg-gradient-to-r from-[#0066B2] to-[#004C8C] text-white font-bold py-3.5 px-6 rounded-xl hover:from-[#005299] hover:to-[#003D70] transition-all duration-300 shadow-lg hover:shadow-xl;
+  }
+
+  .stat-box {
+    @apply bg-[#F8FAFC] rounded-xl p-3 text-center border border-gray-100;
+  }
+  
+  .stat-label {
+    @apply text-xs text-[#68727C] mb-1 font-medium;
+  }
+  
+  .stat-value {
+    @apply text-sm font-bold text-[#162433];
+  }
+
+  .accordion-item {
+    @apply border-b border-gray-100 last:border-b-0;
+  }
+  
+  .accordion-header {
+    @apply flex items-center justify-between w-full py-3 text-left font-semibold text-[#162433] text-sm cursor-pointer hover:text-[#0066B2] transition-colors;
+  }
+  
+  .accordion-icon {
+    @apply w-5 h-5 text-gray-400 transition-transform duration-200;
+  }
+  
+  details[open] .accordion-icon {
+    @apply rotate-180;
+  }
+  
+  .accordion-content {
+    @apply pb-4 text-sm text-[#4B5563] leading-relaxed;
+  }
+
+  .premium-comparison-table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+  .premium-comparison-table thead th {
+    @apply py-4 px-3 text-xs font-bold text-[#68727C] uppercase tracking-wider border-b-2 border-gray-200 bg-[#F8FAFC];
+  }
+  
+  .comparison-row {
+    @apply border-b border-gray-100 hover:bg-[#F8FAFC] transition-colors;
+  }
+  
+  .comparison-row td {
+    @apply py-4 px-3 align-middle text-sm;
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+
+const softwarePosts = [
+  {
+    title: "Best VPN Services",
+    description: "Protect your online privacy with the top VPN providers. Compare NordVPN, ExpressVPN, Surfshark, and more for speed and security.",
+    href: "/software/best-vpn-services",
+    category: "Privacy",
+    image: "/blog-images/default-article.jpg"
+  },
+  {
+    title: "Best Antivirus Software",
+    description: "Keep your devices safe from malware and threats. Compare Norton, McAfee, Bitdefender, and more.",
+    href: "/software/best-antivirus-software",
+    category: "Security",
+    image: "/blog-images/default-article.jpg"
+  },
+  {
+    title: "Best Password Managers",
+    description: "Secure all your passwords in one place. Compare 1Password, LastPass, Dashlane, and Bitwarden.",
+    href: "/software/best-password-managers",
+    category: "Security",
+    image: "/blog-images/default-article.jpg"
+  },
+];
+---
+
+<MainLayout title="Best Software 2025 | Screened" description="Compare the best VPNs, antivirus software, and password managers. Expert reviews and security ratings.">
+  <CursorTrailDark 
+    client:load
+    title="Software"
+    subtitle="Expert reviews of VPNs, antivirus, password managers, and productivity tools"
+    compact={true}
+  />
+
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {softwarePosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            image={post.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
+

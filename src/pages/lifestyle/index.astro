@@ -1,0 +1,78 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+
+const lifestylePosts = [
+  {
+    title: "Best Meal Delivery Services",
+    description: "Simplify dinner with top-rated meal kits. Compare HelloFresh, Blue Apron, Factor, and more for convenience and taste.",
+    href: "/lifestyle/best-meal-delivery-services",
+    category: "Food",
+    image: "/blog-images/default-article.jpg"
+  },
+  {
+    title: "Best Mattresses",
+    description: "Find your perfect sleep with the top mattress brands. Compare Saatva, Casper, Purple, and Tempur-Pedic.",
+    href: "/lifestyle/best-mattresses",
+    category: "Sleep",
+    image: "/blog-images/default-article.jpg"
+  },
+];
+---
+
+<MainLayout title="Best Lifestyle Products 2025 | Screened" description="Compare the best meal delivery services, mattresses, and lifestyle products. Expert reviews.">
+  <CursorTrailDark 
+    client:load
+    title="Lifestyle"
+    subtitle="Expert reviews of meal kits, mattresses, and lifestyle products"
+    compact={true}
+  />
+
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {lifestylePosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            image={post.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
+

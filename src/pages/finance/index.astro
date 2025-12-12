@@ -1,0 +1,99 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+
+const financePosts = [
+  {
+    title: "Best Online Savings Accounts",
+    description: "Compare the highest APY savings accounts from SoFi, Marcus, Ally, and more. Find FDIC-insured accounts with rates up to 5% APY.",
+    href: "/finance/best-online-savings-accounts",
+    category: "Savings",
+    image: "/category-images/savings-accounts.jpg"
+  },
+  {
+    title: "Best Student Loans",
+    description: "Find the best private student loans with competitive rates and flexible repayment options. Compare Sallie Mae, Discover, and more.",
+    href: "/blog/best-student-loans",
+    category: "Student Loans",
+    image: "/category-images/student-loans.jpg"
+  },
+  {
+    title: "Best Mortgage Refinance Companies",
+    description: "Lower your monthly payment with the best mortgage refinance lenders. Compare rates from Rocket Mortgage, Better, and more.",
+    href: "/blog/best-mortgage-refinance-companies",
+    category: "Mortgage",
+    image: "/blog-images/default-article.jpg"
+  },
+  {
+    title: "Best Gold IRA Companies",
+    description: "Protect your retirement with precious metals. Compare top Gold IRA providers including Augusta, Goldco, and American Hartford Gold.",
+    href: "/blog/best-gold-ira-companies",
+    category: "Retirement",
+    image: "/blog-images/default-article.jpg"
+  },
+  {
+    title: "Best Auto Refinance Lenders",
+    description: "Lower your car payment by refinancing. Compare the best auto loan refinancing companies for the lowest rates.",
+    href: "/blog/best-auto-refinance-lenders",
+    category: "Auto Loans",
+    image: "/blog-images/default-article.jpg"
+  },
+];
+---
+
+<MainLayout title="Best Finance Products 2025 | Screened" description="Compare the best savings accounts, loans, and investment options. Expert reviews and data-driven rankings.">
+  <CursorTrailDark 
+    client:load
+    title="Finance"
+    subtitle="Expert reviews of savings accounts, loans, and investment products"
+    compact={true}
+  />
+
+  <section class="posts-section">
+    <div class="posts-container">
+      <div class="posts-grid">
+        {financePosts.map(post => (
+          <PostCard
+            title={post.title}
+            description={post.description}
+            href={post.href}
+            category={post.category}
+            image={post.image}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .posts-section {
+    background: #ffffff;
+    padding: 3rem 0 4rem;
+  }
+
+  .posts-container {
+    max-width: 76rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .posts-container {
+      padding: 0 1.25rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
+
