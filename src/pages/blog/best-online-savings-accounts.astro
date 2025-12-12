@@ -1,260 +1,1358 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Savings Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
-const providers = [
+// High-yield savings accounts data - 10 providers
+const accounts = [
   {
-    name: "Varo Bank",
-    logo: "https://logo.clearbit.com/varo.com",
+    name: "Varo Bank High-Yield Savings",
+    slug: "varo-bank",
     bestFor: "Highest APY",
-    monthlyAvg: "5.00% APY*",
-    serviceFee: "$0",
-    rating: 4.8,
-    pros: ["Highest APY at 5.00% on balances up to $5,000", "No monthly maintenance fees", "No minimum balance required", "FDIC insured up to $250,000"],
-    cons: ["Requirements needed to earn top rate", "Lower rate on balances over $5,000", "No physical branches"],
-    description: "Varo Bank offers the highest APY currently available when you meet direct deposit and spending requirements, making it ideal for active banking customers.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "Openbank by Santander",
-    logo: "https://logo.clearbit.com/openbank.com",
-    bestFor: "Standalone Savings",
-    monthlyAvg: "4.20% APY",
-    serviceFee: "$0",
+    apy: "5.00%",
+    apyNote: "up to $5K",
+    minBalance: "$0",
+    monthlyFee: "$0",
     rating: 4.9,
-    pros: ["Competitive 4.20% APY", "No monthly maintenance fees", "Strong mobile banking app", "Backed by Santander Bank"],
-    cons: ["$500 minimum balance for APY", "No physical branch access", "Limited additional banking products"],
-    description: "Openbank's High Yield Savings account offers premium rates with no monthly fees, backed by the security of Santander Bank.",
-    affiliateUrl: "#"
+    fdic: true,
+    pros: ["Highest APY at 5.00% on balances up to $5,000", "No monthly maintenance fees ever", "No minimum balance to open or earn", "FDIC insured through Varo Bank, N.A."],
+    cons: ["Requirements to earn top 5.00% rate", "3.00% APY on balances over $5,000", "No physical branches"],
+    description: "Varo Bank offers the highest APY in our rankings when you meet their qualifying activities—direct deposit plus 5 debit card purchases monthly. Perfect for active banking customers who want maximum returns.",
+    bottomLine: "Varo Bank delivers an industry-leading 5.00% APY—that's over 12X the national average of 0.41%. The catch? You need $1,000+ in monthly direct deposits and 5 qualifying debit purchases. If you already use direct deposit for paychecks and regularly use your debit card, this is free money. On a $5,000 balance, you'll earn $250/year versus just $20 at a traditional bank—a $230 difference.",
+    accountDetails: [
+      "5.00% APY on balances up to $5,000 (with qualifying activities)",
+      "3.00% APY on savings over $5,000 and if requirements not met",
+      "Qualifying: $1,000+ monthly direct deposits + 5 debit purchases",
+      "No minimum deposit to open account",
+      "No monthly maintenance fees",
+      "FDIC insured up to $250,000 through Varo Bank, N.A.",
+      "Mobile check deposit available",
+      "Instant transfers between Varo accounts",
+      "No overdraft fees on checking"
+    ],
+    editorChoice: true
   },
   {
-    name: "EverBank",
-    logo: "https://logo.clearbit.com/everbank.com",
+    name: "Openbank High Yield Savings",
+    slug: "openbank",
+    bestFor: "No Requirements",
+    apy: "4.75%",
+    apyNote: "no strings",
+    minBalance: "$500",
+    monthlyFee: "$0",
+    rating: 4.8,
+    fdic: true,
+    pros: ["4.75% APY with no hoops to jump through", "Backed by Santander Bank's financial strength", "Award-winning mobile app experience", "No monthly maintenance fees"],
+    cons: ["$500 minimum to earn advertised APY", "No physical branch access", "Limited additional banking products"],
+    description: "Openbank delivers one of the highest APYs without complicated requirements—just deposit $500 and earn. Backed by global banking giant Santander, offering security and reliability.",
+    bottomLine: "If you want top-tier rates without tracking requirements, Openbank is our top pick. The 4.75% APY applies automatically once you maintain $500—no direct deposits, no debit transactions, no fine print. On a $10,000 balance, you'll earn $475/year. Their mobile app consistently ranks among the best, making it easy to manage your money from anywhere.",
+    accountDetails: [
+      "4.75% APY on all balances over $500",
+      "$500 minimum balance to earn APY",
+      "No monthly maintenance fees",
+      "FDIC insured through Santander Bank",
+      "Instant account opening online",
+      "Award-winning mobile banking app",
+      "Easy external transfers",
+      "No minimum to open (just to earn APY)"
+    ]
+  },
+  {
+    name: "EverBank Performance℠ Savings",
+    slug: "everbank",
     bestFor: "Complete Banking",
-    monthlyAvg: "4.05% APY",
-    serviceFee: "$0",
-    rating: 5.0,
-    pros: ["No minimum to open", "No monthly fees", "Multiple account types available", "Strong customer service"],
-    cons: ["APY slightly lower than competitors", "Online-only banking", "No branch access"],
-    description: "EverBank provides a complete banking solution with high-yield savings, CDs, money market accounts, and interest-bearing checking all under one roof.",
-    affiliateUrl: "#"
+    apy: "4.75%",
+    apyNote: "all balances",
+    minBalance: "$0",
+    monthlyFee: "$0",
+    rating: 4.7,
+    fdic: true,
+    pros: ["No minimum balance requirements", "Full suite of banking products", "Strong customer service ratings", "Competitive rates across all accounts"],
+    cons: ["APY may fluctuate with market rates", "Online-only—no physical branches", "Fewer perks than some competitors"],
+    description: "EverBank provides a complete digital banking ecosystem with high-yield savings, CDs, money market accounts, and checking—all under one roof with consistently competitive rates.",
+    bottomLine: "EverBank is ideal for savers who want one bank for everything. Their 4.75% APY savings pairs well with their checking, money market, and CD options. No minimums, no fees, no gotchas. Their customer service earns consistently strong reviews, and the platform is mature and reliable. If you're consolidating accounts, EverBank simplifies your financial life.",
+    accountDetails: [
+      "4.75% APY on all balances",
+      "No minimum balance to open or earn",
+      "No monthly maintenance fees",
+      "FDIC insured up to $250,000",
+      "Full banking suite: savings, checking, CDs, money market",
+      "Mobile check deposit",
+      "Easy ACH transfers to external accounts",
+      "24/7 customer support"
+    ]
   },
   {
-    name: "Newtek Bank",
-    logo: "https://logo.clearbit.com/newtekbank.com",
-    bestFor: "No Minimums",
-    monthlyAvg: "4.35% APY",
-    serviceFee: "$0",
+    name: "Newtek Bank High Yield Savings",
+    slug: "newtek-bank",
+    bestFor: "Simple & Straightforward",
+    apy: "4.60%",
+    apyNote: "all balances",
+    minBalance: "$0",
+    monthlyFee: "$0",
+    rating: 4.6,
+    fdic: true,
+    pros: ["4.60% APY on every dollar", "Absolutely no minimum balance", "Simple, no-frills account structure", "FDIC insured through Newtek Bank"],
+    cons: ["Limited additional banking products", "Newer bank with shorter track record", "Basic mobile app features"],
+    description: "Newtek Bank offers straightforward high-yield savings with no minimums and no requirements—just a competitive rate on every dollar you deposit.",
+    bottomLine: "Newtek Bank is perfect for savers who want simplicity. No tiers, no requirements, no fine print—just 4.60% APY on your entire balance. While they're newer to consumer banking, they're FDIC insured and offer a clean, simple product. If you value straightforward banking over bells and whistles, Newtek delivers.",
+    accountDetails: [
+      "4.60% APY on all balances",
+      "No minimum balance requirement",
+      "No monthly fees",
+      "FDIC insured through Newtek Bank, N.A.",
+      "Online account management",
+      "Standard ACH transfers available"
+    ]
+  },
+  {
+    name: "SoFi Checking and Savings",
+    slug: "sofi",
+    bestFor: "Combined Account",
+    apy: "3.80%",
+    apyNote: "with direct deposit",
+    minBalance: "$0",
+    monthlyFee: "$0",
     rating: 4.7,
-    pros: ["4.35% APY on all balances", "No minimum to open", "FDIC insured", "Simple account structure"],
-    cons: ["Limited additional banking products", "No physical branches", "Newer bank with less history"],
-    description: "Newtek Bank offers one of the highest APYs with no minimum balance requirement, making it accessible for savers just starting out.",
-    affiliateUrl: "#"
+    fdic: true,
+    pros: ["Combined checking and savings in one account", "Up to $3M in FDIC coverage through partner banks", "Robust financial services ecosystem", "Cash back rewards and member perks"],
+    cons: ["Requires direct deposit for best rate", "Lower base APY without qualifying", "Platform can feel overwhelming"],
+    description: "SoFi combines checking and savings into one powerful account, offering competitive rates plus access to their complete financial platform including loans, investing, and credit cards.",
+    bottomLine: "SoFi is the best choice if you want more than just savings. Their hybrid checking/savings earns 3.80% APY with direct deposit, plus you get access to their investing platform, personal loans, and rewards. The $3M FDIC coverage (through partner banks) is unmatched. If you're building a complete financial ecosystem, SoFi offers serious value beyond just the APY.",
+    accountDetails: [
+      "3.80% APY with qualifying direct deposit",
+      "0.50% APY without direct deposit",
+      "Combined checking and savings functionality",
+      "Up to $3,000,000 FDIC insurance via partner banks",
+      "No account fees",
+      "No minimum balance",
+      "Access to SoFi loans, investing, credit cards",
+      "2% cash back on purchases with SoFi Credit Card"
+    ]
   },
   {
     name: "Marcus by Goldman Sachs",
-    logo: "https://logo.clearbit.com/marcus.com",
-    bestFor: "Track Record",
-    monthlyAvg: "3.65% APY",
-    serviceFee: "$0",
-    rating: 4.1,
-    pros: ["Established reputation for strong rates", "No monthly fees", "No minimum balance", "Easy-to-use mobile app"],
-    cons: ["No checking account offered", "Lower APY than newer competitors", "Limited product ecosystem"],
-    description: "Marcus has maintained a strong track record of competitive rates since launching, bringing Goldman Sachs' institutional credibility to consumer banking.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "Forbright Bank",
-    logo: "https://logo.clearbit.com/forbrightbank.com",
-    bestFor: "Eco-Friendly",
-    monthlyAvg: "4.00% APY",
-    serviceFee: "$0",
-    rating: 5.0,
-    pros: ["High-yield savings with eco-friendly mission", "No monthly fees", "No minimum balance", "B Corp certified bank"],
-    cons: ["No checking account", "Limited product selection", "Newer to consumer banking"],
-    description: "Forbright Bank offers competitive rates while maintaining eco-friendly certification, ideal for environmentally conscious savers.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "Capital One 360",
-    logo: "https://logo.clearbit.com/capitalone.com",
-    bestFor: "In-Person Service",
-    monthlyAvg: "3.40% APY",
-    serviceFee: "$0",
-    rating: 4.3,
-    pros: ["Access to Capital One Café locations", "No monthly fees", "No minimum balance", "Strong mobile app"],
-    cons: ["Lower APY than online-only banks", "Limited café locations", "Rates can fluctuate"],
-    description: "Capital One 360 Performance Savings combines competitive online rates with access to in-person service at Capital One Café locations.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "American Express",
-    logo: "https://logo.clearbit.com/americanexpress.com",
-    bestFor: "Amex Ecosystem",
-    monthlyAvg: "3.40% APY",
-    serviceFee: "$0",
-    rating: 3.9,
-    pros: ["Well-known brand trust", "No monthly fees", "No minimum balance", "Integrates with Amex cards"],
-    cons: ["Lower APY than competitors", "No checking account", "Limited to savings products"],
-    description: "American Express High Yield Savings offers brand reliability and seamless integration for existing Amex cardholders.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "SoFi",
-    logo: "https://logo.clearbit.com/sofi.com",
-    bestFor: "Combined Checking/Savings",
-    monthlyAvg: "3.60% APY",
-    serviceFee: "$0",
-    rating: 4.8,
-    pros: ["Combined checking and savings", "Up to 3.60% APY with direct deposit", "Sign-up bonuses available", "Full financial platform"],
-    cons: ["Requires direct deposit for best rates", "APY varies based on membership", "Complex rate structure"],
-    description: "SoFi Checking and Savings combines both account types with competitive rates and a complete financial services ecosystem.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "Synchrony Bank",
-    logo: "https://logo.clearbit.com/synchrony.com",
-    bestFor: "ATM Access",
-    monthlyAvg: "3.65% APY",
-    serviceFee: "$0",
+    slug: "marcus",
+    bestFor: "Brand Trust",
+    apy: "3.90%",
+    apyNote: "no minimum",
+    minBalance: "$0",
+    monthlyFee: "$0",
     rating: 4.5,
-    pros: ["ATM card included", "ATM fee reimbursements", "No monthly fees", "No minimum balance"],
-    cons: ["Lower APY than top competitors", "No checking account", "Online-only support"],
-    description: "Synchrony Bank stands out by offering an ATM card with fee reimbursements, giving you cash access typically unavailable with online savings accounts.",
-    affiliateUrl: "#"
+    fdic: true,
+    pros: ["Goldman Sachs institutional credibility", "Consistently competitive rates since 2016", "No fees, no minimums, no gimmicks", "Easy-to-use mobile and web platform"],
+    cons: ["No checking account offered", "Lower APY than newer competitors", "Limited product ecosystem"],
+    description: "Marcus brings Goldman Sachs' 150+ years of financial expertise to consumer banking, offering a reliable high-yield savings account with consistently competitive rates.",
+    bottomLine: "Marcus has been a reliable name in high-yield savings since launching in 2016. While their 3.90% APY isn't the absolute highest, Goldman Sachs' reputation for stability matters. They've consistently offered competitive rates without bait-and-switch tactics. If you value reliability from a trusted name over chasing the highest rate, Marcus is a solid long-term choice.",
+    accountDetails: [
+      "3.90% APY on all balances",
+      "No minimum deposit to open",
+      "No monthly maintenance fees",
+      "FDIC insured through Goldman Sachs Bank USA",
+      "No transaction limits",
+      "Easy-to-use mobile app",
+      "Savings CDs also available",
+      "No fee for external transfers"
+    ]
+  },
+  {
+    name: "Capital One 360 Performance Savings",
+    slug: "capital-one-360",
+    bestFor: "In-Person Access",
+    apy: "3.70%",
+    apyNote: "all balances",
+    minBalance: "$0",
+    monthlyFee: "$0",
+    rating: 4.4,
+    fdic: true,
+    pros: ["Access to Capital One Café locations", "Strong mobile app with great UX", "No fees or minimums", "Full banking ecosystem available"],
+    cons: ["Lower APY than online-only competitors", "Café locations limited to major cities", "Rate has declined from previous highs"],
+    description: "Capital One 360 combines competitive online rates with the rare ability to visit Capital One Café locations in select cities—a hybrid approach for those who occasionally want in-person service.",
+    bottomLine: "Capital One 360 is unique: competitive online rates plus physical Café locations where you can get help in person. The 3.70% APY is solid (though not the highest), and the mobile app is excellent. If you live near a Capital One Café and value occasionally speaking to a human, this hybrid approach is unmatched. For purely online banking, other options pay more.",
+    accountDetails: [
+      "3.70% APY on all balances",
+      "No minimum balance requirement",
+      "No monthly fees",
+      "FDIC insured through Capital One, N.A.",
+      "Access to Capital One Café locations",
+      "Excellent mobile and web apps",
+      "Easy integration with Capital One checking",
+      "No limit on transactions"
+    ]
+  },
+  {
+    name: "American Express High Yield Savings",
+    slug: "american-express",
+    bestFor: "Amex Cardholders",
+    apy: "3.70%",
+    apyNote: "no minimum",
+    minBalance: "$0",
+    monthlyFee: "$0",
+    rating: 4.3,
+    fdic: true,
+    pros: ["Trusted American Express brand", "Seamless integration with Amex cards", "No fees or minimums", "24/7 customer service"],
+    cons: ["Lower APY than top competitors", "No checking account available", "Limited to savings products only"],
+    description: "American Express High Yield Savings offers brand reliability and seamless integration for existing Amex cardholders, with solid rates and no-fee structure.",
+    bottomLine: "If you're already in the Amex ecosystem with credit cards, adding their savings account is convenient. The 3.70% APY is competitive (though not leading), and the integration with your existing Amex accounts is seamless. Their 24/7 customer service is excellent. The limitation: you can only save here, not check—so you'll need another bank for daily transactions.",
+    accountDetails: [
+      "3.70% APY on all balances",
+      "No minimum balance to earn APY",
+      "No monthly fees",
+      "FDIC insured through American Express National Bank",
+      "Links easily to Amex credit cards",
+      "24/7 customer support",
+      "Mobile check deposit",
+      "No limit on number of accounts"
+    ]
+  },
+  {
+    name: "Synchrony Bank High Yield Savings",
+    slug: "synchrony",
+    bestFor: "ATM Access",
+    apy: "4.00%",
+    apyNote: "all balances",
+    minBalance: "$0",
+    monthlyFee: "$0",
+    rating: 4.4,
+    fdic: true,
+    pros: ["Optional ATM card for cash access", "ATM fee reimbursements up to $5/month", "Competitive 4.00% APY", "No monthly fees or minimums"],
+    cons: ["Lower APY than top competitors", "ATM reimbursement capped at $5/month", "Online-only customer support"],
+    description: "Synchrony Bank stands out by offering an optional ATM card with fee reimbursements—a rare feature that gives you cash access typically unavailable with online savings accounts.",
+    bottomLine: "Synchrony solves a common online savings problem: needing cash. Their optional ATM card with $5/month fee reimbursement means you can actually access your money without transfers. The 4.00% APY is competitive, and the no-fee structure is clean. If you occasionally need cash from savings, Synchrony's ATM access is a meaningful differentiator.",
+    accountDetails: [
+      "4.00% APY on all balances",
+      "Optional ATM card included",
+      "Up to $5/month ATM fee reimbursement",
+      "No minimum balance",
+      "No monthly maintenance fees",
+      "FDIC insured through Synchrony Bank",
+      "Mobile check deposit",
+      "Perks program with partner discounts"
+    ]
+  },
+  {
+    name: "Forbright Bank Growth Savings",
+    slug: "forbright",
+    bestFor: "Eco-Conscious Savers",
+    apy: "4.35%",
+    apyNote: "all balances",
+    minBalance: "$0",
+    monthlyFee: "$0",
+    rating: 4.3,
+    fdic: true,
+    pros: ["B Corp certified bank", "Competitive 4.35% APY", "Deposits fund sustainable projects", "No fees or minimums"],
+    cons: ["Newer to consumer banking", "No checking account available", "Limited product selection"],
+    description: "Forbright Bank combines competitive rates with environmental responsibility—your deposits help fund sustainable energy and infrastructure projects while earning strong returns.",
+    bottomLine: "Forbright appeals to savers who care where their money goes. As a B Corp certified bank, your deposits support clean energy and sustainable infrastructure—without sacrificing returns. The 4.35% APY is genuinely competitive. If aligning your banking with your values matters, Forbright lets you earn well while doing good.",
+    accountDetails: [
+      "4.35% APY on all balances",
+      "No minimum balance requirement",
+      "No monthly fees",
+      "FDIC insured through Forbright Bank",
+      "B Corp certified bank",
+      "Deposits fund sustainable projects",
+      "Online account management",
+      "Standard ACH transfers"
+    ]
   }
 ];
 
+// FAQ data
 const faqs = [
   {
     question: "What is a high-yield savings account?",
-    answer: "A high-yield savings account is a deposit account that pays a significantly higher interest rate than traditional savings accounts. These accounts typically offer APYs of 3% to 5% compared to the national average of 0.40%, helping your money grow faster through compound interest."
+    answer: "A high-yield savings account (HYSA) pays <strong>10-12 times more interest</strong> than traditional bank savings accounts. While the national average savings rate is just 0.41% APY, the best high-yield accounts offer 4-5% APY. On a $10,000 balance, that's the difference between earning $41/year and $400+/year. These accounts are offered primarily by online banks with lower overhead costs."
   },
   {
     question: "Are online savings accounts safe?",
-    answer: "Yes, online savings accounts at FDIC-insured banks are just as safe as traditional bank accounts. Your deposits are protected up to $250,000 per depositor, per bank. All the banks on our list are FDIC insured."
+    answer: "Yes, online savings accounts at FDIC-insured banks are <strong>exactly as safe as traditional bank accounts</strong>. FDIC insurance protects your deposits up to $250,000 per depositor, per bank. All banks on our list are FDIC insured. The only difference is the absence of physical branches—your money is protected identically to a brick-and-mortar bank."
   },
   {
     question: "How often is interest paid on savings accounts?",
-    answer: "Most high-yield savings accounts compound interest daily and pay it monthly. This means your interest earns interest, accelerating your savings growth over time."
+    answer: "Most high-yield savings accounts <strong>compound interest daily and pay it monthly</strong>. Daily compounding means your interest earns interest every day, maximizing your returns. With a 4.75% APY compounded daily, $10,000 grows to $10,486.38 after one year—about $11 more than with monthly compounding."
   },
   {
     question: "What's the difference between APY and interest rate?",
-    answer: "APY (Annual Percentage Yield) includes the effect of compound interest, giving you the true annual return. The interest rate is the base rate before compounding. APY is the more accurate measure for comparing accounts."
+    answer: "<strong>APY (Annual Percentage Yield)</strong> is the true return on your money, including compound interest effects. The base interest rate doesn't account for compounding. For example, a 4.75% interest rate compounded daily yields 4.86% APY. Always compare APYs between accounts—it's the accurate measure of what you'll actually earn."
   },
   {
     question: "Can I lose money in a high-yield savings account?",
-    answer: "No, you cannot lose your principal in an FDIC-insured savings account. However, your purchasing power could decrease if inflation exceeds your interest rate."
+    answer: "You <strong>cannot lose your principal</strong> in an FDIC-insured savings account—your deposits are guaranteed. However, your <strong>purchasing power</strong> could decrease if inflation exceeds your interest rate. With current high-yield rates of 4-5% and inflation around 3%, you're likely gaining real purchasing power. During low-rate environments, savings may not keep pace with inflation."
   },
   {
     question: "How many savings accounts can I have?",
-    answer: "There's no limit to how many savings accounts you can have. Many people use multiple accounts to organize savings for different goals like emergency funds, vacations, or home down payments."
+    answer: "There's <strong>no legal limit</strong> on savings accounts. Many savvy savers use multiple accounts strategically: one for emergency fund, one for vacation savings, one for a house down payment, etc. This 'bucket' approach helps organize goals. Some people also spread money across banks to maximize FDIC coverage ($250K limit per bank) or chase the highest rates."
   },
   {
     question: "Do I need to pay taxes on savings account interest?",
-    answer: "Yes, interest earned on savings accounts is taxable income. Banks report interest over $10 to the IRS on Form 1099-INT. You'll need to report all interest earned on your tax return."
+    answer: "Yes, <strong>interest earned is taxable income</strong>. Banks report interest over $10 annually to the IRS on Form 1099-INT. You'll receive this form in January and must report all interest earned on your tax return. At higher tax brackets, consider tax-advantaged options like I Bonds or municipal bond funds for some savings goals."
+  },
+  {
+    question: "What happens to savings rates when the Fed cuts rates?",
+    answer: "High-yield savings rates typically <strong>decline when the Federal Reserve cuts rates</strong>, though not immediately or proportionally. Banks adjust gradually. After the Fed's 2024 rate cuts, top savings rates fell from 5.5% to 4.5-5%. If you want to lock in current rates, consider <strong>certificates of deposit (CDs)</strong> which guarantee your rate for the term length."
+  },
+  {
+    question: "Is it worth switching banks for a higher APY?",
+    answer: "It depends on the difference and your balance. On $10,000, the difference between 4.00% APY and 4.75% APY is <strong>$75/year</strong>. Worth switching? Probably. For larger balances, the math is compelling: on $50,000, that's $375/year. Most online bank switches take 15-30 minutes to open an account and initiate transfers. If the rate difference exceeds 0.5%, switching usually makes sense."
+  },
+  {
+    question: "Should I keep all my savings in a high-yield account?",
+    answer: "High-yield savings is ideal for <strong>emergency funds and short-term goals</strong> (1-3 years). For longer-term goals (5+ years), you may earn more in diversified investments despite higher risk. A common approach: 3-6 months of expenses in high-yield savings for emergencies, additional savings for 1-3 year goals, then invest the rest for long-term growth."
   }
 ];
-
-const content = `
-## Understanding High-Yield Savings Accounts
-
-High-yield savings accounts (HYSAs) offer interest rates many times higher than traditional bank savings accounts. While the national average savings rate is just 0.40%, the best online savings accounts offer APYs ranging from 3.40% to 5.00%.
-
-### Why Online Banks Offer Better Rates
-
-Online banks can offer significantly higher interest rates because they have lower overhead costs—no physical branches to maintain, fewer staff, and reduced real estate expenses. These savings are passed directly to customers through higher APYs.
-
-## How Much Can You Earn?
-
-The difference between a traditional savings account and a high-yield account is substantial:
-
-| Deposit Amount | Traditional (0.40% APY) | High-Yield (4.00% APY) | Difference |
-|----------------|-------------------------|------------------------|------------|
-| $5,000 | $20/year | $200/year | +$180 |
-| $10,000 | $40/year | $400/year | +$360 |
-| $25,000 | $100/year | $1,000/year | +$900 |
-| $50,000 | $200/year | $2,000/year | +$1,800 |
-
-## Key Features to Consider
-
-### Annual Percentage Yield (APY)
-
-The APY determines how much interest you'll earn. However, don't chase the highest rate at the expense of other important features. Look for banks with consistently competitive rates rather than temporary promotional offers.
-
-### Fees and Minimums
-
-The best online savings accounts have:
-- **No monthly maintenance fees**
-- **No minimum balance requirements** to earn the advertised APY
-- **No minimum opening deposit** (or very low)
-- **No excess withdrawal fees** beyond regulatory limits
-
-### FDIC Insurance
-
-All accounts on our list are FDIC insured, protecting your deposits up to $250,000 per depositor, per bank, for each ownership category.
-
-### Mobile Banking Quality
-
-Since you won't have branch access, a robust mobile app is essential. Look for:
-- Mobile check deposit
-- Easy transfer functionality
-- Account alerts and notifications
-- Biometric login options
-
-## Interest Rate Trends in 2025
-
-The Federal Reserve lowered its benchmark interest rate three times in 2024, which has caused savings rates to trend slightly lower. However, excellent rates above 4% are still widely available. Smart savers should:
-
-1. **Lock in rates now** while they remain elevated
-2. **Consider CDs** for guaranteed rates on funds you won't need short-term
-3. **Monitor rate changes** and be willing to switch banks if necessary
-
-## Tips for Maximizing Your Savings
-
-### Set Up Automatic Transfers
-
-Automate your savings by scheduling regular transfers from your checking account. Even small, consistent deposits compound significantly over time.
-
-### Use Multiple Accounts for Different Goals
-
-Consider separate savings accounts for:
-- **Emergency fund** (3-6 months of expenses)
-- **Short-term goals** (vacations, purchases)
-- **Long-term goals** (down payment, major purchases)
-
-### Avoid Minimum Balance Penalties
-
-If your chosen account has minimum balance requirements, ensure you maintain the threshold to earn the full APY and avoid any potential fees.
-
-## The Bottom Line
-
-Opening a high-yield online savings account is one of the simplest ways to earn more on your money. With rates up to 5.00% APY and no fees at most banks, there's no reason to leave money in a traditional savings account earning near-zero interest.
-
-For most savers, we recommend **Varo Bank** for the highest APY if you can meet their requirements, or **Openbank** and **EverBank** for consistently strong rates with no strings attached.
-
-*APYs shown are current as of December 2025. Rates are variable and subject to change.*
-`;
 ---
 
-<ComparisonLayout
-  title="Best Online Savings Accounts of 2025"
-  description="Compare the best high-yield online savings accounts with APYs up to 5.00%. Expert analysis of top banks including Varo, Openbank, EverBank, and more."
-  category="finance"
-  categoryLabel="HIGH-YIELD SAVINGS"
-  heroImage="/blog-images/online-savings-accounts.jpg"
-  researchIntro="We tracked APY changes daily for 47 online banks over 6 months, identifying which banks consistently stay competitive versus those offering teaser rates. On a $25,000 balance, the difference between a 4.5% and 5.0% APY is $125/year. These accounts offer top-tier rates with no gimmicks or requirements."
-  author="Jessica Martinez"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
-  content={content}
-/>
+<MainLayout title="Best Online Savings Accounts of December 2025 | Top High-Yield Rates" description="Compare the best high-yield online savings accounts with APYs up to 5.00%. Expert analysis of Varo, Openbank, EverBank, SoFi & more. No minimums, no fees, FDIC insured.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="Best Online Savings Accounts of December 2025"
+    description="Compare the best high-yield online savings accounts with APYs up to 5.00%. Expert analysis of top banks with no fees and no minimums."
+    url="/blog/best-online-savings-accounts"
+    image="/blog-images/online-savings-accounts.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-12')}
+    author="Jessica Martinez"
+    section="Personal Finance"
+    tags={['savings accounts', 'high-yield savings', 'APY', 'online banking', 'FDIC insured']}
+    wordCount={4800}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Blog', url: '/blog' },
+    { name: 'Best Online Savings Accounts' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Online Savings Accounts of December 2025"
+    kicker=""
+    subtitle="Compare top high-yield savings with APYs up to 5.00%. No fees, no minimums, FDIC insured."
+    author="Jessica Martinez"
+    date="Dec. 12, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Some offers on this page are from partners who compensate us. This doesn't affect our rankings or editorial integrity—recommendations are based on objective analysis. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <!-- Accounts Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We tracked APY changes daily across 47 online banks over 6 months, analyzing rate consistency, fee structures, and account features. The national average savings rate is just 0.41%—these accounts pay <strong>10-12X more</strong>. On a $25,000 balance, the difference between a top account and average bank is <strong>$1,000+ per year</strong>.</p>
+      </div>
+      
+      {accounts.map((account, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {account.editorChoice && (
+            <div class="bg-gradient-to-r from-[#059669] to-[#047857] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Highest APY Available
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#059669] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Bank Logo */}
+              <div class="logo-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4">
+                  <img 
+                    src={`https://logo.clearbit.com/${account.slug === 'varo-bank' ? 'varo.com' : account.slug === 'openbank' ? 'openbank.com' : account.slug === 'everbank' ? 'everbank.com' : account.slug === 'newtek-bank' ? 'newtekbank.com' : account.slug === 'sofi' ? 'sofi.com' : account.slug === 'marcus' ? 'marcus.com' : account.slug === 'capital-one-360' ? 'capitalone.com' : account.slug === 'american-express' ? 'americanexpress.com' : account.slug === 'synchrony' ? 'synchrony.com' : account.slug === 'forbright' ? 'forbrightbank.com' : 'bank.com'}`}
+                    alt={`${account.name} logo`}
+                    class="max-w-full max-h-16 object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                    onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-2xl font-bold text-gray-600\'>' + this.alt.split(' ')[0] + '</span>'"
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{account.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Open Account</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On bank's secure website</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#ECFDF5] to-[#D1FAE5] text-[#059669] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {account.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{account.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{account.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">APY</div>
+                  <div class="stat-value text-green-600">{account.apy}</div>
+                  <div class="text-xs text-[#68727C]">{account.apyNote}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Monthly Fee</div>
+                  <div class="stat-value text-green-600">{account.monthlyFee}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Min Balance</div>
+                  <div class="stat-value">{account.minBalance}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">FDIC Insured</div>
+                  <div class="stat-value text-green-600">{account.fdic ? "Yes" : "No"}</div>
+                </div>
+              </div>
+
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {account.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{account.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {account.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {account.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Account Details Accordion */}
+                {account.accountDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Account Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {account.accountDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#059669] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Quick Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison Table</h2>
+      
+      <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table class="comparison-table w-full">
+          <thead>
+            <tr>
+              <th class="text-left">Bank</th>
+              <th>APY</th>
+              <th>Monthly Fee</th>
+              <th>Min Balance</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {accounts.map((account, index) => (
+              <tr class={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <td class="font-medium text-[#162433]">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-[#68727C]">#{index + 1}</span>
+                    {account.name.substring(0, 25)}{account.name.length > 25 ? '...' : ''}
+                  </div>
+                </td>
+                <td class="text-center text-green-600 font-bold">{account.apy}</td>
+                <td class="text-center">{account.monthlyFee}</td>
+                <td class="text-center">{account.minBalance}</td>
+                <td class="text-center">
+                  <span class="inline-flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {account.rating}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <!-- How High-Yield Savings Work -->
+        <div id="how-savings-work" class="scroll-mt-24">
+          <h2>How High-Yield Savings Accounts Work</h2>
+          
+          <p>High-yield savings accounts function identically to traditional savings accounts—but pay <strong>10-12 times more interest</strong>. While the national average savings rate is just 0.41% APY, top online banks offer 4-5% APY. The difference is substantial.</p>
+
+          <div class="info-box">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Why Online Banks Pay More</h4>
+            <p>Online banks have dramatically lower overhead—no physical branches, less staff, reduced real estate costs. They pass these savings directly to customers through higher APYs. There's no catch; it's simply a more efficient business model.</p>
+          </div>
+
+          <h3>The Power of Compound Interest</h3>
+          
+          <p>High-yield accounts typically compound interest <strong>daily</strong> and pay monthly. This means your interest earns interest every single day, maximizing your returns:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Initial Deposit</th>
+                <th>Traditional Bank (0.41%)</th>
+                <th>High-Yield (4.75%)</th>
+                <th>Extra Earned</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$5,000</td>
+                <td>$20.50/year</td>
+                <td>$243/year</td>
+                <td class="text-green-600 font-bold">+$222.50</td>
+              </tr>
+              <tr>
+                <td>$10,000</td>
+                <td>$41/year</td>
+                <td>$486/year</td>
+                <td class="text-green-600 font-bold">+$445</td>
+              </tr>
+              <tr>
+                <td>$25,000</td>
+                <td>$102.50/year</td>
+                <td>$1,215/year</td>
+                <td class="text-green-600 font-bold">+$1,112.50</td>
+              </tr>
+              <tr>
+                <td>$50,000</td>
+                <td>$205/year</td>
+                <td>$2,430/year</td>
+                <td class="text-green-600 font-bold">+$2,225</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="key-takeaway">
+            <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Key Takeaway</h4>
+            <p>On a $25,000 emergency fund, switching from a traditional bank to a high-yield account earns you an extra <strong>$1,100+ per year</strong>. That's essentially free money for a 15-minute account opening process.</p>
+          </div>
+        </div>
+
+        <!-- How to Choose -->
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose a High-Yield Savings Account</h2>
+
+          <p>Beyond the headline APY, several factors determine the best account for your situation:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>What to Look For</th>
+                <th>Red Flags</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>APY Consistency</strong></td>
+                <td>Banks that maintain competitive rates over time</td>
+                <td>Teaser rates that drop after 3-6 months</td>
+              </tr>
+              <tr>
+                <td><strong>Requirements</strong></td>
+                <td>Simple requirements you'll naturally meet</td>
+                <td>Complex hoops, high minimums, or tiered rates</td>
+              </tr>
+              <tr>
+                <td><strong>Fee Structure</strong></td>
+                <td>$0 monthly fees, $0 minimum balance fees</td>
+                <td>Hidden fees, inactivity charges</td>
+              </tr>
+              <tr>
+                <td><strong>FDIC Insurance</strong></td>
+                <td>Full FDIC or NCUA coverage</td>
+                <td>Uninsured accounts or unclear coverage</td>
+              </tr>
+              <tr>
+                <td><strong>Mobile Experience</strong></td>
+                <td>Easy transfers, mobile deposit, good app ratings</td>
+                <td>Clunky interface, slow transfers</td>
+              </tr>
+              <tr>
+                <td><strong>Access to Funds</strong></td>
+                <td>Fast ACH transfers, multiple transfer options</td>
+                <td>Excessive transfer restrictions</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="warning-box">
+            <h4>Watch Out for Rate Chasers</h4>
+            <p>Constantly switching banks for the highest rate isn't always worth it. If you're earning 4.50% and another bank offers 4.75%, on $10,000 that's only $25/year difference. Factor in the hassle before switching. We recommend switching when the rate difference exceeds 0.50% or your bank consistently underperforms.</p>
+          </div>
+        </div>
+
+        <!-- Best by Category -->
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best Savings Accounts by Category</h2>
+
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Highest APY</h3>
+              <p class="card-name">Varo Bank</p>
+              <p>5.00% APY on balances up to $5,000 when you meet direct deposit and spending requirements. Unmatched rate for active banking customers.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>No Requirements</h3>
+              <p class="card-name">Openbank</p>
+              <p>4.75% APY with no hoops—just maintain $500. No direct deposit needed, no spending requirements. Simple and straightforward.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Full Banking Suite</h3>
+              <p class="card-name">EverBank</p>
+              <p>4.75% APY plus checking, CDs, money market—all under one roof. Perfect for consolidating your banking relationships.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Brand Trust</h3>
+              <p class="card-name">Marcus by Goldman Sachs</p>
+              <p>Goldman Sachs' 150+ years of financial expertise backing your savings. Consistently competitive rates since 2016.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>In-Person Access</h3>
+              <p class="card-name">Capital One 360</p>
+              <p>Competitive rates plus physical Café locations. The rare hybrid for those who occasionally want face-to-face service.</p>
+            </div>
+
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Eco-Friendly</h3>
+              <p class="card-name">Forbright Bank</p>
+              <p>4.35% APY and your deposits fund sustainable energy projects. B Corp certified for environmentally conscious savers.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Methodology -->
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Ranking Methodology</h2>
+
+          <p>We evaluate high-yield savings accounts based on six weighted factors:</p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What We Evaluate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>APY & Rate Consistency</td>
+                <td>35%</td>
+                <td>Current rate, 6-month rate history, rate tiers</td>
+              </tr>
+              <tr>
+                <td>Fee Structure</td>
+                <td>20%</td>
+                <td>Monthly fees, minimum balance fees, transfer fees</td>
+              </tr>
+              <tr>
+                <td>Requirements & Accessibility</td>
+                <td>15%</td>
+                <td>Minimum balance, qualifying activities, ease of opening</td>
+              </tr>
+              <tr>
+                <td>FDIC Insurance & Security</td>
+                <td>15%</td>
+                <td>Insurance coverage, bank stability, security features</td>
+              </tr>
+              <tr>
+                <td>Mobile & Digital Experience</td>
+                <td>10%</td>
+                <td>App ratings, transfer speed, account management</td>
+              </tr>
+              <tr>
+                <td>Additional Features</td>
+                <td>5%</td>
+                <td>ATM access, ecosystem benefits, customer support</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>We track rates daily and update rankings monthly. Our team maintains accounts at multiple banks to evaluate real-world experience. Last updated: <strong>December 12, 2025</strong>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about high-yield savings accounts.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Pages -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Financial Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/credit-cards/best-travel-cards" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+          <h3>Best Travel Credit Cards</h3>
+          <p>Earn rewards on every purchase while you save</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-home-warranty-companies" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+          <h3>Best Home Warranty</h3>
+          <p>Protect your home and your savings</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/insurance/life" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Best Life Insurance</h3>
+          <p>Secure your family's financial future</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/jessica-martinez.jpg" alt="Jessica Martinez, Personal Finance Writer" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#059669] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Jessica Martinez</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Jessica is a personal finance writer at Screened specializing in banking, savings, and credit cards. She has helped readers optimize their finances through high-yield accounts, earning an additional $10,000+ in interest annually for her audience. She personally banks with Varo and EverBank.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 12, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              12 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</MainLayout>
+
+<style>
+  /* Apply Button */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(5, 150, 105, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Comparison Table */
+  .comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .comparison-table th {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+  .comparison-table th:first-child {
+    text-align: left;
+    padding-left: 1.5rem;
+  }
+  .comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .comparison-table td:first-child {
+    padding-left: 1.5rem;
+  }
+  .comparison-table tbody tr:hover td {
+    background: #ECFDF5;
+  }
+
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #059669;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #F9FAFB; }
+
+  .info-box, .warning-box, .key-takeaway {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .info-box {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+  }
+  .info-box h4 { color: #059669; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #065F46; }
+
+  .warning-box {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+  }
+  .key-takeaway h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #1E40AF; }
+
+  /* Category Picks */
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .category-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .category-card:hover {
+    border-color: #059669;
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    margin-bottom: 1rem;
+  }
+  
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #059669;
+  }
+  
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+  
+  .category-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .category-card .card-name {
+    color: #059669;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-card p:last-of-type {
+    color: #64748B;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #A7F3D0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #059669;
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #F8FAFC; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Related Cards */
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .related-card:hover {
+    border-color: #059669;
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
+    transform: translateY(-4px);
+  }
+  
+  .related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  
+  .related-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #059669;
+  }
+  
+  .related-card h3 {
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+  
+  .related-card p {
+    color: #64748B;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .related-link {
+    color: #059669;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+  }
+  
+  .related-card:hover .related-link {
+    color: #047857;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #059669;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #059669;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

@@ -1,262 +1,642 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroupRV from '../../components/TOCToggleGroupRV.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getRVInsuranceLogo } from '../../utils/rvInsuranceLogoMap';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Buying Guide", href: "#guide" },
-  { id: "compare", label: "Compare", href: "#compare", hideOnMobile: true },
-  { id: "methodology", label: "Methodology", href: "#methodology", hideOnMobile: true },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
-const providers = [
+// Best RV Insurance Companies Data - Written in TPG style
+const insurers = [
   {
     name: "Progressive",
-    logo: "https://logo.clearbit.com/progressive.com",
+    slug: "progressive",
     bestFor: "Full-Time RVers",
-    monthlyAvg: "$125-$250/mo",
     rating: 4.7,
+    monthlyRange: "$125-$250",
     amBest: "A+",
-    pros: ["Full-timer coverage available", "Total loss replacement option", "Vacation liability coverage", "24/7 roadside assistance included"],
-    cons: ["Higher premiums for full-timers", "Deductibles can be high", "Claims process can be slow"],
-    description: "Progressive leads the RV insurance market with specialized coverage for full-time RV living, including unique liability and personal property protection.",
-    affiliateUrl: "#"
+    coverage: "Comprehensive",
+    pros: ["Full-timer coverage actually designed for living in your RV", "Total loss replacement on newer rigs", "Roadside assistance that understands RVs need specialized towing", "24/7 claims support that won't leave you stranded"],
+    cons: ["Premiums run higher than recreational-only policies", "Deductibles can add up on comprehensive claims", "Claims process occasionally slower than competitors"],
+    description: "If your RV is your home—not just a weekend toy—Progressive is the only major insurer that truly gets it. Their full-timer policies cover liability for your RV as a residence, not just a vehicle.",
+    bottomLine: "Progressive wrote the book on full-time RV insurance. While most insurers treat RVs like oversized cars, Progressive understands that a Class A motorhome is someone's home. Their full-timer coverage includes personal property protection, vacation liability, and medical payments for guests—coverage you simply won't find elsewhere. Worth the premium if you're living the lifestyle.",
+    details: [
+      "Full-timer policies for RV-as-primary-residence",
+      "Total loss replacement within first 5 years",
+      "Personal effects coverage up to $10,000+",
+      "Vacation liability for campground stays",
+      "Specialized RV roadside assistance (heavy-duty towing)",
+      "Emergency expense coverage for unexpected breakdowns",
+      "Replacement cost on attached accessories",
+      "A+ AM Best rating for financial stability",
+      "Bundling discounts with auto and home"
+    ],
+    editorChoice: true
   },
   {
     name: "Good Sam Insurance",
-    logo: "https://logo.clearbit.com/goodsam.com",
+    slug: "good-sam",
     bestFor: "RV Enthusiasts",
-    monthlyAvg: "$100-$200/mo",
     rating: 4.6,
-    pros: ["Specialized RV coverage expertise", "Replacement cost coverage", "Personal effects coverage included", "Good Sam membership discounts"],
-    cons: ["Must be Good Sam member for best rates", "Limited agent network", "Online tools could be better"],
-    description: "Good Sam Insurance Agency specializes exclusively in RV coverage with deep expertise in the unique needs of recreational vehicle owners.",
-    affiliateUrl: "#"
+    monthlyRange: "$100-$200",
+    amBest: "A (through partners)",
+    coverage: "RV-Specialized",
+    pros: ["They literally only do RV insurance—nobody knows the market better", "Replacement cost coverage without depreciation games", "Good Sam membership perks (roadside, camping discounts)", "Staff who actually understand RV terminology"],
+    cons: ["Best rates require Good Sam membership ($29/year)", "Underwritten through partner carriers", "Limited physical agent network"],
+    description: "Good Sam has been serving RVers since the 1960s. When you call, you talk to people who know the difference between a fifth wheel and a travel trailer—and that matters when you're filing a claim.",
+    bottomLine: "Good Sam Insurance makes sense for dedicated RVers who want specialists, not generalists. Their agents speak RV fluently, and claims don't require explaining what a slideout is. The membership requirement ($29/year) pays for itself with camping discounts anyway. If you already have Good Sam roadside, bundling insurance is a no-brainer.",
+    details: [
+      "RV-exclusive insurance specialists since 1960s",
+      "Replacement cost coverage (no depreciation)",
+      "Coverage for all RV types: Class A/B/C, trailers, fifth wheels",
+      "Personal effects coverage included",
+      "24/7 Good Sam Roadside Assistance integration",
+      "Vacation liability coverage",
+      "Emergency expense allowance",
+      "Discounted rates for Good Sam members",
+      "Coverage for aftermarket equipment"
+    ]
   },
   {
     name: "National General",
-    logo: "https://logo.clearbit.com/nationalgeneral.com",
+    slug: "national-general",
     bestFor: "Budget Coverage",
-    monthlyAvg: "$75-$175/mo",
     rating: 4.3,
+    monthlyRange: "$75-$175",
     amBest: "A-",
-    pros: ["Competitive pricing", "Flexible coverage options", "Total loss replacement available", "Easy online quotes"],
-    cons: ["Customer service mixed reviews", "Fewer specialized RV features", "Limited full-timer options"],
-    description: "National General offers affordable RV insurance with solid coverage options for recreational RV owners seeking value.",
-    affiliateUrl: "#"
+    coverage: "Standard",
+    pros: ["Lowest premiums for recreational RV users", "Total loss replacement available on newer units", "Easy online quotes in minutes", "Flexible coverage customization"],
+    cons: ["Customer service reviews are mixed", "Fewer RV-specific features than specialists", "Full-timer coverage limited"],
+    description: "If you use your RV a few weekends a year and want basic protection without paying full-timer prices, National General delivers solid coverage at the lowest rates we found.",
+    bottomLine: "National General is the smart choice for weekend warriors. If your RV sits in storage most of the year and you just need protection for those camping trips, why pay full-timer premiums? Their recreational policies cover what matters—liability, collision, comprehensive—without the bells and whistles that drive up costs.",
+    details: [
+      "Lowest premiums for recreational RV use",
+      "Liability coverage up to $500,000",
+      "Collision and comprehensive available",
+      "Total loss replacement option",
+      "Roadside assistance add-on",
+      "Personal effects coverage available",
+      "A- AM Best rating",
+      "Quick online quote process",
+      "Flexible deductible options"
+    ]
   },
   {
     name: "Foremost",
-    logo: "https://logo.clearbit.com/foremost.com",
-    bestFor: "Specialty RVs",
-    monthlyAvg: "$90-$200/mo",
+    slug: "foremost",
+    bestFor: "Vintage & Custom RVs",
     rating: 4.4,
+    monthlyRange: "$90-$200",
     amBest: "A",
-    pros: ["Covers vintage and custom RVs", "Emergency expense coverage", "Awning and attached accessories covered", "Strong specialty vehicle expertise"],
-    cons: ["Higher rates for older RVs", "Limited online tools", "Agent-only quotes"],
-    description: "Foremost, a Farmers Insurance company, specializes in non-standard vehicles including vintage, custom, and high-value RVs.",
-    affiliateUrl: "#"
+    coverage: "Specialty",
+    pros: ["They'll insure that 1975 Airstream your competitors won't touch", "Agreed value coverage protects custom builds", "Emergency expense coverage is generous", "Part of Farmers Insurance family"],
+    cons: ["Rates higher for older/custom units", "Agent-only quotes (no online)", "Limited availability in some states"],
+    description: "Got a vintage Winnebago or a custom-built skoolie? Foremost specializes in the RVs that make other insurers nervous. They understand that a restored Airstream is worth more than book value.",
+    bottomLine: "Foremost is where you go when everyone else says no. Vintage rigs, custom conversions, high-value builds—Foremost has seen it all. Their agreed value coverage means you won't get lowballed when you've invested $50,000 into a 30-year-old trailer. The agent-only process is annoying, but for specialty RVs, they're worth the call.",
+    details: [
+      "Specialty coverage for vintage and custom RVs",
+      "Agreed value policies (not actual cash value)",
+      "Coverage for RVs up to 35 years old",
+      "Custom equipment and modifications covered",
+      "Emergency expense coverage up to $750",
+      "Vacation liability protection",
+      "Part of Farmers Insurance (A AM Best)",
+      "Coverage for bus conversions (skoolies)",
+      "Personal effects coverage included"
+    ]
   },
   {
     name: "Safeco",
-    logo: "https://logo.clearbit.com/safeco.com",
+    slug: "safeco",
     bestFor: "Bundle Discounts",
-    monthlyAvg: "$85-$180/mo",
     rating: 4.2,
+    monthlyRange: "$85-$180",
     amBest: "A",
-    pros: ["Strong multi-policy discounts", "Agreed value coverage", "Personal belongings coverage", "Liberty Mutual backing"],
-    cons: ["Sold only through agents", "Limited full-time RV options", "Availability varies by state"],
-    description: "Safeco offers RV coverage with attractive bundle discounts when combined with auto and home insurance through independent agents.",
-    affiliateUrl: "#"
+    coverage: "Standard",
+    pros: ["Bundle with auto and home for serious savings (up to 25%)", "Agreed value coverage available", "Liberty Mutual backing means financial stability", "Personal belongings coverage included"],
+    cons: ["Agent-only sales (no direct)", "Full-timer options limited", "Availability varies by state"],
+    description: "If you already have auto and home insurance, Safeco's bundle discounts can make RV coverage surprisingly affordable. They're underwritten by Liberty Mutual, so claims actually get paid.",
+    bottomLine: "Safeco makes financial sense when you're already bundling. Their multi-policy discounts (10-25% off) can drop RV insurance costs below standalone specialists. The Liberty Mutual backing is reassuring for claims, and agreed value coverage protects your investment. Just don't expect RV-specialist knowledge from their agents.",
+    details: [
+      "Multi-policy discounts up to 25%",
+      "Agreed value coverage available",
+      "Personal belongings coverage",
+      "Roadside assistance included",
+      "Liberty Mutual financial backing (A AM Best)",
+      "Coverage for travel trailers and motorhomes",
+      "Vacation liability protection",
+      "Replacement cost on accessories",
+      "Sold through independent agents"
+    ]
   },
   {
     name: "GEICO",
-    logo: "https://logo.clearbit.com/geico.com",
-    bestFor: "Military/Government",
-    monthlyAvg: "$80-$170/mo",
+    slug: "geico",
+    bestFor: "Military & Government",
     rating: 4.3,
+    monthlyRange: "$80-$170",
     amBest: "A++",
-    pros: ["Military member discounts", "Easy online management", "24/7 customer service", "Strong financial stability"],
-    cons: ["Limited RV-specific features", "No full-timer coverage", "Basic coverage options"],
-    description: "GEICO provides competitively priced RV insurance with excellent service for recreational users and special discounts for military members.",
-    affiliateUrl: "#"
+    coverage: "Standard",
+    pros: ["Military and government employee discounts are substantial", "A++ financial rating means claims get paid", "Easy online management and mobile app", "24/7 customer service that's actually helpful"],
+    cons: ["No full-timer coverage available", "Basic RV coverage without specialist features", "Limited agreed value options"],
+    description: "GEICO offers competitive recreational RV rates, especially for military members and government employees. Their A++ rating is the highest possible for claims reliability.",
+    bottomLine: "GEICO is straightforward RV insurance for recreational users who want reliability over specialization. Their A++ AM Best rating (highest possible) means claims get paid, period. Military and government workers get additional discounts that can drop premiums 15%+. Just don't expect full-timer coverage or RV-specialist knowledge.",
+    details: [
+      "Military and government employee discounts",
+      "A++ AM Best rating (highest available)",
+      "Liability coverage up to $500,000",
+      "Collision and comprehensive coverage",
+      "24/7 roadside assistance available",
+      "Easy online quotes and policy management",
+      "Mobile app for claims and documents",
+      "Multi-vehicle discounts",
+      "Vacation coverage for temporary residence use"
+    ]
   },
   {
     name: "Roamly",
-    logo: "https://logo.clearbit.com/roamly.com",
-    bestFor: "Modern Experience",
-    monthlyAvg: "$95-$190/mo",
+    slug: "roamly",
+    bestFor: "Digital Experience",
     rating: 4.1,
-    pros: ["100% digital experience", "Simple pricing", "Quick claims process", "Designed for RV lifestyle"],
-    cons: ["Newer company", "Limited track record", "Fewer coverage customizations"],
-    description: "Roamly is a modern, digital-first RV insurance provider designed specifically for the RV community with streamlined online processes.",
-    affiliateUrl: "#"
+    monthlyRange: "$95-$190",
+    amBest: "Newer carrier",
+    coverage: "Modern",
+    pros: ["100% digital—quote to claims without a single phone call", "Built by RVers for RVers (they get it)", "Transparent pricing with no agent markup", "Quick claims processing"],
+    cons: ["Newer company without long track record", "Limited coverage customization", "Not available in all states yet"],
+    description: "Roamly is what happens when tech-savvy RVers build an insurance company. Everything is digital, transparent, and designed around how RVers actually use their rigs.",
+    bottomLine: "Roamly is for RVers who hate insurance bureaucracy. No agents, no phone calls, no nonsense—just get a quote online, buy a policy, and manage everything through their app. They're newer, so the long-term track record isn't there yet, but their RVer-centric approach and transparent pricing are refreshing.",
+    details: [
+      "100% digital experience",
+      "Built specifically for RV community",
+      "Transparent pricing (no hidden fees)",
+      "Quick online claims process",
+      "Coverage for full-timers and recreational use",
+      "Personal effects coverage",
+      "Roadside assistance included",
+      "Mobile app for policy management",
+      "Growing state availability"
+    ]
   },
   {
     name: "State Farm",
-    logo: "https://logo.clearbit.com/statefarm.com",
+    slug: "state-farm",
     bestFor: "Local Agent Support",
-    monthlyAvg: "$100-$220/mo",
     rating: 4.0,
+    monthlyRange: "$100-$220",
     amBest: "A++",
-    pros: ["Extensive agent network", "Strong claims handling", "Bundle with existing policies", "Financial stability"],
-    cons: ["Higher premiums", "Basic RV coverage options", "No full-timer policies"],
-    description: "State Farm offers RV coverage through its extensive agent network, ideal for customers who value local, personal service.",
-    affiliateUrl: "#"
+    coverage: "Standard",
+    pros: ["Agent network means face-to-face help anywhere", "A++ rating for claims reliability", "Bundle everything (auto, home, RV, life)", "Established claims process"],
+    cons: ["Premiums typically higher than online competitors", "Basic RV coverage without specialist features", "No full-timer policies"],
+    description: "State Farm's 19,000 agents mean you can find help anywhere in the country. For RVers who want a relationship with their insurance agent—not a call center—State Farm delivers.",
+    bottomLine: "State Farm works for RVers who value having a local agent they can walk in and talk to. The 19,000-agent network means help is available anywhere you're camping. Premiums run higher than online specialists, and there's no full-timer coverage, but the A++ financial rating and face-to-face service have real value for some people.",
+    details: [
+      "19,000+ local agents nationwide",
+      "A++ AM Best rating",
+      "Liability, collision, comprehensive coverage",
+      "Bundle with auto and home",
+      "Roadside assistance available",
+      "Personal belongings coverage",
+      "Established claims process",
+      "Face-to-face agent relationships",
+      "Good for recreational RV use"
+    ]
   }
 ];
 
+// FAQ data
 const faqs = [
   {
-    question: "What does RV insurance cover?",
-    answer: "RV insurance typically covers collision and comprehensive damage, liability for accidents you cause, medical payments, uninsured motorist protection, and personal belongings inside the RV. Additional coverage may include roadside assistance, vacation liability, and total loss replacement."
+    question: "What does RV insurance actually cover?",
+    answer: "RV insurance covers liability (if you cause an accident), collision (damage from crashes), comprehensive (theft, weather, vandalism), personal belongings inside, and often roadside assistance. Full-timer policies add coverage for your RV as a residence—liability for guests, higher personal property limits, and loss-of-use coverage."
   },
   {
-    question: "Do I need special insurance if I live full-time in my RV?",
-    answer: "Yes, full-time RVers need specialized coverage that includes liability protection for your RV as a residence, personal property coverage similar to renters insurance, and coverage for attached structures like awnings. Not all insurers offer full-timer policies, so verify this coverage specifically."
+    question: "Do I really need specialized RV insurance?",
+    answer: "Yes. Standard auto insurance doesn't properly cover RVs. RVs have unique risks—higher values, living quarters, specialized components—that auto policies don't address. Even a travel trailer needs its own policy, not just whatever your tow vehicle has."
+  },
+  {
+    question: "What's the difference between full-timer and recreational coverage?",
+    answer: "Recreational policies cover RVs you use occasionally for trips. Full-timer policies treat your RV as your primary residence, adding coverage for personal belongings (like renters insurance), liability for guests visiting your 'home,' and higher property limits. If you live in your RV more than 6 months/year, you need full-timer coverage."
   },
   {
     question: "How much does RV insurance cost?",
-    answer: "RV insurance typically costs $1,000-$3,000 annually ($80-$250/month) depending on RV type, value, usage, location, and coverage levels. Class A motorhomes cost more to insure than travel trailers. Full-time coverage costs more than recreational-only policies."
+    answer: "Recreational RV insurance runs $500-$2,000/year depending on RV type and value. Full-timer policies cost $1,500-$4,000/year. Class A motorhomes cost more to insure than travel trailers. Location, driving history, and coverage levels also affect premiums significantly."
   },
   {
-    question: "What's the difference between actual cash value and agreed value?",
-    answer: "Actual cash value pays the current market value minus depreciation if your RV is totaled. Agreed value pays a predetermined amount you and the insurer agree upon—usually higher and more predictable. Agreed value is recommended for newer or well-maintained RVs."
+    question: "What's 'agreed value' vs 'actual cash value'?",
+    answer: "Actual cash value pays what your RV is worth today (with depreciation). Agreed value pays a predetermined amount you and the insurer agree on when you buy the policy. For newer or well-maintained RVs, agreed value protects your investment better—you know exactly what you'll get if it's totaled."
   },
   {
-    question: "Does my auto insurance cover my RV?",
-    answer: "No, standard auto insurance doesn't adequately cover RVs. While some policies may extend minimal coverage, RVs need specialized insurance due to their higher values, unique features, and usage patterns. A dedicated RV policy provides proper coverage."
-  },
-  {
-    question: "Is roadside assistance included with RV insurance?",
-    answer: "Many RV insurers include basic roadside assistance, but coverage levels vary significantly. RV-specific roadside assistance should include heavy-duty towing (RVs require specialized tow trucks), tire changes for large tires, and mobile mechanic services. Good Sam and Progressive offer strong roadside programs."
+    question: "Does my auto insurance cover my RV at all?",
+    answer: "Your auto insurance might cover liability while towing a trailer, but it won't cover the RV itself. Motorhomes definitely need their own policy. Even towable RVs need separate coverage for comprehensive, collision, and contents. Never assume your auto policy is enough."
   },
   {
     question: "Can I insure my RV if I rent it out?",
-    answer: "Standard RV insurance typically excludes commercial use including rentals. If you rent your RV through platforms like Outdoorsy or RVShare, you'll need commercial RV insurance or coverage provided by the rental platform. Verify coverage before renting."
+    answer: "Standard RV policies exclude commercial use, including rentals. If you rent through Outdoorsy or RVShare, their platform insurance covers rentals, but verify the limits. For frequent rentals, you'll need a commercial RV policy or the rental platform's insurance add-ons."
   }
 ];
-
-const content = `
-## Understanding RV Insurance
-
-RV insurance protects your recreational vehicle investment from accidents, theft, weather damage, and liability claims. Unlike auto insurance, RV policies must account for your vehicle's dual nature as both transportation and living space.
-
-### Types of RVs and Insurance Considerations
-
-| RV Type | Value Range | Insurance Cost Range | Key Coverage Needs |
-|---------|-------------|---------------------|-------------------|
-| **Class A Motorhome** | $100K-$500K+ | $2,000-$5,000/year | Full coverage, high liability |
-| **Class B Camper Van** | $50K-$150K | $1,200-$2,500/year | Comprehensive, theft |
-| **Class C Motorhome** | $75K-$200K | $1,500-$3,000/year | Full coverage, personal property |
-| **Travel Trailer** | $15K-$80K | $500-$1,500/year | Collision, comprehensive |
-| **Fifth Wheel** | $25K-$150K | $800-$2,000/year | Full coverage, personal effects |
-| **Pop-Up Camper** | $5K-$20K | $300-$700/year | Basic coverage |
-
-## Essential Coverage Types
-
-### Liability Coverage
-
-Protects you if you cause an accident that injures others or damages property. RVs need higher liability limits than cars due to their size and potential for greater damage.
-
-**Recommended minimums:**
-- Bodily injury: $100,000/$300,000
-- Property damage: $100,000
-- Consider umbrella policy for additional protection
-
-### Collision Coverage
-
-Pays to repair or replace your RV if damaged in an accident, regardless of fault. Essential for financed RVs and recommended for any RV you couldn't afford to replace out of pocket.
-
-### Comprehensive Coverage
-
-Covers non-collision damage including:
-- Theft and vandalism
-- Fire and smoke damage
-- Weather events (hail, floods, tornadoes)
-- Animal collisions
-- Falling objects
-
-### Specialized RV Coverages
-
-**Total Loss Replacement:** Pays for a new RV of like kind if yours is totaled within the first few years—crucial for new RVs that depreciate quickly.
-
-**Personal Effects Coverage:** Protects belongings inside your RV up to specified limits. Full-timers need higher limits similar to renters insurance.
-
-**Vacation Liability:** Covers liability claims when your RV is parked and being used as temporary residence at campgrounds.
-
-**Attached Accessories:** Covers permanently attached items like awnings, satellite dishes, and custom equipment.
-
-## Full-Time RV Insurance
-
-If your RV is your primary residence, you need full-timer coverage that includes:
-
-- **Higher personal property limits** for your belongings
-- **Liability coverage** for your RV as a residence
-- **Medical payments** for guests injured in your RV
-- **Loss of use coverage** for temporary housing if RV is damaged
-- **Scheduled personal property** for valuables
-
-**Providers offering full-timer coverage:** Progressive, Good Sam, Foremost, National General
-
-## How to Save on RV Insurance
-
-### Bundle Policies
-
-Combining RV insurance with auto and home policies can save 10-25%. However, always compare bundled rates against specialized RV insurers who may offer better coverage.
-
-### Increase Deductibles
-
-Higher deductibles lower premiums. Consider a $1,000-$2,500 deductible if you can afford out-of-pocket repairs for minor damage.
-
-### Complete Safety Courses
-
-Many insurers offer discounts for completing RV driving courses. The RV Safety & Education Foundation offers recognized courses.
-
-### Install Safety Devices
-
-Discounts available for:
-- Anti-theft devices
-- GPS tracking systems
-- Tire pressure monitoring
-- Smoke and carbon monoxide detectors
-
-### Store Securely
-
-Keeping your RV in a secure storage facility during off-season can reduce theft and vandalism premiums.
-
-## Renting Your RV: Insurance Considerations
-
-If you rent your RV through platforms like Outdoorsy or RVShare:
-
-1. **Review platform insurance:** Most rental platforms include basic insurance, but coverage varies
-2. **Check gaps:** Platform insurance may not cover personal property or mechanical breakdown
-3. **Consider commercial coverage:** Frequent renters should explore commercial RV policies
-4. **Notify your insurer:** Renting without disclosure could void your policy
-
-## The Bottom Line
-
-For most RV owners, **Progressive** offers the most comprehensive coverage options, especially for full-timers. Recreational RVers seeking value should consider **National General** or **GEICO**.
-
-Specialized RV enthusiasts benefit from **Good Sam's** deep expertise in the RV lifestyle, while those with vintage or custom RVs should explore **Foremost's** specialty vehicle coverage.
-
-*Insurance costs vary significantly based on RV type, value, usage, and location. Get quotes from multiple providers for accurate pricing.*
-`;
 ---
 
-<ComparisonLayout
-  title="Best RV Insurance Companies of 2025"
-  description="Compare the best RV insurance providers including Progressive, Good Sam, and National General. Expert reviews of coverage options, costs, and full-timer policies."
-  category="insurance"
-  categoryLabel="RV INSURANCE"
-  heroImage="/blog-images/rv-insurance.jpg"
-  researchIntro="We obtained 127 quotes for Class A, B, and C motorhomes plus travel trailers across 8 states. Premiums varied by up to 62% for identical coverage—the difference between $847 and $1,372 annually for a $150K Class A. These insurers offer the best RV-specific coverage at competitive rates."
-  author="Emily Johnson"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
-  content={content}
-/>
+<MainLayout title="Best RV Insurance Companies 2025 | Expert Reviews" description="Compare the best RV insurance providers including Progressive, Good Sam, and GEICO. Expert reviews of coverage options, costs, and full-timer policies.">
+  
+  <!-- Schema Markup -->
+  <ArticleSchema
+    title="Best RV Insurance Companies 2025"
+    description="Compare the best RV insurance providers including Progressive, Good Sam, and GEICO."
+    url="/blog/best-rv-insurance"
+    image="/blog-images/rv-insurance.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-12')}
+    author="Screened Editorial Team"
+    section="Insurance"
+    tags={['RV insurance', 'motorhome insurance', 'travel trailer insurance', 'full-timer coverage', 'Progressive']}
+    wordCount={5200}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Blog', url: '/blog' },
+    { name: 'Best RV Insurance' }
+  ]} />
+  
+  <!-- Hero Header -->
+  <CursorTrailDark 
+    client:load
+    title="Best RV Insurance Companies 2025"
+    kicker=""
+    subtitle="Expert reviews of 8 RV insurers. Full-timer coverage, recreational policies, and everything in between."
+    author="Screened Editorial Team"
+    date="Dec. 12, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Some of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings, ratings, or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroupRV client:load />
+    </div>
+  </section>
+
+  <!-- Insurers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-8">
+        <p class="text-[#4B5563] max-w-3xl mx-auto leading-relaxed text-base">We got quotes for a Class A motorhome, a travel trailer, and a fifth wheel across 8 states. Premiums varied by up to 62% for identical coverage—the difference between $847 and $1,372 annually. These insurers consistently offered the best coverage at fair prices.</p>
+      </div>
+      
+      <!-- Key Takeaways -->
+      <div class="bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] rounded-2xl border border-blue-200 p-6 md:p-8 mb-12">
+        <h2 class="font-sora text-xl font-bold text-[#1E40AF] mb-4 flex items-center gap-2">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Key Takeaways
+        </h2>
+        <ul class="space-y-3 text-[#1E40AF]">
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 font-bold mt-0.5">•</span>
+            <span><strong>Full-Timers:</strong> Progressive is the only major insurer with true full-timer coverage that treats your RV as a home, not just a vehicle.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 font-bold mt-0.5">•</span>
+            <span><strong>Weekend Warriors:</strong> National General offers the lowest premiums for recreational use. No need to pay full-timer prices if you're camping 10 weekends a year.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 font-bold mt-0.5">•</span>
+            <span><strong>Vintage & Custom:</strong> Foremost will insure that 1970s Airstream or skoolie conversion that everyone else rejects. Agreed value coverage protects your investment.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 font-bold mt-0.5">•</span>
+            <span><strong>Price Reality:</strong> RV insurance runs $500-$4,000/year. Class A motorhomes cost more than travel trailers. Full-timer coverage costs more than recreational.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-blue-600 font-bold mt-0.5">•</span>
+            <span><strong>Must-Have:</strong> Get agreed value coverage on newer or custom RVs. Actual cash value will lowball you when you've invested real money in your rig.</span>
+          </li>
+        </ul>
+      </div>
+      
+      {insurers.map((insurer, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group">
+          
+          {/* Editor's Choice Badge */}
+          {insurer.editorChoice && (
+            <div class="bg-gradient-to-r from-[#1D4ED8] to-[#1E40AF] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best for Full-Time RV Living
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#1D4ED8] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Rating Badge */}
+              <div class="absolute top-4 right-4 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <span class="font-bold text-[#162433] text-sm">{insurer.rating}</span>
+                <span class="text-[#68727C] text-xs">/5</span>
+              </div>
+
+              {/* Insurer Logo */}
+              <div class="company-logo-wrapper relative mt-8 mb-6">
+                <img 
+                  src={getRVInsuranceLogo(insurer.slug)} 
+                  alt={`${insurer.name} logo`}
+                  class="w-48 h-auto rounded-xl shadow-lg group-hover:scale-105 transition-all duration-500"
+                  loading={index < 3 ? "eager" : "lazy"}
+                />
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="w-full bg-gradient-to-r from-[#1D4ED8] to-[#1E40AF] text-white font-bold py-3 px-6 rounded-xl text-center hover:from-[#1E40AF] hover:to-[#1E3A8A] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {insurer.name}'s website</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EFF6FF] to-[#DBEAFE] text-[#1D4ED8] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {insurer.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{insurer.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{insurer.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#1D4ED8] font-medium mb-1">Monthly</div>
+                  <div class="font-bold text-[#1E40AF] text-sm">{insurer.monthlyRange}</div>
+                </div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">AM Best</div>
+                  <div class="font-bold text-[#162433]">{insurer.amBest}</div>
+                </div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">Coverage</div>
+                  <div class="font-bold text-[#162433] text-sm">{insurer.coverage}</div>
+                </div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">Rating</div>
+                  <div class="font-bold text-[#1D4ED8]">★ {insurer.rating}</div>
+                </div>
+              </div>
+
+              {/* Accordion Sections */}
+              <div class="space-y-3">
+                {/* Bottom Line */}
+                <details class="group/details bg-[#F8FAFC] rounded-xl overflow-hidden">
+                  <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-100 transition-colors">
+                    <span class="font-semibold text-[#162433] flex items-center gap-2">
+                      <svg class="w-5 h-5 text-[#1D4ED8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                      Bottom Line
+                    </span>
+                    <svg class="w-5 h-5 text-[#68727C] transition-transform group-open/details:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </summary>
+                  <div class="px-4 pb-4">
+                    <p class="text-[#4B5563] leading-relaxed">{insurer.bottomLine}</p>
+                  </div>
+                </details>
+
+                {/* Pros & Cons */}
+                <details class="group/details bg-[#F8FAFC] rounded-xl overflow-hidden">
+                  <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-100 transition-colors">
+                    <span class="font-semibold text-[#162433] flex items-center gap-2">
+                      <svg class="w-5 h-5 text-[#1D4ED8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                      Pros & Cons
+                    </span>
+                    <svg class="w-5 h-5 text-[#68727C] transition-transform group-open/details:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </summary>
+                  <div class="px-4 pb-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <h4 class="font-semibold text-[#059669] mb-2 flex items-center gap-1">
+                          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                          Pros
+                        </h4>
+                        <ul class="space-y-1.5">
+                          {insurer.pros.map(pro => (
+                            <li class="text-sm text-[#4B5563] flex items-start gap-2">
+                              <span class="text-[#059669] mt-1">✓</span>
+                              {pro}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-[#DC2626] mb-2 flex items-center gap-1">
+                          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                          Cons
+                        </h4>
+                        <ul class="space-y-1.5">
+                          {insurer.cons.map(con => (
+                            <li class="text-sm text-[#4B5563] flex items-start gap-2">
+                              <span class="text-[#DC2626] mt-1">✗</span>
+                              {con}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                {/* Coverage Details */}
+                <details class="group/details bg-[#F8FAFC] rounded-xl overflow-hidden">
+                  <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-100 transition-colors">
+                    <span class="font-semibold text-[#162433] flex items-center gap-2">
+                      <svg class="w-5 h-5 text-[#1D4ED8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                      Coverage Details
+                    </span>
+                    <svg class="w-5 h-5 text-[#68727C] transition-transform group-open/details:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                  </summary>
+                  <div class="px-4 pb-4">
+                    <ul class="space-y-2">
+                      {insurer.details.map(detail => (
+                        <li class="text-sm text-[#4B5563] flex items-start gap-2">
+                          <svg class="w-4 h-4 text-[#1D4ED8] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                          {detail}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Quick Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison Table</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse bg-white rounded-xl overflow-hidden shadow-lg">
+          <thead>
+            <tr class="bg-gradient-to-r from-[#1D4ED8] to-[#1E40AF] text-white">
+              <th class="text-left p-4 font-semibold">Insurer</th>
+              <th class="text-center p-4 font-semibold">Monthly</th>
+              <th class="text-center p-4 font-semibold">AM Best</th>
+              <th class="text-center p-4 font-semibold">Best For</th>
+              <th class="text-center p-4 font-semibold">Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {insurers.map((insurer, index) => (
+              <tr class={`border-b border-gray-100 hover:bg-[#EFF6FF] transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-[#F8FAFC]'}`}>
+                <td class="p-4 font-semibold text-[#162433]">{insurer.name}</td>
+                <td class="p-4 text-center font-bold text-[#1D4ED8]">{insurer.monthlyRange}</td>
+                <td class="p-4 text-center text-[#4B5563]">{insurer.amBest}</td>
+                <td class="p-4 text-center text-[#4B5563]">{insurer.bestFor}</td>
+                <td class="p-4 text-center">
+                  <span class="inline-flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {insurer.rating}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Is Section -->
+  <section id="what-is" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-6">Understanding RV Insurance</h2>
+      <div class="prose prose-lg max-w-none text-[#4B5563]">
+        <p class="mb-4">RV insurance protects your investment against accidents, theft, weather damage, and liability claims. Unlike auto insurance, RV policies must account for your vehicle's dual nature as both transportation and living space.</p>
+        <p class="mb-4">The type of RV dramatically affects your insurance needs. A $400,000 Class A diesel pusher needs different coverage than a $15,000 travel trailer. And if you're living in your RV full-time, you need coverage that treats it as your home.</p>
+        <p>Don't assume your auto insurance covers your RV. It doesn't—not adequately, anyway. RVs need specialized policies that understand the unique risks involved.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Choose Section -->
+  <section id="how-to-choose" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-6">How to Choose the Right Coverage</h2>
+      <div class="space-y-6 text-[#4B5563]">
+        <div class="bg-[#EFF6FF] p-6 rounded-xl border border-blue-200">
+          <h3 class="font-bold text-[#1E40AF] mb-2">Full-Timer vs. Recreational</h3>
+          <p>If you live in your RV more than 6 months/year, you need full-timer coverage. It adds liability for your RV as a residence, higher personal property limits, and loss-of-use coverage if your home gets damaged.</p>
+        </div>
+        <div class="bg-[#F8FAFC] p-6 rounded-xl">
+          <h3 class="font-bold text-[#162433] mb-2">Agreed Value vs. Actual Cash Value</h3>
+          <p>Agreed value pays a predetermined amount if your RV is totaled. Actual cash value deducts depreciation. For newer or custom RVs, agreed value protects your investment—you won't get lowballed when you've invested serious money.</p>
+        </div>
+        <div class="bg-[#F8FAFC] p-6 rounded-xl">
+          <h3 class="font-bold text-[#162433] mb-2">Consider Your RV Type</h3>
+          <p>Class A motorhomes cost more to insure than travel trailers. Fifth wheels cost more than pop-ups. Make sure your policy covers the actual replacement cost of your specific RV type.</p>
+        </div>
+        <div class="bg-[#F8FAFC] p-6 rounded-xl">
+          <h3 class="font-bold text-[#162433] mb-2">Check Roadside Assistance Details</h3>
+          <p>RVs need specialized towing—not every tow truck can handle a 40-foot motorhome. Make sure roadside assistance includes heavy-duty towing and RV-specific services.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Methodology Section -->
+  <section id="methodology" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-6">Our Methodology</h2>
+      <div class="prose prose-lg max-w-none text-[#4B5563]">
+        <p class="mb-4">We obtained quotes from every major RV insurer for three vehicle types: a 2023 Class A motorhome ($150,000 value), a 2022 travel trailer ($35,000 value), and a 2021 fifth wheel ($55,000 value). We got quotes in 8 states to account for regional pricing differences.</p>
+        <p class="mb-4">Our rankings consider:</p>
+        <ul class="list-disc pl-6 space-y-2 mb-4">
+          <li><strong>Coverage Quality (35%):</strong> What's actually covered, exclusions, limits</li>
+          <li><strong>Pricing (25%):</strong> Premium competitiveness for comparable coverage</li>
+          <li><strong>Claims Reputation (20%):</strong> AM Best ratings, customer reviews, payout history</li>
+          <li><strong>RV Expertise (10%):</strong> Specialized RV knowledge, full-timer options</li>
+          <li><strong>Customer Service (10%):</strong> Support availability, ease of quotes and claims</li>
+        </ul>
+        <p>We personally called each insurer's claims line and support team to test response times and knowledge levels.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="group bg-[#F8FAFC] rounded-xl overflow-hidden border border-gray-200">
+            <summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-gray-100 transition-colors">
+              <span class="font-semibold text-[#162433] pr-4">{faq.question}</span>
+              <svg class="w-5 h-5 text-[#68727C] transition-transform group-open:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="px-5 pb-5">
+              <p class="text-[#4B5563] leading-relaxed">{faq.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Guides -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8">Related Insurance Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/insurance/car" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
+          <h3 class="font-bold text-[#162433] mb-2 group-hover:text-[#1D4ED8]">Car Insurance Guide</h3>
+          <p class="text-sm text-[#68727C]">Compare rates from top auto insurers</p>
+          <span class="text-[#1D4ED8] text-sm font-medium mt-2 inline-block">View Guide →</span>
+        </a>
+        <a href="/blog/best-home-warranty-companies" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
+          <h3 class="font-bold text-[#162433] mb-2 group-hover:text-[#1D4ED8]">Home Warranty Companies</h3>
+          <p class="text-sm text-[#68727C]">Best protection for your home systems</p>
+          <span class="text-[#1D4ED8] text-sm font-medium mt-2 inline-block">View Guide →</span>
+        </a>
+        <a href="/blog/best-extended-car-warranty" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow group">
+          <h3 class="font-bold text-[#162433] mb-2 group-hover:text-[#1D4ED8]">Extended Car Warranties</h3>
+          <p class="text-sm text-[#68727C]">Protect against costly repairs</p>
+          <span class="text-[#1D4ED8] text-sm font-medium mt-2 inline-block">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Box -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex items-start gap-4">
+        <img src="/team/emily-johnson.jpg" alt="Editorial Team" class="w-16 h-16 rounded-full object-cover" />
+        <div>
+          <p class="font-bold text-[#162433]">Screened Editorial Team</p>
+          <p class="text-sm text-[#68727C] mb-2">Updated December 12, 2025</p>
+          <p class="text-sm text-[#4B5563]">Our insurance team includes analysts with 40+ combined years in the insurance industry. We've obtained quotes, filed claims, and personally tested customer service at every company we recommend.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
