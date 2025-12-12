@@ -761,6 +761,30 @@ import { getAltText } from '../utils/altTextMap';
                     <td>None (local)</td>
                     <td><code>node scripts/generate-warranty-logos.js</code></td>
                 </tr>
+                <tr>
+                    <td><code>fetch-bank-logos.js</code></td>
+                    <td>Fetch bank logos for savings accounts (Varo, Marcus, SoFi, etc.)</td>
+                    <td>BRANDFETCH_API_KEY (optional)</td>
+                    <td><code>node scripts/fetch-bank-logos.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-bank-logos.js</code></td>
+                    <td>Generate professional SVG logos for banks</td>
+                    <td>None (local)</td>
+                    <td><code>node scripts/generate-bank-logos.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>fetch-rv-insurance-logos.js</code></td>
+                    <td>Fetch RV insurance company logos (Progressive, Good Sam, etc.)</td>
+                    <td>BRANDFETCH_API_KEY (optional)</td>
+                    <td><code>node scripts/fetch-rv-insurance-logos.js</code></td>
+                </tr>
+                <tr>
+                    <td><code>generate-rv-insurance-logos.js</code></td>
+                    <td>Generate SVG logos for RV insurance companies</td>
+                    <td>None (local)</td>
+                    <td><code>node scripts/generate-rv-insurance-logos.js</code></td>
+                </tr>
             </table>
 
             <h3>🤖 Utility Scripts</h3>
@@ -1942,6 +1966,14 @@ Make sure to fetch logos first using the logo workflow in PROJECT-DOCS.html Sect
                 <li class="completed"><input type="checkbox" checked disabled> <strong>Warranty Logo Scripts</strong> - fetch-warranty-logos.js + generate-warranty-logos.js</li>
                 <li class="completed"><input type="checkbox" checked disabled> <strong>Warranty Logo Map</strong> - src/utils/warrantyLogoMap.ts utility</li>
                 <li class="completed"><input type="checkbox" checked disabled> <strong>Fetched 9/10 warranty logos</strong> - via Brandfetch API (1 SVG fallback)</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Best Online Savings Accounts Page</strong> - Full comparison page with travel cards template (Dec 2025)</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Best RV Insurance Page</strong> - Full comparison page with travel cards template (Dec 2025)</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Bank Logo Scripts</strong> - fetch-bank-logos.js + generate-bank-logos.js (10 SVG logos)</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>RV Insurance Logo Scripts</strong> - fetch-rv-insurance-logos.js + generate-rv-insurance-logos.js</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>Bank Logo Map</strong> - src/utils/bankLogoMap.ts utility</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>RV Insurance Logo Map</strong> - src/utils/rvInsuranceLogoMap.ts utility</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>TOC Components</strong> - TOCToggleGroupSavings.tsx + TOCToggleGroupRV.tsx</li>
+                <li class="completed"><input type="checkbox" checked disabled> <strong>TPG-Style Content</strong> - All new pages written in The Points Guy conversational style</li>
             </ul>
 
             <h3>Pending Tasks <span class="badge badge-pending">TODO</span></h3>
