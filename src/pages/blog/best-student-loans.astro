@@ -1,287 +1,1265 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroupWarranty from '../../components/TOCToggleGroupWarranty.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Loan Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
+type Lender = {
+  name: string;
+  slug: string;
+  domain: string;
+  bestFor: string;
+  rateFrom: string;
+  feeNote: string;
+  rating: number;
+  pros: string[];
+  cons: string[];
+  description: string;
+  bottomLine: string;
+  loanDetails: string[];
+  editorChoice?: boolean;
+};
 
-const providers = [
+const lenders: Lender[] = [
   {
     name: "SoFi",
-    logo: "https://logo.clearbit.com/sofi.com",
-    bestFor: "Overall Value",
-    monthlyAvg: "Rates from 5.49%",
-    serviceFee: "$0 fees",
+    slug: "sofi",
+    domain: "sofi.com",
+    bestFor: "Best Overall Value",
+    rateFrom: "5.49%",
+    feeNote: "$0 fees",
     rating: 4.8,
-    pros: ["No origination or late fees", "Unemployment protection program", "Member benefits (career coaching, events)", "Competitive variable and fixed rates"],
-    cons: ["No cosigner release option", "Stricter eligibility requirements", "Not ideal for those building credit"],
-    description: "SoFi offers a complete financial ecosystem with competitive rates, zero fees, and unique member benefits including career coaching and community events.",
-    affiliateUrl: "#"
+    pros: [
+      "No origination, application, or late fees on most loans.",
+      "Member perks like career coaching and financial planning.",
+      "Multiple in-school repayment options to reduce interest capitalization.",
+      "Strong digital experience with fast prequalification."
+    ],
+    cons: [
+      "Cosigner release is limited compared to some competitors.",
+      "Qualification can be tougher for borrowers with thin credit files."
+    ],
+    description:
+      "SoFi consistently delivers a great mix of low rates, $0 fees, and borrower-friendly extras—making it the easiest all-around recommendation for most students and parents.",
+    bottomLine:
+      "If you want a private student loan that’s competitive on pricing and light on gotchas, SoFi is the one we’d start with. The biggest value driver is the combination of <strong>low advertised starting rates</strong> and <strong>$0 common fees</strong>, plus solid repayment flexibility. It’s ideal if you (or your cosigner) have strong credit and want a clean, modern borrowing experience.",
+    loanDetails: [
+      "Rates from 5.49% APR (variable or fixed options vary by borrower)",
+      "No application/origination/late fees on most products",
+      "In-school repayment options: deferred, interest-only, or fixed payments",
+      "Cosigner allowed (may improve approval odds and pricing)",
+      "Best for borrowers who want one lender with strong overall value"
+    ],
+    editorChoice: true
   },
   {
     name: "Earnest",
-    logo: "https://logo.clearbit.com/earnest.com",
-    bestFor: "Flexible Payments",
-    monthlyAvg: "Rates from 5.44%",
-    serviceFee: "$0 fees",
+    slug: "earnest",
+    domain: "earnest.com",
+    bestFor: "Best for Flexible Payments",
+    rateFrom: "5.44%",
+    feeNote: "$0 fees",
     rating: 4.7,
-    pros: ["Skip one payment per year", "Choose your exact payment date", "Precision pricing (custom rates)", "No fees of any kind"],
-    cons: ["No cosigner option", "Not available in all states", "Requires strong credit history"],
-    description: "Earnest's precision pricing analyzes your full financial picture beyond credit score, potentially offering lower rates for responsible borrowers.",
-    affiliateUrl: "#"
+    pros: [
+      "Precision pricing considers more than just a credit score.",
+      "Flexible repayment choices (including customizing payment timing).",
+      "No origination, application, or prepayment penalties on most loans.",
+      "Borrower experience is straightforward and digital-first."
+    ],
+    cons: [
+      "Availability can vary by state and school program.",
+      "Best pricing typically requires strong credit and income profile."
+    ],
+    description:
+      "Earnest is built for borrowers who want to fine-tune repayment—especially if you’re optimizing monthly cash flow without giving up on a competitive APR.",
+    bottomLine:
+      "Earnest stands out because it’s designed around <strong>payment flexibility</strong>. If your income is irregular (internships, seasonal work, commission), being able to adjust how you pay can matter as much as the headline APR. It’s a strong pick for financially responsible borrowers who can qualify for top-tier pricing and want control over repayment.",
+    loanDetails: [
+      "Rates from 5.44% APR (variable or fixed options vary by borrower)",
+      "No origination or prepayment fees on most loans",
+      "Multiple in-school repayment options to avoid capitalization",
+      "Best for borrowers who value customization over one-size-fits-all terms"
+    ]
   },
   {
     name: "Discover Student Loans",
-    logo: "https://logo.clearbit.com/discover.com",
-    bestFor: "Good Grades Rewards",
-    monthlyAvg: "Rates from 6.74%",
-    serviceFee: "$0 fees",
+    slug: "discover-student-loans",
+    domain: "discover.com",
+    bestFor: "Best for Good Grades Rewards",
+    rateFrom: "6.74%",
+    feeNote: "$0 fees",
     rating: 4.5,
-    pros: ["Cash reward for good grades (GPA 3.0+)", "No origination fees", "U.S.-based customer service", "Multi-year approval option"],
-    cons: ["Higher rates than some competitors", "No refinancing option available", "Limited graduate programs covered"],
-    description: "Discover rewards academic achievement with a cash bonus for maintaining a 3.0+ GPA and offers straightforward undergraduate loans.",
-    affiliateUrl: "#"
+    pros: [
+      "Rewards good academic performance with a GPA-based cash bonus (where offered).",
+      "No origination fees on most student loan products.",
+      "U.S.-based customer support is a meaningful quality-of-life win.",
+      "Clear, straightforward product lineup."
+    ],
+    cons: [
+      "Starting rates are often higher than top online-only competitors.",
+      "Private loans may offer fewer safety nets than federal programs."
+    ],
+    description:
+      "Discover pairs a simple private student loan with a rare perk: rewarding strong grades—an easy win for high-performing students.",
+    bottomLine:
+      "If you’re a strong student who wants a lender with a simple product and potential rewards, Discover can be a good fit. The biggest tradeoff is that you’ll often see <strong>higher starting rates</strong> than the most aggressive online lenders—so it’s worth getting multiple quotes and comparing total repayment cost, not just APR.",
+    loanDetails: [
+      "Rates from 6.74% APR (varies by borrower, term, and rate type)",
+      "No origination fees on most loans",
+      "May offer multi-year approval for returning borrowers",
+      "Best for students who can benefit from grades-based rewards"
+    ]
   },
   {
     name: "College Ave",
-    logo: "https://logo.clearbit.com/collegeavestudentloans.com",
-    bestFor: "Flexible Terms",
-    monthlyAvg: "Rates from 6.54%",
-    serviceFee: "$0 fees",
+    slug: "college-ave",
+    domain: "collegeavestudentloans.com",
+    bestFor: "Best for Flexible Terms",
+    rateFrom: "6.54%",
+    feeNote: "$0 fees",
     rating: 4.4,
-    pros: ["5, 8, 10, or 15-year terms available", "Parent loans available", "Coverage up to 100% cost of attendance", "Low in-school payments option"],
-    cons: ["Higher rates for longer terms", "Cosigner required for most students", "Limited repayment flexibility"],
-    description: "College Ave provides flexible loan terms from 5-15 years, allowing borrowers to customize their repayment timeline and monthly payment.",
-    affiliateUrl: "#"
+    pros: [
+      "Wide range of repayment terms (helpful for dialing in monthly payment).",
+      "Borrow up to the school-certified cost of attendance (minus aid).",
+      "Simple application flow with fast decisions.",
+      "Parent loan options available."
+    ],
+    cons: [
+      "Longer terms can meaningfully increase total interest paid.",
+      "Many undergrads will need a cosigner for strong rates."
+    ],
+    description:
+      "College Ave is a great pick if you want to customize your repayment timeline—especially if monthly payment flexibility is a top priority.",
+    bottomLine:
+      "College Ave’s advantage is range: multiple term lengths and repayment structures let you trade off between a lower monthly payment and a lower total cost. Our advice: if you choose a long term to keep payments manageable, plan to <strong>make extra principal payments</strong> when you can—this is where borrowers can save the most.",
+    loanDetails: [
+      "Rates from 6.54% APR (varies by borrower and term)",
+      "Terms commonly range from 5 to 15 years",
+      "In-school options include deferred or interest-only payments",
+      "Best for borrowers who want to control monthly payment size"
+    ]
   },
   {
     name: "Sallie Mae",
-    logo: "https://logo.clearbit.com/salliemae.com",
-    bestFor: "Graduate Students",
-    monthlyAvg: "Rates from 6.37%",
-    serviceFee: "$0 origination",
+    slug: "sallie-mae",
+    domain: "salliemae.com",
+    bestFor: "Best for Graduate Students",
+    rateFrom: "6.37%",
+    feeNote: "$0 origination",
     rating: 4.2,
-    pros: ["Wide variety of loan products", "Coverage for specialty degrees", "Study abroad loans available", "Cosigner release after 12 payments"],
-    cons: ["Customer service complaints", "Variable rates can increase", "Complex loan servicing history"],
-    description: "Sallie Mae offers specialized loan products for graduate programs, professional degrees, and unique educational situations.",
-    affiliateUrl: "#"
+    pros: [
+      "Broad mix of undergraduate, graduate, and specialty program loans.",
+      "Cosigner release can be available after on-time payments (terms vary).",
+      "Study-abroad and career training options in some cases."
+    ],
+    cons: [
+      "Borrower experience can vary depending on servicing and loan type.",
+      "Variable APRs can rise meaningfully over the life of the loan."
+    ],
+    description:
+      "Sallie Mae is a classic option with a big product catalog—especially useful if you need a loan type that many modern lenders don’t offer.",
+    bottomLine:
+      "Sallie Mae is best when you have a specific borrowing situation—graduate programs, professional degrees, or less-common education paths. The key is to compare the full offer: <strong>APR type (fixed vs variable)</strong>, total repayment estimate, and any cosigner release terms. For many borrowers, it’s worth considering alongside SoFi/Earnest to see who prices you best.",
+    loanDetails: [
+      "Rates from 6.37% APR (varies by borrower and product)",
+      "Specialized loans for graduate and professional programs",
+      "Cosigner release may be available after a required on-time payment streak",
+      "Best for borrowers with specialized education needs"
+    ]
   },
   {
     name: "Citizens Bank",
-    logo: "https://logo.clearbit.com/citizensbank.com",
-    bestFor: "Multi-Year Loans",
-    monthlyAvg: "Rates from 6.64%",
-    serviceFee: "$0 fees",
+    slug: "citizens-bank",
+    domain: "citizensbank.com",
+    bestFor: "Best for Multi-Year Approval",
+    rateFrom: "6.64%",
+    feeNote: "$0 fees",
     rating: 4.3,
-    pros: ["Multi-year approval (up to 10 years)", "Loyalty rate discount for customers", "15-year max repayment term", "No application fees"],
-    cons: ["Rates higher than online lenders", "Limited to certain schools", "Banking relationship required for best rates"],
-    description: "Citizens Bank's multi-year approval feature lets you secure funding for your entire degree program with one application.",
-    affiliateUrl: "#"
+    pros: [
+      "Multi-year approval feature can reduce reapplying each year (where offered).",
+      "Potential discounts for existing banking customers.",
+      "Straightforward terms and solid brand familiarity."
+    ],
+    cons: [
+      "Best pricing may require strong credit and/or relationship discounts.",
+      "Eligibility can depend on school/program participation."
+    ],
+    description:
+      "Citizens can be a smart pick if you want the convenience of multi-year approval—especially for longer degree programs.",
+    bottomLine:
+      "The multi-year approval angle is the real differentiator here: if you qualify, it can simplify how you fund multiple years of school. That said, compare offers carefully—banks can be competitive, but the best deals often depend on <strong>credit strength and relationship pricing</strong>. If you already bank with Citizens, it’s worth checking your discount eligibility.",
+    loanDetails: [
+      "Rates from 6.64% APR (varies by borrower and product)",
+      "Multi-year approval may be available for certain borrowers/schools",
+      "Potential customer discounts for existing Citizens relationships",
+      "Best for borrowers prioritizing convenience over micro-optimizing APR"
+    ]
   },
   {
     name: "Ascent",
-    logo: "https://logo.clearbit.com/ascentfunding.com",
-    bestFor: "No Cosigner Needed",
-    monthlyAvg: "Rates from 7.49%",
-    serviceFee: "$0 fees",
+    slug: "ascent",
+    domain: "ascentfunding.com",
+    bestFor: "Best for No Cosigner Options",
+    rateFrom: "7.49%",
+    feeNote: "$0 fees",
     rating: 4.1,
-    pros: ["Non-cosigned option for juniors/seniors", "Outcomes-based approval", "1% cash back graduation reward", "No origination fees"],
-    cons: ["Higher rates without cosigner", "Limited to upperclassmen for non-cosigned", "Fewer school partnerships"],
-    description: "Ascent offers loans without a cosigner for college juniors and seniors based on future earning potential, not just credit history.",
-    affiliateUrl: "#"
+    pros: [
+      "Non-cosigned options for qualifying students (including outcomes-based approval).",
+      "Graduation reward (where offered) adds a small but real incentive.",
+      "No origination fees on many products."
+    ],
+    cons: [
+      "Non-cosigned loans can be materially more expensive than cosigned loans.",
+      "Not every student will qualify for non-cosigned approval."
+    ],
+    description:
+      "Ascent is one of the more realistic paths for students who don’t have a cosigner—especially upperclassmen with strong academic and earning potential.",
+    bottomLine:
+      "Ascent can be a lifesaver if you don’t have a cosigner and still need funding beyond federal limits. The tradeoff is cost: you may pay a higher APR, so the best strategy is to <strong>borrow only what you need</strong>, make interest-only payments if possible, and refinance later if your credit and income improve.",
+    loanDetails: [
+      "Rates from 7.49% APR (varies widely for non-cosigned vs cosigned loans)",
+      "Non-cosigned options may be available for upperclassmen",
+      "Graduation rewards on select products",
+      "Best for borrowers without cosigner access"
+    ]
   },
   {
     name: "MPOWER Financing",
-    logo: "https://logo.clearbit.com/mpowerfinancing.com",
-    bestFor: "International Students",
-    monthlyAvg: "Rates from 8.23%",
-    serviceFee: "Varies",
+    slug: "mpower-financing",
+    domain: "mpowerfinancing.com",
+    bestFor: "Best for International & DACA Students",
+    rateFrom: "8.23%",
+    feeNote: "Varies",
     rating: 4.0,
-    pros: ["No cosigner required for international students", "No U.S. credit history needed", "Career support services", "Loans for DACA students"],
-    cons: ["Higher interest rates", "Limited to partner schools", "Smaller loan amounts"],
-    description: "MPOWER specializes in loans for international and DACA students who typically can't access traditional student loans.",
-    affiliateUrl: "#"
+    pros: [
+      "No cosigner required for many international and DACA borrowers.",
+      "No U.S. credit history required for typical underwriting approach.",
+      "Career support services can add real value."
+    ],
+    cons: [
+      "Higher starting APRs are common versus traditional private lenders.",
+      "Limited to eligible schools/programs."
+    ],
+    description:
+      "MPOWER is a niche specialist—high value if you’re an international or DACA student who doesn’t fit traditional private-lender underwriting.",
+    bottomLine:
+      "If traditional lenders keep saying no because you don’t have a U.S. cosigner or credit profile, MPOWER is one of the few lenders built for you. You’ll likely pay a higher APR, so the best use case is borrowing for the <strong>minimum necessary gap</strong> and building a path to refinance once you establish income and credit in the U.S.",
+    loanDetails: [
+      "Rates from 8.23% APR (varies by profile and program)",
+      "Designed for international and DACA students",
+      "Typically does not require U.S. credit history",
+      "Best for borrowers who can’t access traditional private student loans"
+    ]
   }
 ];
 
 const faqs = [
   {
-    question: "Should I get federal or private student loans?",
-    answer: "Always exhaust federal student loans first—they offer income-driven repayment, forgiveness programs, and fixed rates regardless of credit. Private loans should supplement federal aid, not replace it. Private loans make sense when federal limits aren't sufficient or when you qualify for lower private rates."
+    question: "Should I take federal or private student loans first?",
+    answer:
+      "Start with federal student aid. Federal loans come with <strong>fixed rates set by Congress</strong> and important protections like income-driven repayment and potential forgiveness. Private loans are best as a gap-filler after you’ve accepted federal grants, subsidized loans, and unsubsidized loans. If you borrow privately first, you may miss out on benefits you can’t get back."
   },
   {
-    question: "What credit score do I need for private student loans?",
-    answer: "Most private lenders require a credit score of 670+ for approval without a cosigner. The best rates (under 6%) typically require 750+ scores. Students with limited credit history usually need a creditworthy cosigner to qualify for competitive rates."
+    question: "What credit score do I need for a private student loan?",
+    answer:
+      "Approval and pricing depend heavily on credit. Many students need a cosigner unless they have a strong file (often <strong>670+ credit scores</strong> and steady income). The lowest advertised APRs typically go to borrowers with excellent credit (often <strong>750+</strong>). If you’re building credit, a cosigner can materially improve both approval odds and rate."
   },
   {
-    question: "Can I refinance student loans while still in school?",
-    answer: "Generally, you can't refinance until after graduation when you have income. Some lenders offer consolidation during school, but true refinancing requires employment. Focus on federal loans during school and consider refinancing after you have stable income and good credit."
-  },
-  {
-    question: "What's the difference between fixed and variable rates?",
-    answer: "Fixed rates stay the same throughout your loan term, providing predictable payments. Variable rates start lower but fluctuate with market conditions—potentially increasing significantly over time. Variable rates work best for shorter loan terms (under 5 years) or if you plan to pay off quickly."
-  },
-  {
-    question: "How does a cosigner affect my loan?",
-    answer: "A creditworthy cosigner can dramatically lower your interest rate and improve approval odds. However, your cosigner is equally responsible for the debt—late payments affect their credit too. Some lenders offer cosigner release after 12-24 on-time payments."
-  },
-  {
-    question: "Should I refinance federal student loans?",
-    answer: "Refinancing federal loans converts them to private loans, permanently losing federal benefits like income-driven repayment, forbearance, and loan forgiveness programs. Only refinance federal loans if you won't need these protections, have stable income, and can get a significantly lower rate."
+    question: "Fixed vs. variable APR: which is better?",
+    answer:
+      "A fixed APR stays the same for the life of your loan, which makes budgeting simple. Variable APRs can start lower but may rise if market rates increase. If you want predictability, choose <strong>fixed</strong>. Variable APRs can make sense if you expect to repay quickly, refinance soon, or can handle payment fluctuations without financial stress."
   },
   {
     question: "How much can I borrow with private student loans?",
-    answer: "Private loan limits vary by lender but typically cover up to 100% of school-certified cost of attendance minus other financial aid. Annual limits range from $5,000 to $150,000+ depending on program and creditworthiness. Aggregate limits may apply across all private loans."
+    answer:
+      "Most private lenders allow borrowing up to the <strong>school-certified cost of attendance</strong> minus other aid you receive. That includes tuition, housing, books, and certain living expenses. Limits vary by lender, program, and credit profile. Borrow conservatively—every additional $1,000 borrowed can cost materially more once interest capitalizes."
+  },
+  {
+    question: "Do private student loans have forgiveness or income-driven repayment?",
+    answer:
+      "Typically, no. Most private loans don’t include federal-style <strong>income-driven repayment</strong> or broad forgiveness programs. Some lenders offer hardship forbearance or temporary relief, but options vary and are usually less generous than federal protections. If you might need flexibility after graduation, prioritize federal loans and keep private borrowing as small as possible."
+  },
+  {
+    question: "Can I refinance student loans while still in school?",
+    answer:
+      "In most cases, refinancing requires proof of income and stable employment, so it’s usually a post-graduation move. Some lenders offer limited consolidation-like options, but true refinancing is typically after you start earning. The best strategy is to <strong>reduce capitalization</strong> while in school (interest-only or small payments), then refinance once you qualify."
+  },
+  {
+    question: "What does cosigner release mean, and should I care?",
+    answer:
+      "Cosigner release lets a lender remove your cosigner after you meet requirements like a streak of <strong>on-time payments</strong> and credit/income checks. It matters if you want to reduce your cosigner’s liability. Not every lender offers it, and requirements vary. If it’s important, confirm the exact policy before you sign."
+  },
+  {
+    question: "Are there fees with private student loans?",
+    answer:
+      "Many top lenders advertise <strong>$0 origination fees</strong>, but you still need to watch for late fees, returned payment fees, and the cost impact of choosing a longer term. Also consider indirect “costs” like higher APRs without a cosigner. Always compare loans using total repayment estimates, not marketing claims."
+  },
+  {
+    question: "How can I get the lowest private student loan rate?",
+    answer:
+      "The biggest levers are credit strength and term length. Improve your odds by applying with a <strong>creditworthy cosigner</strong>, choosing a shorter term if affordable, and shopping multiple lenders in a short window. If you can, pay interest while in school to avoid capitalization—this is one of the easiest ways to save thousands over time."
   }
 ];
+
+const pageTitle = "Best Private Student Loans of 2025";
+const pageDescription =
+  "Compare the best private student loan lenders including SoFi, Earnest, and Discover. Expert reviews of rates, fees, and repayment options.";
+
+const heroImage = "/blog-images/student-loans.jpg";
+const pageUrl = "/blog/best-student-loans";
 ---
 
-<ComparisonLayout
-  title="Best Private Student Loans of 2025"
-  description="Compare the best private student loan lenders including SoFi, Earnest, and Discover. Expert reviews of rates, fees, and repayment options."
-  category="finance"
-  categoryLabel="STUDENT LOANS"
-  heroImage="/blog-images/student-loans.jpg"
-  researchIntro="We analyzed rate data from 19 private lenders, collecting 892 actual loan offers from current students and parents. For a $40,000 undergraduate loan, rates varied by up to 4.2%—a difference of $8,400 over a 10-year term. These lenders consistently offer the most competitive rates."
-  author="Jessica Martinez"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
+<MainLayout
+  title="Best Private Student Loans of 2025 | Screened"
+  description={pageDescription}
 >
+  <!-- Schema -->
+  <ArticleSchema
+    title={pageTitle}
+    description={pageDescription}
+    url={pageUrl}
+    image={heroImage}
+    datePublished={new Date('2025-12-11')}
+    dateModified={new Date('2025-12-11')}
+    author="Jessica Martinez"
+    section="Personal Finance"
+    tags={[
+      'student loans',
+      'private student loans',
+      'FAFSA',
+      'college financing',
+      'APR',
+      'cosigner'
+    ]}
+    wordCount={3600}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema
+    items={[
+      { name: 'Blog', url: '/blog' },
+      { name: 'Best Student Loans' }
+    ]}
+  />
 
-## Understanding Private Student Loans
+  <!-- Hero -->
+  <CursorTrailDark
+    client:load
+    title={pageTitle}
+    kicker=""
+    subtitle="Compare 8 top private student loan lenders for rates, fees, repayment flexibility, and who they’re best for."
+    author="Jessica Martinez"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
-Private student loans fill the gap between federal aid and the true cost of education. While federal loans offer important protections, private loans can provide additional funding—sometimes at competitive rates for well-qualified borrowers.
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Some offers on this page are from partners who compensate us. This doesn’t affect our rankings or editorial integrity—recommendations are based on objective analysis. View our{' '}
+        <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
 
-### Federal vs Private: Key Differences
+  <!-- Sticky TOC -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroupWarranty client:load />
+    </div>
+  </section>
 
-| Feature | Federal Loans | Private Loans |
-|---------|---------------|---------------|
-| Credit Check | Not required (except PLUS) | Required |
-| Interest Rates | Fixed by Congress | Based on creditworthiness |
-| Repayment Options | Income-driven, forgiveness | Varies by lender |
-| Borrowing Limits | Set annually | Up to cost of attendance |
-| Cosigner | Not required | Often needed |
-| In-School Payments | Deferred | Options vary |
+  <!-- Cards -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">
+          We analyzed rate data from 19 private lenders, reviewing 892 real loan offers from current students and parents. For a $40,000 undergraduate loan, rates varied by up to 4.2%—a difference of about <strong>$8,400</strong> over a 10-year term. These lenders consistently offered the strongest mix of price and borrower-friendly terms.
+        </p>
+      </div>
 
-### Always Borrow Federal First
+      {lenders.map((lender, index) => (
+        <div
+          class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group"
+          style={`animation-delay: ${index * 50}ms`}
+        >
+          {lender.editorChoice && (
+            <div class="bg-gradient-to-r from-[#059669] to-[#047857] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Value
+            </div>
+          )}
 
-Before considering private loans:
-1. Complete the **FAFSA** to access federal aid
-2. Accept all **federal grants** (free money)
-3. Accept **federal subsidized loans** (no interest while in school)
-4. Accept **federal unsubsidized loans**
-5. Then consider **private loans** for remaining gap
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#059669] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
 
-## How to Get the Best Private Student Loan Rate
+              <div class="logo-wrapper relative mt-8 mb-6">
+                <img
+                  src={`https://logo.clearbit.com/${lender.domain}?size=200`}
+                  alt={`${lender.name} logo`}
+                  class="w-48 h-auto rounded-xl shadow-lg group-hover:scale-105 transition-all duration-500 bg-white"
+                  loading={index < 3 ? "eager" : "lazy"}
+                />
 
-### Factors Affecting Your Rate
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{lender.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
 
-| Factor | Impact |
-|--------|--------|
-| Credit Score | Most important—affects rate significantly |
-| Income | Higher income = lower rates |
-| School | Some lenders favor certain institutions |
-| Degree Program | Future earning potential considered |
-| Cosigner | Can dramatically lower rate |
-| Loan Term | Shorter terms = lower rates |
+              <a href="#" class="apply-btn w-full">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {lender.name}'s site</p>
+            </div>
 
-### Rate Comparison by Credit Profile
+            <!-- Right -->
+            <div class="p-6 md:p-8">
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#ECFDF5] to-[#D1FAE5] text-[#059669] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {lender.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{lender.name}</h3>
+                </div>
+              </div>
 
-| Credit Score | Estimated Rate Range |
-|--------------|---------------------|
-| 750+ | 5.49% - 7.50% |
-| 700-749 | 7.00% - 9.50% |
-| 650-699 | 8.50% - 11.50% |
-| Below 650 | Often requires cosigner |
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{lender.description}</p>
 
-## Types of Private Student Loans
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="bg-gradient-to-br from-[#F0FDF4] to-[#DCFCE7] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#059669] font-medium mb-1">Rates from</div>
+                  <div class="font-bold text-[#166534] text-lg">{lender.rateFrom}</div>
+                  <div class="text-xs text-[#059669]">APR</div>
+                </div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">Fees</div>
+                  <div class="font-bold text-[#162433]">{lender.feeNote}</div>
+                </div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">Best For</div>
+                  <div class="font-bold text-[#162433] text-sm">{lender.bestFor}</div>
+                </div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">Type</div>
+                  <div class="font-bold text-[#059669]">Private</div>
+                </div>
+              </div>
 
-### Undergraduate Loans
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Bottom Line</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content" set:html={lender.bottomLine}></div>
+                </details>
 
-For bachelor's degree students, covering tuition, housing, books, and living expenses. Usually require cosigner for best rates.
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {lender.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {lender.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
 
-### Graduate Student Loans
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Loan Details</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <ul class="space-y-3">
+                      {lender.loanDetails.map(detail => (
+                        <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                          <span class="w-1.5 h-1.5 rounded-full bg-[#059669] mt-2 flex-shrink-0"></span>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-For master's, professional, and doctoral programs. Often have higher limits and may not require cosigner due to career prospects.
+  <!-- Compare Table -->
+  <section id="compare-table" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-6xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison Table</h2>
 
-### Parent Loans
+      <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table class="comparison-table w-full">
+          <thead>
+            <tr>
+              <th class="text-left">Lender</th>
+              <th>Rates from</th>
+              <th>Fees</th>
+              <th>Best for</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lenders.map((lender, index) => (
+              <tr class={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <td class="font-medium text-[#162433]">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-[#68727C]">#{index + 1}</span>
+                    {lender.name}
+                  </div>
+                </td>
+                <td class="text-center text-green-600 font-bold">{lender.rateFrom}</td>
+                <td class="text-center">{lender.feeNote}</td>
+                <td class="text-center text-sm">{lender.bestFor}</td>
+                <td class="text-center">
+                  <span class="inline-flex items-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {lender.rating}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-Allow parents to borrow for their child's education. Parent is the primary borrower—student is not responsible.
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        <div id="how-it-works" class="scroll-mt-24">
+          <span id="what-is" class="scroll-mt-24"></span>
+          <h2>How Private Student Loans Work</h2>
 
-### Medical/Dental/Law School Loans
+          <p>Private student loans are credit-based loans offered by banks and online lenders to cover education costs not met by financial aid. Unlike federal loans, pricing is based on your <strong>credit profile</strong> (and often your cosigner’s), which is why rates can vary dramatically between borrowers.</p>
 
-Specialized loans for professional programs with higher limits and potentially deferred repayment through residency.
+          <div class="info-box">
+            <h4>
+              <svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg>
+              Borrow federal first
+            </h4>
+            <p>Federal loans come with protections private loans typically don’t—like income-driven repayment and forgiveness pathways. Use private loans only to cover the remaining gap after you’ve used federal grants and loans.</p>
+          </div>
 
-## Repayment Options Explained
+          <h3>Federal vs. Private: Key Differences</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Federal Loans</th>
+                <th>Private Loans</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Credit check</strong></td>
+                <td>Not required (except PLUS)</td>
+                <td>Required</td>
+              </tr>
+              <tr>
+                <td><strong>Rates</strong></td>
+                <td>Set by Congress</td>
+                <td>Based on creditworthiness</td>
+              </tr>
+              <tr>
+                <td><strong>Repayment options</strong></td>
+                <td>Income-driven, forgiveness programs</td>
+                <td>Varies by lender</td>
+              </tr>
+              <tr>
+                <td><strong>Limits</strong></td>
+                <td>Annual caps</td>
+                <td>Up to cost of attendance</td>
+              </tr>
+              <tr>
+                <td><strong>Cosigner</strong></td>
+                <td>Not required</td>
+                <td>Often needed for best rates</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-### Immediate Repayment
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2>How to Choose a Private Student Loan</h2>
+          <p>APR is important, but it’s not the only thing that determines total cost. The best lender for you is the one that balances price, flexibility, and transparency.</p>
 
-Start full payments immediately. **Lowest total cost** but requires income during school.
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>What to look for</th>
+                <th>Red flags</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>APR type</strong></td>
+                <td>Fixed for predictability, variable for short-term strategies</td>
+                <td>Variable APR without a plan to repay/refinance</td>
+              </tr>
+              <tr>
+                <td><strong>In-school payments</strong></td>
+                <td>Interest-only or small payments to reduce capitalization</td>
+                <td>Forced full deferment with heavy capitalization</td>
+              </tr>
+              <tr>
+                <td><strong>Fees</strong></td>
+                <td>No origination/application fees</td>
+                <td>Upfront fees or unclear fee disclosures</td>
+              </tr>
+              <tr>
+                <td><strong>Cosigner release</strong></td>
+                <td>Clear, written policy with a reasonable payment streak</td>
+                <td>No release option if you need it</td>
+              </tr>
+              <tr>
+                <td><strong>Flexibility</strong></td>
+                <td>Hardship options and transparent policies</td>
+                <td>Pressure tactics or vague terms</td>
+              </tr>
+            </tbody>
+          </table>
 
-### Interest-Only Payments
+          <div class="warning-box">
+            <h4>Don’t optimize for APR alone</h4>
+            <p>A 0.25% APR difference can matter, but the bigger savings often come from avoiding capitalization during school and choosing a term you can actually repay. If you can afford it, interest-only payments while enrolled are one of the highest-impact moves you can make.</p>
+          </div>
+        </div>
 
-Pay only interest while in school. **Reduces total debt** compared to full deferment.
+        <div id="best-by-category" class="scroll-mt-24">
+          <h2>Best Student Loan Lenders by Category</h2>
 
-### Partial Payment
+          <div class="category-picks">
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Best Overall Value</h3>
+              <p class="card-name">SoFi</p>
+              <p>$0 common fees plus competitive starting APRs for strong-credit borrowers.</p>
+            </div>
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="10"/></svg></span>
+              <h3>Flexible Payments</h3>
+              <p class="card-name">Earnest</p>
+              <p>Great if you want more control over payment structure and timing.</p>
+            </div>
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Good Grades Rewards</h3>
+              <p class="card-name">Discover</p>
+              <p>Potential GPA-based rewards (where offered) with a simple product lineup.</p>
+            </div>
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 14l4-4 3 3 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>Flexible Terms</h3>
+              <p class="card-name">College Ave</p>
+              <p>Multiple term lengths help you tune monthly payment vs total cost.</p>
+            </div>
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>No Cosigner</h3>
+              <p class="card-name">Ascent</p>
+              <p>One of the more realistic non-cosigned options for qualifying students.</p>
+            </div>
+            <div class="category-card">
+              <span class="category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <h3>International/DACA</h3>
+              <p class="card-name">MPOWER</p>
+              <p>Built for students who don’t fit traditional U.S. underwriting models.</p>
+            </div>
+          </div>
+        </div>
 
-Fixed small payments ($25-$50/month) during school. **Balance between cost and cash flow.**
+        <div id="cost-breakdown" class="scroll-mt-24">
+          <h2>How to Lower Your Total Loan Cost</h2>
+          <ul>
+            <li><strong>Pay interest in school:</strong> Avoid capitalization and reduce the balance that future interest is calculated on.</li>
+            <li><strong>Borrow less than the max:</strong> Cover the gap—don’t borrow extra “just in case.”</li>
+            <li><strong>Choose a term you can realistically afford:</strong> Shorter terms usually mean less total interest.</li>
+            <li><strong>Refinance later (if it makes sense):</strong> After graduation, your income and credit can unlock better APRs.</li>
+          </ul>
+        </div>
 
-### Full Deferment
+        <div id="methodology" class="scroll-mt-24">
+          <h2>Our Ranking Methodology</h2>
+          <p>We scored lenders using weighted factors that reflect both cost and real-world borrower experience:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Weight</th>
+                <th>What we evaluated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>APR competitiveness</td>
+                <td>30%</td>
+                <td>Starting APR ranges, fixed vs variable options, typical borrower outcomes</td>
+              </tr>
+              <tr>
+                <td>Fees & transparency</td>
+                <td>15%</td>
+                <td>Origination/application fees, clarity of terms, fine print</td>
+              </tr>
+              <tr>
+                <td>Repayment flexibility</td>
+                <td>20%</td>
+                <td>In-school options, deferment/forbearance policies, hardship support</td>
+              </tr>
+              <tr>
+                <td>Cosigner features</td>
+                <td>15%</td>
+                <td>Cosigner acceptance and release policy clarity</td>
+              </tr>
+              <tr>
+                <td>Eligibility & niche access</td>
+                <td>10%</td>
+                <td>International/DACA support, school/program coverage</td>
+              </tr>
+              <tr>
+                <td>Customer experience</td>
+                <td>10%</td>
+                <td>Service availability, digital experience, complaint patterns</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Last updated: <strong>December 11, 2025</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-No payments until after graduation. **Most expensive** due to capitalized interest but preserves cash flow.
+  <!-- FAQ -->
+  <section id="faq" class="py-16 bg-white scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Expert answers to common questions about private student loans.</p>
+      </div>
 
-## Understanding Interest Capitalization
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4" set:html={faq.question}></span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-When you defer payments, unpaid interest **capitalizes** (adds to principal). This significantly increases total loan cost.
+  <!-- Related -->
+  <section id="related" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-2xl font-bold text-[#162433] mb-8 text-center">Related Personal Finance Guides</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <a href="/blog/best-online-savings-accounts" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Best Online Savings Accounts</h3>
+          <p>High-yield accounts with strong APYs</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-auto-refinance-lenders" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg></div>
+          <h3>Best Auto Refinance Lenders</h3>
+          <p>Lower your car payment and total interest</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+        <a href="/blog/best-mortgage-refinance-companies" class="related-card group">
+          <div class="related-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+          <h3>Best Mortgage Refinance</h3>
+          <p>Compare lenders for rates and closing costs</p>
+          <span class="related-link">View Guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-Example on $30,000 loan at 7%:
-- Interest accrued during 4 years: ~$8,400
-- After capitalization: $38,400 principal
-- Interest now compounds on higher balance
+  <!-- Author -->
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="flex flex-col md:flex-row gap-6 items-start bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-200 p-6 md:p-8">
+        <img src="/team/jessica-martinez.jpg" alt="Jessica Martinez, Personal Finance Writer" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#059669] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Jessica Martinez</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Jessica is a personal finance writer at Screened specializing in banking, savings, and borrowing decisions. She focuses on helping readers compare real-world costs (not just headline APRs) and avoid expensive traps like interest capitalization.
+          </p>
+          <div class="flex items-center gap-4 text-sm text-[#68727C]">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Updated: Dec 11, 2025
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              11 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
 
-**Tip:** Even small interest payments during school prevent capitalization and save thousands.
+<style>
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
 
-## Cosigner Considerations
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
 
-### Why Use a Cosigner
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(5, 150, 105, 0.4);
+  }
 
-- **Lower interest rate:** Often 2-3% reduction
-- **Higher approval odds:** Especially for young borrowers
-- **Higher loan limits:** May qualify for more
+  .apply-btn:hover::before {
+    left: 100%;
+  }
 
-### Cosigner Responsibilities
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
 
-- Equally liable for entire loan
-- Payments affect cosigner's credit
-- Delinquency impacts both parties
-- May affect cosigner's borrowing ability
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-### Cosigner Release
+  .comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
 
-Some lenders release cosigners after 12-48 consecutive on-time payments. Not all lenders offer this—verify before borrowing if important to you.
+  .comparison-table th {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
 
-## Red Flags to Avoid
+  .comparison-table th:first-child {
+    text-align: left;
+    padding-left: 1.5rem;
+  }
 
-### Warning Signs
+  .comparison-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
 
-- **Guaranteed approval:** Legitimate lenders check credit
-- **Upfront fees:** Reputable lenders don't charge application fees
-- **Pressure tactics:** Take time to compare options
-- **No clear terms:** All rates and terms should be disclosed
-- **Unknown lenders:** Research company reputation
+  .comparison-table td:first-child {
+    padding-left: 1.5rem;
+  }
 
-## The Bottom Line
+  .comparison-table tbody tr:hover td {
+    background: #ECFDF5;
+  }
 
-For most students with good credit, **SoFi** or **Earnest** offer the best combination of low rates, no fees, and borrower-friendly features. **Discover** rewards academic achievement with cash bonuses for good grades.
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
 
-Students without a cosigner should explore **Ascent** (upperclassmen) or **MPOWER** (international students). Always exhaust federal loan options before turning to private lenders.
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #059669;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
 
-*Rates shown are examples for well-qualified borrowers. Your actual rate depends on creditworthiness and other factors.*
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
 
-</ComparisonLayout>
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+
+  .seo-content strong { color: #162433; font-weight: 600; }
+
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .seo-content th {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+
+  .seo-content tr:hover td { background: #F9FAFB; }
+
+  .info-box, .warning-box {
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .info-box {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+  }
+  .info-box h4 { color: #059669; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #065F46; }
+
+  .warning-box {
+    background: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff;
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #334155; padding: 1.25rem 1.5rem; }
+
+  .category-picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .category-card {
+    background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .category-card:hover {
+    border-color: #059669;
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    margin-bottom: 1rem;
+  }
+
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #059669;
+  }
+
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+
+  .category-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .category-card .card-name {
+    color: #059669;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .category-card p:last-of-type {
+    color: #64748B;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+
+  .faq-item:hover {
+    border-color: #A7F3D0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .faq-item[open] {
+    border-color: #059669;
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.1);
+  }
+
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+
+  .faq-question:hover { background: #F8FAFC; }
+  .faq-question::-webkit-details-marker { display: none; }
+
+  .faq-icon { transition: transform 0.3s ease; }
+  .faq-item[open] .faq-icon { transform: rotate(180deg); }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  .related-card {
+    display: block;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .related-card:hover {
+    border-color: #059669;
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .related-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  .related-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #059669;
+  }
+
+  .related-card h3 {
+    font-weight: 700;
+    color: #162433;
+    margin-bottom: 0.5rem;
+  }
+
+  .related-card p {
+    color: #64748B;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .related-link {
+    color: #059669;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+  }
+
+  .related-card:hover .related-link { color: #047857; }
+
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .accordion-item { border-bottom: 1px solid #E5E7EB; }
+  .accordion-item:last-child { border-bottom: none; }
+
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+
+  .accordion-header::-webkit-details-marker { display: none; }
+  .accordion-header:hover { color: #059669; }
+
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .accordion-item[open] .accordion-icon { transform: rotate(180deg); }
+  .accordion-item[open] .accordion-header { color: #059669; }
+
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+
+  .accordion-content p { margin: 0; }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('animate-in');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => observer.observe(el));
+  });
+</script>
 
