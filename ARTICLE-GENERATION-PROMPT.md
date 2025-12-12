@@ -111,16 +111,13 @@ Each provider needs:
 - Finance/Savings: Green (#059669 → #047857)
 - Home: Slate (#334155 → #1e293b)
 
-### 10. LOGOS:
-Use Clearbit API: `https://logo.clearbit.com/[company-domain].com`
-
-### 11. FAQs - Target "People Also Ask":
+### 10. FAQs - Target "People Also Ask":
 - 8-10 questions minimum
 - Each answer 50+ words
 - Use <strong> for emphasis
 - Answer comprehensively
 
-### 12. WORD COUNT:
+### 11. WORD COUNT:
 - Total article: 4,000-5,000 words
 - Research intro: 50-75 words
 - Provider description: 30-50 words
@@ -135,21 +132,375 @@ Provide the COMPLETE .astro file ready to save, including:
 - Full HTML structure
 - All <style> blocks (copy from travel cards template)
 - Client-side <script> for animations
-
-## AFTER GENERATION, RUN THESE COMMANDS:
-
-1. **Verify Logos Load:**
-   npm run dev → check /blog/best-[topic]
-
-2. **Generate Hero Image (if needed):**
-   node scripts/generate-insurance-hero.js "[topic]"
-
-3. **Optimize Images:**
-   npm run optimize:images
-
-4. **Update Progress:**
-   Edit scripts/article-progress.csv
 ```
+
+---
+
+## 🖼️ LOGO WORKFLOW (CRITICAL - DO THIS AFTER ARTICLE GENERATION)
+
+### STEP 1: Choose Your Logo Strategy
+
+**Option A: Quick Start - Use Clearbit URLs (No Downloads)**
+```html
+<!-- In your article, use this format for logos: -->
+<img src="https://logo.clearbit.com/[company-domain].com" alt="Company logo" />
+
+<!-- Examples: -->
+<img src="https://logo.clearbit.com/progressive.com" alt="Progressive logo" />
+<img src="https://logo.clearbit.com/geico.com" alt="GEICO logo" />
+<img src="https://logo.clearbit.com/varo.com" alt="Varo Bank logo" />
+```
+
+**Option B: Better Quality - Download & Store Locally**
+
+### STEP 2: Create Logo Fetch Script for Your Category
+
+Copy and customize the script template:
+
+```bash
+# Copy existing script as template
+cp scripts/fetch-warranty-logos.js scripts/fetch-[category]-logos.js
+```
+
+Edit the new script - update the company array:
+
+```javascript
+// Example for RV Insurance
+const companies = [
+  { name: 'Progressive', domain: 'progressive.com', slug: 'progressive' },
+  { name: 'Good Sam Insurance', domain: 'goodsam.com', slug: 'good-sam' },
+  { name: 'National General', domain: 'nationalgeneral.com', slug: 'national-general' },
+  { name: 'Foremost', domain: 'foremost.com', slug: 'foremost' },
+  { name: 'Safeco', domain: 'safeco.com', slug: 'safeco' },
+  { name: 'GEICO', domain: 'geico.com', slug: 'geico' },
+  { name: 'Roamly', domain: 'roamly.com', slug: 'roamly' },
+  { name: 'State Farm', domain: 'statefarm.com', slug: 'state-farm' },
+  // Add all your providers here
+];
+
+// Update output directory
+const outputDir = path.join(__dirname, '../public/rv-insurance-logos');
+```
+
+### STEP 3: Run the Logo Fetch Script
+
+```bash
+# Without Brandfetch API key (uses Clearbit + Google favicon)
+node scripts/fetch-[category]-logos.js
+
+# With Brandfetch API key (best quality)
+# Add to .env: BRANDFETCH_API_KEY=your_key_here
+node scripts/fetch-[category]-logos.js
+
+# Force re-download all logos
+node scripts/fetch-[category]-logos.js --force
+```
+
+### STEP 4: Check Results & Handle Failures
+
+The script will:
+1. ✅ Download logos to `/public/[category]-logos/`
+2. ✅ Generate TypeScript map at `src/utils/[category]LogoMap.ts`
+3. ⚠️ List any failed companies that need manual logos
+
+For failed logos, you have 3 options:
+
+**Option 1: Generate SVG Fallback**
+```bash
+# Copy and customize the SVG generator
+cp scripts/generate-warranty-logos.js scripts/generate-[category]-logos.js
+# Edit with your company colors, then run:
+node scripts/generate-[category]-logos.js
+```
+
+**Option 2: Manual Download**
+- Brandfetch.com - Search company, download logo
+- Company website - Check press/media page
+- Seeklogo.com - Search for company logos
+
+**Option 3: Background Removal (if logo has white background)**
+```bash
+# Use Freepik API (requires FREEPIK_API_KEY in .env)
+# Or use online tool: remove.bg
+```
+
+### STEP 5: Use Logos in Your Article
+
+**Option A: Local logos (recommended)**
+```javascript
+// Import the auto-generated logo map
+import { getRVInsuranceLogo } from '../../utils/rvInsuranceLogoMap';
+
+// In your template
+<img src={getRVInsuranceLogo(provider.slug)} alt={`${provider.name} logo`} />
+```
+
+**Option B: Clearbit URLs (quick but less reliable)**
+```javascript
+// In your template - build URL from domain
+<img 
+  src={`https://logo.clearbit.com/${provider.domain}`}
+  alt={`${provider.name} logo`}
+  onerror="this.onerror=null; this.src='/fallback-logo.png'"
+/>
+```
+
+### STEP 6: Verify All Logos Load
+
+```bash
+npm run dev
+# Visit http://localhost:4321/blog/best-[topic]
+# Check every provider card - all logos should display
+```
+
+---
+
+## 🎨 LOGO FETCH SCRIPT TEMPLATE
+
+Create `scripts/fetch-[category]-logos.js`:
+
+```javascript
+/**
+ * Fetch [CATEGORY] Company Logos
+ * Run: node scripts/fetch-[category]-logos.js
+ */
+
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+import { fileURLToPath } from 'url';
+
+try {
+  const dotenv = await import('dotenv');
+  dotenv.config();
+} catch (e) {}
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// ========== CUSTOMIZE THIS ARRAY ==========
+const companies = [
+  { name: 'Company Name', domain: 'company.com', slug: 'company-name' },
+  // Add all your companies here
+];
+
+// ========== CUSTOMIZE OUTPUT DIRECTORY ==========
+const outputDir = path.join(__dirname, '../public/[category]-logos');
+
+// Ensure output directory exists
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
+
+// Fetch from Clearbit (free)
+function fetchClearbitLogo(domain, outputPath) {
+  return new Promise((resolve, reject) => {
+    const url = `https://logo.clearbit.com/${domain}?size=200&format=png`;
+    const file = fs.createWriteStream(outputPath);
+    
+    https.get(url, (response) => {
+      if (response.statusCode === 200) {
+        response.pipe(file);
+        file.on('finish', () => { file.close(); resolve(true); });
+      } else {
+        file.close();
+        fs.unlink(outputPath, () => {});
+        resolve(false);
+      }
+    }).on('error', (err) => {
+      file.close();
+      fs.unlink(outputPath, () => {});
+      reject(err);
+    });
+  });
+}
+
+// Brandfetch API (best quality - requires API key)
+async function fetchBrandfetchLogo(domain, outputPath) {
+  const API_KEY = process.env.BRANDFETCH_API_KEY;
+  if (!API_KEY) return false;
+  
+  try {
+    const response = await fetch(`https://api.brandfetch.io/v2/brands/${domain}`, {
+      headers: { 'Authorization': `Bearer ${API_KEY}` },
+    });
+    if (!response.ok) return false;
+    
+    const brandData = await response.json();
+    const logos = brandData.logos || [];
+    
+    let logo = logos.find(l => l.type === 'logo' && l.theme === 'dark');
+    if (!logo) logo = logos.find(l => l.type === 'logo');
+    if (!logo) logo = logos[0];
+    if (!logo?.formats) return false;
+    
+    let format = logo.formats.find(f => f.format === 'png' && f.background === 'transparent');
+    if (!format) format = logo.formats.find(f => f.format === 'png');
+    if (!format) format = logo.formats[0];
+    if (!format?.src) return false;
+    
+    const logoResponse = await fetch(format.src);
+    if (!logoResponse.ok) return false;
+    
+    const buffer = await logoResponse.arrayBuffer();
+    fs.writeFileSync(outputPath, Buffer.from(buffer));
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+// Google favicon fallback
+function fetchGoogleFavicon(domain, outputPath) {
+  return new Promise((resolve, reject) => {
+    const url = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+    const file = fs.createWriteStream(outputPath);
+    
+    https.get(url, (response) => {
+      if (response.statusCode === 200) {
+        response.pipe(file);
+        file.on('finish', () => { file.close(); resolve(true); });
+      } else {
+        file.close();
+        fs.unlink(outputPath, () => {});
+        resolve(false);
+      }
+    }).on('error', () => resolve(false));
+  });
+}
+
+async function downloadLogos() {
+  console.log('🎨 Fetching logos...\\n');
+  
+  let successCount = 0;
+  let failCount = 0;
+  const results = [];
+  
+  for (const company of companies) {
+    const outputPath = path.join(outputDir, `${company.slug}.png`);
+    console.log(`[${companies.indexOf(company) + 1}/${companies.length}] ${company.name}`);
+    
+    if (fs.existsSync(outputPath) && !process.argv.includes('--force')) {
+      console.log('   ⏭️  Already exists\\n');
+      successCount++;
+      continue;
+    }
+    
+    try {
+      let downloaded = false;
+      
+      // Try Brandfetch first
+      if (process.env.BRANDFETCH_API_KEY) {
+        downloaded = await fetchBrandfetchLogo(company.domain, outputPath);
+        if (downloaded) console.log('   ✅ Brandfetch\\n');
+      }
+      
+      // Try Clearbit
+      if (!downloaded) {
+        downloaded = await fetchClearbitLogo(company.domain, outputPath);
+        if (downloaded) console.log('   ✅ Clearbit\\n');
+      }
+      
+      // Fallback to Google favicon
+      if (!downloaded) {
+        downloaded = await fetchGoogleFavicon(company.domain, outputPath);
+        if (downloaded) console.log('   ✅ Google favicon\\n');
+      }
+      
+      if (downloaded) {
+        successCount++;
+        results.push({ company: company.name, success: true });
+      } else {
+        console.log('   ❌ Failed\\n');
+        failCount++;
+        results.push({ company: company.name, success: false });
+      }
+      
+      await new Promise(r => setTimeout(r, 500));
+    } catch (error) {
+      console.log(`   ❌ Error: ${error.message}\\n`);
+      failCount++;
+    }
+  }
+  
+  console.log(`\\n📊 Summary: ${successCount} successful, ${failCount} failed`);
+  console.log(`📁 Logos saved to: ${outputDir}`);
+  
+  // Generate TypeScript logo map
+  const logoMap = {};
+  companies.forEach(company => {
+    const logoPath = `/[category]-logos/${company.slug}.png`;
+    logoMap[company.slug] = logoPath;
+    logoMap[company.name.toLowerCase()] = logoPath;
+  });
+  
+  // ========== CUSTOMIZE MAP PATH ==========
+  const mapPath = path.join(__dirname, '../src/utils/[category]LogoMap.ts');
+  const mapContent = `export const logos: Record<string, string> = ${JSON.stringify(logoMap, null, 2)};
+
+export function get[Category]Logo(nameOrSlug: string): string | null {
+  return logos[nameOrSlug.toLowerCase()] || null;
+}
+
+export default logos;
+`;
+  
+  fs.writeFileSync(mapPath, mapContent);
+  console.log(`\\n📄 Logo map saved to: ${mapPath}`);
+  
+  const failed = results.filter(r => !r.success);
+  if (failed.length > 0) {
+    console.log('\\n⚠️  Failed (need manual logos):');
+    failed.forEach(f => console.log(`   - ${f.company}`));
+  }
+}
+
+downloadLogos().catch(console.error);
+```
+
+---
+
+## 📸 HERO IMAGE WORKFLOW
+
+### Option 1: Freepik (Recommended)
+1. Go to [freepik.com](https://freepik.com)
+2. Search: "[topic] hero banner" or "[topic] header"
+3. Download high-res (1200x630px minimum)
+4. Save to: `/public/blog-images/best-[topic].jpg`
+
+### Option 2: Generate with Gemini AI
+```bash
+node scripts/generate-insurance-hero.js "[topic]"
+# Example: node scripts/generate-insurance-hero.js "rv insurance"
+```
+
+### Option 3: Unsplash/Pexels
+- [unsplash.com](https://unsplash.com) - Free high-quality photos
+- [pexels.com](https://pexels.com) - Free stock photos
+
+---
+
+## 🗜️ IMAGE OPTIMIZATION (Imagify)
+
+After adding all images, optimize them:
+
+```bash
+# Preview what will be optimized
+npm run optimize:images:dry
+
+# Optimize all images (normal compression - good for logos)
+npm run optimize:images
+
+# Aggressive compression (for photos/hero images)
+npm run optimize:images:aggressive
+
+# Specific folder only
+IMAGIFY_API_KEY=your_key node scripts/optimize-images-imagify.js --folder=blog-images
+```
+
+**Target file sizes:**
+- Hero images: < 200KB
+- Logos: < 50KB
+- In-content images: < 100KB
 
 ---
 
@@ -160,6 +511,7 @@ Provide the COMPLETE .astro file ready to save, including:
 Metrics: monthlyAvg, rating, amBest (A++, A+, A, etc.)
 Stats Grid: Monthly Cost, AM Best Rating, Deductible, Claims Rating
 Color Theme: Blue (#0D2C4B)
+Logos: /public/insurance-logos-small/ or Clearbit
 ```
 
 ### For Finance/Savings Articles:
@@ -167,6 +519,7 @@ Color Theme: Blue (#0D2C4B)
 Metrics: apy, monthlyFee, minBalance, fdic
 Stats Grid: APY, Monthly Fee, Min Balance, FDIC Insured
 Color Theme: Green (#059669)
+Logos: /public/company-logos/ or Clearbit
 ```
 
 ### For Credit Card Articles:
@@ -174,6 +527,7 @@ Color Theme: Green (#059669)
 Metrics: annualFee, bonus, bonusValue, rewardsRate, foreignFee
 Stats Grid: Annual Fee, Welcome Bonus, Rewards Rate, Foreign Fees
 Color Theme: Blue (#0066B2)
+Logos: Use cardImageMap.ts for card images
 ```
 
 ### For Home/Services Articles:
@@ -181,59 +535,49 @@ Color Theme: Blue (#0066B2)
 Metrics: monthlyAvg, serviceFee, rating, coverage
 Stats Grid: Monthly Cost, Service Fee, Coverage, Rating
 Color Theme: Slate (#334155)
+Logos: /public/company-logos/ or Clearbit
 ```
 
 ---
 
-## 📋 PRE-FLIGHT CHECKLIST
+## 📋 COMPLETE WORKFLOW CHECKLIST
 
-Before starting, verify:
-- [ ] Target keyword identified
-- [ ] Competitor articles analyzed (check top 3 Google results)
-- [ ] Number of providers decided (8-15)
-- [ ] Category type confirmed
-- [ ] Author assigned (Sarah Chen, Emily Johnson, Jessica Martinez, etc.)
+### Phase 1: Article Generation
+- [ ] Copy THE PROMPT above and fill in details
+- [ ] Paste to AI and generate article
+- [ ] Save as `src/pages/blog/best-[topic].astro`
 
----
+### Phase 2: Logo Setup
+- [ ] Create logo fetch script for your category
+- [ ] Run: `node scripts/fetch-[category]-logos.js`
+- [ ] Check for failed logos
+- [ ] Generate SVG fallbacks or download manually
+- [ ] Update article to use local logo paths
 
-## ✅ POST-GENERATION CHECKLIST
+### Phase 3: Hero Image
+- [ ] Download from Freepik or generate with Gemini
+- [ ] Save to `/public/blog-images/best-[topic].jpg`
+- [ ] Ensure 1200x630px minimum
 
-After receiving the article:
-- [ ] All provider data complete (no placeholders)
-- [ ] Editor's Choice on #1 pick only
-- [ ] Logos use Clearbit URLs correctly
-- [ ] Stats grid shows 4 relevant metrics
-- [ ] All 10 sections present
-- [ ] 8-10 FAQs included
-- [ ] Color theme matches category
-- [ ] Author box uses real team member
-- [ ] Internal links to related pages
+### Phase 4: Optimization
+- [ ] Run: `npm run optimize:images`
+- [ ] Verify file sizes are under targets
 
----
+### Phase 5: Verification
+- [ ] Run: `npm run dev`
+- [ ] Visit article URL
+- [ ] Check all logos load
+- [ ] Check hero image displays
+- [ ] Test accordion expand/collapse
+- [ ] Test on mobile (resize browser)
 
-## 🔧 SCREAMING EAGLE WORKFLOW (After Generation)
+### Phase 6: Internal Linking
+- [ ] Add 3 links FROM existing pages TO new article
+- [ ] Verify 3 links FROM new article TO existing pages
 
-```
-□ Step 1: Save article file
-□ Step 2: Check logos load (npm run dev)
-□ Step 3: Visual verification (screenshot test)
-□ Step 4: Add hero image (Freepik or Gemini)
-□ Step 5: Optimize images (Imagify)
-□ Step 6: Internal linking (3-in, 3-out)
-□ Step 7: Final SEO check
-□ Step 8: Update progress CSV
-```
-
----
-
-## 📁 FILE LOCATIONS
-
-| Type | Location |
-|------|----------|
-| Article | `src/pages/blog/best-[topic].astro` |
-| Hero Image | `/public/blog-images/best-[topic].jpg` |
-| Logos | `/public/[category]-logos/` or Clearbit URL |
-| Progress | `scripts/article-progress.csv` |
+### Phase 7: Finalize
+- [ ] Update `scripts/article-progress.csv`
+- [ ] Commit and push
 
 ---
 
@@ -250,4 +594,37 @@ After receiving the article:
 
 ---
 
-*Use this prompt every time you generate a comparison article for consistent, high-quality results.*
+## 🔑 API KEYS NEEDED (in .env file)
+
+```bash
+# Logo fetching (optional but better quality)
+BRANDFETCH_API_KEY=your_key
+
+# Image optimization
+IMAGIFY_API_KEY=your_key
+
+# Hero image generation
+GEMINI_API_KEY=your_key
+
+# Background removal (if needed)
+FREEPIK_API_KEY=your_key
+```
+
+---
+
+## 📁 FILE LOCATIONS REFERENCE
+
+| Type | Location |
+|------|----------|
+| Articles | `src/pages/blog/best-[topic].astro` |
+| Hero Images | `/public/blog-images/best-[topic].jpg` |
+| Insurance Logos | `/public/insurance-logos-small/` |
+| Company Logos | `/public/company-logos/` |
+| Warranty Logos | `/public/warranty-logos/` |
+| Logo Maps | `src/utils/[category]LogoMap.ts` |
+| Logo Scripts | `scripts/fetch-[category]-logos.js` |
+| Progress CSV | `scripts/article-progress.csv` |
+
+---
+
+*Use this prompt + workflow every time you generate a comparison article for consistent, high-quality results with proper logos and images.*

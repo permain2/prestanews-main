@@ -5,12 +5,14 @@ import TOCToggleGroupSavings from '../../components/TOCToggleGroupSavings.tsx';
 import FAQSchema from '../../components/seo/FAQSchema.astro';
 import ArticleSchema from '../../components/seo/ArticleSchema.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getBankLogo } from '../../utils/bankLogoMap';
 
 // High-yield savings accounts data - 10 providers
 const accounts = [
   {
     name: "Varo Bank High-Yield Savings",
     slug: "varo-bank",
+    logoSlug: "varo",
     bestFor: "Highest APY",
     apy: "5.00%",
     apyNote: "up to $5K",
@@ -38,6 +40,7 @@ const accounts = [
   {
     name: "Openbank High Yield Savings",
     slug: "openbank",
+    logoSlug: "openbank",
     bestFor: "No Requirements",
     apy: "4.75%",
     apyNote: "no strings",
@@ -63,6 +66,7 @@ const accounts = [
   {
     name: "EverBank Performance℠ Savings",
     slug: "everbank",
+    logoSlug: "everbank",
     bestFor: "Complete Banking",
     apy: "4.75%",
     apyNote: "all balances",
@@ -88,6 +92,7 @@ const accounts = [
   {
     name: "Newtek Bank High Yield Savings",
     slug: "newtek-bank",
+    logoSlug: "newtek",
     bestFor: "Simple & Straightforward",
     apy: "4.60%",
     apyNote: "all balances",
@@ -111,6 +116,7 @@ const accounts = [
   {
     name: "SoFi Checking and Savings",
     slug: "sofi",
+    logoSlug: "sofi",
     bestFor: "Combined Account",
     apy: "3.80%",
     apyNote: "with direct deposit",
@@ -136,6 +142,7 @@ const accounts = [
   {
     name: "Marcus by Goldman Sachs",
     slug: "marcus",
+    logoSlug: "marcus",
     bestFor: "Brand Trust",
     apy: "3.90%",
     apyNote: "no minimum",
@@ -161,6 +168,7 @@ const accounts = [
   {
     name: "Capital One 360 Performance Savings",
     slug: "capital-one-360",
+    logoSlug: "capital-one",
     bestFor: "In-Person Access",
     apy: "3.70%",
     apyNote: "all balances",
@@ -186,6 +194,7 @@ const accounts = [
   {
     name: "American Express High Yield Savings",
     slug: "american-express",
+    logoSlug: "amex",
     bestFor: "Amex Cardholders",
     apy: "3.70%",
     apyNote: "no minimum",
@@ -211,6 +220,7 @@ const accounts = [
   {
     name: "Synchrony Bank High Yield Savings",
     slug: "synchrony",
+    logoSlug: "synchrony",
     bestFor: "ATM Access",
     apy: "4.00%",
     apyNote: "all balances",
@@ -236,6 +246,7 @@ const accounts = [
   {
     name: "Forbright Bank Growth Savings",
     slug: "forbright",
+    logoSlug: "forbright",
     bestFor: "Eco-Conscious Savers",
     apy: "4.35%",
     apyNote: "all balances",
@@ -383,15 +394,12 @@ const faqs = [
 
               {/* Bank Logo */}
               <div class="logo-wrapper relative mt-8 mb-6">
-                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4">
-                  <img 
-                    src={`https://logo.clearbit.com/${account.slug === 'varo-bank' ? 'varo.com' : account.slug === 'openbank' ? 'openbank.com' : account.slug === 'everbank' ? 'everbank.com' : account.slug === 'newtek-bank' ? 'newtekbank.com' : account.slug === 'sofi' ? 'sofi.com' : account.slug === 'marcus' ? 'marcus.com' : account.slug === 'capital-one-360' ? 'capitalone.com' : account.slug === 'american-express' ? 'americanexpress.com' : account.slug === 'synchrony' ? 'synchrony.com' : account.slug === 'forbright' ? 'forbrightbank.com' : 'bank.com'}`}
-                    alt={`${account.name} logo`}
-                    class="max-w-full max-h-16 object-contain"
-                    loading={index < 3 ? "eager" : "lazy"}
-                    onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-2xl font-bold text-gray-600\'>' + this.alt.split(' ')[0] + '</span>'"
-                  />
-                </div>
+                <img 
+                  src={getBankLogo(account.logoSlug) || `/bank-logos/${account.logoSlug}.svg`}
+                  alt={`${account.name} logo`}
+                  class="w-48 h-auto rounded-xl shadow-lg group-hover:scale-105 transition-all duration-500"
+                  loading={index < 3 ? "eager" : "lazy"}
+                />
                 
                 {/* Floating Rating */}
                 <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
@@ -426,22 +434,22 @@ const faqs = [
 
               {/* Key Stats Grid */}
               <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                <div class="stat-box">
-                  <div class="stat-label">APY</div>
-                  <div class="stat-value text-green-600">{account.apy}</div>
-                  <div class="text-xs text-[#68727C]">{account.apyNote}</div>
+                <div class="bg-gradient-to-br from-[#F0FDF4] to-[#DCFCE7] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#059669] font-medium mb-1">APY</div>
+                  <div class="font-bold text-[#166534] text-lg">{account.apy}</div>
+                  <div class="text-xs text-[#059669]">{account.apyNote}</div>
                 </div>
-                <div class="stat-box">
-                  <div class="stat-label">Monthly Fee</div>
-                  <div class="stat-value text-green-600">{account.monthlyFee}</div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">Min Balance</div>
+                  <div class="font-bold text-[#162433]">{account.minBalance}</div>
                 </div>
-                <div class="stat-box">
-                  <div class="stat-label">Min Balance</div>
-                  <div class="stat-value">{account.minBalance}</div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">Monthly Fees</div>
+                  <div class="font-bold text-[#059669]">$0</div>
                 </div>
-                <div class="stat-box">
-                  <div class="stat-label">FDIC Insured</div>
-                  <div class="stat-value text-green-600">{account.fdic ? "Yes" : "No"}</div>
+                <div class="bg-[#F8FAFC] rounded-xl p-3 text-center">
+                  <div class="text-xs text-[#68727C] font-medium mb-1">FDIC Insured</div>
+                  <div class="font-bold text-[#059669]">✓ Yes</div>
                 </div>
               </div>
 
