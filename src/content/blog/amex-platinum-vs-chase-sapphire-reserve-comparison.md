@@ -2,7 +2,7 @@
 title: "Amex Platinum vs Chase Sapphire Reserve: Which Premium Card Wins in 2024?"
 description: "Complete comparison of Amex Platinum vs Chase Sapphire Reserve. Fees, rewards, perks analyzed to help you choose the right premium credit card."
 pubDate: 2025-12-10
-heroImage: "/blog-images/chase-comparison.jpg"
+heroImage: "/blog-images/amex-vs-chase.jpg"
 author: "Michael Rodriguez"
 authorImage: "/team/michael-rodriguez.jpg"
 authorRole: "Senior Credit Card Analyst"

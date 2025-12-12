@@ -2,7 +2,7 @@
 title: "Chase Sapphire Preferred vs Sapphire Reserve: Which Is Better?"
 description: "Compare Chase Sapphire Preferred vs Reserve cards. Expert analysis of benefits, fees, rewards to help you choose the best premium travel card."
 pubDate: 2025-12-10
-heroImage: "/blog-images/chase-comparison.jpg"
+heroImage: "/blog-images/chase-sapphire-comparison.jpg"
 tags: ["credit-cards","guide"]
 ---
 
