@@ -901,6 +901,15 @@ const faqs = [
     position: relative;
     overflow: hidden;
   }
+
+  /* Move rating pill so it never overlaps the logo (top-right of logo area) */
+  .logo-wrapper > div {
+    top: -0.75rem !important;
+    right: -0.75rem !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+  }
   
   .apply-btn::before {
     content: '';
