@@ -63,7 +63,16 @@ app.use(express.static(ADMIN_DIR));
 
 // Helper functions
 function loadKeywords() {
-  return JSON.parse(fs.readFileSync(KEYWORDS_FILE, 'utf-8'));
+  const data = JSON.parse(fs.readFileSync(KEYWORDS_FILE, 'utf-8'));
+  // Handle both 'keywords' and 'records' formats
+  const keywords = data.keywords || data.records || [];
+  // Add slug if missing
+  return {
+    keywords: keywords.map(k => ({
+      ...k,
+      slug: k.slug || k.keyword.toLowerCase().replace(/\s+/g, '-')
+    }))
+  };
 }
 
 function saveKeywords(data) {
@@ -169,7 +178,7 @@ app.post('/api/articles/:slug', (req, res) => {
 });
 
 // POST /api/publish/:slug - Generate Astro page and commit
-app.post('/api/publish/:slug', (req, res) => {
+app.post('/api/publish/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
     const data = loadArticles();
@@ -375,14 +384,14 @@ app.get('/preview', (req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`
-╔══════════════════════════════════════════════════╗
-║                                                  ║
-║   📊 Screened Admin Dashboard                    ║
-║                                                  ║
-║   Dashboard:  http://localhost:${PORT}              ║
-║   Editor:     http://localhost:${PORT}/editor       ║
-║                                                  ║
-╚══════════════════════════════════════════════════╝
+╔══════════════════════════════════════════════════════╗
+║                                                      ║
+║   📊 Screened Admin Dashboard                        ║
+║                                                      ║
+║   Dashboard:  http://localhost:${PORT}                 ║
+║   Editor:     http://localhost:${PORT}/editor          ║
+║                                                      ║
+╚══════════════════════════════════════════════════════╝
   `);
 });
 

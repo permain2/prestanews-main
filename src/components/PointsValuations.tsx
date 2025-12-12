@@ -1,26 +1,20 @@
-import { motion } from "motion/react";
 import { useState } from "react";
 
 const programs = [
-  { name: "Chase Ultimate Rewards", value: "2.05", logo: "/logos/chase.svg" },
-  { name: "Bilt Rewards", value: "2.20", logo: "/logos/bilt.svg" },
-  { name: "American Express Membership Rewards", value: "2.00", logo: "/logos/amex.svg" },
-  { name: "Capital One Miles", value: "1.85", logo: "/logos/capital-one.svg" },
-  { name: "Citi ThankYou Points", value: "1.70", logo: "/logos/citi.svg" },
-  { name: "Wells Fargo Rewards", value: "1.50", logo: "/logos/wells-fargo.svg" },
+  { name: "Chase Ultimate Rewards", value: "2.05", logo: "chase" },
+  { name: "Bilt Rewards", value: "2.20", logo: "bilt" },
+  { name: "Amex Membership Rewards", value: "2.00", logo: "amex" },
+  { name: "Capital One Miles", value: "1.85", logo: "capital-one" },
+  { name: "Citi ThankYou Points", value: "1.70", logo: "citi" },
+  { name: "Wells Fargo Rewards", value: "1.50", logo: "wells-fargo" },
 ];
 
 export default function PointsValuations() {
   const [startIndex, setStartIndex] = useState(0);
   const visibleCount = 4;
 
-  const next = () => {
-    setStartIndex((prev) => (prev + 1) % programs.length);
-  };
-
-  const prev = () => {
-    setStartIndex((prev) => (prev - 1 + programs.length) % programs.length);
-  };
+  const next = () => setStartIndex((prev) => (prev + 1) % programs.length);
+  const prev = () => setStartIndex((prev) => (prev - 1 + programs.length) % programs.length);
 
   const getVisiblePrograms = () => {
     const visible = [];
@@ -39,7 +33,7 @@ export default function PointsValuations() {
         </p>
 
         <div className="valuations-carousel">
-          <button className="carousel-btn prev" onClick={prev} aria-label="Previous">
+          <button className="carousel-btn" onClick={prev} aria-label="Previous">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M15 18l-6-6 6-6" />
             </svg>
@@ -47,23 +41,17 @@ export default function PointsValuations() {
 
           <div className="valuations-grid">
             {getVisiblePrograms().map((program, index) => (
-              <motion.div
-                key={`${program.name}-${startIndex}-${index}`}
-                className="valuation-card"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
+              <div key={`${program.name}-${startIndex}-${index}`} className="valuation-card">
                 <span className="valuation-value">{program.value}¢</span>
                 <span className="valuation-name">{program.name}</span>
                 <div className="valuation-logo">
-                  <ProgramLogo name={program.name} />
+                  <ProgramLogo name={program.logo} />
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
-          <button className="carousel-btn next" onClick={next} aria-label="Next">
+          <button className="carousel-btn" onClick={next} aria-label="Next">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M9 18l6-6-6-6" />
             </svg>
@@ -77,8 +65,9 @@ export default function PointsValuations() {
 
       <style>{`
         .valuations-section {
-          background: #F8F9FA;
+          background: #F7F8FA;
           padding: 4rem 0;
+          border-bottom: 1px solid #E6E8EB;
         }
 
         .valuations-container {
@@ -89,19 +78,19 @@ export default function PointsValuations() {
         }
 
         .valuations-title {
-          font-family: 'Playfair Display', 'Georgia', serif;
-          font-size: clamp(1.75rem, 4vw, 2.5rem);
-          font-weight: 700;
-          color: #0D2644;
-          margin-bottom: 0.75rem;
-          font-style: italic;
+          font-family: 'Lexend', sans-serif;
+          font-size: clamp(1.5rem, 3vw, 2rem);
+          font-weight: 600;
+          color: #0D2C4B;
+          margin-bottom: 0.5rem;
+          letter-spacing: -0.02em;
         }
 
         .valuations-subtitle {
           font-family: 'Poppins', sans-serif;
-          font-size: 1rem;
-          color: #5A6670;
-          max-width: 40rem;
+          font-size: 0.9375rem;
+          color: #68727C;
+          max-width: 36rem;
           margin: 0 auto 2.5rem;
           line-height: 1.6;
         }
@@ -109,7 +98,7 @@ export default function PointsValuations() {
         .valuations-carousel {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 1.5rem;
           justify-content: center;
         }
 
@@ -117,7 +106,7 @@ export default function PointsValuations() {
           width: 2.5rem;
           height: 2.5rem;
           border-radius: 50%;
-          border: 1px solid #D1D5DB;
+          border: 1px solid #E6E8EB;
           background: white;
           cursor: pointer;
           display: flex;
@@ -128,8 +117,8 @@ export default function PointsValuations() {
         }
 
         .carousel-btn:hover {
-          border-color: #0D2644;
-          background: #0D2644;
+          border-color: #0D2C4B;
+          background: #0D2C4B;
         }
 
         .carousel-btn:hover svg {
@@ -139,43 +128,43 @@ export default function PointsValuations() {
         .carousel-btn svg {
           width: 1.25rem;
           height: 1.25rem;
-          stroke: #5A6670;
+          stroke: #68727C;
         }
 
         .valuations-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 1.5rem;
+          gap: 2rem;
           flex: 1;
-          max-width: 56rem;
+          max-width: 52rem;
         }
 
         .valuation-card {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.5rem;
-          padding: 1.5rem 1rem;
+          gap: 0.375rem;
+          padding: 1rem;
         }
 
         .valuation-value {
-          font-family: 'Poppins', sans-serif;
-          font-size: 2rem;
-          font-weight: 700;
-          color: #0D2644;
+          font-family: 'Lexend', sans-serif;
+          font-size: 1.75rem;
+          font-weight: 600;
+          color: #0D2C4B;
         }
 
         .valuation-name {
           font-family: 'Poppins', sans-serif;
-          font-size: 0.8125rem;
-          color: #5A6670;
+          font-size: 0.75rem;
+          color: #68727C;
           text-align: center;
           line-height: 1.4;
         }
 
         .valuation-logo {
-          width: 3rem;
-          height: 3rem;
+          width: 2.5rem;
+          height: 2.5rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -191,26 +180,25 @@ export default function PointsValuations() {
           display: inline-block;
           margin-top: 2rem;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.9375rem;
+          font-size: 0.875rem;
           font-weight: 600;
-          color: #146AFF;
+          color: #146aff;
           text-decoration: none;
           transition: color 0.2s ease;
         }
 
         .valuations-link:hover {
-          color: #0052CC;
-          text-decoration: underline;
+          color: #0D2C4B;
         }
 
         @media (max-width: 768px) {
+          .valuations-section {
+            padding: 3rem 0;
+          }
+
           .valuations-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
-          }
-
-          .valuations-section {
-            padding: 3rem 0;
           }
 
           .carousel-btn {
@@ -220,10 +208,6 @@ export default function PointsValuations() {
           .valuation-value {
             font-size: 1.5rem;
           }
-
-          .valuation-name {
-            font-size: 0.75rem;
-          }
         }
       `}</style>
     </section>
@@ -231,53 +215,51 @@ export default function PointsValuations() {
 }
 
 function ProgramLogo({ name }: { name: string }) {
-  if (name.includes("Chase")) {
-    return (
-      <svg viewBox="0 0 64 64" fill="none">
-        <path d="M32 8L8 24v16l24 16 24-16V24L32 8z" fill="#0D2644"/>
-        <path d="M32 16l-16 10.67v10.66L32 48l16-10.67V26.67L32 16z" fill="white"/>
+  const logos: Record<string, JSX.Element> = {
+    chase: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <path d="M20 4L4 14v12l16 10 16-10V14L20 4z" fill="#0D2C4B"/>
+        <path d="M20 10l-10 6.67v6.66L20 30l10-6.67v-6.66L20 10z" fill="white"/>
       </svg>
-    );
-  }
-  if (name.includes("Bilt")) {
-    return (
-      <svg viewBox="0 0 64 64" fill="none">
-        <rect x="12" y="16" width="10" height="32" fill="#0D2644"/>
-        <rect x="27" y="16" width="10" height="32" fill="#0D2644"/>
-        <rect x="42" y="16" width="10" height="32" fill="#0D2644"/>
-        <rect x="12" y="16" width="40" height="8" fill="#0D2644"/>
+    ),
+    bilt: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect x="8" y="10" width="6" height="20" fill="#0D2C4B"/>
+        <rect x="17" y="10" width="6" height="20" fill="#0D2C4B"/>
+        <rect x="26" y="10" width="6" height="20" fill="#0D2C4B"/>
+        <rect x="8" y="10" width="24" height="5" fill="#0D2C4B"/>
       </svg>
-    );
-  }
-  if (name.includes("American Express")) {
-    return (
-      <svg viewBox="0 0 64 64" fill="none">
-        <rect x="8" y="20" width="48" height="24" rx="2" fill="#006FCF"/>
-        <text x="32" y="36" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" fontFamily="sans-serif">AMEX</text>
+    ),
+    amex: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect x="4" y="12" width="32" height="16" rx="2" fill="#006FCF"/>
+        <text x="20" y="23" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold" fontFamily="sans-serif">AMEX</text>
       </svg>
-    );
-  }
-  if (name.includes("Capital One")) {
-    return (
-      <svg viewBox="0 0 64 64" fill="none">
-        <path d="M8 32c0-13.255 10.745-24 24-24s24 10.745 24 24" stroke="#D03027" strokeWidth="6" fill="none"/>
-        <path d="M16 36l12-8 12 8" stroke="#D03027" strokeWidth="4" fill="none"/>
+    ),
+    "capital-one": (
+      <svg viewBox="0 0 40 40" fill="none">
+        <path d="M4 20c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#D03027" strokeWidth="4" fill="none"/>
+        <path d="M10 24l8-6 8 6" stroke="#D03027" strokeWidth="3" fill="none"/>
       </svg>
-    );
-  }
-  if (name.includes("Citi")) {
-    return (
-      <svg viewBox="0 0 64 64" fill="none">
-        <path d="M12 28h40v8H12z" fill="#003B70"/>
-        <circle cx="32" cy="32" r="4" fill="#E31837"/>
+    ),
+    citi: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <path d="M6 17h28v6H6z" fill="#003B70"/>
+        <circle cx="20" cy="20" r="3" fill="#E31837"/>
       </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 64 64" fill="none">
-      <circle cx="32" cy="32" r="20" stroke="#0D2644" strokeWidth="2" fill="none"/>
-      <text x="32" y="36" textAnchor="middle" fill="#0D2644" fontSize="12" fontWeight="bold">$</text>
+    ),
+    "wells-fargo": (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect x="8" y="14" width="24" height="12" rx="2" fill="#D71E28"/>
+        <rect x="12" y="18" width="16" height="4" rx="1" fill="#FFCD41"/>
+      </svg>
+    ),
+  };
+
+  return logos[name] || (
+    <svg viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="14" stroke="#0D2C4B" strokeWidth="2" fill="none"/>
+      <text x="20" y="24" textAnchor="middle" fill="#0D2C4B" fontSize="10" fontWeight="bold">$</text>
     </svg>
   );
 }
-

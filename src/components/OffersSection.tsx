@@ -6,11 +6,7 @@ const offers = [
     image: "/credit-cards/chase-sapphire-preferred.png",
     bonus: "75,000 bonus points",
     url: "https://www.chase.com/personal/credit-cards/sapphire/sapphire-preferred",
-    expert: {
-      name: "Sarah Chen",
-      title: "Editor-in-Chief",
-      image: "/team/sarah-chen.jpg"
-    },
+    expert: { name: "Sarah Chen", title: "Editor-in-Chief", image: "/team/sarah-chen.jpg" },
     whyLike: "Valuable rewards, a low annual fee and wide-ranging travel protections"
   },
   {
@@ -20,11 +16,7 @@ const offers = [
     image: "/credit-cards/capital-one-venture-x.png",
     bonus: "Earn 100,000 bonus miles",
     url: "https://www.capitalone.com/credit-cards/venture-x/",
-    expert: {
-      name: "Michael Rodriguez",
-      title: "Senior Credit Card Analyst",
-      image: "/team/michael-rodriguez.jpg"
-    },
+    expert: { name: "Michael Rodriguez", title: "Senior Credit Card Analyst", image: "/team/michael-rodriguez.jpg" },
     whyLike: "Solid earning rates, extensive travel protections and terrific airport lounge access"
   },
   {
@@ -34,11 +26,7 @@ const offers = [
     image: "/credit-cards/capital-one-venture-x.png",
     bonus: "Earn up to 400K bonus miles",
     url: "https://www.capitalone.com/small-business/credit-cards/venture-x-business/",
-    expert: {
-      name: "Emily Johnson",
-      title: "Insurance Editor",
-      image: "/team/emily-johnson.jpg"
-    },
+    expert: { name: "Emily Johnson", title: "Insurance Editor", image: "/team/emily-johnson.jpg" },
     whyLike: "Unlimited access to Capital One's awesome airport lounges"
   },
   {
@@ -48,11 +36,7 @@ const offers = [
     image: "/credit-cards/chase-sapphire-preferred.png",
     bonus: "Earn 200,000 bonus points",
     url: "https://www.chase.com/business/credit-cards/ink-business-preferred",
-    expert: {
-      name: "Sarah Chen",
-      title: "Editor-in-Chief",
-      image: "/team/sarah-chen.jpg"
-    },
+    expert: { name: "Sarah Chen", title: "Editor-in-Chief", image: "/team/sarah-chen.jpg" },
     whyLike: "Unlock more than $2,500 in travel and business credits each year"
   }
 ];
@@ -61,16 +45,17 @@ export default function OffersSection() {
   return (
     <section className="offers-section">
       <div className="offers-container">
-        <h2 className="offers-title">
-          Great offers from partners<br />
-          <span>that reward every day</span>
-        </h2>
+        <h2 className="offers-title">Great offers from our partners</h2>
+        <p className="offers-subtitle">Top credit card deals handpicked by our expert team</p>
         
         <div className="offers-grid">
-          {offers.map((offer, index) => (
-            <div key={offer.name} className={`offer-card ${offer.badgeStyle === 'highlight' ? 'highlighted' : ''}`}>
-              {offer.badgeStyle === 'highlight' && <div className="card-highlight-bar">LIMITED-TIME OFFER</div>}
-              {offer.badgeStyle === 'premium' && <div className="card-highlight-bar premium">$2500+ IN ANNUAL VALUE</div>}
+          {offers.map((offer) => (
+            <div key={offer.name} className={`offer-card ${offer.badgeStyle === 'highlight' || offer.badgeStyle === 'premium' ? 'highlighted' : ''}`}>
+              {(offer.badgeStyle === 'highlight' || offer.badgeStyle === 'premium') && (
+                <div className={`card-highlight-bar ${offer.badgeStyle}`}>
+                  {offer.badgeStyle === 'highlight' ? 'LIMITED-TIME OFFER' : '$2500+ IN ANNUAL VALUE'}
+                </div>
+              )}
               
               <div className="card-inner">
                 <span className={`offer-badge ${offer.badgeStyle}`}>{offer.badge}</span>
@@ -79,16 +64,14 @@ export default function OffersSection() {
                   <div className="card-image">
                     <img src={offer.image} alt={offer.name} />
                   </div>
-                  <div className="card-info">
-                    <h3 className="card-name">{offer.name}</h3>
-                  </div>
+                  <h3 className="card-name">{offer.name}</h3>
                 </div>
 
                 <div className="card-cta-row">
                   <a href={offer.url} className="apply-btn" target="_blank" rel="noopener noreferrer">
                     Apply now
                   </a>
-                  <span className="bonus-text">{offer.bonus} <span className="info-icon">ⓘ</span></span>
+                  <span className="bonus-text">{offer.bonus}</span>
                 </div>
 
                 <div className="card-terms">
@@ -99,7 +82,7 @@ export default function OffersSection() {
                 <div className="card-divider"></div>
 
                 <div className="expert-section">
-                  <span className="expert-label">HOW WE'D USE THESE POINTS</span>
+                  <span className="section-label">HOW WE'D USE THESE POINTS</span>
                   <div className="expert-row">
                     <div className="expert-info">
                       <img src={offer.expert.image} alt={offer.expert.name} className="expert-avatar" />
@@ -118,7 +101,7 @@ export default function OffersSection() {
                 </div>
 
                 <div className="why-section">
-                  <span className="why-label">WHY YOU'LL LIKE IT</span>
+                  <span className="section-label">WHY YOU'LL LIKE IT</span>
                   <p className="why-text">{offer.whyLike}</p>
                 </div>
               </div>
@@ -127,35 +110,23 @@ export default function OffersSection() {
         </div>
       </div>
 
-      {/* Newsletter Bar */}
+      {/* Newsletter Bar - Matching footer style */}
       <div className="newsletter-bar">
         <div className="newsletter-container">
-          <div className="newsletter-icon">
-            <svg viewBox="0 0 48 48" fill="none">
-              <rect x="4" y="8" width="40" height="32" rx="4" fill="#FFD93D"/>
-              <rect x="8" y="12" width="32" height="24" rx="2" fill="#4ECDC4"/>
-              <path d="M8 14l16 10 16-10" stroke="white" strokeWidth="2"/>
-            </svg>
+          <div className="newsletter-content">
+            <h3 className="newsletter-title">Get notified about limited-time offers</h3>
+            <p className="newsletter-text">We'll email you when bonus offers are <strong>up to 65% higher</strong> than usual</p>
           </div>
-          <p className="newsletter-text">
-            We'll notify you about limited-time offers <strong>up to 65% higher</strong> than usual
-          </p>
           <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Email address" className="newsletter-input" />
-            <button type="submit" className="newsletter-btn">
-              Notify me
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-              </svg>
-            </button>
+            <input type="email" placeholder="your@email.com" className="newsletter-input" required />
+            <button type="submit" className="newsletter-btn">Subscribe</button>
           </form>
         </div>
       </div>
 
       <style>{`
         .offers-section {
-          background: linear-gradient(180deg, #0D2644 0%, #1A3A5C 100%);
+          background: #0D2C4B;
           padding: 4rem 0 0;
         }
 
@@ -166,18 +137,21 @@ export default function OffersSection() {
         }
 
         .offers-title {
-          font-family: 'Playfair Display', 'Georgia', serif;
-          font-size: clamp(2rem, 5vw, 3rem);
-          font-weight: 700;
+          font-family: 'Lexend', sans-serif;
+          font-size: clamp(1.75rem, 4vw, 2.5rem);
+          font-weight: 600;
           color: white;
           text-align: center;
-          margin-bottom: 3rem;
-          line-height: 1.2;
-          font-style: italic;
+          margin-bottom: 0.5rem;
+          letter-spacing: -0.02em;
         }
 
-        .offers-title span {
-          display: block;
+        .offers-subtitle {
+          font-family: 'Poppins', sans-serif;
+          font-size: 1rem;
+          color: rgba(255, 255, 255, 0.7);
+          text-align: center;
+          margin-bottom: 2.5rem;
         }
 
         .offers-grid {
@@ -191,19 +165,18 @@ export default function OffersSection() {
           background: white;
           border-radius: 0.75rem;
           overflow: hidden;
-          position: relative;
         }
 
         .offer-card.highlighted {
-          box-shadow: 0 0 0 2px #4ECDC4;
+          box-shadow: 0 0 0 2px #146aff;
         }
 
         .card-highlight-bar {
-          background: linear-gradient(90deg, #0D4D4D 0%, #1A6B6B 100%);
+          background: #146aff;
           color: white;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.6875rem;
-          font-weight: 700;
+          font-size: 0.625rem;
+          font-weight: 600;
           letter-spacing: 0.05em;
           text-align: center;
           padding: 0.5rem;
@@ -220,15 +193,15 @@ export default function OffersSection() {
         .offer-badge {
           display: block;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.625rem;
-          font-weight: 700;
+          font-size: 0.5625rem;
+          font-weight: 600;
           letter-spacing: 0.05em;
-          color: #0D2644;
-          margin-bottom: 1rem;
+          color: #0D2C4B;
+          margin-bottom: 0.875rem;
         }
 
         .offer-badge.highlight {
-          color: #0D4D4D;
+          color: #146aff;
         }
 
         .offer-badge.premium {
@@ -243,12 +216,12 @@ export default function OffersSection() {
         }
 
         .card-image {
-          width: 4.5rem;
-          height: 3rem;
-          border-radius: 0.375rem;
+          width: 4rem;
+          height: 2.5rem;
+          border-radius: 0.25rem;
           overflow: hidden;
           flex-shrink: 0;
-          background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+          background: #f5f5f5;
         }
 
         .card-image img {
@@ -258,59 +231,55 @@ export default function OffersSection() {
         }
 
         .card-name {
-          font-family: 'Poppins', sans-serif;
-          font-size: 0.9375rem;
+          font-family: 'Lexend', sans-serif;
+          font-size: 0.875rem;
           font-weight: 600;
-          color: #0D2644;
+          color: #0D2C4B;
           line-height: 1.3;
         }
 
         .card-cta-row {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
-          margin-bottom: 0.75rem;
+          gap: 0.625rem;
+          margin-bottom: 0.625rem;
         }
 
         .apply-btn {
-          background: #0D4D4D;
+          background: linear-gradient(135deg, #146aff 0%, #0040B1 100%);
           color: white;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.8125rem;
+          font-size: 0.75rem;
           font-weight: 600;
-          padding: 0.5rem 1rem;
+          padding: 0.5rem 0.875rem;
           border-radius: 0.375rem;
           text-decoration: none;
-          transition: background 0.2s ease;
+          transition: all 0.2s ease;
         }
 
         .apply-btn:hover {
-          background: #0A3D3D;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(20, 106, 255, 0.3);
         }
 
         .bonus-text {
           font-family: 'Poppins', sans-serif;
-          font-size: 0.8125rem;
-          color: #0D2644;
-          font-weight: 500;
-        }
-
-        .info-icon {
-          color: #9CA3AF;
           font-size: 0.75rem;
+          color: #0D2C4B;
+          font-weight: 500;
         }
 
         .card-terms {
           display: flex;
-          gap: 1rem;
+          gap: 0.75rem;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.6875rem;
-          color: #6B7280;
+          font-size: 0.625rem;
+          color: #68727C;
           margin-bottom: 1rem;
         }
 
         .card-terms a {
-          color: #0D4D4D;
+          color: #146aff;
           text-decoration: none;
         }
 
@@ -320,7 +289,7 @@ export default function OffersSection() {
 
         .card-divider {
           height: 1px;
-          background: #E5E7EB;
+          background: #E6E8EB;
           margin: 1rem 0;
         }
 
@@ -328,13 +297,13 @@ export default function OffersSection() {
           margin-bottom: 1rem;
         }
 
-        .expert-label, .why-label {
+        .section-label {
           display: block;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.625rem;
-          font-weight: 700;
-          letter-spacing: 0.05em;
-          color: #6B7280;
+          font-size: 0.5625rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          color: #68727C;
           margin-bottom: 0.5rem;
         }
 
@@ -347,12 +316,12 @@ export default function OffersSection() {
         .expert-info {
           display: flex;
           align-items: center;
-          gap: 0.625rem;
+          gap: 0.5rem;
         }
 
         .expert-avatar {
-          width: 2.5rem;
-          height: 2.5rem;
+          width: 2rem;
+          height: 2rem;
           border-radius: 50%;
           object-fit: cover;
         }
@@ -360,23 +329,23 @@ export default function OffersSection() {
         .expert-name {
           display: block;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.8125rem;
+          font-size: 0.75rem;
           font-weight: 600;
-          color: #0D2644;
+          color: #0D2C4B;
         }
 
         .expert-title {
           display: block;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.6875rem;
-          color: #6B7280;
+          font-size: 0.625rem;
+          color: #68727C;
         }
 
         .expand-btn {
-          width: 2rem;
-          height: 2rem;
+          width: 1.75rem;
+          height: 1.75rem;
           border-radius: 50%;
-          border: 1px solid #E5E7EB;
+          border: 1px solid #E6E8EB;
           background: white;
           cursor: pointer;
           display: flex;
@@ -386,26 +355,27 @@ export default function OffersSection() {
         }
 
         .expand-btn:hover {
-          border-color: #0D4D4D;
+          border-color: #146aff;
         }
 
         .expand-btn svg {
-          width: 1.25rem;
-          height: 1.25rem;
-          stroke: #0D4D4D;
+          width: 1rem;
+          height: 1rem;
+          stroke: #146aff;
         }
 
         .why-text {
           font-family: 'Poppins', sans-serif;
-          font-size: 0.8125rem;
-          color: #4B5563;
+          font-size: 0.75rem;
+          color: #68727C;
           line-height: 1.5;
           margin: 0;
         }
 
-        /* Newsletter Bar */
+        /* Newsletter Bar - Screened branded */
         .newsletter-bar {
-          background: #1F2937;
+          background: rgba(0, 0, 0, 0.2);
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
           padding: 1.5rem 0;
         }
 
@@ -415,26 +385,27 @@ export default function OffersSection() {
           padding: 0 1.5rem;
           display: flex;
           align-items: center;
-          gap: 1.5rem;
+          justify-content: space-between;
+          gap: 2rem;
         }
 
-        .newsletter-icon {
-          width: 3rem;
-          height: 3rem;
-          flex-shrink: 0;
+        .newsletter-content {
+          flex: 1;
         }
 
-        .newsletter-icon svg {
-          width: 100%;
-          height: 100%;
+        .newsletter-title {
+          font-family: 'Lexend', sans-serif;
+          font-size: 1rem;
+          font-weight: 600;
+          color: white;
+          margin: 0 0 0.25rem;
         }
 
         .newsletter-text {
           font-family: 'Poppins', sans-serif;
-          font-size: 0.9375rem;
-          color: white;
+          font-size: 0.8125rem;
+          color: rgba(255, 255, 255, 0.7);
           margin: 0;
-          flex: 1;
         }
 
         .newsletter-text strong {
@@ -443,53 +414,49 @@ export default function OffersSection() {
 
         .newsletter-form {
           display: flex;
-          gap: 0.75rem;
+          gap: 0.5rem;
           flex-shrink: 0;
         }
 
         .newsletter-input {
-          width: 14rem;
-          padding: 0.75rem 1rem;
-          border: 1px solid #374151;
-          border-radius: 0.5rem;
-          background: #111827;
+          width: 12rem;
+          padding: 0.625rem 0.875rem;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          border-radius: 0.375rem;
+          background: rgba(255, 255, 255, 0.08);
           color: white;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.875rem;
+          font-size: 0.8125rem;
+          transition: all 0.2s ease;
         }
 
         .newsletter-input::placeholder {
-          color: #6B7280;
+          color: rgba(255, 255, 255, 0.4);
         }
 
         .newsletter-input:focus {
           outline: none;
-          border-color: #4ECDC4;
+          border-color: #146aff;
+          background: rgba(255, 255, 255, 0.12);
+          box-shadow: 0 0 0 3px rgba(20, 106, 255, 0.2);
         }
 
         .newsletter-btn {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          padding: 0.75rem 1.25rem;
-          background: #4ECDC4;
-          color: #0D2644;
+          padding: 0.625rem 1.25rem;
+          background: linear-gradient(135deg, #146aff 0%, #0040B1 100%);
+          color: white;
           font-family: 'Poppins', sans-serif;
-          font-size: 0.875rem;
+          font-size: 0.8125rem;
           font-weight: 600;
           border: none;
-          border-radius: 0.5rem;
+          border-radius: 0.375rem;
           cursor: pointer;
-          transition: background 0.2s ease;
+          transition: all 0.2s ease;
         }
 
         .newsletter-btn:hover {
-          background: #3DBDB5;
-        }
-
-        .newsletter-btn svg {
-          width: 1rem;
-          height: 1rem;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(20, 106, 255, 0.4);
         }
 
         @media (max-width: 1024px) {
@@ -506,7 +473,7 @@ export default function OffersSection() {
           .offers-grid {
             grid-template-columns: 1fr;
             gap: 1rem;
-            max-width: 24rem;
+            max-width: 22rem;
             margin: 0 auto;
           }
 
@@ -517,17 +484,13 @@ export default function OffersSection() {
           }
 
           .newsletter-form {
-            flex-direction: column;
             width: 100%;
+            max-width: 20rem;
           }
 
           .newsletter-input {
-            width: 100%;
-          }
-
-          .newsletter-btn {
-            width: 100%;
-            justify-content: center;
+            flex: 1;
+            width: auto;
           }
         }
       `}</style>
