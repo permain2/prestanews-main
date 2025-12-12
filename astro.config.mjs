@@ -10,28 +10,14 @@ export default defineConfig({
 	site: process.env.SITE_URL || 'https://www.screened.com',
 	integrations: [
 		mdx(), 
-		sitemap({
-			// Exclude admin pages from sitemap
-			filter: (page) => !page.includes('/admin'),
-		}), 
-		react({
-			// Include Sanity packages for JSX transformation
-			include: ['**/sanity/**', '**/node_modules/sanity/**', '**/node_modules/@sanity/**'],
-		}),
+		sitemap(), 
+		react(),
 	],
 	vite: {
 		plugins: [tailwind()],
-		// Optimize Sanity Studio dependencies
-		optimizeDeps: {
-			include: ['sanity', '@sanity/vision', 'react', 'react-dom'],
-		},
-		ssr: {
-			// These packages should not be externalized during SSR
-			noExternal: ['sanity', '@sanity/vision', '@sanity/client'],
-		},
 	},
-	// Server mode with static prerendering for most pages, serverless for API routes
-	output: 'server',
+	// Static pages with serverless API routes (prerender: false)
+	output: 'static',
 	adapter: vercel(),
 	trailingSlash: 'ignore',
 	prefetch: {

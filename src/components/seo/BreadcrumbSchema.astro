@@ -25,14 +25,18 @@ const breadcrumbItems = [
 const schema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
-  "itemListElement": breadcrumbItems.map((item, index) => ({
-    "@type": "ListItem",
-    "position": index + 1,
-    "name": item.name,
-    ...(item.url && { 
-      "item": item.url.startsWith('http') ? item.url : `${SITE_URL}${item.url}`
-    })
-  }))
+  "itemListElement": breadcrumbItems.map((item, index) => {
+    const itemUrl = item.url;
+    const result: Record<string, any> = {
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+    };
+    if (itemUrl && typeof itemUrl === 'string') {
+      result["item"] = itemUrl.startsWith('http') ? itemUrl : `${SITE_URL}${itemUrl}`;
+    }
+    return result;
+  })
 };
 ---
 
