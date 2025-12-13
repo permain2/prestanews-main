@@ -1,296 +1,1198 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getAutoRefinanceLogo } from '../../utils/AutoRefinanceLogoMap';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Refinance Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
-const providers = [
+// Top Auto Refinance Lenders - 8 providers
+const lenders = [
   {
     name: "Auto Approve",
-    logo: "https://logo.clearbit.com/autoapprove.com",
+    slug: "auto-approve",
     bestFor: "Rate Savings",
-    monthlyAvg: "Rates from 5.24%",
-    serviceFee: "$0 fees",
+    rateFrom: "5.24%",
+    fees: "$0 fees",
     rating: 4.7,
     pros: ["Compares 20+ lenders automatically", "Fast approval process", "No application fees", "Handles payoff with old lender"],
     cons: ["Not a direct lender", "Rates vary by partner", "Limited customer service hours"],
     description: "Auto Approve shops your loan across 20+ lenders to find the best rate, handling the entire refinance process from application to payoff.",
-    affiliateUrl: "#"
+    bottomLine: "Auto Approve is our top pick for auto refinancing because they do the hard work for you. Instead of applying to multiple lenders yourself, they shop your loan across 20+ partners to find the best rate. The entire process—from application to paying off your old loan—is handled for you. Best for borrowers who want the lowest rate without the hassle of comparison shopping.",
+    loanDetails: [
+      "Partners with 20+ auto lenders",
+      "Rates starting from 5.24% APR",
+      "No application or origination fees",
+      "Handles title transfer and old loan payoff",
+      "Fast approval—often same day",
+      "Works with most credit profiles",
+      "Refinances up to 125% LTV",
+      "Terms from 24-84 months"
+    ],
+    editorChoice: true
   },
   {
     name: "Capital One",
-    logo: "https://logo.clearbit.com/capitalone.com",
+    slug: "capital-one",
     bestFor: "Online Experience",
-    monthlyAvg: "Rates from 5.99%",
-    serviceFee: "$0 fees",
+    rateFrom: "5.99%",
+    fees: "$0 fees",
     rating: 4.5,
     pros: ["Fully digital application", "Pre-qualification without credit impact", "Existing customer benefits", "Clear, transparent process"],
     cons: ["Rates not always lowest", "Limited term flexibility", "No in-person service"],
     description: "Capital One offers a streamlined online refinance experience with pre-qualification that doesn't affect your credit score.",
-    affiliateUrl: "#"
+    bottomLine: "Capital One delivers a premium digital experience for auto refinancing. Their pre-qualification tool lets you check your rate without impacting your credit score. Existing Capital One customers may qualify for additional rate discounts. The application is fully online with clear, transparent terms—ideal for borrowers who prefer a major bank with strong technology.",
+    loanDetails: [
+      "Rates from 5.99% APR",
+      "Pre-qualification with soft credit pull",
+      "No application fees",
+      "Existing customer rate discounts",
+      "Online application and management",
+      "Terms from 36-72 months",
+      "Refinances vehicles up to 7 years old",
+      "Up to 120,000 miles accepted"
+    ]
   },
   {
     name: "LightStream",
-    logo: "https://logo.clearbit.com/lightstream.com",
+    slug: "lightstream",
     bestFor: "Excellent Credit",
-    monthlyAvg: "Rates from 5.49%",
-    serviceFee: "$0 fees",
+    rateFrom: "5.49%",
+    fees: "$0 fees",
     rating: 4.6,
     pros: ["Rate Beat Program", "No fees of any kind", "Same-day funding possible", "Excellent for high credit scores"],
     cons: ["Requires good to excellent credit", "No pre-qualification", "Hard credit pull required"],
     description: "LightStream, a SunTrust division, offers some of the lowest rates for borrowers with excellent credit and will beat competitor rates.",
-    affiliateUrl: "#"
+    bottomLine: "LightStream offers the lowest rates for borrowers with excellent credit (720+). Their unique Rate Beat Program guarantees they'll beat any competitor's rate by 0.10%. No fees whatsoever—no origination, no prepayment penalties. Same-day funding is possible for approved loans. The catch: no pre-qualification, so you'll need to commit to a hard credit pull to see your rate.",
+    loanDetails: [
+      "Rates from 5.49% APR for excellent credit",
+      "Rate Beat Program—beat competitors by 0.10%",
+      "Zero fees of any kind",
+      "Same-day funding possible",
+      "Terms from 24-84 months",
+      "No pre-qualification available",
+      "Requires 660+ credit score",
+      "Direct deposit to your bank account"
+    ]
   },
   {
     name: "PenFed Credit Union",
-    logo: "https://logo.clearbit.com/penfed.org",
+    slug: "penfed",
     bestFor: "Credit Union Rates",
-    monthlyAvg: "Rates from 5.24%",
-    serviceFee: "$0 fees",
+    rateFrom: "5.24%",
+    fees: "$0 fees",
     rating: 4.4,
     pros: ["Consistently low rates", "Open to all (easy membership)", "No rate markup", "Refinances up to 125% LTV"],
     cons: ["Slower approval process", "Limited physical branches", "Customer service varies"],
     description: "PenFed offers credit union rates to anyone who joins (membership is free and easy), with competitive rates on older and higher-mileage vehicles.",
-    affiliateUrl: "#"
+    bottomLine: "PenFed consistently offers some of the lowest auto refinance rates in the market. Unlike traditional credit unions, anyone can join PenFed—membership is free and easy. They refinance up to 125% loan-to-value, making them a good option if you're slightly underwater. They also accept older vehicles and higher mileage than most lenders.",
+    loanDetails: [
+      "Rates from 5.24% APR",
+      "Open membership—anyone can join",
+      "Refinances up to 125% LTV",
+      "Accepts vehicles up to 10 years old",
+      "Up to 125,000 miles accepted",
+      "No origination fees",
+      "Terms from 36-84 months",
+      "Member benefits and discounts"
+    ]
   },
   {
     name: "Bank of America",
-    logo: "https://logo.clearbit.com/bankofamerica.com",
+    slug: "bank-of-america",
     bestFor: "BofA Customers",
-    monthlyAvg: "Rates from 6.19%",
-    serviceFee: "$0 fees",
+    rateFrom: "6.19%",
+    fees: "$0 fees",
     rating: 4.2,
     pros: ["Rate discounts for existing customers", "Large branch network", "Preferred Rewards benefits", "Established institution"],
     cons: ["Higher base rates", "Slower processing", "Relationship required for best rates"],
     description: "Bank of America offers rate discounts for existing customers, especially those in their Preferred Rewards program.",
-    affiliateUrl: "#"
+    bottomLine: "Bank of America is best for existing customers who can unlock rate discounts. Preferred Rewards members (those with $20K+ in combined accounts) get the biggest savings—up to 0.50% off. The base rates are higher than online lenders, but the discounts can make them competitive. Access to physical branches is a plus if you prefer in-person service.",
+    loanDetails: [
+      "Rates from 6.19% APR (before discounts)",
+      "Up to 0.50% discount for Preferred Rewards",
+      "0.25% discount for autopay",
+      "Large branch network for service",
+      "No application fees",
+      "Terms from 12-75 months",
+      "Refinances vehicles up to 7 years old",
+      "Established, trusted institution"
+    ]
   },
   {
     name: "myAutoloan",
-    logo: "https://logo.clearbit.com/myautoloan.com",
+    slug: "myautoloan",
     bestFor: "Multiple Offers",
-    monthlyAvg: "Varies by lender",
-    serviceFee: "$0 fees",
+    rateFrom: "Varies",
+    fees: "$0 fees",
     rating: 4.3,
     pros: ["Up to 4 offers in minutes", "Soft credit pull for quotes", "Good for comparison shopping", "Works with challenged credit"],
     cons: ["Not a direct lender", "Offers may include dealer markup", "Experience varies by lender"],
     description: "myAutoloan provides up to four loan offers from different lenders with a single soft credit inquiry.",
-    affiliateUrl: "#"
+    bottomLine: "myAutoloan is a loan marketplace that gives you up to 4 competing offers with a single soft credit pull. This makes it easy to compare without hurting your credit score. They work with borrowers across credit tiers, including those with challenged credit. The catch: since they're a marketplace, your experience will depend on which lender you choose.",
+    loanDetails: [
+      "Up to 4 offers from one application",
+      "Soft credit pull for initial quotes",
+      "Works with credit scores 550+",
+      "Partners with banks and credit unions",
+      "No application fees",
+      "Compare rates in minutes",
+      "Various term lengths available",
+      "Good for credit comparison shopping"
+    ]
   },
   {
     name: "Consumers Credit Union",
-    logo: "https://logo.clearbit.com/myconsumers.org",
+    slug: "consumers-credit-union",
     bestFor: "Older Vehicles",
-    monthlyAvg: "Rates from 5.49%",
-    serviceFee: "$0 fees",
+    rateFrom: "5.49%",
+    fees: "$0 fees",
     rating: 4.3,
     pros: ["Refinances vehicles up to 15 years old", "Up to 125,000 miles accepted", "Nationwide membership available", "Competitive rates"],
     cons: ["Membership required", "Slower digital experience", "Limited marketing presence"],
     description: "Consumers Credit Union stands out for refinancing older vehicles that many lenders won't touch, with reasonable rates and terms.",
-    affiliateUrl: "#"
+    bottomLine: "Consumers Credit Union is the go-to for refinancing older vehicles. While most lenders cap at 7-10 years, Consumers accepts vehicles up to 15 years old with up to 125,000 miles. Their rates remain competitive despite the flexibility. Membership is required but open to anyone for a small fee. A hidden gem for older car owners.",
+    loanDetails: [
+      "Rates from 5.49% APR",
+      "Vehicles up to 15 years old accepted",
+      "Up to 125,000 miles",
+      "Nationwide membership available",
+      "Terms from 24-84 months",
+      "No prepayment penalties",
+      "Low minimum loan amount",
+      "Credit union member benefits"
+    ]
   },
   {
     name: "RateGenius",
-    logo: "https://logo.clearbit.com/rategenius.com",
+    slug: "rategenius",
     bestFor: "Loan Shopping",
-    monthlyAvg: "Varies by lender",
-    serviceFee: "$0 fees",
+    rateFrom: "Varies",
+    fees: "$0 fees",
     rating: 4.1,
     pros: ["Partners with 150+ lenders", "Handles refinance paperwork", "Good for lower credit scores", "Free to use"],
     cons: ["Marketplace model", "Response time varies", "Less control over lender selection"],
     description: "RateGenius connects borrowers with 150+ lenders, particularly helpful for those with less-than-perfect credit seeking options.",
-    affiliateUrl: "#"
+    bottomLine: "RateGenius has the largest lender network (150+), which means more options for borrowers with varying credit profiles. They're particularly helpful if you've been turned down elsewhere or have less-than-perfect credit. The trade-off is less control—RateGenius matches you with lenders rather than letting you choose directly. But for finding options, they cast the widest net.",
+    loanDetails: [
+      "Partners with 150+ lenders",
+      "Works with all credit tiers",
+      "Free service—no fees to borrowers",
+      "Handles paperwork and title transfer",
+      "Various term lengths available",
+      "Specializes in harder-to-place loans",
+      "Personal loan advisors available",
+      "Good for credit-challenged borrowers"
+    ]
   }
 ];
 
 const faqs = [
   {
     question: "When should I refinance my car loan?",
-    answer: "Consider refinancing when rates have dropped since your original loan, your credit score has improved significantly (50+ points), you're paying over 7-8% interest, or you want to lower monthly payments. Avoid refinancing if you're close to paying off the loan or your car is worth less than you owe."
+    answer: "Consider refinancing when <strong>rates have dropped</strong> since your original loan, your <strong>credit score has improved</strong> significantly (50+ points), you're paying <strong>over 7-8% interest</strong>, or you want to lower monthly payments. Avoid refinancing if you're close to paying off the loan (less than $5,000 remaining) or your car is worth less than you owe without a plan to address the gap."
   },
   {
     question: "How much can I save by refinancing my car?",
-    answer: "Savings depend on rate reduction and remaining loan balance. A 2% rate reduction on a $20,000 balance over 48 months saves approximately $850 in interest. Use refinance calculators to estimate your specific savings based on your current terms."
+    answer: "Savings depend on rate reduction and remaining loan balance. A <strong>2% rate reduction</strong> on a $20,000 balance over 48 months saves approximately <strong>$850 in interest</strong>. The average borrower saves $1,847 over their loan term. Use refinance calculators to estimate your specific savings based on your current terms."
   },
   {
     question: "Does refinancing hurt my credit score?",
-    answer: "Refinancing causes a temporary small dip (5-10 points) from the hard credit inquiry. However, this typically recovers within a few months. Multiple loan applications within 14-45 days count as a single inquiry for scoring purposes, so rate shop within this window."
+    answer: "Refinancing causes a <strong>temporary small dip (5-10 points)</strong> from the hard credit inquiry. However, this typically recovers within a few months. Multiple loan applications within <strong>14-45 days count as a single inquiry</strong> for scoring purposes, so rate shop within this window to minimize impact."
   },
   {
     question: "Can I refinance with negative equity?",
-    answer: "Some lenders refinance up to 125% loan-to-value (LTV), meaning you can owe more than the car is worth. However, rates will be higher, and you'll still owe the full amount. Consider whether refinancing makes sense if you're significantly underwater."
+    answer: "Some lenders (like PenFed) refinance up to <strong>125% loan-to-value (LTV)</strong>, meaning you can owe more than the car is worth. However, rates will be higher, and you'll still owe the full amount. Consider whether refinancing makes sense if you're significantly underwater—sometimes paying down the balance first is smarter."
   },
   {
     question: "How long does auto refinancing take?",
-    answer: "The process typically takes 1-3 weeks from application to completion. Online lenders may fund in as little as 2-3 days. The timeline includes application, approval, payoff of old loan, and title transfer."
+    answer: "The process typically takes <strong>1-3 weeks</strong> from application to completion. Online lenders like LightStream may fund in as little as <strong>2-3 days</strong>. The timeline includes application review, approval, payoff of your old loan, and title transfer to the new lender."
   },
   {
     question: "What documents do I need to refinance?",
-    answer: "Typically required: driver's license, proof of income (pay stubs or tax returns), proof of insurance, vehicle registration, current loan account information, and proof of residence. Some lenders require odometer verification."
+    answer: "Typically required: <strong>driver's license</strong>, <strong>proof of income</strong> (pay stubs or tax returns), <strong>proof of auto insurance</strong>, <strong>vehicle registration</strong>, <strong>current loan account information</strong> (payoff amount), and <strong>proof of residence</strong>. Some lenders require odometer verification or photos of the vehicle."
   },
   {
     question: "Can I skip a payment when refinancing?",
-    answer: "Yes, refinancing often allows you to 'skip' your next payment since you're essentially paying off the old loan. However, interest continues accruing. It's usually best to continue payments until the new loan is fully processed."
+    answer: "Yes, refinancing often allows you to <strong>'skip' your next payment</strong> since you're essentially paying off the old loan. However, interest continues accruing on your new loan. It's usually best to continue payments on your old loan until the new loan is fully processed and confirmed."
+  },
+  {
+    question: "What credit score do I need to refinance?",
+    answer: "Requirements vary by lender. Most competitive rates require <strong>720+ credit scores</strong>. Lenders like myAutoloan and RateGenius work with scores as low as <strong>550-580</strong>. Expect to pay higher rates with lower scores: 720+ gets 5-7%, 660-719 gets 7-10%, and below 660 may see 10%+."
   }
 ];
 ---
 
-<ComparisonLayout
-  title="Best Auto Refinance Lenders of 2025"
-  description="Compare the best car refinance lenders including Auto Approve, Capital One, and LightStream. Expert reviews of rates, fees, and approval requirements."
-  category="finance"
-  categoryLabel="AUTO LOANS"
-  heroImage="/blog-images/auto-refinance.jpg"
-  researchIntro="We submitted 67 refinance applications across credit score tiers (620-780) and vehicle types to compare actual APRs—not just advertised rates. The average borrower saves $1,847 over their loan term by refinancing with these top-rated lenders."
-  author="Michael Rodriguez"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
->
+<MainLayout title="Best Auto Refinance Lenders of 2025 | Compare Top Rates" description="Compare the best auto refinance lenders of 2025. Expert reviews of Auto Approve, Capital One, LightStream & more. Save an average of $1,847 on your car loan.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="Best Auto Refinance Lenders of 2025"
+    description="Compare the best car refinance lenders including Auto Approve, Capital One, and LightStream. Expert reviews of rates, fees, and approval requirements."
+    url="/blog/best-auto-refinance-lenders"
+    image="/blog-images/auto-refinance.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Michael Rodriguez"
+    section="Auto Loans"
+    tags={['auto refinance', 'car loan', 'refinancing', 'auto loans']}
+    wordCount={4800}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Finance', url: '/finance' },
+    { name: 'Best Auto Refinance Lenders' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Auto Refinance Lenders of 2025"
+    kicker=""
+    subtitle="Compare top car refinance lenders. Save an average of $1,847 on your auto loan with expert-reviewed rates and terms."
+    author="Michael Rodriguez"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
-## Is Auto Refinancing Right for You?
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#0066B2] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
 
-Refinancing your car loan can save hundreds or thousands of dollars in interest—but it's not right for everyone. Understanding when refinancing makes sense helps you make the best financial decision.
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
 
-### Good Candidates for Refinancing
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We submitted 67 refinance applications across credit score tiers (620-780) and vehicle types to compare actual APRs—not just advertised rates. The average borrower saves $1,847 over their loan term by refinancing with these top-rated lenders.</p>
+      </div>
+      
+      {lenders.map((lender, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {lender.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Auto Refinance Lender
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
 
-- **Credit score improved** 50+ points since original loan
-- **Current rate above 7%** and market rates are lower
-- **Loan is less than halfway paid** (significant principal remaining)
-- **Car value exceeds loan balance** (positive equity)
-- **No prepayment penalty** on current loan
+              {/* Company Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getAutoRefinanceLogo(lender.slug) || `https://logo.clearbit.com/${lender.slug}.com`}
+                    alt={`${lender.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{lender.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {lender.name}'s secure website</p>
+            </div>
 
-### When to Skip Refinancing
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    Best for {lender.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{lender.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{lender.description}</p>
 
-- Less than $5,000 remaining on loan
-- Current rate already competitive (under 5%)
-- Significant negative equity without improvement
-- Very old vehicle (many lenders won't refinance)
-- Planning to sell car within 12 months
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Rates From</div>
+                  <div class="stat-value text-[#0066B2]">{lender.rateFrom}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Fees</div>
+                  <div class="stat-value text-green-600">{lender.fees}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Our Rating</div>
+                  <div class="stat-value">{lender.rating}/5</div>
+                </div>
+              </div>
 
-## How Auto Refinancing Works
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {lender.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{lender.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {lender.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {lender.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Loan Details Accordion */}
+                {lender.loanDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Loan Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {lender.loanDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-### Step 1: Check Your Current Loan
+  <!-- Premium Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best auto refinance lenders</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[900px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Lender</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Rates From</th>
+              <th class="text-left">Fees</th>
+              <th class="text-left">Rating</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {lenders.map((lender, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getAutoRefinanceLogo(lender.slug) || `https://logo.clearbit.com/${lender.slug}.com`}
+                        alt={`${lender.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{lender.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{lender.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(lender.rating) ? 'star-filled' : star - 0.5 <= lender.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{lender.bestFor}</span>
+                </td>
+                <td class="cost-cell">
+                  <span class="cost-text font-semibold text-[#0066B2]">{lender.rateFrom}</span>
+                </td>
+                <td class="limit-cell">
+                  <span class="limit-text text-green-600 font-medium">{lender.fees}</span>
+                </td>
+                <td class="waiting-cell">
+                  <span class="waiting-text">{lender.rating}/5</span>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Get Quote
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-Review your current loan terms:
-- Remaining balance
-- Interest rate
-- Monthly payment
-- Months remaining
-- Payoff amount (may differ from balance)
-- Prepayment penalties (rare but check)
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <h2 id="how-it-works">Is Auto Refinancing Right for You?</h2>
+        
+        <p>Refinancing your car loan can save hundreds or thousands of dollars in interest—but it's not right for everyone. Understanding when refinancing makes sense helps you make the best financial decision.</p>
 
-### Step 2: Check Your Credit
+        <div class="info-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Good Candidates for Refinancing</h4>
+          <ul class="mt-3 space-y-1 text-sm">
+            <li>• Credit score improved 50+ points since original loan</li>
+            <li>• Current rate above 7% and market rates are lower</li>
+            <li>• Loan is less than halfway paid (significant principal remaining)</li>
+            <li>• Car value exceeds loan balance (positive equity)</li>
+            <li>• No prepayment penalty on current loan</li>
+          </ul>
+        </div>
 
-Your credit score significantly impacts available rates:
+        <div class="warning-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"/></svg> When to Skip Refinancing</h4>
+          <p>Less than $5,000 remaining on loan, current rate already competitive (under 5%), significant negative equity without improvement, very old vehicle (many lenders won't refinance), or planning to sell car within 12 months.</p>
+        </div>
 
-| Credit Score | Typical Rate Range |
-|--------------|-------------------|
-| 720+ | 5.0% - 7.0% |
-| 660-719 | 7.0% - 10.0% |
-| 600-659 | 10.0% - 15.0% |
-| Below 600 | 15.0%+ |
+        <h2>How Auto Refinancing Works</h2>
 
-### Step 3: Get Multiple Quotes
+        <h3>Step 1: Check Your Current Loan</h3>
+        <p>Review your current loan terms: remaining balance, interest rate, monthly payment, months remaining, payoff amount (may differ from balance), and prepayment penalties (rare but check).</p>
 
-Apply to several lenders within a 14-day window—multiple inquiries count as one for credit scoring. Compare:
-- Interest rate (APR)
-- Loan term options
-- Fees (origination, title, etc.)
-- Payment amount
+        <h3>Step 2: Check Your Credit</h3>
+        <p>Your credit score significantly impacts available rates:</p>
 
-### Step 4: Choose and Apply
+        <table>
+          <thead>
+            <tr>
+              <th>Credit Score</th>
+              <th>Typical Rate Range</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>720+</td>
+              <td>5.0% - 7.0%</td>
+            </tr>
+            <tr>
+              <td>660-719</td>
+              <td>7.0% - 10.0%</td>
+            </tr>
+            <tr>
+              <td>600-659</td>
+              <td>10.0% - 15.0%</td>
+            </tr>
+            <tr>
+              <td>Below 600</td>
+              <td>15.0%+</td>
+            </tr>
+          </tbody>
+        </table>
 
-Select the best offer and complete the application. The new lender will:
-1. Verify your information
-2. Appraise vehicle value
-3. Pay off your existing loan
-4. Issue new loan documents
-5. Handle title transfer
+        <h3>Step 3: Get Multiple Quotes</h3>
+        <p>Apply to several lenders within a <strong>14-day window</strong>—multiple inquiries count as one for credit scoring. Compare: interest rate (APR), loan term options, fees (origination, title, etc.), and payment amount.</p>
 
-## Calculating Your Savings
+        <h2>Calculating Your Savings</h2>
 
-### Break-Even Analysis
+        <p>Compare total costs of keeping current loan vs refinancing:</p>
 
-Compare total costs of keeping current loan vs refinancing:
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Monthly Payment</th>
+              <th>Total Interest</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Current: 48 mo @ 9%</td>
+              <td>$448</td>
+              <td>$3,504</td>
+            </tr>
+            <tr>
+              <td>New: 48 mo @ 6%</td>
+              <td>$423</td>
+              <td>$2,304</td>
+            </tr>
+            <tr>
+              <td>New: 60 mo @ 6%</td>
+              <td>$348</td>
+              <td>$2,880</td>
+            </tr>
+            <tr>
+              <td>New: 72 mo @ 6%</td>
+              <td>$299</td>
+              <td>$3,528</td>
+            </tr>
+          </tbody>
+        </table>
 
-**Example:**
-- Current loan: $18,000 at 9% with 48 months remaining
-- New loan: $18,000 at 6% for 48 months
-- Monthly savings: $27
-- Total interest savings: $1,296
-- Refinancing costs: $0 (most auto refinancing is free)
-- **Net savings: $1,296**
+        <div class="key-takeaway">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Pro Tip</h4>
+          <p>Refinance to a lower rate with the <strong>same or shorter term</strong> to maximize savings. Extending your term lowers monthly payments but may cost more overall in interest.</p>
+        </div>
 
-### Monthly Payment vs Total Cost
+        <h2>Credit Union vs Bank vs Online Lender</h2>
 
-Extending your loan term lowers monthly payments but may cost more overall:
+        <table>
+          <thead>
+            <tr>
+              <th>Factor</th>
+              <th>Credit Union</th>
+              <th>Bank</th>
+              <th>Online Lender</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Rates</td>
+              <td>Typically lowest</td>
+              <td>Moderate</td>
+              <td>Competitive</td>
+            </tr>
+            <tr>
+              <td>Speed</td>
+              <td>Slower</td>
+              <td>Moderate</td>
+              <td>Fastest</td>
+            </tr>
+            <tr>
+              <td>Flexibility</td>
+              <td>Most flexible</td>
+              <td>Rigid</td>
+              <td>Varies</td>
+            </tr>
+            <tr>
+              <td>Service</td>
+              <td>Personal</td>
+              <td>Varies</td>
+              <td>Digital</td>
+            </tr>
+          </tbody>
+        </table>
 
-| Scenario | Monthly Payment | Total Interest |
-|----------|-----------------|----------------|
-| Current: 48 mo @ 9% | $448 | $3,504 |
-| New: 48 mo @ 6% | $423 | $2,304 |
-| New: 60 mo @ 6% | $348 | $2,880 |
-| New: 72 mo @ 6% | $299 | $3,528 |
+      </div>
+    </div>
+  </section>
 
-**Tip:** Refinance to a lower rate with the same or shorter term to maximize savings.
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4 text-center">Frequently Asked Questions</h2>
+      <p class="text-[#68727C] text-center mb-10 max-w-2xl mx-auto">Expert answers to common questions about auto refinancing.</p>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-## What Lenders Look At
+  <!-- Author Bio -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <img src="/team/michael-rodriguez.jpg" alt="Michael Rodriguez" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Michael Rodriguez</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Michael is an auto finance expert at Screened with over 8 years of experience helping consumers navigate car loans and refinancing. He's personally refinanced 3 vehicles and tracks rate changes across major lenders weekly.
+          </p>
+          <p class="text-xs text-[#68727C]">Updated: Dec 11, 2025 · 10 min read</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-### Vehicle Requirements
+</MainLayout>
 
-Most lenders have restrictions:
-- **Age:** Under 7-10 years old (credit unions more flexible)
-- **Mileage:** Under 100,000-125,000 miles
-- **Value:** Must exceed loan amount (ideally)
-- **Title:** Clear, in your name
+<style>
+  /* Blue Theme - Matches Travel Cards Template */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
 
-### Borrower Requirements
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
 
-- Proof of income (employment or self-employment)
-- Valid driver's license
-- Full coverage auto insurance
-- Proof of residence
-- Good payment history (ideally)
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-## Credit Union vs Bank vs Online Lender
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
 
-| Factor | Credit Union | Bank | Online Lender |
-|--------|-------------|------|---------------|
-| Rates | Typically lowest | Moderate | Competitive |
-| Speed | Slower | Moderate | Fastest |
-| Flexibility | Most flexible | Rigid | Varies |
-| Service | Personal | Varies | Digital |
-| Requirements | Membership | May require relationship | Open |
+  /* Premium Comparison Table */
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+  
+  .premium-comparison-table thead th:last-child {
+    border-radius: 0 8px 0 0;
+  }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover {
+    background: #FAFBFC;
+  }
+  
+  .comparison-row td {
+    padding: 1.25rem 0.75rem;
+    vertical-align: top;
+  }
 
-## Tips for Getting the Best Rate
+  .card-cell {
+    min-width: 220px;
+    padding-left: 1rem !important;
+  }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-badge-new {
+    background: #22C55E;
+    color: white;
+  }
+  
+  .card-info-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  
+  .card-image-container {
+    flex-shrink: 0;
+  }
+  
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  
+  .card-details {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0066B2;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .rating-number {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #162433;
+  }
+  
+  .rating-stars {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .star-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .star-filled { fill: #22C55E; }
+  .star-half { fill: #86EFAC; }
+  .star-empty { fill: #D1D5DB; }
 
-### Before Applying
+  .cost-text, .limit-text, .waiting-text {
+    font-size: 0.9rem;
+    color: #374151;
+  }
 
-1. **Check credit reports** for errors (dispute if found)
-2. **Pay down credit cards** below 30% utilization
-3. **Avoid new credit** applications for 30+ days
-4. **Gather documents** (income, insurance, current loan info)
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #0066B2;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .apply-now-btn:hover {
+    background: #004C8C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+  }
 
-### During Application
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
 
-1. **Apply to 3-5 lenders** within 14 days
-2. **Compare APR** not just interest rate
-3. **Ask about fees** (most should be $0)
-4. **Negotiate** if you have competing offers
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #004C8C;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #EBF5FF; }
 
-## The Bottom Line
+  .info-box {
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p, .info-box ul { margin: 0; color: #475569; }
 
-For most borrowers, **Auto Approve** or **myAutoloan** offer the easiest way to compare multiple lender offers. Those with excellent credit should check **LightStream** for potentially the lowest rates.
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #475569; padding: 1.25rem 1.5rem; }
 
-Credit unions like **PenFed** and **Consumers Credit Union** often beat banks and online lenders, especially for older vehicles or challenging situations.
+  .key-takeaway {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-takeaway h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #1E40AF; }
 
-*Rates shown are examples for well-qualified borrowers. Your actual rate depends on credit, income, vehicle, and other factors.*
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
 
-</ComparisonLayout>
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BAE6FD;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #0066B2;
+    box-shadow: 0 8px 24px rgba(0, 102, 178, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #EBF5FF; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
 
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #0066B2;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #0066B2;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

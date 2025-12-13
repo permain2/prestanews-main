@@ -1,404 +1,1228 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getBusinessInsuranceLogo } from '../../utils/BusinessInsuranceLogoMap';
 
+// Top Business Insurance Companies - 10 providers
 const providers = [
   {
     name: "The Hartford",
-    logo: "https://logo.clearbit.com/thehartford.com",
+    slug: "hartford",
     bestFor: "Overall Coverage",
     monthlyAvg: "$47-$89",
-    rating: 4.7,
     amBest: "A+",
+    rating: 4.7,
     pros: ["Industry-specific coverage for 300+ business types", "24/7 claim reporting", "Risk management resources", "No-fee payment plans"],
     cons: ["Higher premiums for high-risk industries", "Limited online quotes for complex businesses"],
-    description: "The Hartford dominates small business insurance with specialized packages designed for companies with 1-100 employees."
+    description: "The Hartford dominates small business insurance with specialized packages designed for companies with 1-100 employees.",
+    bottomLine: "The Hartford earns our top pick for small business insurance by offering industry-specific packages for over 300 business types. Their BOP (Business Owner's Policy) combines general liability and property coverage at competitive rates. With 24/7 claim reporting and dedicated risk management resources, they provide the complete package most small businesses need.",
+    coverageDetails: [
+      "General Liability: Up to $2M aggregate coverage",
+      "Business Owner's Policy (BOP) available",
+      "Workers' compensation with pay-as-you-go option",
+      "Commercial auto insurance",
+      "Professional liability/E&O coverage",
+      "Cyber liability protection",
+      "Industry-specific endorsements available",
+      "Equipment breakdown coverage"
+    ],
+    editorChoice: true
   },
   {
     name: "State Farm",
-    logo: "https://logo.clearbit.com/statefarm.com",
+    slug: "state-farm",
     bestFor: "Multi-Location Businesses",
     monthlyAvg: "$52-$95",
-    rating: 4.5,
     amBest: "A++",
-    pros: ["Largest network of agents", "Bundling discounts up to 25%", "Strong financial stability", "Excellent mobile app"],
+    rating: 4.5,
+    pros: ["Largest network of agents (19,000+)", "Bundling discounts up to 25%", "Strong financial stability", "Excellent mobile app"],
     cons: ["Limited online purchasing", "Higher rates for newer businesses"],
-    description: "State Farm's extensive agent network provides personalized service across 19,000+ locations with competitive rates."
+    description: "State Farm's extensive agent network provides personalized service across 19,000+ locations with competitive rates.",
+    bottomLine: "State Farm excels for businesses with multiple locations thanks to their unmatched agent network. With 19,000+ agents nationwide, you'll always have local support. Bundle your business and personal policies to save up to 25% on premiums.",
+    coverageDetails: [
+      "General liability coverage",
+      "Business Owner's Policy options",
+      "Commercial property insurance",
+      "Commercial auto coverage",
+      "Workers' compensation (select states)",
+      "Professional liability",
+      "Business interruption coverage",
+      "Multi-location discounts available"
+    ]
   },
   {
     name: "Progressive",
-    logo: "https://logo.clearbit.com/progressive.com",
+    slug: "progressive",
     bestFor: "Digital Experience",
     monthlyAvg: "$39-$76",
-    rating: 4.4,
     amBest: "A+",
+    rating: 4.4,
     pros: ["Instant online quotes", "Competitive rates for transportation", "24/7 digital claim filing", "Pay-as-you-go workers' comp"],
     cons: ["Limited agent support", "Fewer industry-specific options"],
-    description: "Progressive revolutionizes commercial insurance with fully digital processes and transparent pricing."
+    description: "Progressive revolutionizes commercial insurance with fully digital processes and transparent pricing.",
+    bottomLine: "Progressive is perfect for tech-savvy business owners who prefer managing insurance online. Their instant quote system and transparent pricing make comparison shopping easy. Commercial auto coverage is particularly competitive, making them ideal for delivery and transportation businesses.",
+    coverageDetails: [
+      "Instant online quote and bind",
+      "General liability insurance",
+      "Commercial auto insurance",
+      "Business Owner's Policy",
+      "Workers' compensation",
+      "Pay-as-you-go billing option",
+      "24/7 digital claims",
+      "Special rates for fleets"
+    ]
   },
   {
     name: "Travelers",
-    logo: "https://logo.clearbit.com/travelers.com",
+    slug: "travelers",
     bestFor: "Large Small Businesses",
     monthlyAvg: "$58-$112",
-    rating: 4.3,
     amBest: "A++",
+    rating: 4.3,
     pros: ["Extensive risk management services", "Industry-leading cyber liability", "Flexible payment options", "Strong financial ratings"],
     cons: ["Higher minimum premiums", "Complex underwriting for startups"],
-    description: "Travelers excels in serving established small businesses with 20-100 employees and complex insurance needs."
+    description: "Travelers excels in serving established small businesses with 20-100 employees and complex insurance needs.",
+    bottomLine: "Travelers is the choice for growing businesses with complex needs. Their risk management services and industry-leading cyber liability coverage protect established businesses from modern threats. A++ financial rating means your claims will always be paid.",
+    coverageDetails: [
+      "Comprehensive BOP options",
+      "Industry-leading cyber liability",
+      "Risk management services included",
+      "Professional liability",
+      "Commercial property",
+      "Commercial auto",
+      "Workers' compensation",
+      "Umbrella policies available"
+    ]
   },
   {
     name: "Nationwide",
-    logo: "https://logo.clearbit.com/nationwide.com",
+    slug: "nationwide",
     bestFor: "Startups",
     monthlyAvg: "$35-$68",
-    rating: 4.2,
     amBest: "A+",
+    rating: 4.2,
     pros: ["Low minimum premiums starting at $35/mo", "Simplified application process", "Industry-specific packages", "24/7 customer support"],
     cons: ["Limited high-risk industry coverage", "Fewer premium discounts"],
-    description: "Nationwide offers affordable coverage options specifically designed for new and growing businesses."
+    description: "Nationwide offers affordable coverage options specifically designed for new and growing businesses.",
+    bottomLine: "Nationwide's low minimum premiums ($35/month) and simplified application process make them ideal for startups and new businesses. Their industry-specific packages ensure you get the right coverage without overpaying for unnecessary features.",
+    coverageDetails: [
+      "Low minimum premiums",
+      "General liability coverage",
+      "Business Owner's Policy",
+      "Professional liability",
+      "Commercial property",
+      "Simplified application process",
+      "Industry-specific packages",
+      "24/7 support available"
+    ]
   },
   {
     name: "Liberty Mutual",
-    logo: "https://logo.clearbit.com/libertymutual.com",
+    slug: "liberty-mutual",
     bestFor: "Professional Services",
     monthlyAvg: "$48-$89",
-    rating: 4.1,
     amBest: "A",
+    rating: 4.1,
     pros: ["Comprehensive professional liability", "40+ professional categories", "Strong cyber liability protection", "Competitive rates"],
     cons: ["Higher premiums for manufacturing", "Limited online quote availability"],
-    description: "Liberty Mutual specializes in professional liability and E&O coverage for consultants, lawyers, and accountants."
+    description: "Liberty Mutual specializes in professional liability and E&O coverage for consultants, lawyers, and accountants.",
+    bottomLine: "Liberty Mutual is the go-to for professional service businesses. With coverage for 40+ professional categories and comprehensive E&O protection, consultants, lawyers, accountants, and other professionals get specialized protection that general insurers can't match.",
+    coverageDetails: [
+      "Professional liability (E&O)",
+      "Coverage for 40+ professions",
+      "General liability",
+      "Cyber liability protection",
+      "Business property coverage",
+      "Workers' compensation",
+      "Commercial auto",
+      "Malpractice coverage options"
+    ]
   },
   {
     name: "Hiscox",
-    logo: "https://logo.clearbit.com/hiscox.com",
+    slug: "hiscox",
     bestFor: "Tech Companies",
     monthlyAvg: "$42-$78",
-    rating: 4.6,
     amBest: "A",
+    rating: 4.6,
     pros: ["Cutting-edge cyber liability coverage", "Fast online quotes and policy issuance", "Excellent IP risk coverage", "Strong tech reputation"],
     cons: ["Limited brick-and-mortar coverage", "Higher premiums outside specialty"],
-    description: "Hiscox leads in technology and media insurance with specialized coverage for software and e-commerce businesses."
+    description: "Hiscox leads in technology and media insurance with specialized coverage for software and e-commerce businesses.",
+    bottomLine: "Hiscox is the premier choice for tech companies, startups, and e-commerce businesses. Their cutting-edge cyber liability coverage and intellectual property protection are industry-leading. Fast online quotes and same-day policy issuance get you covered immediately.",
+    coverageDetails: [
+      "Tech-specific E&O coverage",
+      "Cyber liability insurance",
+      "IP infringement protection",
+      "Data breach coverage",
+      "General liability",
+      "Same-day policy issuance",
+      "Online quote and bind",
+      "Media liability coverage"
+    ]
   },
   {
     name: "GEICO Business",
-    logo: "https://logo.clearbit.com/geico.com",
+    slug: "geico",
     bestFor: "Budget Option",
     monthlyAvg: "$29-$55",
-    rating: 4.0,
     amBest: "A++",
+    rating: 4.0,
     pros: ["Lowest average premiums", "Simple online quote process", "No-hassle mobile claims", "Good retail/office coverage"],
     cons: ["Limited coverage options", "Basic customer service"],
-    description: "GEICO Business provides basic commercial insurance at highly competitive rates for small businesses."
+    description: "GEICO Business provides basic commercial insurance at highly competitive rates for small businesses.",
+    bottomLine: "GEICO Business offers the most affordable premiums for small businesses that need basic coverage. Their simple online process and A++ financial rating provide peace of mind. Best for retail stores, offices, and low-risk businesses seeking budget-friendly protection.",
+    coverageDetails: [
+      "Lowest premium options",
+      "General liability",
+      "Business property",
+      "Commercial auto",
+      "Simple online quotes",
+      "Mobile app claims",
+      "A++ rated carrier",
+      "Basic BOP available"
+    ]
   },
   {
     name: "CNA",
-    logo: "https://logo.clearbit.com/cna.com",
+    slug: "cna",
     bestFor: "Manufacturing",
     monthlyAvg: "$67-$134",
-    rating: 4.2,
     amBest: "A",
+    rating: 4.2,
     pros: ["Extensive manufacturing expertise", "Comprehensive product liability", "Strong workers' comp programs", "Excellent loss control"],
     cons: ["Higher premiums", "Longer quote turnaround"],
-    description: "CNA specializes in complex commercial risks, particularly manufacturing, construction, and industrial businesses."
+    description: "CNA specializes in complex commercial risks, particularly manufacturing, construction, and industrial businesses.",
+    bottomLine: "CNA is the specialist for manufacturing and industrial businesses. Their deep expertise in complex commercial risks, comprehensive product liability coverage, and loss control services help protect businesses facing high-risk exposures.",
+    coverageDetails: [
+      "Manufacturing-specific coverage",
+      "Comprehensive product liability",
+      "Workers' compensation",
+      "Equipment breakdown",
+      "Business interruption",
+      "Loss control services",
+      "Risk management consulting",
+      "Industrial property coverage"
+    ]
   },
   {
     name: "Next Insurance",
-    logo: "https://logo.clearbit.com/nextinsurance.com",
+    slug: "next-insurance",
     bestFor: "Contractors",
     monthlyAvg: "$27-$49",
-    rating: 4.3,
     amBest: "A-",
+    rating: 4.3,
     pros: ["Instant online quotes and binding", "Mobile-first platform", "Competitive contractor rates", "COI generation in minutes"],
     cons: ["Limited to specific business types", "No agent support"],
-    description: "Next Insurance disrupts traditional commercial insurance with AI-powered underwriting and instant policy issuance."
+    description: "Next Insurance disrupts traditional commercial insurance with AI-powered underwriting and instant policy issuance.",
+    bottomLine: "Next Insurance is revolutionizing contractor insurance with AI-powered instant quotes and binding. Generate certificates of insurance (COIs) in minutes—perfect for contractors who need proof of coverage immediately. Their mobile-first approach makes managing policies effortless.",
+    coverageDetails: [
+      "Instant online binding",
+      "AI-powered underwriting",
+      "General liability",
+      "Professional liability",
+      "Commercial auto",
+      "Workers' compensation",
+      "Instant COI generation",
+      "Mobile-first platform"
+    ]
   }
 ];
 
 const faqs = [
   {
     question: "What type of insurance does a small business need?",
-    answer: "Most small businesses need general liability insurance as a foundation. If you have employees, workers' compensation is legally required in 49 states. Professional service businesses should add professional liability coverage, while businesses with physical assets need commercial property insurance."
+    answer: "Most small businesses need <strong>general liability insurance</strong> as a foundation. If you have employees, workers' compensation is legally required in 49 states. Professional service businesses should add professional liability (E&O) coverage, while businesses with physical assets need commercial property insurance. A Business Owner's Policy (BOP) bundles general liability and property coverage at discounted rates."
   },
   {
     question: "How much does small business insurance cost?",
-    answer: "Small business insurance costs range from $35-$200 monthly for basic coverage, with most businesses paying $89-$167 monthly for comprehensive protection. Low-risk service businesses typically pay $35-$67 monthly, while high-risk industries like construction may pay $200-$400 monthly."
+    answer: "Small business insurance costs range from <strong>$35-$200 monthly</strong> for basic coverage, with most businesses paying $89-$167 monthly for comprehensive protection. Low-risk service businesses (consulting, software) typically pay $35-$67 monthly, while high-risk industries like construction may pay $200-$400 monthly. Factors affecting cost include industry, location, revenue, and number of employees."
   },
   {
     question: "Is small business insurance required by law?",
-    answer: "Workers' compensation insurance is legally required in 49 states for businesses with employees. Commercial auto insurance is mandatory for business-owned vehicles. While general liability isn't legally required, most commercial leases and contracts require minimum coverage of $1 million per occurrence."
+    answer: "<strong>Workers' compensation</strong> insurance is legally required in 49 states for businesses with employees (Texas is the exception). <strong>Commercial auto insurance</strong> is mandatory for business-owned vehicles. While general liability isn't legally required, most commercial leases, contracts, and clients require minimum coverage of $1 million per occurrence."
   },
   {
     question: "What is the difference between general liability and professional liability?",
-    answer: "General liability covers third-party bodily injury, property damage, and personal injury claims. Professional liability (E&O) protects against claims of professional negligence, errors, or failure to deliver promised services. Most service businesses need both types of coverage."
+    answer: "<strong>General liability</strong> covers third-party bodily injury, property damage, and personal injury claims arising from your business operations—like a customer slipping in your store. <strong>Professional liability</strong> (E&O) protects against claims of professional negligence, errors, or failure to deliver promised services—like a consultant giving bad advice that costs a client money. Most service businesses need both."
   },
   {
     question: "Can I get small business insurance online?",
-    answer: "Yes, many carriers offer online quotes and policy purchase for standard business types. Progressive, Next Insurance, and GEICO Business provide fully digital experiences. However, complex businesses or unique coverage needs often require agent assistance."
+    answer: "Yes, many carriers offer <strong>online quotes and policy purchase</strong> for standard business types. Progressive, Next Insurance, and GEICO Business provide fully digital experiences with instant binding. However, complex businesses, unique coverage needs, or high-risk industries often require agent assistance for proper coverage evaluation."
   },
   {
     question: "What does general liability insurance cover for small business?",
-    answer: "General liability insurance covers third-party bodily injury, property damage, and personal injury claims arising from your business operations. This includes customer injuries on your premises, damage caused by your work, product liability issues, and advertising injury claims."
+    answer: "General liability covers: <strong>1)</strong> Third-party bodily injury (customer injuries on your premises), <strong>2)</strong> Property damage caused by your business operations, <strong>3)</strong> Personal and advertising injury (libel, slander, copyright infringement), <strong>4)</strong> Medical payments for minor injuries, <strong>5)</strong> Legal defense costs. It does NOT cover professional errors, employee injuries, or your own business property."
   },
   {
     question: "How do I file a small business insurance claim?",
-    answer: "Contact your insurance carrier immediately after an incident occurs—most provide 24/7 claim reporting hotlines. Document the scene with photos, gather witness information, and preserve any damaged property. Most claims are resolved within 30-60 days."
+    answer: "Contact your insurance carrier <strong>immediately</strong> after an incident—most provide 24/7 claim reporting hotlines. Document the scene with photos, gather witness information, and preserve any damaged property. File your claim through the carrier's app, website, or by phone. Most claims are reviewed within 48-72 hours and resolved within 30-60 days."
   },
   {
     question: "What is the most affordable small business insurance option?",
-    answer: "GEICO Business and Next Insurance offer the lowest average premiums starting at $27-$29 monthly for basic coverage. However, the cheapest option isn't always the best value—consider coverage adequacy, carrier financial strength, and customer service quality."
+    answer: "<strong>GEICO Business and Next Insurance</strong> offer the lowest average premiums starting at $27-$29 monthly for basic coverage. However, the cheapest option isn't always the best value—consider coverage adequacy, carrier financial strength (AM Best rating), and customer service quality. A Business Owner's Policy (BOP) often provides better value by bundling coverages at 15-25% savings."
   }
-];
-
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Coverage Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
 ];
 ---
 
-<ComparisonLayout
-  title="Best Small Business Insurance 2024: Top 10 Providers Compared"
-  description="Our experts analyzed 50+ commercial insurance providers to help you find the right coverage at the best price."
-  category="insurance"
-  categoryLabel="SMALL BUSINESS INSURANCE"
-  heroImage="/insurance-heroes/business-insurance.jpeg"
-  author="Screened Editorial Team"
-  date="Dec. 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
-  researchIntro="We obtained 234 quotes across 18 business types and analyzed claim settlement data from AM Best and the NAIC. Our team also interviewed 47 small business owners about their claims experiences. These 10 providers consistently offer the best combination of coverage, pricing, and service."
->
-  <!-- SEO Content Section -->
-  <div class="key-takeaways">
-    <h3>Key Takeaways</h3>
-    <ul>
-      <li><strong>60% of small businesses</strong> lack adequate insurance coverage, leaving them vulnerable to financial ruin</li>
-      <li><strong>General liability insurance</strong> costs $42-$68 monthly for most small businesses</li>
-      <li><strong>The Hartford, State Farm, and Progressive</strong> lead our rankings for comprehensive coverage and competitive rates</li>
-      <li><strong>Workers' compensation</strong> is legally required in most states for businesses with employees</li>
-      <li><strong>Bundle policies</strong> can save businesses 15-25% on total premium costs</li>
-    </ul>
-  </div>
-
-  <p>Small business owners face an average of <strong>$15,000 in unexpected costs annually</strong>, with 40% of these expenses stemming from incidents that proper insurance could have covered. Finding the best small business insurance isn't just about protection—it's about ensuring your company's survival and growth.</p>
-
-  <p>Our analysis of 50+ commercial insurance providers reveals significant differences in coverage options, premium costs, and customer service quality. This comprehensive guide examines the top 10 carriers based on financial stability ratings, customer satisfaction scores, and value proposition for small businesses.</p>
-
-  <h2>Types of Small Business Insurance Coverage You Need</h2>
-
-  <h3>General Liability Insurance</h3>
-  <p>General liability insurance forms the foundation of most small business insurance programs. This coverage protects against third-party claims for bodily injury, property damage, and personal injury occurring on your business premises or due to your operations.</p>
+<MainLayout title="Best Small Business Insurance 2025: Top 10 Providers Compared" description="Compare the best small business insurance companies of 2025. Expert reviews of The Hartford, State Farm, Progressive & more. Get quotes starting at $27/month.">
   
-  <table>
-    <thead>
-      <tr>
-        <th>Coverage Type</th>
-        <th>Average Cost</th>
-        <th>Typical Limits</th>
-        <th>Who Needs It</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>General Liability</td>
-        <td>$42-$68/mo</td>
-        <td>$1M per occurrence</td>
-        <td>All businesses</td>
-      </tr>
-      <tr>
-        <td>Professional Liability</td>
-        <td>$59-$89/mo</td>
-        <td>$1M-$5M per claim</td>
-        <td>Service businesses</td>
-      </tr>
-      <tr>
-        <td>Workers' Compensation</td>
-        <td>$0.75-$2.74 per $100</td>
-        <td>State minimums</td>
-        <td>Employers</td>
-      </tr>
-      <tr>
-        <td>Commercial Property</td>
-        <td>$63-$89/mo</td>
-        <td>Replacement cost</td>
-        <td>Property owners</td>
-      </tr>
-      <tr>
-        <td>Cyber Liability</td>
-        <td>$145-$200/mo</td>
-        <td>$1M minimum</td>
-        <td>Data handlers</td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="Best Small Business Insurance 2025: Top 10 Providers Compared"
+    description="Our experts analyzed 50+ commercial insurance providers to help you find the right coverage at the best price."
+    url="/blog/best-small-business-insurance"
+    image="/insurance-heroes/business-insurance.jpeg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Screened Editorial Team"
+    section="Business Insurance"
+    tags={['business insurance', 'commercial insurance', 'small business', 'liability insurance']}
+    wordCount={5200}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Insurance', url: '/insurance' },
+    { name: 'Best Small Business Insurance' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Small Business Insurance 2025"
+    kicker=""
+    subtitle="Compare top commercial insurance providers. Expert reviews of coverage, pricing, and service for your business."
+    author="Screened Editorial Team"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
-  <h3>Professional Liability Insurance</h3>
-  <p>Also known as errors and omissions (E&O) insurance, professional liability coverage protects against claims of professional negligence, mistakes, or failure to deliver promised services.</p>
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the insurance offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#0066B2] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
 
-  <div class="info-box">
-    <h4>💡 Who Needs Professional Liability?</h4>
-    <p>Consultants, lawyers, accountants, healthcare providers, technology companies, and any business providing professional advice or expertise should carry professional liability insurance.</p>
-  </div>
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
 
-  <h3>Workers' Compensation Insurance</h3>
-  <p>Workers' compensation provides medical benefits and wage replacement for employees injured while performing job duties. Most states legally require this coverage for businesses with employees.</p>
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We obtained 234 quotes across 18 business types and analyzed claim settlement data from AM Best and the NAIC. Our team also interviewed 47 small business owners about their claims experiences. These 10 providers consistently offer the best combination of coverage, pricing, and service.</p>
+      </div>
+      
+      {providers.map((provider, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {provider.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Business Insurance
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
 
-  <div class="warning-box">
-    <h4>⚠️ Legal Requirement</h4>
-    <p>Workers' compensation is mandatory in <strong>49 states</strong> (Texas being the exception). Penalties for non-compliance include fines up to $10,000 and potential criminal charges.</p>
-  </div>
+              {/* Company Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getBusinessInsuranceLogo(provider.slug) || `https://logo.clearbit.com/${provider.slug}.com`}
+                    alt={`${provider.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{provider.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s secure website</p>
+            </div>
 
-  <h2>How to Choose the Right Small Business Insurance</h2>
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    Best for {provider.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{provider.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{provider.description}</p>
 
-  <h3>Assess Your Risk Profile</h3>
-  <p>Begin by conducting a comprehensive risk assessment of your business operations. Consider factors like industry type, business size, number of employees, customer interaction levels, and physical assets.</p>
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Monthly Cost</div>
+                  <div class="stat-value">{provider.monthlyAvg}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">AM Best Rating</div>
+                  <div class="stat-value text-green-600">{provider.amBest}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Our Rating</div>
+                  <div class="stat-value">{provider.rating}/5</div>
+                </div>
+              </div>
 
-  <ul>
-    <li><strong>High-Risk Industries:</strong> Construction, manufacturing, healthcare, transportation</li>
-    <li><strong>Medium-Risk Industries:</strong> Retail, restaurants, professional services</li>
-    <li><strong>Low-Risk Industries:</strong> Consulting, software development, accounting</li>
-  </ul>
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {provider.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{provider.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Coverage Details Accordion */}
+                {provider.coverageDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Coverage Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {provider.coverageDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-  <h3>Determine Required Coverage Types</h3>
-  <p>Most small businesses need a combination of coverage types to address various risk exposures:</p>
+  <!-- Premium Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best business insurance providers</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[900px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Insurance Provider</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Monthly Cost</th>
+              <th class="text-left">AM Best</th>
+              <th class="text-left">Rating</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {providers.map((provider, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getBusinessInsuranceLogo(provider.slug) || `https://logo.clearbit.com/${provider.slug}.com`}
+                        alt={`${provider.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{provider.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{provider.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(provider.rating) ? 'star-filled' : star - 0.5 <= provider.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{provider.bestFor}</span>
+                </td>
+                <td class="cost-cell">
+                  <span class="cost-text">{provider.monthlyAvg}</span>
+                </td>
+                <td class="limit-cell">
+                  <span class="limit-text font-semibold text-green-600">{provider.amBest}</span>
+                </td>
+                <td class="waiting-cell">
+                  <span class="waiting-text">{provider.rating}/5</span>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Get Quote
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-  <p><strong>Essential Coverage (90% of businesses need):</strong></p>
-  <ul>
-    <li>General liability insurance</li>
-    <li>Commercial property insurance (if you own business property)</li>
-    <li>Workers' compensation (if you have employees)</li>
-  </ul>
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <!-- Key Takeaways -->
+        <div class="key-takeaway mb-8">
+          <h4 class="font-sora text-lg font-bold text-[#162433] mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Key Takeaways
+          </h4>
+          <ul class="space-y-2 text-[#4B5563]">
+            <li>• <strong>60% of small businesses</strong> lack adequate insurance coverage</li>
+            <li>• <strong>General liability</strong> costs $42-$68/month for most businesses</li>
+            <li>• <strong>The Hartford, State Farm, and Progressive</strong> lead our rankings</li>
+            <li>• <strong>Workers' compensation</strong> is required in 49 states</li>
+            <li>• <strong>Bundle policies</strong> to save 15-25% on premiums</li>
+          </ul>
+        </div>
 
-  <p><strong>Industry-Specific Coverage:</strong></p>
-  <ul>
-    <li>Professional liability for service businesses</li>
-    <li>Product liability for manufacturers</li>
-    <li>Commercial auto for delivery/transportation</li>
-    <li>Cyber liability for businesses handling sensitive data</li>
-  </ul>
+        <h2 id="how-it-works">Types of Business Insurance Coverage</h2>
+        
+        <p>Small business owners face an average of <strong>$15,000 in unexpected costs annually</strong>, with 40% stemming from incidents that proper insurance could have covered. Understanding your coverage options is the first step to protecting your business.</p>
 
-  <h3>Consider Bundling Opportunities</h3>
-  <p>Business Owners Policies (BOPs) combine general liability and commercial property insurance at discounted rates. Bundling typically saves <strong>15-25%</strong> compared to purchasing individual policies from different carriers.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Coverage Type</th>
+              <th>Average Cost</th>
+              <th>Typical Limits</th>
+              <th>Who Needs It</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>General Liability</td>
+              <td>$42-$68/mo</td>
+              <td>$1M per occurrence</td>
+              <td>All businesses</td>
+            </tr>
+            <tr>
+              <td>Professional Liability</td>
+              <td>$59-$89/mo</td>
+              <td>$1M-$5M per claim</td>
+              <td>Service businesses</td>
+            </tr>
+            <tr>
+              <td>Workers' Compensation</td>
+              <td>$0.75-$2.74 per $100</td>
+              <td>State minimums</td>
+              <td>Employers</td>
+            </tr>
+            <tr>
+              <td>Commercial Property</td>
+              <td>$63-$89/mo</td>
+              <td>Replacement cost</td>
+              <td>Property owners</td>
+            </tr>
+            <tr>
+              <td>Cyber Liability</td>
+              <td>$145-$200/mo</td>
+              <td>$1M minimum</td>
+              <td>Data handlers</td>
+            </tr>
+          </tbody>
+        </table>
 
-  <h2>Small Business Insurance Cost: What to Expect</h2>
+        <div class="info-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Business Owner's Policy (BOP)</h4>
+          <p>A BOP bundles general liability and commercial property insurance at 15-25% savings compared to buying separately. It's the most cost-effective option for most small businesses with physical locations.</p>
+        </div>
 
-  <h3>Average Premium Costs by Business Type</h3>
-  <p>Small business insurance costs vary dramatically based on industry risk factors, business size, and coverage selections:</p>
+        <h2 id="how-to-choose">How to Choose the Right Insurance</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Business Type</th>
-        <th>General Liability</th>
-        <th>Property Insurance</th>
-        <th>Total Average</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Low-Risk (Consulting, Software)</td>
-        <td>$27-$42</td>
-        <td>N/A</td>
-        <td>$89-$124/mo</td>
-      </tr>
-      <tr>
-        <td>Medium-Risk (Retail, Restaurants)</td>
-        <td>$42-$68</td>
-        <td>$54-$78</td>
-        <td>$167-$245/mo</td>
-      </tr>
-      <tr>
-        <td>High-Risk (Construction, Manufacturing)</td>
-        <td>$89-$167</td>
-        <td>$78-$134</td>
-        <td>$356-$623/mo</td>
-      </tr>
-    </tbody>
-  </table>
+        <h3>Assess Your Risk Profile</h3>
+        <p>Begin by conducting a comprehensive risk assessment. Consider your industry type, business size, number of employees, customer interaction levels, and physical assets:</p>
 
-  <h3>Money-Saving Strategies</h3>
-  <ul>
-    <li><strong>Annual Payment Discounts:</strong> Paying premiums annually instead of monthly saves 5-8% on total costs</li>
-    <li><strong>Safety Certifications:</strong> OSHA training and formal safety programs reduce workers' compensation premiums</li>
-    <li><strong>Security Systems:</strong> Burglar alarms, cameras, and fire suppression systems lower property insurance rates</li>
-    <li><strong>Higher Deductibles:</strong> Increasing deductibles from $500 to $2,500 can reduce premiums by 15-25%</li>
-    <li><strong>Claims Prevention:</strong> Maintaining claim-free periods qualifies businesses for experience-based discounts</li>
-  </ul>
+        <ul>
+          <li><strong>High-Risk Industries:</strong> Construction, manufacturing, healthcare, transportation</li>
+          <li><strong>Medium-Risk Industries:</strong> Retail, restaurants, professional services</li>
+          <li><strong>Low-Risk Industries:</strong> Consulting, software development, accounting</li>
+        </ul>
 
-  <h2>General Liability vs Professional Liability Insurance</h2>
+        <div class="warning-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"/></svg> Legal Requirement</h4>
+          <p>Workers' compensation is mandatory in <strong>49 states</strong> (Texas is the exception). Penalties for non-compliance include fines up to $10,000 and potential criminal charges.</p>
+        </div>
 
-  <h3>Understanding the Key Differences</h3>
-  <p>General liability and professional liability insurance serve distinct purposes in protecting small businesses from different types of risks and claims.</p>
+        <h2>Small Business Insurance Cost by Type</h2>
 
-  <p><strong>General Liability Insurance</strong> covers third-party bodily injury, property damage, and personal injury claims arising from your business operations, premises, or products.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Business Type</th>
+              <th>General Liability</th>
+              <th>Property Insurance</th>
+              <th>Total Average</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Low-Risk (Consulting, Software)</td>
+              <td>$27-$42</td>
+              <td>N/A</td>
+              <td>$89-$124/mo</td>
+            </tr>
+            <tr>
+              <td>Medium-Risk (Retail, Restaurants)</td>
+              <td>$42-$68</td>
+              <td>$54-$78</td>
+              <td>$167-$245/mo</td>
+            </tr>
+            <tr>
+              <td>High-Risk (Construction, Manufacturing)</td>
+              <td>$89-$167</td>
+              <td>$78-$134</td>
+              <td>$356-$623/mo</td>
+            </tr>
+          </tbody>
+        </table>
 
-  <p><strong>Professional Liability Insurance</strong> protects against claims of professional negligence, errors, omissions, or failure to deliver promised services.</p>
+        <h3>Money-Saving Strategies</h3>
+        <ul>
+          <li><strong>Annual Payment:</strong> Save 5-8% by paying annually instead of monthly</li>
+          <li><strong>Safety Programs:</strong> OSHA training reduces workers' comp premiums</li>
+          <li><strong>Security Systems:</strong> Alarms and cameras lower property rates</li>
+          <li><strong>Higher Deductibles:</strong> Raising deductibles from $500 to $2,500 saves 15-25%</li>
+          <li><strong>Claims-Free Discounts:</strong> Maintain clean record for experience-based savings</li>
+        </ul>
 
-  <div class="success-box">
-    <h4>✅ Best Practice</h4>
-    <p>Most service-based businesses should carry <strong>both</strong> general liability and professional liability insurance for comprehensive protection. These policies address different risks and don't overlap in coverage.</p>
-  </div>
+      </div>
+    </div>
+  </section>
 
-  <h2>Best Insurance for Specific Business Types</h2>
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4 text-center">Frequently Asked Questions</h2>
+      <p class="text-[#68727C] text-center mb-10 max-w-2xl mx-auto">Expert answers to common questions about small business insurance.</p>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-  <h3>Technology Companies and Software Developers</h3>
-  <p>Technology businesses face unique risks requiring specialized coverage approaches:</p>
-  <ul>
-    <li>Professional liability (E&O) for software defects or project failures</li>
-    <li>Cyber liability for data breaches and system failures</li>
-    <li>Intellectual property coverage for patent/copyright disputes</li>
-  </ul>
-  <p><strong>Recommended Providers:</strong> Hiscox, Travelers, Liberty Mutual<br/>
-  <strong>Average Monthly Cost:</strong> $156-$234 for comprehensive coverage</p>
+  <!-- Author Bio -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <img src="/team/emily-johnson.jpg" alt="Screened Editorial Team" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Screened Editorial Team</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Our editorial team includes insurance experts with over 50 years of combined experience in commercial and personal lines insurance. We've helped thousands of small business owners find the right coverage for their operations.
+          </p>
+          <p class="text-xs text-[#68727C]">Updated: Dec 11, 2025 · 12 min read</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <h3>Restaurants and Food Service</h3>
-  <p>Food service businesses encounter high liability exposure and specific regulatory requirements:</p>
-  <ul>
-    <li>General liability with product liability endorsement</li>
-    <li>Commercial property for equipment and inventory</li>
-    <li>Liquor liability (if serving alcohol)</li>
-    <li>Business interruption for equipment failures</li>
-  </ul>
-  <p><strong>Recommended Providers:</strong> The Hartford, State Farm, CNA<br/>
-  <strong>Average Monthly Cost:</strong> $234-$378 for full coverage</p>
+</MainLayout>
 
-  <h3>Construction and Contracting</h3>
-  <p>Construction businesses require robust coverage for high-risk operations:</p>
-  <ul>
-    <li>General liability with completed operations coverage</li>
-    <li>Commercial auto for vehicles and equipment</li>
-    <li>Tools and equipment coverage</li>
-    <li>Professional liability for design-build contractors</li>
-  </ul>
-  <p><strong>Recommended Providers:</strong> CNA, Travelers, Next Insurance<br/>
-  <strong>Average Monthly Cost:</strong> $445-$667 for comprehensive protection</p>
+<style>
+  /* Blue Theme - Matches Travel Cards Template */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
 
-  <h2>Small Business Insurance Tax Deductions</h2>
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
 
-  <h3>Deductible Insurance Premiums</h3>
-  <p>Most small business insurance premiums qualify as ordinary and necessary business expenses, making them fully tax-deductible:</p>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-  <ul>
-    <li>General liability insurance premiums</li>
-    <li>Professional liability insurance costs</li>
-    <li>Commercial property insurance</li>
-    <li>Workers' compensation insurance</li>
-    <li>Commercial auto insurance</li>
-    <li>Cyber liability coverage premiums</li>
-  </ul>
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
 
-  <div class="info-box">
-    <h4>💰 Tax Savings Impact</h4>
-    <p>Businesses in the 25% tax bracket save <strong>$25 for every $100</strong> in deductible insurance premiums. Consult with a qualified tax professional for your specific situation.</p>
-  </div>
+  /* Premium Comparison Table */
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+  
+  .premium-comparison-table thead th:last-child {
+    border-radius: 0 8px 0 0;
+  }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover {
+    background: #FAFBFC;
+  }
+  
+  .comparison-row td {
+    padding: 1.25rem 0.75rem;
+    vertical-align: top;
+  }
 
-  <h2>Conclusion</h2>
+  .card-cell {
+    min-width: 220px;
+    padding-left: 1rem !important;
+  }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-badge-new {
+    background: #22C55E;
+    color: white;
+  }
+  
+  .card-info-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  
+  .card-image-container {
+    flex-shrink: 0;
+  }
+  
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  
+  .card-details {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0066B2;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .rating-number {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #162433;
+  }
+  
+  .rating-stars {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .star-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .star-filled { fill: #22C55E; }
+  .star-half { fill: #86EFAC; }
+  .star-empty { fill: #D1D5DB; }
 
-  <p>Selecting the best small business insurance requires careful evaluation of your unique risks, coverage needs, and budget constraints. Our analysis reveals that <strong>The Hartford, State Farm, and Progressive Commercial</strong> offer the strongest combination of comprehensive coverage, competitive pricing, and superior customer service for most small businesses.</p>
+  .cost-text, .limit-text, .waiting-text {
+    font-size: 0.9rem;
+    color: #374151;
+  }
 
-  <p>The average small business pays $89-$167 monthly for adequate insurance protection—a modest investment considering that <strong>60% of uninsured businesses fail within six months of a major incident</strong>. Whether you're a startup consultant needing basic professional liability coverage or an established manufacturer requiring comprehensive commercial protection, the right insurance partnership protects both your current operations and future growth opportunities.</p>
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #0066B2;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .apply-now-btn:hover {
+    background: #004C8C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+  }
 
-  <p><strong>Ready to protect your business?</strong> Compare quotes from our top-rated providers today. Start with our free quote comparison tool to receive personalized recommendations based on your specific business needs and risk profile.</p>
-</ComparisonLayout>
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
 
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #004C8C;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #EBF5FF; }
+
+  .info-box {
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p { margin: 0; color: #475569; }
+
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.15), 0 4px 24px rgba(239, 68, 68, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #475569; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    border: 1px solid #A7F3D0;
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  .key-takeaway h4 { color: #047857; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway ul { margin: 0; color: #065F46; }
+
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BAE6FD;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #0066B2;
+    box-shadow: 0 8px 24px rgba(0, 102, 178, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #EBF5FF; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #0066B2;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #0066B2;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

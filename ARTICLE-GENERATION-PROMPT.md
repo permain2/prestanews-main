@@ -443,6 +443,9 @@ const faqs = [/* your FAQs */];
 
 # LOGO WORKFLOW
 
+> ⚠️ **CRITICAL WARNING**: Many API-fetched logos are **WHITE on TRANSPARENT** backgrounds!  
+> These are **INVISIBLE** on white card backgrounds. Always verify visibility after fetching!
+
 ## Step 1: Choose Strategy
 
 **Option A: Clearbit URLs (Quick)**
@@ -468,7 +471,28 @@ const companies = [
 const outputDir = path.join(__dirname, '../public/[category]-logos');
 ```
 
-## Step 3: Handle Failed Logos
+## Step 3: ⚠️ CRITICAL - Verify Logo Visibility
+```bash
+# Many API logos are WHITE on TRANSPARENT = INVISIBLE on white cards!
+
+# Method 1: Ask Cursor AI to visually inspect
+"Read public/[category]-logos/[company].png - is it visible on white background?"
+
+# Method 2: Check in browser with dark background
+# Open logo file, if it appears white/light = problem!
+
+# Method 3: Check on actual page
+npm run dev
+# Visit page, if logo area is blank = white logo problem
+```
+
+**Fix White Logos:**
+- Re-fetch with `theme: "dark"` parameter
+- Download colored version from company website
+- Use logo.dev with different token/params
+- Generate SVG fallback with colored text
+
+## Step 4: Handle Failed/White Logos
 ```bash
 # Generate SVG fallbacks
 node scripts/generate-[category]-logos.js
@@ -588,7 +612,9 @@ npm run optimize:images:aggressive
 ## Phase 2: Logos
 - [ ] Create/run logo fetch script
 - [ ] Check for failed logos
-- [ ] Generate SVG fallbacks or download manually
+- [ ] ⚠️ **VERIFY VISIBILITY: Ask Cursor "Read [logo].png - is it visible on white?"**
+- [ ] Fix white/invisible logos (re-fetch dark theme or download colored)
+- [ ] Generate SVG fallbacks for remaining failures
 - [ ] Update article with local paths
 
 ## Phase 3: Hero Image
@@ -603,6 +629,7 @@ npm run optimize:images:aggressive
 ## Phase 5: Verification
 - [ ] npm run dev
 - [ ] Visit /blog/best-[topic]
+- [ ] **All logos VISIBLE (not white/blank)** ✓
 - [ ] All logos load ✓
 - [ ] Hero displays ✓
 - [ ] Accordions work ✓

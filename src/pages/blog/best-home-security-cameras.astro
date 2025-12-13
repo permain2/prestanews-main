@@ -1,280 +1,1168 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getSecurityCameraLogo } from '../../utils/SecurityCameraLogoMap';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Camera Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
-const providers = [
+// Top Security Camera Brands - 8 providers
+const cameras = [
   {
     name: "Ring",
-    logo: "https://logo.clearbit.com/ring.com",
+    slug: "ring",
     bestFor: "Doorbell Cameras",
-    monthlyAvg: "$3.99-$20/mo",
+    monthlyFee: "$3.99-$20/mo",
+    cameraPrice: "From $100",
+    resolution: "1080p-2K",
     rating: 4.6,
     pros: ["Industry-leading doorbell cameras", "Neighborhood safety network", "Easy DIY installation", "Works with Alexa seamlessly"],
     cons: ["Video storage requires subscription", "Privacy concerns with Amazon", "Basic cameras less competitive"],
     description: "Ring dominates the doorbell camera market with easy installation and Amazon Alexa integration for a complete smart home security ecosystem.",
-    affiliateUrl: "#"
+    bottomLine: "Ring is the undisputed leader in doorbell cameras. Their Video Doorbell lineup offers the best combination of features, reliability, and smart home integration. The Neighbors app creates a community safety network. While a Ring Protect subscription is needed for video history, the app and live view are free. Best for Alexa households wanting comprehensive coverage.",
+    details: [
+      "Industry's most popular doorbell cameras",
+      "Video Doorbell Pro 2 with 3D motion detection",
+      "Neighbors app community safety alerts",
+      "Ring Protect: $3.99/mo (1 camera) or $20/mo (unlimited)",
+      "Works seamlessly with Alexa and Echo devices",
+      "Battery and hardwired options available",
+      "Spotlight and Floodlight camera options",
+      "24/7 professional monitoring available"
+    ],
+    editorChoice: true
   },
   {
     name: "Arlo",
-    logo: "https://logo.clearbit.com/arlo.com",
+    slug: "arlo",
     bestFor: "Wireless Cameras",
-    monthlyAvg: "$4.99-$17.99/mo",
+    monthlyFee: "$4.99-$17.99/mo",
+    cameraPrice: "From $130",
+    resolution: "2K-4K",
     rating: 4.7,
     pros: ["True wireless with rechargeable batteries", "4K video quality available", "Works without subscription (limited)", "Excellent night vision"],
     cons: ["Higher camera prices", "Best features require subscription", "Battery life varies by use"],
     description: "Arlo offers premium wireless cameras with industry-leading video quality and flexible power options for any installation location.",
-    affiliateUrl: "#"
+    bottomLine: "Arlo delivers the best wireless outdoor cameras with truly wire-free installation. Their 4K Pro cameras capture license plates and faces with exceptional clarity. While cameras work without subscription, Arlo Secure unlocks AI detection and 30-day cloud history. Perfect for renters or those who can't run wires.",
+    details: [
+      "True wireless with magnetic mounts",
+      "4K HDR video available (Pro 4/Ultra)",
+      "Color night vision for better identification",
+      "Rechargeable batteries or solar panel option",
+      "Arlo Secure subscription for AI features",
+      "Works with Alexa, Google, and Apple HomeKit",
+      "Spotlight and siren built-in",
+      "Free 7-day cloud with basic features"
+    ]
   },
   {
     name: "Google Nest",
-    logo: "https://logo.clearbit.com/store.google.com",
+    slug: "google-nest",
     bestFor: "Google Home Users",
-    monthlyAvg: "$6-$12/mo",
+    monthlyFee: "$6-$12/mo",
+    cameraPrice: "From $100",
+    resolution: "1080p-2K",
     rating: 4.5,
     pros: ["Excellent AI-powered alerts", "Deep Google Home integration", "Familiar face recognition", "24/7 continuous recording option"],
     cons: ["Requires Nest Aware for most features", "Higher subscription costs", "No local storage option"],
     description: "Google Nest cameras leverage AI to distinguish people, packages, animals, and vehicles, minimizing false alerts.",
-    affiliateUrl: "#"
+    bottomLine: "Google Nest cameras offer the smartest AI detection on the market. They can tell the difference between a person, package, animal, or vehicle—and even recognize familiar faces. The catch: Nest Aware subscription ($6-12/mo) is practically required. Ideal for Google Home users who want intelligence over raw features.",
+    details: [
+      "Industry-leading AI detection and alerts",
+      "Distinguishes people, packages, animals, vehicles",
+      "Familiar face recognition (Nest Aware Plus)",
+      "24/7 continuous recording option",
+      "Deep Google Home and Assistant integration",
+      "View on Nest Hub displays and Chromecast",
+      "Activity zones to reduce false alerts",
+      "3-hour free video history without subscription"
+    ]
   },
   {
     name: "Wyze",
-    logo: "https://logo.clearbit.com/wyze.com",
+    slug: "wyze",
     bestFor: "Budget Cameras",
-    monthlyAvg: "$0-$9.99/mo",
+    monthlyFee: "$0-$9.99/mo",
+    cameraPrice: "From $20",
+    resolution: "1080p-2K",
     rating: 4.3,
     pros: ["Extremely affordable cameras ($20-50)", "Free cloud storage (14-day)", "Local storage option", "Feature-rich for the price"],
     cons: ["Video quality not premium", "Customer service limited", "Past security vulnerabilities"],
     description: "Wyze delivers remarkable value with feature-packed cameras at a fraction of competitor prices and optional free cloud storage.",
-    affiliateUrl: "#"
+    bottomLine: "Wyze offers the best bang for your buck in home security. Their $20 Wyze Cam v3 rivals cameras costing 5x more. Free 14-day cloud storage and microSD support mean no subscription needed. The trade-off is customer service and some past security issues. Perfect for budget-conscious buyers or covering multiple locations.",
+    details: [
+      "Cameras starting at just $20",
+      "Free 14-day cloud video storage",
+      "Local microSD card storage option",
+      "Cam Plus ($1.99/mo) for AI detection",
+      "Color night vision on most models",
+      "Works with Alexa and Google Assistant",
+      "Outdoor, indoor, and doorbell options",
+      "Person, package, pet, and vehicle detection"
+    ]
   },
   {
     name: "Eufy",
-    logo: "https://logo.clearbit.com/eufylife.com",
+    slug: "eufy",
     bestFor: "No Monthly Fees",
-    monthlyAvg: "$0 (local storage)",
+    monthlyFee: "$0",
+    cameraPrice: "From $100",
+    resolution: "2K-4K",
     rating: 4.5,
     pros: ["No subscription required ever", "Local storage included", "Strong privacy focus", "Excellent video quality"],
     cons: ["Upfront costs higher", "Limited cloud options", "Fewer integrations"],
     description: "Eufy prioritizes privacy with local storage and no mandatory subscriptions, making it the best choice for subscription-averse users.",
-    affiliateUrl: "#"
+    bottomLine: "Eufy is the clear winner for anyone avoiding monthly fees. All features work without subscription—including AI detection, activity zones, and 2K/4K video. Local storage keeps footage on-device for privacy. Higher upfront camera cost pays for itself within a year vs. subscription competitors.",
+    details: [
+      "Zero subscription fees ever",
+      "Local HomeBase storage (16GB included)",
+      "On-device AI processing for privacy",
+      "2K and 4K resolution options",
+      "Apple HomeKit Secure Video compatible",
+      "Solar panel options for wire-free install",
+      "Human, pet, and vehicle detection included",
+      "No cloud required—footage stays local"
+    ]
   },
   {
     name: "Blink",
-    logo: "https://logo.clearbit.com/blinkforhome.com",
+    slug: "blink",
     bestFor: "Long Battery Life",
-    monthlyAvg: "$3-$10/mo",
+    monthlyFee: "$3-$10/mo",
+    cameraPrice: "From $35",
+    resolution: "1080p",
     rating: 4.2,
     pros: ["Up to 2-year battery life", "Amazon/Alexa integration", "Affordable camera prices", "Local storage option with Sync Module"],
     cons: ["1080p only (no 2K/4K)", "Limited advanced features", "Requires Sync Module for best features"],
     description: "Blink cameras offer exceptional battery life—up to 2 years on AA batteries—making them ideal for locations without power access.",
-    affiliateUrl: "#"
+    bottomLine: "Blink's killer feature is battery life: up to 2 years on two AA batteries. This makes them perfect for sheds, garages, or vacation homes where you can't run power. Video quality is just 1080p, but the price ($35-100) and battery convenience can't be beat. Amazon/Alexa integration is excellent.",
+    details: [
+      "Up to 2-year battery life on 2 AA batteries",
+      "Sync Module 2 enables local USB storage",
+      "No subscription needed with local storage",
+      "Blink Subscription: $3/camera or $10/unlimited",
+      "Works seamlessly with Alexa",
+      "Indoor, outdoor, and floodlight options",
+      "Live view and two-way audio",
+      "Temperature and motion alerts"
+    ]
   },
   {
     name: "SimpliSafe",
-    logo: "https://logo.clearbit.com/simplisafe.com",
+    slug: "simplisafe",
     bestFor: "Integrated Security",
-    monthlyAvg: "$17.99-$27.99/mo",
+    monthlyFee: "$17.99-$27.99/mo",
+    cameraPrice: "From $140",
+    resolution: "1080p",
     rating: 4.4,
     pros: ["Complete security system integration", "Professional monitoring available", "No long-term contracts", "Police/fire dispatch"],
     cons: ["Cameras not standalone", "Higher monthly costs", "Equipment costs add up"],
     description: "SimpliSafe offers cameras as part of a complete home security system with optional professional monitoring and emergency dispatch.",
-    affiliateUrl: "#"
+    bottomLine: "SimpliSafe is best when you want more than just cameras—you want a complete security system with professional monitoring. Their cameras integrate with door/window sensors, motion detectors, and a base station. For $27.99/mo, you get 24/7 monitoring with police/fire dispatch. Not the cheapest, but most comprehensive.",
+    details: [
+      "Complete home security system integration",
+      "Professional 24/7 monitoring available",
+      "Police and fire dispatch included",
+      "No long-term contracts required",
+      "Indoor and outdoor camera options",
+      "Door/window sensors and motion detectors",
+      "Cellular backup for reliability",
+      "Works with Alexa and Google Assistant"
+    ]
   },
   {
     name: "Reolink",
-    logo: "https://logo.clearbit.com/reolink.com",
+    slug: "reolink",
     bestFor: "PoE/Wired Systems",
-    monthlyAvg: "$0 (local storage)",
+    monthlyFee: "$0",
+    cameraPrice: "From $50",
+    resolution: "4K-12MP",
     rating: 4.4,
     pros: ["Excellent wired camera options", "No subscription required", "NVR systems available", "4K resolution standard"],
     cons: ["Installation more complex", "Less smart home integration", "App could be improved"],
     description: "Reolink specializes in professional-grade wired camera systems with local NVR storage and no recurring fees.",
-    affiliateUrl: "#"
+    bottomLine: "Reolink is the choice for serious DIYers who want professional-grade systems without professional prices. Their PoE (Power over Ethernet) cameras offer reliable wired connections with 4K+ resolution. NVR systems store weeks of footage locally. Zero subscription fees and you own all your data. Installation is more complex but worth it.",
+    details: [
+      "Professional-grade PoE wired cameras",
+      "4K and 12MP ultra-high resolution",
+      "NVR systems with local HDD storage",
+      "Zero subscription fees forever",
+      "Continuous 24/7 recording capable",
+      "Person/vehicle detection included",
+      "Solar-powered wireless options too",
+      "ONVIF compatible for flexibility"
+    ]
   }
 ];
 
 const faqs = [
   {
     question: "Do I need a subscription for security cameras?",
-    answer: "Not necessarily. Cameras from Eufy, Reolink, and Wyze offer free local storage options. However, cloud storage subscriptions typically provide longer video history, AI features, and remote access. Consider your budget and feature needs when deciding."
+    answer: "Not necessarily. Cameras from <strong>Eufy, Reolink, and Wyze</strong> offer free local storage options with full functionality. However, cloud storage subscriptions typically provide longer video history (30-60 days), AI-powered detection, and easier remote access. Calculate your 3-year total cost—sometimes higher upfront camera cost beats monthly fees."
   },
   {
     question: "What resolution should I choose?",
-    answer: "1080p (Full HD) is sufficient for most home security needs. 2K and 4K provide more detail for identifying faces or license plates but require more storage and bandwidth. Higher resolution matters most for larger areas or critical identification needs."
+    answer: "<strong>1080p (Full HD)</strong> is sufficient for most home security needs—it captures faces clearly at typical distances. <strong>2K and 4K</strong> provide more detail for identifying license plates or monitoring large areas but require more storage and bandwidth. 4K matters most for driveways and large properties."
   },
   {
     question: "Wireless vs wired cameras: which is better?",
-    answer: "Wireless cameras offer easy installation and flexible placement. Wired cameras provide reliable power and consistent connectivity without battery maintenance. For permanent installations in homes you own, wired often provides better long-term reliability."
+    answer: "<strong>Wireless cameras</strong> offer easy installation and flexible placement—great for renters. <strong>Wired (PoE) cameras</strong> provide reliable power, consistent connectivity, and no battery maintenance—better for permanent installations. For critical areas like front doors, wired often provides better long-term reliability."
   },
   {
     question: "How much storage do security cameras need?",
-    answer: "Continuous recording uses 10-20GB per camera per day at 1080p. Motion-activated recording uses much less—typically 2-5GB daily. For local NVR systems, plan for 1TB per camera for 1-2 weeks of retention. Cloud plans typically offer 30-60 days of history."
+    answer: "Continuous recording uses <strong>10-20GB per camera per day</strong> at 1080p. Motion-activated recording uses much less—typically 2-5GB daily. For local NVR systems, plan for 1TB per camera for 1-2 weeks of retention. Cloud plans typically offer 30-60 days of history."
   },
   {
     question: "Can security cameras work without internet?",
-    answer: "Cameras with local storage (SD card or NVR) can record without internet. However, you won't receive mobile alerts or access footage remotely. Some cameras offer local network viewing during internet outages."
+    answer: "Cameras with <strong>local storage</strong> (SD card or NVR) can record without internet. However, you won't receive mobile alerts or access footage remotely. Some cameras like Reolink offer local network viewing during internet outages. For reliability, consider cameras with both cloud and local storage options."
   },
   {
     question: "Are outdoor cameras weatherproof?",
-    answer: "Look for IP65 or IP67 ratings for outdoor use. IP65 protects against rain and dust. IP67 can handle temporary submersion. Operating temperature ranges matter too—some cameras struggle in extreme cold or heat."
+    answer: "Look for <strong>IP65 or IP67 ratings</strong> for outdoor use. IP65 protects against rain and dust. IP67 can handle temporary submersion. Also check operating temperature ranges—some cameras struggle below 0°F or above 104°F. All cameras in our top picks are rated for outdoor use."
   },
   {
     question: "Do security cameras deter crime?",
-    answer: "Studies show visible cameras deter property crime by 13-50%. For maximum deterrent effect, position cameras visibly at entry points with clear signage. However, cameras work best as part of a complete security strategy including lighting and locks."
+    answer: "Studies show visible cameras <strong>deter property crime by 13-50%</strong>. For maximum deterrent effect, position cameras visibly at entry points with clear signage. Cameras with spotlights (Ring, Arlo, Blink) provide additional deterrent. However, cameras work best as part of a complete security strategy including lighting and locks."
+  },
+  {
+    question: "Which cameras work with my smart home?",
+    answer: "<strong>Amazon Alexa:</strong> Ring, Blink, Wyze, Arlo work best. <strong>Google Home:</strong> Nest is seamless; Wyze and Arlo also work. <strong>Apple HomeKit:</strong> Eufy and Logitech offer HomeKit Secure Video with local processing. Check compatibility before buying if smart home integration matters to you."
   }
 ];
 ---
 
-<ComparisonLayout
-  title="Best Home Security Cameras of 2025"
-  description="Compare the best home security cameras including Ring, Arlo, Google Nest, and Eufy. Expert reviews of video quality, subscriptions, and smart home integration."
-  category="home"
-  categoryLabel="HOME SECURITY"
-  heroImage="/blog-images/home-security-cameras.jpg"
-  researchIntro="Our team installed and tested 31 security cameras over 4 months, measuring video quality in daylight and night, motion detection accuracy, and app response times. We also calculated 3-year total costs including subscriptions. These cameras delivered the best real-world performance."
-  author="David Kim"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
->
+<MainLayout title="Best Home Security Cameras of 2025 | Compare Top Brands" description="Compare the best home security cameras of 2025. Expert reviews of Ring, Arlo, Nest, Eufy & more. Video quality, subscriptions, and smart home integration tested.">
+  
+  <!-- Schema Markup -->
+  <ArticleSchema
+    title="Best Home Security Cameras of 2025"
+    description="Compare the best home security cameras including Ring, Arlo, Google Nest, and Eufy. Expert reviews of video quality, subscriptions, and smart home integration."
+    url="/blog/best-home-security-cameras"
+    image="/blog-images/home-security-cameras.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="David Kim"
+    section="Home"
+    tags={['security cameras', 'home security', 'smart home', 'Ring', 'Arlo', 'Nest']}
+    wordCount={5500}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Home', url: '/home' },
+    { name: 'Best Home Security Cameras' }
+  ]} />
+  
+  <!-- Header -->
+  <CursorTrailDark 
+    client:load
+    title="Best Home Security Cameras of 2025"
+    kicker=""
+    subtitle="Compare top security cameras. Expert reviews of video quality, subscriptions, and smart home integration from 4 months of real-world testing."
+    author="David Kim"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
-## Choosing the Right Security Camera
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#0066B2] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
 
-The security camera market offers options ranging from $20 budget cameras to $500+ professional systems. Understanding your needs helps navigate choices and avoid overpaying for unnecessary features.
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
 
-### Key Considerations
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">Our team installed and tested 31 security cameras over 4 months, measuring video quality in daylight and night, motion detection accuracy, and app response times. We calculated 3-year total costs including subscriptions.</p>
+      </div>
+      
+      {cameras.map((camera, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {camera.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Security Camera Brand
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
 
-| Factor | Questions to Ask |
-|--------|------------------|
-| **Location** | Indoor, outdoor, or both? Weather exposure? |
-| **Power** | Access to outlets? Willing to run wires? |
-| **Budget** | One-time cost tolerance? Monthly subscription budget? |
-| **Integration** | Existing smart home ecosystem? Alexa, Google, Apple? |
-| **Privacy** | Cloud storage acceptable? Local storage required? |
-| **Monitoring** | Self-monitoring OK? Professional monitoring needed? |
+              {/* Camera Brand Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getSecurityCameraLogo(camera.slug) || `https://logo.clearbit.com/${camera.slug}.com`}
+                    alt={`${camera.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{camera.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Shop Now</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {camera.name}'s site</p>
+            </div>
 
-## Camera Types Explained
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    Best for {camera.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{camera.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{camera.description}</p>
 
-### Indoor Cameras
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Monthly</div>
+                  <div class="stat-value text-[#0066B2] text-sm">{camera.monthlyFee}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Camera Price</div>
+                  <div class="stat-value text-sm">{camera.cameraPrice}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Resolution</div>
+                  <div class="stat-value text-sm">{camera.resolution}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Rating</div>
+                  <div class="stat-value">{camera.rating}/5</div>
+                </div>
+              </div>
 
-Designed for monitoring inside your home—entry points, common areas, or specific rooms. Features to prioritize:
-- **Privacy shutter** (physical lens cover)
-- **Two-way audio** for communication
-- **Night vision** for low-light conditions
-- **Wide-angle lens** (130°+) for room coverage
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {camera.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{camera.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {camera.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {camera.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Camera Details Accordion */}
+                {camera.details && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Camera Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {camera.details.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-### Outdoor Cameras
+  <!-- Premium Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best security cameras</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[1000px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Brand</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Monthly Fee</th>
+              <th class="text-left">Camera Price</th>
+              <th class="text-left">Resolution</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {cameras.map((camera, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  {index === 4 && (
+                    <span class="card-badge card-badge-premium">No Fees</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getSecurityCameraLogo(camera.slug) || `https://logo.clearbit.com/${camera.slug}.com`}
+                        alt={`${camera.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{camera.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{camera.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(camera.rating) ? 'star-filled' : star - 0.5 <= camera.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{camera.bestFor}</span>
+                </td>
+                <td class="cost-cell">
+                  <span class={`cost-text font-semibold ${camera.monthlyFee === '$0' ? 'text-green-600' : 'text-[#0066B2]'}`}>{camera.monthlyFee}</span>
+                </td>
+                <td class="limit-cell">
+                  <span class="limit-text">{camera.cameraPrice}</span>
+                </td>
+                <td class="resolution-cell">
+                  <span class="resolution-text">{camera.resolution}</span>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Shop
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-Built to withstand weather while monitoring exterior areas. Essential features:
-- **Weather resistance** (IP65+ rating)
-- **Color night vision** for better identification
-- **Motion detection zones** to reduce false alerts
-- **Spotlight/siren** deterrents
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <h2 id="how-it-works">Choosing the Right Security Camera</h2>
+        
+        <p>The security camera market offers options ranging from $20 budget cameras to $500+ professional systems. Understanding your needs helps navigate choices and avoid overpaying for unnecessary features.</p>
 
-### Doorbell Cameras
+        <div class="info-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Key Questions to Ask</h4>
+          <ul class="mt-3 space-y-1 text-sm">
+            <li>• <strong>Location:</strong> Indoor, outdoor, or both? Weather exposure?</li>
+            <li>• <strong>Power:</strong> Access to outlets? Willing to run wires?</li>
+            <li>• <strong>Budget:</strong> One-time cost tolerance? Monthly subscription budget?</li>
+            <li>• <strong>Integration:</strong> Existing smart home ecosystem? Alexa, Google, Apple?</li>
+            <li>• <strong>Privacy:</strong> Cloud storage acceptable? Local storage required?</li>
+          </ul>
+        </div>
 
-Monitor your front door with video intercom capabilities. Key features:
-- **Package detection** for delivery alerts
-- **Pre-roll recording** to capture approaching visitors
-- **Head-to-toe view** for full person visibility
-- **Hardwired or battery** power options
+        <h2>Camera Types Explained</h2>
 
-### Floodlight Cameras
+        <h3>Doorbell Cameras</h3>
+        <p>Monitor your front door with video intercom capabilities. Look for package detection, pre-roll recording, head-to-toe view, and hardwired or battery options. <strong>Best pick: Ring</strong></p>
 
-Combine security cameras with powerful lighting. Best for:
-- **Driveways and parking areas**
-- **Large backyards**
-- **Dark entry points**
-- **Motion-activated illumination**
+        <h3>Wireless Outdoor Cameras</h3>
+        <p>Easy to install anywhere without running wires. Need rechargeable batteries or solar panels. Look for IP65+ weather rating and color night vision. <strong>Best pick: Arlo</strong></p>
 
-## Video Quality Comparison
+        <h3>No-Subscription Cameras</h3>
+        <p>Local storage with zero monthly fees. Higher upfront cost pays for itself within a year. Look for on-device AI and HomeKit compatibility. <strong>Best pick: Eufy</strong></p>
 
-| Resolution | Pixels | Best For | Storage Needs |
-|------------|--------|----------|---------------|
-| 1080p (Full HD) | 1920x1080 | General monitoring | Low |
-| 2K (QHD) | 2560x1440 | Detail identification | Medium |
-| 4K (UHD) | 3840x2160 | Large areas, license plates | High |
+        <h2>Video Quality Comparison</h2>
 
-**Recommendation:** 1080p is adequate for most home security. Upgrade to 2K or 4K only for specific needs like capturing license plates or monitoring large properties.
+        <table>
+          <thead>
+            <tr>
+              <th>Resolution</th>
+              <th>Pixels</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1080p (Full HD)</td>
+              <td>1920x1080</td>
+              <td>General monitoring, faces at normal distance</td>
+            </tr>
+            <tr>
+              <td>2K (QHD)</td>
+              <td>2560x1440</td>
+              <td>Detail identification, medium properties</td>
+            </tr>
+            <tr>
+              <td>4K (UHD)</td>
+              <td>3840x2160</td>
+              <td>Large areas, license plates, maximum detail</td>
+            </tr>
+          </tbody>
+        </table>
 
-## Subscription vs No Subscription
+        <div class="key-takeaway">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> 3-Year Total Cost (Per Camera)</h4>
+          <p>
+            <strong>Ring:</strong> $100 + $120 subscription = $220<br/>
+            <strong>Arlo:</strong> $130 + $180 subscription = $310<br/>
+            <strong>Eufy:</strong> $150 + $0 subscription = $150<br/>
+            <strong>Wyze:</strong> $30 + $0-72 subscription = $30-$102
+          </p>
+        </div>
 
-### Subscription Benefits
-- Extended cloud video history (30-60 days)
-- AI-powered detection (people, packages, vehicles)
-- Professional monitoring options
-- Advanced features and analytics
+        <h2>Smart Home Integration</h2>
 
-### Subscription-Free Options
-- **Eufy:** Local storage, full features, no fees
-- **Reolink:** NVR systems with local recording
-- **Wyze:** 14-day free cloud + SD card support
-- **Blink:** Local storage with Sync Module 2
+        <h3>Amazon Alexa</h3>
+        <p><strong>Best cameras:</strong> Ring, Blink, Wyze, Arlo. View feeds on Echo Show, use voice commands ("Alexa, show front door"), trigger recording with routines.</p>
 
-### True Cost Analysis (Per Camera)
+        <h3>Google Home</h3>
+        <p><strong>Best cameras:</strong> Nest, Wyze, Arlo. View on Nest Hub displays, Google Assistant control, smart home routine integration.</p>
 
-| Brand | Camera Cost | Annual Subscription | 3-Year Total |
-|-------|-------------|---------------------|--------------|
-| Ring | $100 | $40 | $220 |
-| Arlo | $130 | $60 | $310 |
-| Nest | $100 | $72 | $316 |
-| Eufy | $150 | $0 | $150 |
-| Wyze | $30 | $0-24 | $30-$102 |
+        <h3>Apple HomeKit</h3>
+        <p><strong>Best cameras:</strong> Eufy, Logitech, Aqara. HomeKit Secure Video stores in iCloud with local processing for privacy. Apple Home app control.</p>
 
-## Smart Home Integration
+        <div class="warning-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"/></svg> Installation Tips</h4>
+          <p><strong>Best placement:</strong> Front door (most common entry), back door, driveway, first-floor windows. Mount 8-10 feet high for optimal angle and tamper prevention. Always test WiFi signal before permanent installation.</p>
+        </div>
 
-### Amazon Alexa
+        <h2>The Bottom Line</h2>
+        <p>For most homeowners, <strong>Ring</strong> provides the best doorbell cameras while <strong>Arlo</strong> leads in wireless outdoor cameras. <strong>Eufy</strong> is the clear winner for those avoiding subscriptions.</p>
+        
+        <p>Budget-conscious buyers get exceptional value from <strong>Wyze</strong>, while serious DIYers should consider <strong>Reolink's</strong> professional wired systems.</p>
 
-**Best cameras:** Ring, Blink, Wyze, Arlo
-- View camera feeds on Echo Show
-- Voice commands: "Alexa, show front door"
-- Routines trigger camera recording
+        <p class="text-sm text-[#68727C] italic mt-6">Prices and features change frequently. Verify current specifications before purchasing.</p>
 
-### Google Home
+      </div>
+    </div>
+  </section>
 
-**Best cameras:** Nest, Wyze, Arlo
-- View on Nest Hub displays
-- Google Assistant voice control
-- Smart home routine integration
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4 text-center">Frequently Asked Questions</h2>
+      <p class="text-[#68727C] text-center mb-10 max-w-2xl mx-auto">Expert answers to common questions about home security cameras.</p>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-### Apple HomeKit
+  <!-- Author Bio -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <img src="/team/david-kim.jpg" alt="David Kim" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">David Kim</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            David is a smart home expert at Screened with over 5 years of experience testing security cameras and home automation devices. He personally installed and tested every camera in this guide over 4 months.
+          </p>
+          <p class="text-xs text-[#68727C]">Updated: Dec 11, 2025 · 12 min read</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-**Best cameras:** Eufy, Logitech, Aqara
-- HomeKit Secure Video (iCloud storage)
-- Apple Home app control
-- Local processing for privacy
+</MainLayout>
 
-## Installation Tips
+<style>
+  /* Blue Theme - Matches Travel Cards Template */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
 
-### Placement Best Practices
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
 
-- **Front door:** Most common entry point for packages and intruders
-- **Back door:** Second most common entry, often overlooked
-- **Driveway:** Monitor vehicles and approaching visitors
-- **First floor windows:** Potential entry points
-- **8-10 feet height:** Optimal angle while preventing tampering
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-### WiFi Considerations
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
 
-- Strong signal required at camera location
-- Test with phone before installing
-- Consider WiFi extenders for distant cameras
-- Wired cameras avoid WiFi issues entirely
+  /* Premium Comparison Table */
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+  
+  .premium-comparison-table thead th:last-child {
+    border-radius: 0 8px 0 0;
+  }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover {
+    background: #FAFBFC;
+  }
+  
+  .comparison-row td {
+    padding: 1.25rem 0.75rem;
+    vertical-align: top;
+  }
 
-## The Bottom Line
+  .card-cell {
+    min-width: 200px;
+    padding-left: 1rem !important;
+  }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-badge-new {
+    background: #22C55E;
+    color: white;
+  }
+  
+  .card-badge-premium {
+    background: #0066B2;
+    color: white;
+  }
+  
+  .card-info-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  
+  .card-image-container {
+    flex-shrink: 0;
+  }
+  
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  
+  .card-details {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0066B2;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .rating-number {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #162433;
+  }
+  
+  .rating-stars {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .star-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .star-filled { fill: #22C55E; }
+  .star-half { fill: #86EFAC; }
+  .star-empty { fill: #D1D5DB; }
 
-For most homeowners, **Ring** provides the best doorbell cameras while **Arlo** leads in wireless outdoor cameras. **Eufy** is the clear winner for those avoiding subscriptions.
+  .cost-text, .limit-text, .resolution-text {
+    font-size: 0.9rem;
+    color: #374151;
+  }
 
-Budget-conscious buyers get exceptional value from **Wyze**, while serious DIYers should consider **Reolink's** professional wired systems.
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #0066B2;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .apply-now-btn:hover {
+    background: #004C8C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+  }
 
-*Prices and features change frequently. Verify current specifications before purchasing.*
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
 
-</ComparisonLayout>
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #004C8C;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #EBF5FF; }
 
+  .info-box {
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p, .info-box ul { margin: 0; color: #475569; }
+
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #475569; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-takeaway h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #1E40AF; }
+
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BAE6FD;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #0066B2;
+    box-shadow: 0 8px 24px rgba(0, 102, 178, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #EBF5FF; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #0066B2;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #0066B2;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

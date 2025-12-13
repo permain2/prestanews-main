@@ -2,200 +2,231 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import CursorTrailDark from '../../components/CursorTrailDark.tsx';
 import ComparisonTOCToggle from '../../components/ComparisonTOCToggle.tsx';
-import AnimatedFAQ from '../../components/AnimatedFAQ.tsx';
 import ArticleSchema from '../../components/seo/ArticleSchema.astro';
 import FAQSchema from '../../components/seo/FAQSchema.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
 const lastUpdated = "Dec. 11, 2025";
 
-// Affiliate programs (required order)
-const affiliatePartners = [
-  {
-    name: "Haven Life",
-    websiteLabel: "havenlife.com",
-    websiteUrl: "https://havenlife.com",
-    payout: "$24 per lead",
-    network: "Direct (our page)",
-  },
-  {
-    name: "Fabric (by Gerber Life)",
-    websiteLabel: "meetfabric.com",
-    websiteUrl: "https://meetfabric.com",
-    payout: "$25 per lead",
-    network: "Direct referral program",
-    programUrl: "https://meetfabric.com/legal/referral-program",
-  },
-  {
-    name: "New York Life",
-    websiteLabel: "newyorklife.com",
-    websiteUrl: "https://www.newyorklife.com",
-    payout: "$75 per lead",
-    network: "CJ Affiliate",
-    programUrl: "https://www.cj.com/",
-  },
-  {
-    name: "Northwestern Mutual",
-    websiteLabel: "northwesternmutual.com",
-    websiteUrl: "https://www.northwesternmutual.com",
-    payout: "Via network",
-    network: "CJ Affiliate",
-    programUrl: "https://www.cj.com/",
-  },
-  {
-    name: "Ethos",
-    websiteLabel: "ethos.com",
-    websiteUrl: "https://www.ethos.com",
-    payout: "$20–$55 per lead",
-    network: "Direct affiliate program",
-    programUrl: "https://www.ethos.com/affiliate-program/",
-  },
-  {
-    name: "Ladder Life",
-    websiteLabel: "ladderlife.com",
-    websiteUrl: "https://www.ladderlife.com",
-    payout: "Up to $75 per lead",
-    network: "Affiliate program",
-    programUrl: "https://www.ladderlife.com/affiliates?utm_campaign=Forbes%20Digital%20Marketing%20Inc.&utm_medium=SL2&utm_source=impact",
-  },
-  {
-    name: "Lemonade",
-    websiteLabel: "lemonade.com",
-    websiteUrl: "https://www.lemonade.com",
-    payout: "25% per lead (per program terms)",
-    network: "Partners program",
-    programUrl: "https://www.lemonade.com/partners-program",
-  },
-];
-
 // Life insurance providers data
 const providers = [
   {
+    name: "Northwestern Mutual",
+    logo: "/insurance-logos/northwestern.png",
+    bestFor: "Best for Whole Life",
+    policyTypes: "Term, Whole, Universal",
+    rating: 4.9,
+    pros: ["Elite financial strength (A++)", "Strong whole life offering with dividends (policy-dependent)", "Full-service planning and ongoing support", "Great fit for long-term wealth/legacy goals"],
+    cons: ["Almost always agent-based", "Higher premiums vs pure-term competitors"],
+    description: "Northwestern Mutual is the classic pick for permanent coverage and long-range planning. If you're the type who wants to build a durable plan and stick with it, this is a top-tier place to start.",
+    bottomLine: "Northwestern Mutual has been a household name in life insurance since 1857. Their whole life policies consistently earn dividends (though not guaranteed), and their financial advisors provide holistic planning that covers insurance, investments, and retirement. If you want a relationship with an advisor, not just a policy, this is where to start.",
+    amBest: "A++",
+    website: "https://www.northwesternmutual.com",
+    affiliateUrl: "https://www.cj.com/",
+    editorChoice: true,
+    details: [
+      "Term life policies from 10-30 years with conversion options",
+      "Whole life with guaranteed cash value growth",
+      "Universal life with flexible premium payments",
+      "Dividend payments on eligible whole life policies",
+      "Comprehensive financial planning services included",
+      "Long-term care riders available"
+    ]
+  },
+  {
     name: "Haven Life",
-    logo: "/insurance-logos-small/havenlife.png",
+    logo: "/insurance-logos/havenlife.png",
     bestFor: "Best Online Term Life",
     policyTypes: "Term",
     rating: 4.7,
-    pros: ["Fast online application that’s genuinely simple", "Competitive term rates for healthy applicants", "Backed by MassMutual’s balance sheet", "Coverage amounts up to $3M for eligible applicants"],
+    pros: ["Fast online application that's genuinely simple", "Competitive term rates for healthy applicants", "Backed by MassMutual's balance sheet", "Coverage amounts up to $3M for eligible applicants"],
     cons: ["Term-only (no permanent policies)", "Eligibility and approvals vary by health/state"],
-    description: "If you want term life without the appointment-calendar chaos, Haven Life is one of the cleanest online experiences. You’ll get a straightforward quote flow, transparent pricing, and coverage options that work for most families.",
+    description: "If you want term life without the appointment-calendar chaos, Haven Life is one of the cleanest online experiences. You'll get a straightforward quote flow, transparent pricing, and coverage options that work for most families.",
+    bottomLine: "Haven Life is perfect for the modern buyer who wants to skip the agent song-and-dance. Their InstantTerm product can get you covered in as little as 20 minutes for eligible applicants. Since they're backed by MassMutual (A++ rated), you're getting financial stability with digital convenience.",
     amBest: "A++ (via MassMutual)",
     website: "https://havenlife.com",
-    affiliateUrl: "https://havenlife.com"
+    affiliateUrl: "https://havenlife.com",
+    details: [
+      "Term lengths: 10, 15, 20, or 30 years",
+      "Coverage amounts from $100K to $3M",
+      "No medical exam for many applicants (InstantTerm)",
+      "Policy issued by MassMutual",
+      "Haven Life Plus benefits at no extra cost",
+      "Convertible to permanent coverage"
+    ]
   },
   {
     name: "Fabric (by Gerber Life)",
-    logo: "/insurance-logos-small/fabric.png",
+    logo: "/insurance-logos/fabric.png",
     bestFor: "Best for New Parents",
     policyTypes: "Term",
     rating: 4.6,
-    pros: ["Built around family planning (coverage + tools)", "Quick quoting and a modern onboarding flow", "Backed by an established carrier (Gerber Life)", "Good fit if you’re bundling coverage planning with life changes"],
+    pros: ["Built around family planning (coverage + tools)", "Quick quoting and a modern onboarding flow", "Backed by an established carrier (Gerber Life)", "Good fit if you're bundling coverage planning with life changes"],
     cons: ["Primarily term-focused (limited permanent options)", "Not ideal for complex estate planning needs"],
-    description: "Fabric is designed for the moment life insurance actually matters: when you’re building a family. It pairs term coverage with a modern, step-by-step experience that feels way less intimidating than the traditional agent route.",
+    description: "Fabric is designed for the moment life insurance actually matters: when you're building a family. It pairs term coverage with a modern, step-by-step experience that feels way less intimidating than the traditional agent route.",
+    bottomLine: "Fabric goes beyond insurance to offer free wills, financial checklists, and family organization tools. It's built for millennial and Gen-Z parents who want to knock out life's important tasks in one place. The coverage is solid and the experience is refreshingly simple.",
     amBest: "N/A (agency)",
     website: "https://meetfabric.com",
-    affiliateUrl: "https://meetfabric.com/legal/referral-program"
+    affiliateUrl: "https://meetfabric.com/legal/referral-program",
+    details: [
+      "Term lengths: 10, 15, or 20 years",
+      "Coverage amounts up to $5M",
+      "Free will-making tool included",
+      "Policies issued by Vantis Life (A-rated)",
+      "Quick online application (5-10 minutes)",
+      "No medical exam for coverage up to $1M"
+    ]
   },
   {
     name: "New York Life",
-    logo: "/insurance-logos-small/newyorklife.png",
+    logo: "/insurance-logos/newyorklife.png",
     bestFor: "Best for Financial Planning",
     policyTypes: "Term, Whole, Universal",
     rating: 4.8,
     pros: ["Top-tier financial strength and longevity", "Strong whole life dividend history (for eligible policies)", "Broad product lineup for planning goals", "Great fit for complex needs (estate, business, legacy)"],
     cons: ["Typically agent-driven (less DIY)", "Not the simplest lineup to compare without guidance"],
     description: "New York Life is a heavyweight in life insurance — especially if you care about long-term stability and you want help matching policy types to real financial goals.",
+    bottomLine: "Founded in 1845, New York Life is one of the largest mutual life insurance companies in the U.S. Their agents are well-trained, their products are comprehensive, and their dividend track record is strong. If you want a full-service relationship and aren't price-shopping for pure term, this is a top choice.",
     amBest: "A++",
     website: "https://www.newyorklife.com",
-    affiliateUrl: "https://www.cj.com/"
-  },
-  {
-    name: "Northwestern Mutual",
-    logo: "/insurance-logos-small/northwestern.png",
-    bestFor: "Best for Whole Life",
-    policyTypes: "Term, Whole, Universal",
-    rating: 4.9,
-    pros: ["Elite financial strength (A++)", "Strong whole life offering with dividends (policy-dependent)", "Full-service planning and ongoing support", "Great fit for long-term wealth/legacy goals"],
-    cons: ["Almost always agent-based", "Higher premiums vs pure-term competitors"],
-    description: "Northwestern Mutual is the classic pick for permanent coverage and long-range planning. If you’re the type who wants to build a durable plan and stick with it, this is a top-tier place to start.",
-    amBest: "A++",
-    website: "https://www.northwesternmutual.com",
-    affiliateUrl: "https://www.cj.com/"
+    affiliateUrl: "https://www.cj.com/",
+    details: [
+      "Term life from 10-30 years",
+      "Whole life with guaranteed death benefit and cash value",
+      "Universal life with flexible features",
+      "Custom Whole Life with dividend options",
+      "Living benefits and accelerated death benefit riders",
+      "Business and estate planning solutions"
+    ]
   },
   {
     name: "Ethos",
-    logo: "/insurance-logos-small/ethos.png",
+    logo: "/insurance-logos/ethos.png",
     bestFor: "Best for No-Exam Shopping",
     policyTypes: "Term (through partners)",
     rating: 4.6,
     pros: ["Shop multiple partner options in one flow", "Fast decisions for many applicants", "Good fit if you want speed and simplicity", "Straightforward term-first approach"],
-    cons: ["It’s a marketplace/agency (not a single carrier)", "Carrier options vary by state and profile"],
-    description: "Ethos is built for people who want coverage fast — and don’t want to spend a weekend decoding policy jargon. It’s a strong “start here” option for modern term life shopping.",
+    cons: ["It's a marketplace/agency (not a single carrier)", "Carrier options vary by state and profile"],
+    description: "Ethos is built for people who want coverage fast — and don't want to spend a weekend decoding policy jargon. It's a strong 'start here' option for modern term life shopping.",
+    bottomLine: "Ethos acts as an insurance marketplace, connecting you with policies from multiple carriers like Banner Life and Ameritas. Many applicants get approved without a medical exam, and the whole process can take under 10 minutes. Great for healthy applicants who value speed.",
     amBest: "N/A (agency)",
     website: "https://www.ethos.com",
-    affiliateUrl: "https://www.ethos.com/affiliate-program/"
+    affiliateUrl: "https://www.ethos.com/affiliate-program/",
+    details: [
+      "Term lengths: 10, 15, 20, or 30 years",
+      "Coverage up to $2M without a medical exam",
+      "Policies from A-rated carriers",
+      "Online application in ~10 minutes",
+      "Same-day coverage for many applicants",
+      "Living benefits included on most policies"
+    ]
   },
   {
     name: "Ladder Life",
-    logo: "/insurance-logos-small/ladder.png",
+    logo: "/insurance-logos/ladder.png",
     bestFor: "Best for Flexible Coverage",
     policyTypes: "Term (through partners)",
     rating: 4.5,
     pros: ["Flexible coverage increases/decreases over time (where available)", "Great fit if your needs change quickly", "Modern online experience", "Often competitive for term coverage"],
     cons: ["Availability and features vary by state", "Not focused on permanent coverage"],
     description: "Ladder is tailor-made for changing life stages — think new mortgage today, bigger family tomorrow. If you want term coverage you can adjust, Ladder is worth a serious look.",
+    bottomLine: "Ladder's 'laddering' feature lets you adjust your coverage as your life changes — reduce it when your kids leave home or increase it when you buy a bigger house. This flexibility is unique in the industry and can save you money over time.",
     amBest: "N/A (agency)",
     website: "https://www.ladderlife.com",
-    affiliateUrl: "https://www.ladderlife.com/affiliates?utm_campaign=Forbes%20Digital%20Marketing%20Inc.&utm_medium=SL2&utm_source=impact"
+    affiliateUrl: "https://www.ladderlife.com/affiliates",
+    details: [
+      "Term lengths: 10, 15, 20, 25, or 30 years",
+      "Coverage from $100K to $8M",
+      "Unique 'laddering' to adjust coverage over time",
+      "Policies issued by Allianz and Fidelity & Guaranty Life",
+      "No medical exam for coverage up to $3M",
+      "Quick online application"
+    ]
   },
   {
     name: "Lemonade",
-    logo: "/insurance-logos-small/lemonade.png",
+    logo: "/insurance-logos/lemonade.png",
     bestFor: "Best for Bundling",
     policyTypes: "Term (select states)",
     rating: 4.4,
     pros: ["Simple digital quoting", "Good fit if you already use Lemonade for renters/home", "Fast onboarding experience", "Transparent, app-first servicing"],
     cons: ["Availability varies by state", "Not ideal for complex planning needs"],
-    description: "If you’re already living in the Lemonade app for renters or homeowners coverage, adding term life can be a clean, consolidated move—especially if you value speed over paperwork.",
+    description: "If you're already living in the Lemonade app for renters or homeowners coverage, adding term life can be a clean, consolidated move—especially if you value speed over paperwork.",
+    bottomLine: "Lemonade's life insurance is basic but effective. The real value is if you already use their renters or homeowners insurance — managing all your policies in one modern app is genuinely convenient. Plus, their Giveback program donates unclaimed premiums to charity.",
     amBest: "A",
     website: "https://www.lemonade.com",
-    affiliateUrl: "https://www.lemonade.com/partners-program"
+    affiliateUrl: "https://www.lemonade.com/partners-program",
+    details: [
+      "Term lengths: 10, 15, 20, 25, or 30 years",
+      "Coverage from $50K to $1.5M",
+      "Available in most U.S. states",
+      "App-based policy management",
+      "No medical exam for many applicants",
+      "Giveback program donates to charity"
+    ]
   },
   {
     name: "MassMutual",
-    logo: "/insurance-logos-small/massmutual.png",
+    logo: "/insurance-logos/massmutual.png",
     bestFor: "Best Dividend Track Record",
     policyTypes: "Term, Whole, Universal, Variable",
     rating: 4.8,
     pros: ["Mutual company structure (policyholder-focused)", "Strong financial strength", "Solid permanent policy lineup", "Good fit for long-term coverage"],
     cons: ["Often agent-driven", "Permanent coverage is pricey vs term"],
-    description: "MassMutual is a go-to for permanent coverage shoppers who care about long-term stability and dividend history. It’s not the cheapest path—but it’s one of the sturdier ones.",
+    description: "MassMutual is a go-to for permanent coverage shoppers who care about long-term stability and dividend history. It's not the cheapest path—but it's one of the sturdier ones.",
+    bottomLine: "As a mutual company, MassMutual is owned by its policyholders, not shareholders. This structure incentivizes them to focus on long-term value. Their dividend payments on whole life policies have been consistent for over 150 years, making them a cornerstone for cash-value-focused strategies.",
     amBest: "A++",
-    website: "https://www.massmutual.com"
+    website: "https://www.massmutual.com",
+    details: [
+      "Term life from 10-30 years",
+      "Whole life with dividend potential",
+      "Universal life with flexible premiums",
+      "Variable universal life for market-linked growth",
+      "Disability income insurance available",
+      "Retirement and investment services"
+    ]
   },
   {
     name: "Prudential",
-    logo: "/insurance-logos-small/prudential.png",
+    logo: "/insurance-logos/prudential.png",
     bestFor: "Best for Living Benefits",
     policyTypes: "Term, Whole, Universal, Variable",
     rating: 4.7,
     pros: ["Strong term lineup", "Living benefits often included on term policies", "Good underwriting for certain profiles", "Reputable national carrier"],
     cons: ["Whole life value varies by product", "Service experiences can vary by channel"],
-    description: "Prudential’s term policies are popular for a reason: competitive pricing paired with living benefits that can matter in real life (not just in fine print).",
+    description: "Prudential's term policies are popular for a reason: competitive pricing paired with living benefits that can matter in real life (not just in fine print).",
+    bottomLine: "Prudential's term policies include accelerated death benefits at no extra cost, meaning you can access a portion of your benefit if diagnosed with a terminal illness. Their PruLife offerings are straightforward, and the brand recognition provides peace of mind.",
     amBest: "A+",
-    website: "https://www.prudential.com"
+    website: "https://www.prudential.com",
+    details: [
+      "Term lengths: 10, 15, 20, or 30 years",
+      "Coverage up to $10M+",
+      "Living benefits included on term policies",
+      "Universal and variable universal life options",
+      "Simplified issue policies available",
+      "Workplace and group coverage options"
+    ]
   },
   {
     name: "State Farm",
-    logo: "/insurance-logos-small/statefarm.png",
+    logo: "/insurance-logos/statefarm.png",
     bestFor: "Best for Bundling Discounts",
     policyTypes: "Term, Whole, Universal",
     rating: 4.6,
     pros: ["Easy bundling if you already have auto/home", "Large agent network for hands-on support", "Strong financial strength (A++)", "Straightforward policy options"],
     cons: ["Not the most digital-first experience", "Advanced planning options are more limited"],
-    description: "If you like having a local agent and you’re already with State Farm for auto or home, adding life insurance can be a simple, consolidated move.",
+    description: "If you like having a local agent and you're already with State Farm for auto or home, adding life insurance can be a simple, consolidated move.",
+    bottomLine: "State Farm's strength is convenience through bundling. If your auto, home, and life insurance are all with State Farm, you'll likely get multi-policy discounts and the simplicity of a single agent relationship. Not the cheapest standalone option, but the bundle value can add up.",
     amBest: "A++",
-    website: "https://www.statefarm.com"
+    website: "https://www.statefarm.com",
+    details: [
+      "Term life with Return of Premium option",
+      "Whole life with guaranteed cash value",
+      "Universal life with flexible premiums",
+      "Multi-policy discount when bundled",
+      "Local agent network nationwide",
+      "Simple online tools for existing customers"
+    ]
   },
 ];
 
@@ -268,14 +299,13 @@ const tocItems = [
   />
 
   <!-- Disclosure -->
-  <section class="bg-[#F7F8FA] py-4">
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <p class="text-xs text-[#68727C] leading-relaxed">
         We may receive compensation when you click on links to products. Our analysis, reviews, and opinions are entirely from our editorial team. Please view our <a href="/advertising" class="text-[#3B82F6] hover:underline">advertising policy</a> for more information.
       </p>
     </div>
   </section>
-
 
   <!-- TOC Toggle Navigation -->
   <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
@@ -289,76 +319,174 @@ const tocItems = [
     <div class="max-w-5xl mx-auto px-4 md:px-8">
       <!-- Research Intro -->
       <div class="text-center mb-10">
-        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We compared term and permanent policy options, reviewed AM Best financial strength ratings, and pressure-tested the “real-world” buying experience (quote speed, underwriting friction, and policy flexibility). These insurers stand out for value, stability, and clarity—without the fine-print gymnastics.</p>
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We compared term and permanent policy options, reviewed AM Best financial strength ratings, and pressure-tested the "real-world" buying experience (quote speed, underwriting friction, and policy flexibility). These insurers stand out for value, stability, and clarity—without the fine-print gymnastics.</p>
       </div>
       
       {providers.map((provider, index) => (
-        <div class="bg-white rounded-xl overflow-hidden mb-8 hover:shadow-lg transition-shadow" style="box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-          <div class="grid md:grid-cols-[300px_1fr]">
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {provider.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Life Insurance
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
             <!-- Left Panel - Logo & CTA -->
-            <div class="bg-[#F7F8FA] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-100">
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+              
               <!-- Provider Logo -->
-              <div class="w-48 h-32 rounded-xl mb-6 relative overflow-hidden flex items-center justify-center bg-white p-4" style="box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
-                <img src={provider.logo} alt={`${provider.name} logo`} class="max-w-full max-h-full object-contain" />
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-32 rounded-xl relative overflow-hidden flex items-center justify-center bg-white p-4 shadow-2xl group-hover:scale-105 transition-all duration-500" style="box-shadow: 0 4px 24px rgba(0,0,0,0.1);">
+                  <img 
+                    src={provider.logo} 
+                    alt={`${provider.name} logo`} 
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                    onerror={`this.onerror=null; this.parentElement.innerHTML='<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#0D2C4B] to-[#1a4a7a] rounded-lg"><span class="text-white font-bold text-center px-2 text-sm">${provider.name}</span></div>'`}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{provider.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
               </div>
               
               <!-- Apply Button -->
-              <a href={provider.affiliateUrl ?? provider.website ?? "#"} target="_blank" rel="sponsored noopener noreferrer" class="w-full bg-gradient-to-r from-[#0066B2] to-[#004C8C] hover:from-[#004C8C] hover:to-[#003366] text-center py-4 rounded-lg font-bold transition-all text-sm uppercase tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2" style="color: #FFFFFF !important;">
+              <a href={provider.affiliateUrl ?? provider.website ?? "#"} target="_blank" rel="sponsored noopener noreferrer" class="apply-btn w-full">
                 <span>Get Quote</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
               <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s Website</p>
             </div>
 
             <!-- Right Panel - Provider Details -->
             <div class="p-6 md:p-8">
-              <div class="flex items-start justify-between mb-2">
-                <h3 class="font-sora font-bold text-xl md:text-2xl text-[#162433]">{provider.name}</h3>
-                <span class="bg-[#0D2C4B] text-white text-xs font-bold px-3 py-1 rounded-full">#{index + 1}</span>
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    {provider.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{provider.name}</h3>
+                </div>
               </div>
               
-              <div class="flex items-center gap-4 mb-4 flex-wrap">
-                <div class="flex items-center gap-1">
-                  <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                  <span class="font-bold text-[#162433]">{provider.rating}/5</span>
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{provider.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Policy Types</div>
+                  <div class="stat-value text-sm">{provider.policyTypes}</div>
                 </div>
-                <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded font-medium">AM Best: {provider.amBest}</span>
-                <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded font-medium">{provider.bestFor}</span>
+                <div class="stat-box">
+                  <div class="stat-label">AM Best</div>
+                  <div class="stat-value text-green-600">{provider.amBest}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Best For</div>
+                  <div class="stat-value text-sm">{provider.bestFor.replace('Best ', '')}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Rating</div>
+                  <div class="stat-value flex items-center justify-center gap-1">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    {provider.rating}
+                  </div>
+                </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-4 mb-4">
-                <div class="bg-[#F7F8FA] p-3 rounded-lg">
-                  <div class="text-xs text-[#68727C] uppercase font-bold mb-1">Policy Types</div>
-                  <div class="text-sm font-bold text-[#162433]">{provider.policyTypes}</div>
-                </div>
-                <div class="bg-[#F7F8FA] p-3 rounded-lg">
-                  <div class="text-xs text-[#68727C] uppercase font-bold mb-1">Best For</div>
-                  <div class="text-sm font-bold text-[#162433]">{provider.bestFor}</div>
-                </div>
-              </div>
-
-              <p class="text-[#68727C] mb-6 text-sm">{provider.description}</p>
-              
-              <!-- Verdict Box -->
-              <div class="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 class="font-bold text-[#162433] mb-2 flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                    Pros
-                  </h4>
-                  <ul class="text-sm text-[#68727C] space-y-1">
-                    {provider.pros.map(pro => <li>• {pro}</li>)}
-                  </ul>
-                </div>
-                <div>
-                  <h4 class="font-bold text-[#162433] mb-2 flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
-                    Cons
-                  </h4>
-                  <ul class="text-sm text-[#68727C] space-y-1">
-                    {provider.cons.map(con => <li>• {con}</li>)}
-                  </ul>
-                </div>
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {provider.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{provider.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Provider Details Accordion */}
+                {provider.details && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Policy Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {provider.details.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
               </div>
             </div>
           </div>
@@ -373,64 +501,152 @@ const tocItems = [
       <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Life Insurance Coverage Guide</h2>
       
       <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-[#F7F8FA] p-6 rounded-xl">
+        <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all">
+          <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
           <h3 class="font-bold text-[#162433] mb-3">Term Life Insurance</h3>
           <p class="text-sm text-[#68727C]">Coverage for a set period (10-30 years) at fixed premiums. Most affordable option—ideal for income replacement during working years. A healthy 35-year-old pays ~$25/month for $500K coverage.</p>
         </div>
-        <div class="bg-[#F7F8FA] p-6 rounded-xl">
+        <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all">
+          <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
           <h3 class="font-bold text-[#162433] mb-3">Whole Life Insurance</h3>
           <p class="text-sm text-[#68727C]">Permanent coverage with guaranteed death benefit and cash value growth. Premiums are 5-15x higher than term but stay level for life. Best for estate planning and wealth transfer.</p>
         </div>
-        <div class="bg-[#F7F8FA] p-6 rounded-xl">
+        <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all">
+          <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
           <h3 class="font-bold text-[#162433] mb-3">Universal Life Insurance</h3>
           <p class="text-sm text-[#68727C]">Flexible permanent coverage with adjustable premiums and death benefits. Cash value grows based on interest rates. Good for those wanting permanent coverage with flexibility.</p>
         </div>
-        <div class="bg-[#F7F8FA] p-6 rounded-xl">
+        <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all">
+          <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
           <h3 class="font-bold text-[#162433] mb-3">Coverage Amount</h3>
           <p class="text-sm text-[#68727C]">Calculate based on: income replacement (10-15x salary), outstanding debts, children's education costs, and final expenses. Most families need $500K-$2M in coverage.</p>
         </div>
       </div>
 
-      <div class="bg-[#F7F8FA] p-6 rounded-xl mt-8">
-        <h3 class="font-bold text-[#162433] mb-3">Related guides</h3>
-        <ul class="text-sm text-[#68727C] space-y-2">
-          <li><a class="text-[#3B82F6] hover:underline" href="/insurance/home">Best home insurance</a> — homeowners coverage picks and how to choose limits.</li>
-          <li><a class="text-[#3B82F6] hover:underline" href="/insurance/renters">Best renters insurance</a> — affordable personal property and liability protection.</li>
-          <li><a class="text-[#3B82F6] hover:underline" href="/blog/best-disability-insurance">Best disability insurance</a> — income protection if you can’t work.</li>
+      <div class="bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] p-6 rounded-xl mt-8 border border-blue-200">
+        <h3 class="font-bold text-[#1D4ED8] mb-3 flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Related guides
+        </h3>
+        <ul class="text-sm text-[#1E40AF] space-y-2">
+          <li><a class="hover:underline font-medium" href="/insurance/home">Best home insurance</a> — homeowners coverage picks and how to choose limits.</li>
+          <li><a class="hover:underline font-medium" href="/insurance/renters">Best renters insurance</a> — affordable personal property and liability protection.</li>
+          <li><a class="hover:underline font-medium" href="/blog/best-disability-insurance">Best disability insurance</a> — income protection if you can't work.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- Comparison Table Section -->
+  <!-- Premium Comparison Table Section -->
   <section id="compare" class="py-16 bg-[#F7F8FA]">
-    <div class="max-w-5xl mx-auto px-4 md:px-8">
-      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-8 text-center">Quick Comparison</h2>
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best life insurance</h2>
       
       <div class="overflow-x-auto">
-        <table class="w-full bg-white rounded-xl overflow-hidden" style="box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-          <thead class="bg-[#0D2C4B] text-white">
+        <table class="premium-comparison-table w-full min-w-[900px]">
+          <thead>
             <tr>
-              <th class="p-4 text-left font-bold text-sm">Provider</th>
-              <th class="p-4 text-center font-bold text-sm">Policy Types</th>
-              <th class="p-4 text-center font-bold text-sm">Rating</th>
-              <th class="p-4 text-center font-bold text-sm">AM Best</th>
-              <th class="p-4 text-center font-bold text-sm">Best For</th>
+              <th class="text-left pl-4">Provider</th>
+              <th class="text-left">Best for</th>
+              <th class="text-left">Policy Types</th>
+              <th class="text-center">AM Best</th>
+              <th class="text-center">Rating</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {providers.map((provider, index) => (
-              <tr class={index % 2 === 0 ? 'bg-white' : 'bg-[#F7F8FA]'}>
-                <td class="p-4 font-bold text-[#162433]">{provider.name}</td>
-                <td class="p-4 text-center text-sm text-[#68727C]">{provider.policyTypes}</td>
-                <td class="p-4 text-center">
-                  <span class="inline-flex items-center gap-1">
-                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    {provider.rating}
+              <tr class="comparison-row">
+                {/* Provider Column */}
+                <td class="card-cell">
+                  {/* Badge */}
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Choice</span>
+                  )}
+                  {index === 1 && (
+                    <span class="card-badge card-badge-premium">Top Pick</span>
+                  )}
+                  
+                  <div class="card-info-wrapper">
+                    {/* Logo */}
+                    <div class="card-image-container">
+                      <img 
+                        src={provider.logo} 
+                        alt={`${provider.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                        onerror={`this.style.display='none'; this.nextElementSibling.style.display='flex'`}
+                      />
+                      <div class="card-thumbnail-placeholder bg-[#0D2C4B]" style="display: none;">
+                        <span class="text-white text-xs font-bold text-center px-1">{provider.name.split(' ')[0]}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Provider Name & Rating */}
+                    <div class="card-details">
+                      <h3 class="card-name-link">{provider.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{provider.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(provider.rating) ? 'star-filled' : star - 0.5 <= provider.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                
+                {/* Best For Column */}
+                <td class="best-for-cell">
+                  <span class="best-for-text">{provider.bestFor}</span>
+                </td>
+                
+                {/* Policy Types Column */}
+                <td class="policy-types-cell">
+                  <span class="policy-types-text">{provider.policyTypes}</span>
+                </td>
+                
+                {/* AM Best Column */}
+                <td class="am-best-cell">
+                  <span class={`am-best-badge ${provider.amBest.includes('A++') ? 'am-best-excellent' : provider.amBest.includes('A+') ? 'am-best-superior' : 'am-best-other'}`}>
+                    {provider.amBest}
                   </span>
                 </td>
-                <td class="p-4 text-center text-green-600 font-medium">{provider.amBest}</td>
-                <td class="p-4 text-center text-sm text-[#68727C]">{provider.bestFor}</td>
+                
+                {/* Rating Column */}
+                <td class="rating-cell">
+                  <div class="rating-display">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span class="font-bold">{provider.rating}</span>
+                  </div>
+                </td>
+                
+                {/* CTA Column */}
+                <td class="cta-cell">
+                  <a href={provider.affiliateUrl ?? provider.website ?? "#"} target="_blank" rel="sponsored noopener noreferrer" class="apply-now-btn">
+                    Get Quote
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                  <div class="cta-links">
+                    <a href={`#provider-${index + 1}`} class="cta-link">See details</a>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -443,11 +659,11 @@ const tocItems = [
   <section id="methodology" class="py-16 bg-white">
     <div class="max-w-4xl mx-auto px-4 md:px-8">
       <h2 class="font-sora text-3xl font-bold text-[#162433] mb-6 text-center">How we ranked the best life insurance</h2>
-      <p class="text-sm text-[#68727C] leading-relaxed mb-6">Life insurance is easy to overcomplicate. We prioritized providers that make it easier to get the right coverage amount at a fair price—while still delivering strong financial stability and policy flexibility.</p>
+      <p class="text-sm text-[#68727C] leading-relaxed mb-8 text-center max-w-2xl mx-auto">Life insurance is easy to overcomplicate. We prioritized providers that make it easier to get the right coverage amount at a fair price—while still delivering strong financial stability and policy flexibility.</p>
 
       <div class="overflow-x-auto">
-        <table class="w-full bg-[#F7F8FA] rounded-xl overflow-hidden">
-          <thead class="bg-[#0D2C4B] text-white">
+        <table class="methodology-table w-full bg-white rounded-xl overflow-hidden" style="box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+          <thead class="bg-gradient-to-r from-[#0D2C4B] to-[#1a4a7a] text-white">
             <tr>
               <th class="p-4 text-left font-bold text-sm">Factor</th>
               <th class="p-4 text-center font-bold text-sm">Weight</th>
@@ -455,41 +671,561 @@ const tocItems = [
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white">
+            <tr class="bg-white hover:bg-blue-50 transition-colors">
               <td class="p-4 font-medium text-[#162433]">Price & value</td>
-              <td class="p-4 text-center text-[#162433]">30%</td>
+              <td class="p-4 text-center">
+                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 text-blue-700 font-bold">30%</span>
+              </td>
               <td class="p-4 text-sm text-[#68727C]">Competitive term pricing, transparent quotes, clear underwriting steps</td>
             </tr>
-            <tr class="bg-[#F7F8FA]">
+            <tr class="bg-[#F8FAFC] hover:bg-blue-50 transition-colors">
               <td class="p-4 font-medium text-[#162433]">Financial strength</td>
-              <td class="p-4 text-center text-[#162433]">25%</td>
+              <td class="p-4 text-center">
+                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-100 to-green-200 text-green-700 font-bold">25%</span>
+              </td>
               <td class="p-4 text-sm text-[#68727C]">AM Best ratings where applicable, carrier stability and track record</td>
             </tr>
-            <tr class="bg-white">
+            <tr class="bg-white hover:bg-blue-50 transition-colors">
               <td class="p-4 font-medium text-[#162433]">Policy flexibility</td>
-              <td class="p-4 text-center text-[#162433]">20%</td>
+              <td class="p-4 text-center">
+                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 text-purple-700 font-bold">20%</span>
+              </td>
               <td class="p-4 text-sm text-[#68727C]">Convertible term options, riders, coverage adjustability, policy types</td>
             </tr>
-            <tr class="bg-[#F7F8FA]">
+            <tr class="bg-[#F8FAFC] hover:bg-blue-50 transition-colors">
               <td class="p-4 font-medium text-[#162433]">Customer experience</td>
-              <td class="p-4 text-center text-[#162433]">15%</td>
+              <td class="p-4 text-center">
+                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 text-amber-700 font-bold">15%</span>
+              </td>
               <td class="p-4 text-sm text-[#68727C]">Quote speed, digital tools, service access (agent vs online support)</td>
             </tr>
-            <tr class="bg-white">
+            <tr class="bg-white hover:bg-blue-50 transition-colors">
               <td class="p-4 font-medium text-[#162433]">Coverage breadth</td>
-              <td class="p-4 text-center text-[#162433]">10%</td>
+              <td class="p-4 text-center">
+                <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-rose-100 to-rose-200 text-rose-700 font-bold">10%</span>
+              </td>
               <td class="p-4 text-sm text-[#68727C]">Availability, term lengths, permanent options, and typical policy limits</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <p class="text-xs text-[#68727C] mt-4 text-center"><strong>Last updated:</strong> {lastUpdated}</p>
+      <p class="text-xs text-[#68727C] mt-6 text-center"><strong>Last updated:</strong> {lastUpdated}</p>
     </div>
   </section>
 
   <!-- FAQ Section -->
-  <div id="faq">
-    <AnimatedFAQ faqs={faqs} client:visible />
-  </div>
+  <section id="faq" class="py-16 bg-[#F7F8FA] scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-sora text-3xl md:text-4xl font-bold text-[#162433] mb-4">Frequently Asked Questions</h2>
+        <p class="text-[#68727C]">Everything you need to know about life insurance coverage.</p>
+      </div>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span class="pr-4">{faq.question}</span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="faq-answer">{faq.answer}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 </MainLayout>
+
+<style>
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Apply Button */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white !important;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #3B82F6;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #3B82F6;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Premium Comparison Table */
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+  
+  .premium-comparison-table thead th:last-child {
+    border-radius: 0 8px 0 0;
+  }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover {
+    background: #FAFBFC;
+  }
+  
+  .comparison-row td {
+    padding: 1.25rem 0.75rem;
+    vertical-align: middle;
+  }
+  
+  /* Card Cell */
+  .card-cell {
+    min-width: 240px;
+    padding-left: 1rem !important;
+  }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-badge-new {
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white;
+  }
+  
+  .card-badge-premium {
+    background: #22C55E;
+    color: white;
+  }
+  
+  .card-info-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  
+  .card-image-container {
+    flex-shrink: 0;
+  }
+  
+  .card-thumbnail {
+    width: 56px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    background: white;
+  }
+  
+  .card-thumbnail-placeholder {
+    width: 56px;
+    height: 36px;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card-details {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0066B2;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .rating-number {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #162433;
+  }
+  
+  .rating-stars {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .star-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .star-filled {
+    fill: #22C55E;
+  }
+  
+  .star-half {
+    fill: #86EFAC;
+  }
+  
+  .star-empty {
+    fill: #D1D5DB;
+  }
+  
+  /* Best For Cell */
+  .best-for-cell {
+    min-width: 140px;
+  }
+  
+  .best-for-text {
+    font-size: 0.9rem;
+    color: #374151;
+    line-height: 1.4;
+  }
+  
+  /* Policy Types Cell */
+  .policy-types-cell {
+    min-width: 160px;
+  }
+  
+  .policy-types-text {
+    font-size: 0.85rem;
+    color: #4B5563;
+  }
+  
+  /* AM Best Cell */
+  .am-best-cell {
+    text-align: center;
+  }
+  
+  .am-best-badge {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8125rem;
+  }
+  
+  .am-best-excellent {
+    background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+    color: #047857;
+  }
+  
+  .am-best-superior {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    color: #1D4ED8;
+  }
+  
+  .am-best-other {
+    background: #F3F4F6;
+    color: #4B5563;
+  }
+  
+  /* Rating Cell */
+  .rating-cell {
+    text-align: center;
+  }
+  
+  .rating-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    color: #162433;
+  }
+  
+  /* CTA Cell */
+  .cta-cell {
+    min-width: 130px;
+    text-align: center;
+  }
+  
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #22C55E;
+    color: white !important;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .apply-now-btn:hover {
+    background: #16A34A;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+  }
+  
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .cta-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.625rem;
+  }
+  
+  .cta-link {
+    font-size: 0.8125rem;
+    color: #6B7280;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+  
+  .cta-link:hover {
+    color: #374151;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BFDBFE;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #3B82F6;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #F8FAFC; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+    
+    .stat-box {
+      padding: 0.75rem;
+    }
+    
+    .stat-value {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

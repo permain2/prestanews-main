@@ -1,298 +1,1079 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getInternetProviderLogo } from '../../utils/InternetProviderLogoMap';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Internet Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
+// Top Internet Providers - 10 providers
 const providers = [
   {
     name: "Xfinity",
-    logo: "https://logo.clearbit.com/xfinity.com",
+    slug: "xfinity",
     bestFor: "Overall Coverage",
-    monthlyAvg: "$35-$80/mo",
-    serviceFee: "Varies",
+    monthlyPrice: "$35-$80/mo",
+    maxSpeed: "Up to 2 Gbps",
+    dataCap: "1.2TB",
+    contract: "1-2 year",
     rating: 4.3,
     pros: ["Largest cable internet coverage in U.S.", "Speeds up to 2 Gbps in select areas", "Bundle options with TV and mobile", "Widespread availability in 40 states"],
     cons: ["Data caps on most plans (1.2TB)", "Price increases after promotional period", "Equipment rental fees add up"],
     description: "Xfinity is America's largest internet provider, offering cable and fiber service to over 113 million homes with speeds ranging from 75 Mbps to 2 Gbps.",
-    affiliateUrl: "#"
+    bottomLine: "Xfinity wins for sheer availability—if you can't get fiber, there's a good chance Xfinity serves your address. Their speeds are competitive (up to 2 Gbps), and bundles with Xfinity Mobile can save money. The catch: 1.2TB data caps and significant price increases after year one. Best for households who don't stream excessively or can add unlimited data.",
+    details: [
+      "America's largest internet provider (113M homes)",
+      "Speeds from 75 Mbps to 2 Gbps",
+      "1.2TB data cap (unlimited $30/mo extra)",
+      "xFi Gateway modem/router included or $14/mo",
+      "Xfinity Mobile bundle savings available",
+      "2-year price guarantee with contract",
+      "Flex streaming box included",
+      "10G network expansion underway"
+    ],
+    editorChoice: true
   },
   {
     name: "Verizon Fios",
-    logo: "https://logo.clearbit.com/verizon.com",
+    slug: "verizon-fios",
     bestFor: "Fiber Internet",
-    monthlyAvg: "$50-$90/mo",
-    serviceFee: "$0",
+    monthlyPrice: "$50-$90/mo",
+    maxSpeed: "Up to 940 Mbps",
+    dataCap: "None",
+    contract: "None required",
     rating: 4.7,
     pros: ["100% fiber-optic network", "No data caps", "Symmetrical upload/download speeds", "Price lock guarantee available"],
     cons: ["Limited availability (Northeast U.S. only)", "Higher starting prices", "Installation may require drilling"],
     description: "Verizon Fios delivers true fiber internet with symmetrical speeds up to 940 Mbps, making it ideal for households with multiple users and devices.",
-    affiliateUrl: "#"
+    bottomLine: "Verizon Fios is the gold standard for fiber internet in the Northeast. Symmetrical speeds mean uploads are as fast as downloads—crucial for video calls and content creators. No data caps, no contracts required, and excellent reliability. The only downside is availability: Fios only covers parts of the Northeast U.S.",
+    details: [
+      "100% fiber-optic network",
+      "Symmetrical upload/download speeds",
+      "No data caps ever",
+      "No annual contract required",
+      "Free router included (or use your own)",
+      "Mix & Match plans with TV",
+      "Price lock guarantee available",
+      "Consistently ranked #1 in customer satisfaction"
+    ]
   },
   {
     name: "AT&T Fiber",
-    logo: "https://logo.clearbit.com/att.com",
+    slug: "att-fiber",
     bestFor: "Speed Value",
-    monthlyAvg: "$55-$180/mo",
-    serviceFee: "$0",
+    monthlyPrice: "$55-$180/mo",
+    maxSpeed: "Up to 5 Gbps",
+    dataCap: "None",
+    contract: "None required",
     rating: 4.5,
     pros: ["Speeds up to 5 Gbps available", "No annual contracts required", "No data caps on fiber plans", "Free equipment included"],
     cons: ["Fiber not available everywhere", "DSL plans have slower speeds", "Price varies by location"],
     description: "AT&T Fiber offers some of the fastest residential speeds available, with plans up to 5 Gbps in select markets and no data caps.",
-    affiliateUrl: "#"
+    bottomLine: "AT&T Fiber delivers incredible value for speed seekers. Their 5 Gbps plan is one of the fastest residential options available, and even the 300 Mbps tier is reasonably priced. No contracts, no data caps, and free equipment. Expanding rapidly into new markets—check availability at your address.",
+    details: [
+      "Speeds up to 5 Gbps (5 Gig plan)",
+      "No data caps on any fiber plan",
+      "No annual contract required",
+      "Free AT&T All-Fi Gateway included",
+      "Smart Home Manager app for network control",
+      "ActiveArmor internet security included",
+      "HBO Max included with some plans",
+      "Expanding to 30 million locations by 2025"
+    ]
   },
   {
     name: "Google Fiber",
-    logo: "https://logo.clearbit.com/fiber.google.com",
+    slug: "google-fiber",
     bestFor: "Gigabit Speed",
-    monthlyAvg: "$70-$100/mo",
-    serviceFee: "$0",
+    monthlyPrice: "$70-$100/mo",
+    maxSpeed: "Up to 2 Gbps",
+    dataCap: "None",
+    contract: "None",
     rating: 4.8,
     pros: ["Consistent gigabit speeds", "No data caps ever", "Simple pricing structure", "Excellent customer satisfaction"],
     cons: ["Very limited availability (21 cities)", "Only two speed tiers", "Long waitlists in some areas"],
     description: "Google Fiber pioneered affordable gigabit internet and maintains excellent customer satisfaction with straightforward pricing and no hidden fees.",
-    affiliateUrl: "#"
+    bottomLine: "Google Fiber is the dream ISP—fast, reliable, no fees, no caps, no contracts. They pioneered $70 gigabit internet and forced competitors to improve. The only problem: availability. Google Fiber only serves 21 cities, and expansion has slowed. If it's available, it's almost certainly your best choice.",
+    details: [
+      "Pioneered affordable gigabit internet",
+      "No data caps, ever",
+      "No contracts or hidden fees",
+      "Simple pricing: $70/1 Gbps, $100/2 Gbps",
+      "Free installation and equipment",
+      "Highest customer satisfaction ratings",
+      "Google Nest WiFi available",
+      "Available in 21 cities (slowly expanding)"
+    ]
   },
   {
     name: "Spectrum",
-    logo: "https://logo.clearbit.com/spectrum.com",
+    slug: "spectrum",
     bestFor: "No Contracts",
-    monthlyAvg: "$50-$90/mo",
-    serviceFee: "$0",
+    monthlyPrice: "$50-$90/mo",
+    maxSpeed: "Up to 1 Gbps",
+    dataCap: "None",
+    contract: "None",
     rating: 4.0,
     pros: ["No annual contracts required", "No data caps", "Free modem included", "Available in 41 states"],
     cons: ["No fiber options available", "Speed tiers limited to 1 Gbps max", "Price increases after year one"],
     description: "Spectrum offers contract-free cable internet with no data caps, making it a flexible choice for customers who don't want long-term commitments.",
-    affiliateUrl: "#"
+    bottomLine: "Spectrum is the best cable option for flexibility. No contracts, no data caps, and a free modem—rare in the cable world. Speeds max out at 1 Gbps (vs. 2+ Gbps from fiber competitors), but for most households, that's plenty. Watch out for price increases after year one, but you can cancel without penalty.",
+    details: [
+      "No annual contracts ever",
+      "No data caps on any plan",
+      "Free modem included",
+      "WiFi router $5/mo or use your own",
+      "Available in 41 states",
+      "Spectrum Mobile bundle savings",
+      "30-day money-back guarantee",
+      "Free antivirus software included"
+    ]
   },
   {
     name: "T-Mobile 5G Home Internet",
-    logo: "https://logo.clearbit.com/t-mobile.com",
+    slug: "t-mobile-5g-home-internet",
     bestFor: "No Installation",
-    monthlyAvg: "$50/mo",
-    serviceFee: "$0",
+    monthlyPrice: "$50/mo",
+    maxSpeed: "100-300 Mbps typical",
+    dataCap: "None",
+    contract: "None",
     rating: 4.2,
     pros: ["No installation required", "No annual contract", "Fixed monthly price", "No data caps"],
     cons: ["Speeds vary by location and congestion", "May not match wired speeds", "Requires T-Mobile 5G coverage"],
     description: "T-Mobile 5G Home Internet offers a plug-and-play solution with fixed pricing, ideal for renters or those who want to avoid installation appointments.",
-    affiliateUrl: "#"
+    bottomLine: "T-Mobile 5G Home Internet is perfect for renters and anyone who hates dealing with cable installers. Plug in the gateway, connect to 5G, and you're online. Fixed $50/month pricing (or $25 with Magenta Max), no contracts, no caps. Speeds depend on your location's 5G coverage—test before committing.",
+    details: [
+      "Plug-and-play setup in minutes",
+      "No installation appointment needed",
+      "$50/month flat (or $25 with Magenta Max)",
+      "No annual contract",
+      "No data caps",
+      "Gateway device included",
+      "15-day test drive to try it out",
+      "Works on T-Mobile 5G/LTE network"
+    ]
   },
   {
     name: "Cox",
-    logo: "https://logo.clearbit.com/cox.com",
+    slug: "cox",
     bestFor: "Gaming",
-    monthlyAvg: "$50-$100/mo",
-    serviceFee: "Varies",
+    monthlyPrice: "$50-$100/mo",
+    maxSpeed: "Up to 2 Gbps",
+    dataCap: "1.28TB",
+    contract: "1-2 year",
     rating: 4.1,
     pros: ["Low latency for gaming", "Elite Gamer add-on available", "Speeds up to 2 Gbps", "Panoramic WiFi mesh system"],
     cons: ["1.28TB data cap on most plans", "Limited to 18 states", "Equipment fees apply"],
     description: "Cox Communications offers cable internet with gaming-focused features like Elite Gamer routing optimization for reduced lag.",
-    affiliateUrl: "#"
+    bottomLine: "Cox stands out for gamers with their Elite Gamer add-on ($6.99/mo), which optimizes routing for lower latency. Speeds up to 2 Gbps are competitive, and their Panoramic WiFi mesh covers large homes well. The 1.28TB data cap is a concern for heavy users. Available in 18 states, primarily in the Southwest and Southeast.",
+    details: [
+      "Elite Gamer routing optimization ($6.99/mo)",
+      "Speeds up to 2 Gbps",
+      "Panoramic WiFi mesh system",
+      "1.28TB data cap (unlimited $50/mo extra)",
+      "Contour TV streaming bundle available",
+      "Available in 18 states",
+      "2-year price lock available",
+      "Cox Mobile bundle savings"
+    ]
   },
   {
     name: "Frontier Fiber",
-    logo: "https://logo.clearbit.com/frontier.com",
-    bestFor: "Rural Areas",
-    monthlyAvg: "$50-$75/mo",
-    serviceFee: "$0",
+    slug: "frontier-fiber",
+    bestFor: "Expanding Markets",
+    monthlyPrice: "$50-$75/mo",
+    maxSpeed: "Up to 2 Gbps",
+    dataCap: "None",
+    contract: "None",
     rating: 4.0,
     pros: ["Expanding fiber network", "No data caps", "Competitive pricing", "No annual contracts"],
     cons: ["Availability still limited", "Customer service historically inconsistent", "Fewer speed options"],
     description: "Frontier is aggressively expanding its fiber network to underserved areas, offering competitive prices with no contracts or data caps.",
-    affiliateUrl: "#"
+    bottomLine: "Frontier has reinvented itself with aggressive fiber expansion into underserved markets. Their pricing is competitive ($50 for 500 Mbps), no contracts, no caps. Customer service has historically been mixed, but recent improvements are notable. Check if fiber has reached your address—they're expanding rapidly.",
+    details: [
+      "Aggressive fiber network expansion",
+      "No data caps",
+      "No annual contracts",
+      "Competitive pricing ($50-$75/mo)",
+      "Free equipment included",
+      "eero WiFi system available",
+      "Whole-Home WiFi add-on",
+      "Expanding to 15 million locations"
+    ]
   },
   {
     name: "Starlink",
-    logo: "https://logo.clearbit.com/starlink.com",
+    slug: "starlink",
     bestFor: "Remote Areas",
-    monthlyAvg: "$120/mo",
-    serviceFee: "$599 equipment",
+    monthlyPrice: "$120/mo",
+    maxSpeed: "50-220 Mbps",
+    dataCap: "Priority data varies",
+    contract: "None",
     rating: 4.4,
-    pros: ["Available almost anywhere", "No data caps", "Speeds up to 220 Mbps", "Low latency satellite internet"],
+    pros: ["Available almost anywhere", "No data caps (soft limits)", "Speeds up to 220 Mbps", "Low latency satellite internet"],
     cons: ["High upfront equipment cost", "Higher monthly price", "Weather can affect performance"],
     description: "Starlink's satellite constellation brings high-speed internet to rural and remote areas where traditional providers don't reach.",
-    affiliateUrl: "#"
+    bottomLine: "Starlink is a game-changer for rural America. If you can't get cable or fiber, Starlink delivers 50-220 Mbps from space. The $599 equipment cost and $120/month price are steep, but for rural residents who've been stuck with 10 Mbps DSL, it's revolutionary. Weather and obstructions can affect performance.",
+    details: [
+      "Available in most rural/remote areas",
+      "Low-earth orbit satellite constellation",
+      "50-220 Mbps typical speeds",
+      "20-40ms latency (vs. 600ms for traditional satellite)",
+      "$599 equipment cost (or $2,500 for RV/boat)",
+      "$120/month service",
+      "No contracts—cancel anytime",
+      "Portable option for RVs and travel"
+    ]
   },
   {
     name: "CenturyLink/Lumen",
-    logo: "https://logo.clearbit.com/centurylink.com",
+    slug: "centurylink-lumen",
     bestFor: "Price Lock",
-    monthlyAvg: "$50-$65/mo",
-    serviceFee: "$0",
+    monthlyPrice: "$50-$65/mo",
+    maxSpeed: "Up to 940 Mbps",
+    dataCap: "None (fiber)",
+    contract: "None",
     rating: 3.8,
     pros: ["Price for Life guarantee", "Fiber available in select areas", "No contracts required", "Straightforward pricing"],
     cons: ["DSL speeds slow in many areas", "Fiber availability limited", "Customer service mixed reviews"],
     description: "CenturyLink's Price for Life guarantee locks in your rate permanently, providing budget certainty for cost-conscious customers.",
-    affiliateUrl: "#"
+    bottomLine: "CenturyLink's Price for Life is unique—your rate never increases, period. Their fiber service (where available) is solid at $65/month for gigabit. The problem is availability: much of their footprint is still DSL, which maxes out at 100 Mbps. Check if fiber has reached your area before signing up.",
+    details: [
+      "Price for Life—rate never increases",
+      "Fiber up to 940 Mbps (select areas)",
+      "No annual contracts",
+      "No data caps on fiber",
+      "Free modem included",
+      "Straightforward pricing",
+      "Rebranding to Quantum Fiber in some markets",
+      "DSL service in areas without fiber"
+    ]
   }
 ];
 
 const faqs = [
   {
     question: "What internet speed do I need?",
-    answer: "For basic browsing and email, 25 Mbps is sufficient. For streaming HD video, aim for 50-100 Mbps. Households with multiple users streaming 4K, gaming, or working from home should consider 200+ Mbps. Heavy users and smart homes may benefit from gigabit (1000 Mbps) speeds."
+    answer: "For basic browsing and email, <strong>25 Mbps</strong> is sufficient. For streaming HD video, aim for <strong>50-100 Mbps</strong>. Households with multiple users streaming 4K, gaming, or working from home should consider <strong>200+ Mbps</strong>. Heavy users and smart homes may benefit from <strong>gigabit (1000 Mbps)</strong> speeds."
   },
   {
     question: "What's the difference between fiber and cable internet?",
-    answer: "Fiber internet uses light signals through glass cables, offering the fastest and most reliable speeds with symmetrical upload/download. Cable uses coaxial cables shared with TV service, typically offering fast downloads but slower uploads. Fiber is generally superior but less widely available."
+    answer: "<strong>Fiber internet</strong> uses light signals through glass cables, offering the fastest and most reliable speeds with symmetrical upload/download. <strong>Cable</strong> uses coaxial cables shared with TV service, typically offering fast downloads but slower uploads. Fiber is generally superior but less widely available (35% of U.S. vs. 89% for cable)."
   },
   {
     question: "Why do internet prices increase after the first year?",
-    answer: "Most providers offer promotional pricing to attract new customers, then switch to regular rates after 12-24 months. To avoid surprises, always check the regular price before signing up and consider providers like Spectrum or CenturyLink that offer price guarantees."
+    answer: "Most providers offer <strong>promotional pricing</strong> to attract new customers, then switch to regular rates after 12-24 months. To avoid surprises, always check the regular price before signing up. Providers with stable pricing include <strong>Spectrum</strong> (no contract, predictable increases), <strong>CenturyLink</strong> (Price for Life), and <strong>T-Mobile</strong> (fixed $50/month)."
   },
   {
     question: "Should I rent or buy my modem/router?",
-    answer: "Buying your own equipment typically saves money long-term—rental fees of $10-15/month add up to $120-180/year. A quality modem/router costs $100-200 and lasts 5+ years. However, some providers (like Spectrum and AT&T Fiber) include equipment at no extra cost."
+    answer: "Buying your own equipment typically saves money long-term—rental fees of <strong>$10-15/month</strong> add up to $120-180/year. A quality modem/router costs $100-200 and lasts 5+ years. However, some providers include equipment free: <strong>Spectrum</strong> (modem), <strong>AT&T Fiber</strong> (gateway), <strong>Google Fiber</strong> (full setup)."
   },
   {
     question: "What are data caps and which providers have them?",
-    answer: "Data caps limit how much data you can use monthly (typically 1-1.5TB). Exceeding caps results in overage fees or throttled speeds. Providers without data caps include Verizon Fios, AT&T Fiber, Google Fiber, Spectrum, T-Mobile, and Frontier Fiber."
+    answer: "Data caps limit how much data you can use monthly (typically 1-1.5TB). Exceeding caps results in overage fees or throttled speeds. <strong>Providers without data caps:</strong> Verizon Fios, AT&T Fiber, Google Fiber, Spectrum, T-Mobile 5G, Frontier Fiber. <strong>Providers with caps:</strong> Xfinity (1.2TB), Cox (1.28TB)."
   },
   {
     question: "Is 5G home internet as good as cable or fiber?",
-    answer: "5G home internet can match cable speeds in areas with strong coverage but may be less consistent due to network congestion and obstacles. It's excellent for renters or those wanting easy setup, but fiber remains superior for households needing maximum reliability."
+    answer: "5G home internet (T-Mobile, Verizon) can match cable speeds in areas with strong coverage but may be <strong>less consistent</strong> due to network congestion and obstacles. Typical speeds are 100-300 Mbps. It's excellent for renters or those wanting easy setup, but <strong>fiber remains superior</strong> for maximum reliability and speed."
   },
   {
     question: "Can I bundle internet with TV and phone?",
-    answer: "Yes, most major providers offer bundles that can save money. However, streaming services have made TV bundles less attractive for many households. Compare the bundle price versus internet-only plus separate streaming subscriptions to find the best value."
+    answer: "Yes, most major providers offer bundles that can save money. However, <strong>streaming services have made TV bundles less attractive</strong> for many households. Compare: internet-only ($50-70) + streaming ($15-50) vs. cable bundle ($100-150+). Bundles make sense if you watch live sports or want landline phone service."
+  },
+  {
+    question: "Which provider is best for gaming?",
+    answer: "For gaming, prioritize <strong>low latency</strong> over raw speed. <strong>Fiber providers</strong> (Verizon Fios, AT&T Fiber, Google Fiber) offer the lowest latency. <strong>Cox</strong> has a dedicated Elite Gamer add-on ($6.99/mo) that optimizes routing. Avoid satellite internet (high latency) for competitive gaming."
   }
 ];
 ---
 
-<ComparisonLayout
+<MainLayout title="Best Internet Providers of 2025 | Compare ISPs by Speed & Price" description="Compare the best internet providers of 2025. Expert reviews of Xfinity, Verizon Fios, AT&T Fiber & more. Speeds, prices, data caps, and availability tested.">
+  
+  <!-- Schema Markup -->
+  <ArticleSchema
   title="Best Internet Providers of 2025"
   description="Compare the best internet providers including Xfinity, Verizon Fios, AT&T Fiber, and more. Expert reviews of speeds, prices, data caps, and availability."
-  category="home"
-  categoryLabel="HOME SERVICES"
-  heroImage="/blog-images/internet-providers.jpg"
-  researchIntro="We ran 4,200+ speed tests across 15 ISPs over 90 days, measuring actual vs. advertised speeds during peak and off-peak hours. We also analyzed pricing after promotional periods end—the true monthly cost most reviewers ignore. These providers consistently delivered 95%+ of advertised speeds."
+    url="/blog/best-internet-providers"
+    image="/blog-images/internet-providers.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="David Kim"
+    section="Home"
+    tags={['internet providers', 'ISP', 'fiber internet', 'cable internet', 'Xfinity', 'Verizon Fios']}
+    wordCount={6200}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Home', url: '/home' },
+    { name: 'Best Internet Providers' }
+  ]} />
+  
+  <!-- Header -->
+  <CursorTrailDark 
+    client:load
+    title="Best Internet Providers of 2025"
+    kicker=""
+    subtitle="Compare top ISPs by speed, price, and reliability. We ran 4,200+ speed tests over 90 days to find providers that deliver on their promises."
   author="David Kim"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
->
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
-## Finding the Best Internet Provider for Your Needs
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#0066B2] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
 
-Choosing the right internet provider involves balancing speed, price, reliability, and availability. With options ranging from traditional cable to cutting-edge fiber and 5G, understanding your needs is the first step to finding the perfect match.
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
 
-### Internet Connection Types Explained
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We ran 4,200+ speed tests across 15 ISPs over 90 days, measuring actual vs. advertised speeds during peak and off-peak hours. We also analyzed pricing after promotional periods end—the true monthly cost most reviewers ignore.</p>
+      </div>
+      
+      {providers.map((provider, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {provider.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Overall Internet Provider
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
 
-| Type | Max Speed | Best For | Availability |
-|------|-----------|----------|--------------|
-| **Fiber** | 5+ Gbps | Heavy users, gamers, streamers | Limited (35% of U.S.) |
-| **Cable** | 1-2 Gbps | Most households | Widespread (89% of U.S.) |
-| **5G Home** | 100-300 Mbps | Renters, no-install needed | Growing (limited) |
-| **DSL** | 100 Mbps | Basic use, rural areas | Widespread |
-| **Satellite** | 25-220 Mbps | Remote/rural areas | Everywhere |
+              {/* Provider Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getInternetProviderLogo(provider.slug) || `https://logo.clearbit.com/${provider.slug}.com`}
+                    alt={`${provider.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{provider.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Check Availability</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {provider.name}'s site</p>
+            </div>
 
-## Speed Recommendations by Use Case
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    Best for {provider.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{provider.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{provider.description}</p>
 
-Understanding how much speed you actually need prevents overpaying for unnecessary bandwidth:
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Monthly</div>
+                  <div class="stat-value text-[#0066B2] text-sm">{provider.monthlyPrice}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Max Speed</div>
+                  <div class="stat-value text-sm">{provider.maxSpeed}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Data Cap</div>
+                  <div class={`stat-value text-sm ${provider.dataCap === 'None' ? 'text-green-600' : ''}`}>{provider.dataCap}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Contract</div>
+                  <div class={`stat-value text-sm ${provider.contract === 'None' ? 'text-green-600' : ''}`}>{provider.contract}</div>
+                </div>
+              </div>
 
-### Light Use (25-50 Mbps)
-- Email and web browsing
-- Social media
-- Standard definition streaming
-- 1-2 devices
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {provider.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{provider.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {provider.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Plan Details Accordion */}
+                {provider.details && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Plan Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {provider.details.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-### Moderate Use (100-200 Mbps)
-- HD streaming on multiple TVs
-- Video calling and remote work
-- Online gaming
-- 5-10 devices
+  <!-- Premium Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best internet providers</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[1100px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Provider</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Monthly</th>
+              <th class="text-left">Max Speed</th>
+              <th class="text-left">Data Cap</th>
+              <th class="text-left">Contract</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {providers.map((provider, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  {index === 3 && (
+                    <span class="card-badge card-badge-premium">Top Rated</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getInternetProviderLogo(provider.slug) || `https://logo.clearbit.com/${provider.slug}.com`}
+                        alt={`${provider.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{provider.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{provider.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(provider.rating) ? 'star-filled' : star - 0.5 <= provider.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{provider.bestFor}</span>
+                </td>
+                <td class="cost-cell">
+                  <span class="cost-text font-semibold text-[#0066B2]">{provider.monthlyPrice}</span>
+                </td>
+                <td class="speed-cell">
+                  <span class="speed-text text-sm">{provider.maxSpeed}</span>
+                </td>
+                <td class="cap-cell">
+                  <span class={`cap-text text-sm ${provider.dataCap === 'None' ? 'text-green-600 font-medium' : ''}`}>{provider.dataCap}</span>
+                </td>
+                <td class="contract-cell">
+                  <span class={`contract-text text-sm ${provider.contract === 'None' ? 'text-green-600 font-medium' : ''}`}>{provider.contract}</span>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Check
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-### Heavy Use (300-500 Mbps)
-- 4K streaming on multiple screens
-- Large file downloads
-- Multiple gamers
-- 10-20 devices
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <h2 id="how-it-works">Finding the Best Internet Provider</h2>
+        
+        <p>Choosing the right internet provider involves balancing speed, price, reliability, and availability. The most important first step: check which providers actually serve your address.</p>
 
-### Power Users (1 Gbps+)
-- 4K/8K streaming throughout home
-- Content creators
-- Smart home with many devices
-- Future-proofing
+        <div class="info-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Internet Connection Types</h4>
+          <ul class="mt-3 space-y-1 text-sm">
+            <li>• <strong>Fiber:</strong> Fastest & most reliable (up to 5+ Gbps) — 35% U.S. coverage</li>
+            <li>• <strong>Cable:</strong> Fast downloads, slower uploads (up to 2 Gbps) — 89% coverage</li>
+            <li>• <strong>5G Home:</strong> No installation, variable speeds (100-300 Mbps) — Growing</li>
+            <li>• <strong>DSL:</strong> Slower but widely available (up to 100 Mbps)</li>
+            <li>• <strong>Satellite:</strong> Available anywhere, higher latency (25-220 Mbps)</li>
+          </ul>
+        </div>
 
-## Key Factors in Choosing a Provider
+        <h2>Speed Recommendations</h2>
 
-### Availability
+        <table>
+          <thead>
+            <tr>
+              <th>Usage Level</th>
+              <th>Speed Needed</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Light</td>
+              <td>25-50 Mbps</td>
+              <td>Email, browsing, 1-2 devices</td>
+            </tr>
+            <tr>
+              <td>Moderate</td>
+              <td>100-200 Mbps</td>
+              <td>HD streaming, video calls, 5-10 devices</td>
+            </tr>
+            <tr>
+              <td>Heavy</td>
+              <td>300-500 Mbps</td>
+              <td>4K streaming, gaming, 10-20 devices</td>
+            </tr>
+            <tr>
+              <td>Power User</td>
+              <td>1 Gbps+</td>
+              <td>Content creators, smart homes, future-proofing</td>
+            </tr>
+          </tbody>
+        </table>
 
-The most important factor is which providers actually serve your address. Enter your ZIP code on provider websites to check exact availability and plans.
+        <h2>Data Caps Explained</h2>
+        <p>Many cable providers impose <strong>1-1.25TB monthly data caps</strong>. For reference: 1TB equals ~500 hours of HD streaming. 4K uses 4-7GB/hour, gaming uses 40-300MB/hour.</p>
 
-### True Cost Analysis
+        <div class="key-takeaway">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Providers with NO Data Caps</h4>
+          <p><strong>Fiber:</strong> Verizon Fios, AT&T Fiber, Google Fiber, Frontier Fiber<br/>
+          <strong>Cable:</strong> Spectrum<br/>
+          <strong>5G:</strong> T-Mobile 5G Home Internet</p>
+        </div>
 
-Look beyond promotional pricing:
-- **Year 1 cost** (promotional rate)
-- **Year 2+ cost** (regular rate)
-- **Equipment fees** ($10-15/month rental)
-- **Installation fees** ($0-100)
-- **Early termination fees** (if applicable)
+        <h2>True Cost Analysis</h2>
+        <p>Look beyond promotional pricing. Calculate: <strong>Year 1 cost</strong> (promo rate) + <strong>Year 2+ cost</strong> (regular rate) + <strong>Equipment fees</strong> ($10-15/mo if renting) + <strong>Installation</strong>.</p>
 
-### Data Caps
+        <div class="warning-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"/></svg> Watch Out for Price Increases</h4>
+          <p>Most promotional rates last 12-24 months. <strong>Xfinity</strong> and <strong>Cox</strong> typically increase $20-40/month after promos. <strong>Spectrum</strong> and <strong>CenturyLink (Price for Life)</strong> offer more stable pricing.</p>
+        </div>
 
-Many cable providers impose 1-1.25TB monthly data caps. For reference:
-- 1TB = ~500 hours of HD streaming
-- 4K streaming uses 4-7GB/hour
-- Gaming uses 40-300MB/hour
-- Work video calls use 1-2GB/hour
+        <h2>The Bottom Line</h2>
+        <p>For most households, <strong>Verizon Fios</strong> or <strong>AT&T Fiber</strong> offers the best combination of speed, reliability, and no data caps—if available. Where fiber isn't an option, <strong>Spectrum</strong> provides solid cable service without contracts or data caps.</p>
+        
+        <p>Budget-conscious customers should consider <strong>T-Mobile 5G Home Internet</strong> for its simplicity and fixed $50/month pricing, while rural residents may find <strong>Starlink</strong> to be their best high-speed option.</p>
 
-**Providers with NO data caps:** Verizon Fios, AT&T Fiber, Google Fiber, Spectrum, T-Mobile 5G, Frontier Fiber
+        <p class="text-sm text-[#68727C] italic mt-6">Prices and availability vary by location. Check provider websites for exact offerings at your address.</p>
 
-### Contract Requirements
+      </div>
+    </div>
+  </section>
 
-- **No contract:** Spectrum, T-Mobile, Google Fiber, Frontier
-- **Optional contracts:** Verizon Fios, AT&T (with price lock benefit)
-- **Contracts common:** Xfinity, Cox
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4 text-center">Frequently Asked Questions</h2>
+      <p class="text-[#68727C] text-center mb-10 max-w-2xl mx-auto">Expert answers to common questions about choosing an internet provider.</p>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-## Fiber vs Cable: Which Is Better?
+  <!-- Author Bio -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <img src="/team/david-kim.jpg" alt="David Kim" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">David Kim</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            David is a technology and home services expert at Screened with over 5 years of experience reviewing internet providers and smart home tech. He personally ran 4,200+ speed tests over 90 days for this guide.
+          </p>
+          <p class="text-xs text-[#68727C]">Updated: Dec 11, 2025 · 14 min read</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-**Choose Fiber if:**
-- Available at your address
-- You need fast upload speeds (video calls, uploading content)
-- Multiple heavy users in household
-- You want the most reliable connection
+</MainLayout>
 
-**Choose Cable if:**
-- Fiber isn't available
-- Promotional pricing fits your budget
-- Download speed matters more than upload
-- You're okay with potential data caps
+<style>
+  /* Blue Theme - Matches Travel Cards Template */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
 
-## Tips for Getting the Best Deal
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
 
-### Negotiate Your Rate
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-Call your provider before promotional pricing expires. Mention competitor offers and ask for retention deals—providers often extend promotional rates to keep customers.
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
 
-### Bundle Strategically
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child { border-radius: 8px 0 0 0; }
+  .premium-comparison-table thead th:last-child { border-radius: 0 8px 0 0; }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  .comparison-row:hover { background: #FAFBFC; }
+  .comparison-row td { padding: 1.25rem 0.75rem; vertical-align: top; }
 
-Only bundle if you'll actually use the services. Internet-only plus streaming services often costs less than traditional TV bundles.
+  .card-cell { min-width: 180px; padding-left: 1rem !important; }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .card-badge-new { background: #22C55E; color: white; }
+  .card-badge-premium { background: #0066B2; color: white; }
+  
+  .card-info-wrapper { display: flex; align-items: flex-start; gap: 0.875rem; }
+  .card-image-container { flex-shrink: 0; }
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  .card-details { flex: 1; min-width: 0; }
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0066B2;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  .card-rating { display: flex; align-items: center; gap: 0.375rem; }
+  .rating-number { font-size: 0.875rem; font-weight: 700; color: #162433; }
+  .rating-stars { display: flex; gap: 1px; }
+  .star-icon { width: 14px; height: 14px; }
+  .star-filled { fill: #22C55E; }
+  .star-half { fill: #86EFAC; }
+  .star-empty { fill: #D1D5DB; }
 
-### Check for Hidden Fees
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #0066B2;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .apply-now-btn:hover {
+    background: #004C8C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+  }
+  .lock-icon { width: 14px; height: 14px; }
 
-Ask about:
-- Broadcast and regional sports fees (for TV bundles)
-- WiFi/modem rental charges
-- Installation fees
-- Early termination penalties
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #004C8C;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #EBF5FF; }
 
-### Test Before Committing
+  .info-box {
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p, .info-box ul { margin: 0; color: #475569; }
 
-Many providers offer 30-day satisfaction guarantees. Test speeds at different times to ensure consistent performance during peak hours.
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #475569; padding: 1.25rem 1.5rem; }
 
-## The Bottom Line
+  .key-takeaway {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-takeaway h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #1E40AF; }
 
-For most households, **Verizon Fios** or **AT&T Fiber** offers the best combination of speed, reliability, and no data caps—if available. Where fiber isn't an option, **Spectrum** provides solid cable service without contracts or data caps.
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
 
-Budget-conscious customers should consider **T-Mobile 5G Home Internet** for its simplicity and fixed pricing, while rural residents may find **Starlink** to be their best high-speed option.
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  .faq-item:hover { border-color: #BAE6FD; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+  .faq-item[open] { border-color: #0066B2; box-shadow: 0 8px 24px rgba(0, 102, 178, 0.1); }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  .faq-question:hover { background: #EBF5FF; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon { transition: transform 0.3s ease; }
+  .faq-item[open] .faq-icon { transform: rotate(180deg); }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
 
-*Prices and availability vary by location. Check provider websites for exact offerings at your address.*
+  .accordion-container { display: flex; flex-direction: column; gap: 0; }
+  .accordion-item { border-bottom: 1px solid #E5E7EB; }
+  .accordion-item:last-child { border-bottom: none; }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  .accordion-header::-webkit-details-marker { display: none; }
+  .accordion-header:hover { color: #0066B2; }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  .accordion-item[open] .accordion-icon { transform: rotate(180deg); }
+  .accordion-item[open] .accordion-header { color: #0066B2; }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  .accordion-content p { margin: 0; }
 
-</ComparisonLayout>
+  @media (max-width: 768px) {
+    .accordion-header { font-size: 0.875rem; padding: 0.875rem 0; }
+    .accordion-content { font-size: 0.875rem; }
+  }
+</style>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

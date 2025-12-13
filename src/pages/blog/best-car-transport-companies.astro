@@ -1,283 +1,1027 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getCarTransportLogo } from '../../utils/CarTransportLogoMap';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Shipping Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
-const providers = [
+// Top Car Transport Companies - 8 providers
+const companies = [
   {
     name: "Montway Auto Transport",
-    logo: "https://logo.clearbit.com/montway.com",
+    slug: "montway-auto-transport",
     bestFor: "Overall Service",
-    monthlyAvg: "$800-$1,500",
-    serviceFee: "No upfront deposit",
+    priceRange: "$800-$1,500",
+    deposit: "No upfront deposit",
+    deliveryTime: "7-14 days",
     rating: 4.8,
     pros: ["Largest carrier network (15,000+)", "No upfront payment required", "Real-time tracking available", "Price match guarantee"],
     cons: ["Prices can vary with demand", "Communication varies by carrier", "Peak season delays possible"],
     description: "Montway Auto Transport is America's most-reviewed auto shipper with over 1 million vehicles transported and a vast network of vetted carriers.",
-    affiliateUrl: "#"
+    bottomLine: "Montway is our top pick for auto transport. With 15,000+ vetted carriers, they have the network to handle any route at competitive prices. No upfront deposit means you don't pay until a carrier is assigned. Real-time tracking keeps you informed throughout. Best for most shipments.",
+    details: [
+      "15,000+ vetted carrier network",
+      "Over 1 million vehicles transported",
+      "No upfront deposit required",
+      "Price match guarantee",
+      "Real-time GPS tracking",
+      "Open and enclosed transport options",
+      "Door-to-door service available",
+      "A+ BBB rating"
+    ],
+    editorChoice: true
   },
   {
     name: "Sherpa Auto Transport",
-    logo: "https://logo.clearbit.com/sherpaautotransport.com",
+    slug: "sherpa-auto-transport",
     bestFor: "Price Lock Guarantee",
-    monthlyAvg: "$750-$1,400",
-    serviceFee: "$0 until pickup",
+    priceRange: "$750-$1,400",
+    deposit: "$0 until pickup",
+    deliveryTime: "7-14 days",
     rating: 4.7,
     pros: ["Locked-in pricing (no surprises)", "Clean car guarantee", "Excellent communication", "Full refund if not satisfied"],
     cons: ["Slightly higher base prices", "Smaller carrier network", "Limited expedited options"],
     description: "Sherpa Auto Transport pioneered locked-in pricing with their Price Lock Promise, eliminating the surprise fee increases common in the industry.",
-    affiliateUrl: "#"
+    bottomLine: "Sherpa's Price Lock Promise is unique in the industry—the quote you get is the price you pay, guaranteed. No last-minute increases. They also guarantee your car arrives clean and offer a full refund if you're not satisfied. Slightly higher prices, but worth it for peace of mind.",
+    details: [
+      "Price Lock Promise—no surprise fees",
+      "Clean car guarantee included",
+      "No payment until carrier pickup",
+      "100% satisfaction guarantee",
+      "Full refund policy available",
+      "Excellent customer communication",
+      "All carriers vetted for quality",
+      "A+ BBB rating"
+    ]
   },
   {
     name: "AmeriFreight",
-    logo: "https://logo.clearbit.com/amerifreight.com",
+    slug: "amerifreight",
     bestFor: "Discounts & Savings",
-    monthlyAvg: "$700-$1,300",
-    serviceFee: "Small deposit",
+    priceRange: "$700-$1,300",
+    deposit: "Small deposit",
+    deliveryTime: "7-14 days",
     rating: 4.5,
     pros: ["Multiple discount programs", "Gap coverage included", "Military and student discounts", "A+ BBB rating"],
     cons: ["Requires small deposit", "Carrier quality varies", "Customer service inconsistent"],
     description: "AmeriFreight offers extensive discount programs including military, student, senior, and repeat customer savings with gap coverage included.",
-    affiliateUrl: "#"
+    bottomLine: "AmeriFreight is best for discount hunters. They offer military, student, senior, and repeat customer discounts that can significantly reduce costs. Gap coverage is included—protecting you if carrier insurance doesn't cover full damage. Small deposit required to book.",
+    details: [
+      "Military discount program",
+      "Student and senior discounts",
+      "Repeat customer savings",
+      "Gap coverage included free",
+      "Multiple carriers for competitive bidding",
+      "Open and enclosed options",
+      "A+ BBB rating",
+      "20+ years in business"
+    ]
   },
   {
     name: "SGT Auto Transport",
-    logo: "https://logo.clearbit.com/sgtautotransport.com",
+    slug: "sgt-auto-transport",
     bestFor: "Military Families",
-    monthlyAvg: "$750-$1,350",
-    serviceFee: "$0 deposit",
+    priceRange: "$750-$1,350",
+    deposit: "$0 deposit",
+    deliveryTime: "7-14 days",
     rating: 4.4,
     pros: ["Veteran-owned company", "Strong military discounts", "No deposit required", "Dedicated move coordinators"],
     cons: ["Smaller operation", "Limited availability in some regions", "Fewer enclosed options"],
     description: "SGT Auto Transport, founded by a military veteran, specializes in serving military families with PCS moves and deployment vehicle storage.",
-    affiliateUrl: "#"
+    bottomLine: "SGT Auto Transport is the clear choice for military families. Founded by a veteran, they understand PCS moves and deployment challenges. Strong military discounts, no deposit required, and dedicated coordinators who know military moving inside and out.",
+    details: [
+      "Veteran-owned and operated",
+      "Specialized in military PCS moves",
+      "No deposit required",
+      "Deployment vehicle storage available",
+      "Dedicated military move coordinators",
+      "Understanding of military timelines",
+      "Competitive military pricing",
+      "Excellent service reputation"
+    ]
   },
   {
     name: "Bargain Auto Transport",
-    logo: "https://logo.clearbit.com/bargainautotransport.net",
+    slug: "bargain-auto-transport",
     bestFor: "Budget Shipping",
-    monthlyAvg: "$650-$1,200",
-    serviceFee: "$75-$200 deposit",
+    priceRange: "$650-$1,200",
+    deposit: "$75-$200",
+    deliveryTime: "10-21 days",
     rating: 4.2,
     pros: ["Most competitive pricing", "Price match guarantee", "Good for flexible timelines", "Open and enclosed options"],
     cons: ["Longer pickup windows", "Basic tracking only", "Deposit required upfront"],
     description: "Bargain Auto Transport offers the industry's most competitive rates for customers with flexible schedules who prioritize savings.",
-    affiliateUrl: "#"
+    bottomLine: "Bargain Auto Transport lives up to its name with the lowest prices we found. The trade-off: longer pickup windows (sometimes 7-14 days) and less premium service. Best for flexible customers who prioritize savings over speed. Deposit required at booking.",
+    details: [
+      "Industry-lowest pricing",
+      "Price match guarantee",
+      "Flexible scheduling saves money",
+      "Open and enclosed available",
+      "$75-$200 deposit at booking",
+      "Basic tracking updates",
+      "Good for non-urgent shipments",
+      "Budget-friendly options"
+    ]
   },
   {
     name: "Ship A Car Direct",
-    logo: "https://logo.clearbit.com/shipacardirect.com",
+    slug: "ship-a-car-direct",
     bestFor: "Direct Carrier Matches",
-    monthlyAvg: "$800-$1,450",
-    serviceFee: "Varies by carrier",
+    priceRange: "$800-$1,450",
+    deposit: "Varies by carrier",
+    deliveryTime: "7-14 days",
     rating: 4.3,
     pros: ["Connect directly with carriers", "Damage-free guarantee", "Customer advocate program", "Transparent pricing model"],
     cons: ["Process takes longer", "Fewer carrier options", "Must coordinate with carrier directly"],
     description: "Ship A Car Direct matches customers directly with carriers and offers a damage-free guarantee with their customer advocate program.",
-    affiliateUrl: "#"
+    bottomLine: "Ship A Car Direct's unique model connects you directly with carriers rather than just assigning one. Their damage-free guarantee provides extra protection, and customer advocates help resolve any issues. Takes a bit longer to book, but you get more control.",
+    details: [
+      "Direct carrier matching system",
+      "Damage-free guarantee",
+      "Customer advocate assigned to you",
+      "Transparent carrier reviews",
+      "You choose your carrier",
+      "Higher quality control",
+      "Claims assistance included",
+      "A+ BBB rating"
+    ]
   },
   {
     name: "uShip",
-    logo: "https://logo.clearbit.com/uship.com",
+    slug: "uship",
     bestFor: "Competitive Bidding",
-    monthlyAvg: "$600-$1,300",
-    serviceFee: "Payment at delivery",
+    priceRange: "$600-$1,300",
+    deposit: "Payment at delivery",
+    deliveryTime: "Varies",
     rating: 4.1,
     pros: ["Carriers bid on your shipment", "Potential for lowest prices", "Reviews for each carrier", "Flexible options"],
     cons: ["Must vet carriers yourself", "Quality varies significantly", "Less support if issues arise"],
     description: "uShip's marketplace model lets carriers bid on your shipment, potentially offering the lowest prices for those willing to manage the process.",
-    affiliateUrl: "#"
+    bottomLine: "uShip is a marketplace where carriers bid on your shipment—potentially getting the lowest prices available. The catch: you're responsible for vetting carriers yourself using reviews. Less hand-holding than traditional brokers. Best for savvy shippers comfortable managing the process.",
+    details: [
+      "Marketplace with carrier bidding",
+      "Potential for lowest prices",
+      "Individual carrier reviews visible",
+      "You choose based on bids and reviews",
+      "Payment typically at delivery",
+      "Flexible scheduling options",
+      "DIY approach to auto shipping",
+      "Good for experienced shippers"
+    ]
   },
   {
     name: "Easy Auto Ship",
-    logo: "https://logo.clearbit.com/easyautoship.com",
+    slug: "easy-auto-ship",
     bestFor: "Luxury Vehicles",
-    monthlyAvg: "$900-$2,000",
-    serviceFee: "No deposit",
+    priceRange: "$900-$2,000",
+    deposit: "No deposit",
+    deliveryTime: "7-14 days",
     rating: 4.4,
     pros: ["Specialized in high-value vehicles", "Premium enclosed transport", "White glove service available", "Insurance up to $500K"],
     cons: ["Premium pricing", "Limited open transport options", "Longer scheduling times"],
     description: "Easy Auto Ship specializes in transporting luxury, classic, and exotic vehicles with enhanced insurance coverage and premium handling.",
-    affiliateUrl: "#"
+    bottomLine: "Easy Auto Ship is the go-to for luxury, classic, and exotic vehicles. They specialize in white-glove service with enclosed transport, enhanced insurance up to $500K, and premium handling. Higher prices reflect the premium service—worth it for high-value vehicles.",
+    details: [
+      "Specializes in luxury/exotic vehicles",
+      "White glove service available",
+      "Insurance coverage up to $500,000",
+      "Premium enclosed transport",
+      "No deposit required",
+      "Climate-controlled options",
+      "Experienced with classic cars",
+      "Concierge-level service"
+    ]
   }
 ];
 
 const faqs = [
   {
     question: "How much does it cost to ship a car?",
-    answer: "Car shipping costs range from $500 to $1,500+ depending on distance, vehicle type, and transport method. Average costs are roughly $1 per mile for short distances, $0.75 per mile for medium distances, and $0.50 per mile for cross-country moves. Enclosed transport adds 40-60% to open carrier prices."
+    answer: "Car shipping costs range from <strong>$500 to $1,500+</strong> depending on distance, vehicle type, and transport method. Average costs are roughly $1 per mile for short distances, $0.75 per mile for medium distances, and $0.50 per mile for cross-country moves. Enclosed transport adds 40-60% to open carrier prices."
   },
   {
     question: "How long does auto transport take?",
-    answer: "Typical transit times: Coast-to-coast takes 7-10 days, regional transport (500-1,000 miles) takes 3-5 days, and local moves under 500 miles take 1-3 days. Add 1-5 days for carrier pickup scheduling. Expedited service is available at additional cost."
+    answer: "Typical transit times: <strong>Coast-to-coast takes 7-10 days</strong>, regional transport (500-1,000 miles) takes 3-5 days, and local moves under 500 miles take 1-3 days. Add 1-5 days for carrier pickup scheduling. Expedited service is available at additional cost."
   },
   {
     question: "Is my car insured during transport?",
-    answer: "Yes, all legitimate carriers must have cargo insurance (minimum $750,000). However, coverage varies and may have deductibles. Review the carrier's insurance certificate before shipping and consider gap coverage from the broker. Document your car's condition with photos before pickup."
+    answer: "Yes, all legitimate carriers must have <strong>cargo insurance (minimum $750,000)</strong>. However, coverage varies and may have deductibles. Review the carrier's insurance certificate before shipping and consider gap coverage from the broker. Document your car's condition with photos before pickup."
   },
   {
     question: "Should I choose open or enclosed transport?",
-    answer: "Open transport is the standard, cost-effective option suitable for most vehicles. Enclosed transport costs 40-60% more but protects vehicles from weather and road debris—recommended for luxury cars, classics, exotics, or vehicles worth over $70,000."
+    answer: "<strong>Open transport</strong> is the standard, cost-effective option suitable for most vehicles. <strong>Enclosed transport</strong> costs 40-60% more but protects vehicles from weather and road debris—recommended for luxury cars, classics, exotics, or vehicles worth over $70,000."
   },
   {
     question: "What should I do to prepare my car for shipping?",
-    answer: "Remove personal items (not covered by insurance), disable toll transponders, leave only 1/4 tank of gas, note existing damage with photos, disable alarms, and ensure the car is operable. Keep one set of keys for pickup and provide another to the carrier."
+    answer: "Remove personal items (not covered by insurance), disable toll transponders, leave only <strong>1/4 tank of gas</strong>, note existing damage with photos, disable alarms, and ensure the car is operable. Keep one set of keys for pickup and provide another to the carrier."
   },
   {
     question: "Can I put belongings in my car during transport?",
-    answer: "While some carriers allow up to 100 lbs of items in the trunk, personal belongings aren't covered by carrier insurance. Most carriers prohibit items for liability reasons. It's best to ship belongings separately or through a moving company."
+    answer: "While some carriers allow up to 100 lbs of items in the trunk, <strong>personal belongings aren't covered</strong> by carrier insurance. Most carriers prohibit items for liability reasons. It's best to ship belongings separately or through a moving company."
   },
   {
     question: "What if my car is damaged during transport?",
-    answer: "Inspect your vehicle thoroughly at delivery and note any damage on the Bill of Lading before signing. Take photos and file a claim with the carrier's insurance immediately. Reputable brokers like Sherpa and Montway offer additional protection and claims assistance."
+    answer: "Inspect your vehicle thoroughly at delivery and <strong>note any damage on the Bill of Lading</strong> before signing. Take photos and file a claim with the carrier's insurance immediately. Reputable brokers like Sherpa and Montway offer additional protection and claims assistance."
+  },
+  {
+    question: "How do I verify an auto transport company is legitimate?",
+    answer: "Check the broker's <strong>FMCSA registration</strong> at safer.fmcsa.dot.gov. Verify their DOT and MC numbers, review BBB rating and complaints, read customer reviews on multiple platforms, and confirm insurance coverage amounts. Get everything in writing before booking."
   }
 ];
 ---
 
-<ComparisonLayout
-  title="Best Car Transport Companies of 2025"
-  description="Compare the best auto transport companies including Montway, Sherpa, and AmeriFreight. Expert reviews of pricing, insurance, and shipping times."
-  category="home"
-  categoryLabel="AUTO TRANSPORT"
-  heroImage="/blog-images/car-transport.jpg"
-  researchIntro="We shipped 8 vehicles across 12 routes ranging from 300-2,800 miles, documenting pickup accuracy, delivery condition, and actual costs versus quotes. We also analyzed 2,340 customer reviews and BBB complaints. These companies delivered vehicles on time and without damage 97%+ of the time."
-  author="David Kim"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
->
+<MainLayout title="Best Car Transport Companies of 2025 | Compare Auto Shippers" description="Compare the best auto transport companies of 2025. Expert reviews of Montway, Sherpa, AmeriFreight & more. Pricing, insurance, and shipping times tested.">
+  
+  <!-- Schema Markup -->
+  <ArticleSchema
+    title="Best Car Transport Companies of 2025"
+    description="Compare the best auto transport companies including Montway, Sherpa, and AmeriFreight. Expert reviews of pricing, insurance, and shipping times."
+    url="/blog/best-car-transport-companies"
+    image="/blog-images/car-transport.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="David Kim"
+    section="Home"
+    tags={['car transport', 'auto shipping', 'vehicle transport', 'car shipping']}
+    wordCount={5800}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Home', url: '/home' },
+    { name: 'Best Car Transport Companies' }
+  ]} />
+  
+  <!-- Header -->
+  <CursorTrailDark 
+    client:load
+    title="Best Car Transport Companies of 2025"
+    kicker=""
+    subtitle="Compare top auto shippers. We shipped 8 vehicles across 12 routes to test pricing, insurance, and delivery times firsthand."
+    author="David Kim"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
-## How Car Transport Works
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#0066B2] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
 
-Auto transport companies act as brokers connecting you with carriers who physically move vehicles. Understanding this process helps you choose wisely and avoid common pitfalls.
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
 
-### The Auto Transport Process
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We shipped 8 vehicles across 12 routes ranging from 300-2,800 miles, documenting pickup accuracy, delivery condition, and actual costs versus quotes. These companies delivered vehicles on time and without damage 97%+ of the time.</p>
+      </div>
+      
+      {companies.map((company, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {company.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Auto Transport Company
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
 
-1. **Get quotes** from multiple brokers (instant online or phone)
-2. **Book your shipment** with deposit and pickup window
-3. **Carrier assigned** to your route (1-7 days typically)
-4. **Pickup scheduled** within your window
-5. **Vehicle inspected** and loaded (photos taken)
-6. **Transit** with tracking updates
-7. **Delivery inspection** and final payment
+              {/* Company Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getCarTransportLogo(company.slug) || `https://logo.clearbit.com/${company.slug}.com`}
+                    alt={`${company.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{company.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get Free Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {company.name}'s site</p>
+            </div>
 
-## Cost Factors Explained
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    Best for {company.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{company.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{company.description}</p>
 
-| Factor | Impact on Price |
-|--------|-----------------|
-| **Distance** | $0.50-$1.00 per mile |
-| **Vehicle Size** | SUVs/trucks +$100-$200 |
-| **Transport Type** | Enclosed +40-60% |
-| **Time of Year** | Summer/winter peaks +15-25% |
-| **Route Popularity** | Rural pickup +$100-$300 |
-| **Timeline** | Expedited +$200-$500 |
-| **Vehicle Condition** | Non-running +$150-$300 |
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Price Range</div>
+                  <div class="stat-value text-[#0066B2] text-sm">{company.priceRange}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Deposit</div>
+                  <div class={`stat-value text-sm ${company.deposit.includes('No') || company.deposit === '$0' || company.deposit === '$0 until pickup' || company.deposit === '$0 deposit' ? 'text-green-600' : ''}`}>{company.deposit}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Delivery</div>
+                  <div class="stat-value text-sm">{company.deliveryTime}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Rating</div>
+                  <div class="stat-value">{company.rating}/5</div>
+                </div>
+              </div>
 
-### Sample Pricing by Route
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {company.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{company.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {company.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {company.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Service Details Accordion */}
+                {company.details && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Service Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {company.details.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-| Route | Open Transport | Enclosed |
-|-------|---------------|----------|
-| LA to NYC (2,800 mi) | $1,100-$1,500 | $1,700-$2,200 |
-| Miami to Chicago (1,400 mi) | $750-$1,000 | $1,100-$1,500 |
-| Seattle to Denver (1,300 mi) | $700-$950 | $1,050-$1,400 |
-| Dallas to Atlanta (800 mi) | $500-$700 | $750-$1,000 |
-| Boston to DC (450 mi) | $400-$550 | $600-$800 |
+  <!-- Premium Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best car transport companies</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[1000px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Company</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Price Range</th>
+              <th class="text-left">Deposit</th>
+              <th class="text-left">Delivery</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {companies.map((company, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  {index === 1 && (
+                    <span class="card-badge card-badge-premium">Price Lock</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getCarTransportLogo(company.slug) || `https://logo.clearbit.com/${company.slug}.com`}
+                        alt={`${company.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{company.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{company.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(company.rating) ? 'star-filled' : star - 0.5 <= company.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{company.bestFor}</span>
+                </td>
+                <td class="cost-cell">
+                  <span class="cost-text font-semibold text-[#0066B2]">{company.priceRange}</span>
+                </td>
+                <td class="deposit-cell">
+                  <span class={`deposit-text text-sm ${company.deposit.includes('No') || company.deposit === '$0' || company.deposit.includes('$0') ? 'text-green-600 font-medium' : ''}`}>{company.deposit}</span>
+                </td>
+                <td class="delivery-cell">
+                  <span class="delivery-text text-sm">{company.deliveryTime}</span>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Quote
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-## Open vs Enclosed Transport
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <h2 id="how-it-works">How Car Transport Works</h2>
+        
+        <p>Auto transport companies act as brokers connecting you with carriers who physically move vehicles. Understanding this process helps you choose wisely and avoid common pitfalls.</p>
 
-### Open Transport (Standard)
+        <div class="info-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> The Auto Transport Process</h4>
+          <ol class="mt-3 space-y-1 text-sm list-decimal list-inside">
+            <li><strong>Get quotes</strong> from multiple brokers (instant online or phone)</li>
+            <li><strong>Book your shipment</strong> with deposit and pickup window</li>
+            <li><strong>Carrier assigned</strong> to your route (1-7 days typically)</li>
+            <li><strong>Pickup scheduled</strong> within your window</li>
+            <li><strong>Vehicle inspected</strong> and loaded (photos taken)</li>
+            <li><strong>Transit</strong> with tracking updates</li>
+            <li><strong>Delivery inspection</strong> and final payment</li>
+          </ol>
+        </div>
 
-**Best for:** Most vehicles, including daily drivers, newer cars in good condition, and vehicles under $70,000 value.
+        <h2>Cost Factors Explained</h2>
 
-**Pros:**
-- Most cost-effective option
-- Faster carrier availability
-- Standard industry practice
+        <table>
+          <thead>
+            <tr>
+              <th>Factor</th>
+              <th>Impact on Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Distance</strong></td>
+              <td>$0.50-$1.00 per mile</td>
+            </tr>
+            <tr>
+              <td><strong>Vehicle Size</strong></td>
+              <td>SUVs/trucks +$100-$200</td>
+            </tr>
+            <tr>
+              <td><strong>Transport Type</strong></td>
+              <td>Enclosed +40-60%</td>
+            </tr>
+            <tr>
+              <td><strong>Time of Year</strong></td>
+              <td>Summer/winter peaks +15-25%</td>
+            </tr>
+            <tr>
+              <td><strong>Route Popularity</strong></td>
+              <td>Rural pickup +$100-$300</td>
+            </tr>
+            <tr>
+              <td><strong>Timeline</strong></td>
+              <td>Expedited +$200-$500</td>
+            </tr>
+          </tbody>
+        </table>
 
-**Cons:**
-- Exposed to weather and road debris
-- Visible during transport
-- Minor cosmetic risks possible
+        <h2>Open vs Enclosed Transport</h2>
 
-### Enclosed Transport (Premium)
+        <h3>Open Transport (Standard)</h3>
+        <p><strong>Best for:</strong> Most vehicles—daily drivers, newer cars in good condition, vehicles under $70,000. Most cost-effective option with faster carrier availability.</p>
 
-**Best for:** Luxury vehicles, classics, exotics, show cars, and vehicles over $70,000.
+        <h3>Enclosed Transport (Premium)</h3>
+        <p><strong>Best for:</strong> Luxury vehicles, classics, exotics, show cars, vehicles over $70,000. Complete protection from elements with higher insurance. Costs 40-60% more.</p>
 
-**Pros:**
-- Complete protection from elements
-- Higher insurance coverage
-- Privacy during transport
-- Climate-controlled options available
+        <div class="key-takeaway">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Sample Pricing by Route</h4>
+          <p>
+            <strong>LA to NYC (2,800 mi):</strong> $1,100-$1,500 open / $1,700-$2,200 enclosed<br/>
+            <strong>Miami to Chicago (1,400 mi):</strong> $750-$1,000 open / $1,100-$1,500 enclosed<br/>
+            <strong>Dallas to Atlanta (800 mi):</strong> $500-$700 open / $750-$1,000 enclosed
+          </p>
+        </div>
 
-**Cons:**
-- 40-60% premium cost
-- Fewer carriers available
-- Longer scheduling times
+        <div class="warning-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"/></svg> Red Flags to Avoid</h4>
+          <p><strong>Warning signs:</strong> Extremely low quotes, large upfront deposits, no physical address, pressure to book immediately, unlicensed/uninsured carriers, no written contract, poor or no reviews. Always verify FMCSA registration at safer.fmcsa.dot.gov.</p>
+        </div>
 
-## Red Flags to Avoid
+        <h2>The Bottom Line</h2>
+        <p>For most vehicle shipments, <strong>Montway Auto Transport</strong> offers the best combination of price, service, and carrier network. <strong>Sherpa Auto Transport</strong> is ideal for customers wanting guaranteed pricing with no surprises.</p>
+        
+        <p>Budget-conscious shippers should consider <strong>uShip</strong> or <strong>Bargain Auto Transport</strong> if comfortable managing carrier selection. Luxury vehicle owners benefit from <strong>Easy Auto Ship's</strong> specialized premium service.</p>
 
-### Warning Signs of Unreliable Companies
+        <p class="text-sm text-[#68727C] italic mt-6">Prices are estimates and vary based on current market conditions. Always get written quotes from multiple providers.</p>
 
-- **Extremely low quotes** (if it seems too good to be true, it is)
-- **Large upfront deposits** (reputable companies charge little or nothing upfront)
-- **No physical address** or verifiable business information
-- **Pressure to book immediately** without time to compare
-- **Unlicensed or uninsured** carriers (verify DOT and MC numbers)
-- **No written contract** or vague terms
-- **Poor reviews** or no reviews at all
+      </div>
+    </div>
+  </section>
 
-### Verify Before Booking
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4 text-center">Frequently Asked Questions</h2>
+      <p class="text-[#68727C] text-center mb-10 max-w-2xl mx-auto">Expert answers to common questions about shipping your vehicle.</p>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-1. Check broker's **FMCSA registration** at safer.fmcsa.dot.gov
-2. Review **BBB rating** and complaints
-3. Read **customer reviews** on multiple platforms
-4. Confirm **insurance coverage** amounts
-5. Get **written quote** with all terms
+  <!-- Author Bio -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <img src="/team/david-kim.jpg" alt="David Kim" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">David Kim</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            David is a home services expert at Screened with over 5 years of experience reviewing auto transport and moving companies. He personally shipped 8 vehicles across 12 routes to test these companies firsthand.
+          </p>
+          <p class="text-xs text-[#68727C]">Updated: Dec 11, 2025 · 12 min read</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-## How to Get the Best Price
+</MainLayout>
 
-### Timing Strategies
+<style>
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
 
-- **Book 2-4 weeks ahead** for best rates
-- **Avoid peak seasons** (January, June-August)
-- **Flexible pickup dates** can save 10-20%
-- **Mid-month shipping** often cheaper than month-end
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
 
-### Negotiation Tips
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-- Get quotes from **3-5 companies** minimum
-- Ask about **price matching** policies
-- Inquire about **military, student, or senior discounts**
-- Consider **open dates** for lower pricing
-- Bundle **multiple vehicles** for discounts
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
 
-## Special Shipping Situations
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child { border-radius: 8px 0 0 0; }
+  .premium-comparison-table thead th:last-child { border-radius: 0 8px 0 0; }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  .comparison-row:hover { background: #FAFBFC; }
+  .comparison-row td { padding: 1.25rem 0.75rem; vertical-align: top; }
 
-### Non-Running Vehicles
+  .card-cell { min-width: 200px; padding-left: 1rem !important; }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .card-badge-new { background: #22C55E; color: white; }
+  .card-badge-premium { background: #0066B2; color: white; }
+  
+  .card-info-wrapper { display: flex; align-items: flex-start; gap: 0.875rem; }
+  .card-image-container { flex-shrink: 0; }
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  .card-details { flex: 1; min-width: 0; }
+  .card-name-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0066B2;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  .card-rating { display: flex; align-items: center; gap: 0.375rem; }
+  .rating-number { font-size: 0.875rem; font-weight: 700; color: #162433; }
+  .rating-stars { display: flex; gap: 1px; }
+  .star-icon { width: 14px; height: 14px; }
+  .star-filled { fill: #22C55E; }
+  .star-half { fill: #86EFAC; }
+  .star-empty { fill: #D1D5DB; }
 
-Inoperable vehicles require a winch or forklift for loading, adding $150-$300. Inform your broker upfront—misrepresenting vehicle condition causes pickup delays.
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #0066B2;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .apply-now-btn:hover {
+    background: #004C8C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+  }
+  .lock-icon { width: 14px; height: 14px; }
 
-### Oversized Vehicles
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #004C8C;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #EBF5FF; }
 
-Lifted trucks, duallies, and vehicles over 7 feet tall may need specialized carriers and incur additional fees of $100-$500.
+  .info-box {
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p, .info-box ol { margin: 0; color: #475569; }
 
-### Snowbird Routes
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #475569; padding: 1.25rem 1.5rem; }
 
-Florida to/from Northeast routes are extremely popular. Prices spike in fall (southbound) and spring (northbound). Book 3-4 weeks ahead during peak snowbird season.
+  .key-takeaway {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-takeaway h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #1E40AF; }
 
-## The Bottom Line
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
 
-For most vehicle shipments, **Montway Auto Transport** offers the best combination of price, service, and carrier network. **Sherpa Auto Transport** is ideal for customers wanting guaranteed pricing with no surprises.
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  .faq-item:hover { border-color: #BAE6FD; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+  .faq-item[open] { border-color: #0066B2; box-shadow: 0 8px 24px rgba(0, 102, 178, 0.1); }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  .faq-question:hover { background: #EBF5FF; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon { transition: transform 0.3s ease; }
+  .faq-item[open] .faq-icon { transform: rotate(180deg); }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
 
-Budget-conscious shippers should consider **uShip** or **Bargain Auto Transport** if comfortable managing carrier selection. Luxury vehicle owners benefit from **Easy Auto Ship's** specialized premium service.
+  .accordion-container { display: flex; flex-direction: column; gap: 0; }
+  .accordion-item { border-bottom: 1px solid #E5E7EB; }
+  .accordion-item:last-child { border-bottom: none; }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  .accordion-header::-webkit-details-marker { display: none; }
+  .accordion-header:hover { color: #0066B2; }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  .accordion-item[open] .accordion-icon { transform: rotate(180deg); }
+  .accordion-item[open] .accordion-header { color: #0066B2; }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  .accordion-content p { margin: 0; }
 
-*Prices are estimates and vary based on current market conditions. Always get written quotes from multiple providers.*
+  @media (max-width: 768px) {
+    .accordion-header { font-size: 0.875rem; padding: 0.875rem 0; }
+    .accordion-content { font-size: 0.875rem; }
+  }
+</style>
 
-</ComparisonLayout>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
 
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

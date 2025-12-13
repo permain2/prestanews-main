@@ -1363,7 +1363,11 @@ node scripts/fetch-[category]-logos.js
 # 4. Check results - some may fail (niche companies)
 # Script creates: src/utils/[category]LogoMap.ts
 
-# 5. For failed logos, create SVG fallbacks
+# 5. ⚠️ CRITICAL: Verify logos are NOT white/invisible!
+# Ask Cursor: "Read public/[category]-logos/[name].png - is it visible on white?"
+# Or open each logo with dark background to check color
+
+# 6. For failed/white logos, create SVG fallbacks or re-download
 cp scripts/generate-warranty-logos.js scripts/generate-[category]-logos.js
 # Edit colors and company names, then run:
 node scripts/generate-[category]-logos.js
@@ -1449,12 +1453,41 @@ import { get[Category]Logo } from '../../utils/[category]LogoMap';
             </ol>
             <p>Format priority: PNG with transparent background → PNG → SVG</p>
 
+            <h3>⚠️ CRITICAL: Logo Visibility Check</h3>
+            <div style="background: #fef2f2; padding: 1.5rem; border-radius: 8px; border-left: 5px solid #DC2626; margin: 1rem 0;">
+                <h4 style="margin-top: 0; color: #991b1b;">🚨 White Logo Problem</h4>
+                <p><strong>Many API-fetched logos are WHITE on TRANSPARENT backgrounds!</strong> These are invisible on white card backgrounds.</p>
+                
+                <h5>How to Check (using Cursor AI):</h5>
+                <pre><code># Ask Cursor to visually inspect each logo:
+"Read the image file public/[category]-logos/[company].png and tell me if it's visible on a white background"
+
+# Or check multiple at once:
+"Check all logos in public/insurance-logos/ - which ones are white/invisible?"</code></pre>
+
+                <h5>How to Check (Manual):</h5>
+                <ol>
+                    <li>Open logo in image viewer with <strong>dark background</strong> (not white)</li>
+                    <li>If logo appears white/light-colored, it will be invisible on white cards</li>
+                    <li>Check logo on actual page: <code>npm run dev</code> → inspect cards</li>
+                </ol>
+
+                <h5>Fix for White Logos:</h5>
+                <ul>
+                    <li><strong>Option 1:</strong> Re-fetch with <code>theme: "dark"</code> parameter (colored version for light backgrounds)</li>
+                    <li><strong>Option 2:</strong> Download colored version from company website/press kit</li>
+                    <li><strong>Option 3:</strong> Use logo.dev API with different parameters</li>
+                    <li><strong>Option 4:</strong> Generate SVG fallback with colored text</li>
+                </ul>
+            </div>
+
             <h3>Troubleshooting</h3>
             <table>
                 <tr><th>Issue</th><th>Solution</th></tr>
                 <tr><td>API error 401</td><td>Check BRANDFETCH_API_KEY in .env</td></tr>
                 <tr><td>No logo found (niche company)</td><td>Run generate-[category]-logos.js for SVG fallback</td></tr>
                 <tr><td>Logo has white background</td><td>Use Freepik API background removal (FREEPIK_API_KEY)</td></tr>
+                <tr><td><strong>Logo is WHITE/invisible</strong></td><td><strong>See "Logo Visibility Check" above - re-fetch with dark theme or download colored version</strong></td></tr>
                 <tr><td>Wrong logo variant</td><td>Manually download from Brandfetch website</td></tr>
                 <tr><td>SVG looks wrong</td><td>Adjust colors in generate script, re-run</td></tr>
             </table>

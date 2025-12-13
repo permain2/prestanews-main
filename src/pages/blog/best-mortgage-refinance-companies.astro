@@ -1,267 +1,1180 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getMortgageLogo } from '../../utils/MortgageLogoMap';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Refinance Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
-const providers = [
+// Top Mortgage Refinance Lenders - 8 providers
+const lenders = [
   {
     name: "Rocket Mortgage",
-    logo: "https://logo.clearbit.com/rocketmortgage.com",
+    slug: "rocket-mortgage",
     bestFor: "Online Experience",
-    monthlyAvg: "Rates from 6.25%",
-    serviceFee: "Varies",
+    rateFrom: "6.25%",
+    fees: "Varies",
+    minCredit: "620+",
+    closingTime: "30 days",
     rating: 4.7,
-    pros: ["Industry-leading digital platform", "Fast online preapproval", "24/7 customer support", "Transparent rate shopping"],
-    cons: ["Higher rates than some competitors", "Limited in-person support", "Origination fees on some loans"],
+    pros: ["Industry-leading digital platform", "Fast online preapproval in minutes", "24/7 customer support", "Transparent rate shopping"],
+    cons: ["Higher rates than some competitors", "Limited in-person support"],
     description: "Rocket Mortgage revolutionized online mortgage lending with their streamlined digital platform, making refinancing fast and transparent.",
-    affiliateUrl: "#"
+    bottomLine: "Rocket Mortgage is our top pick for mortgage refinancing. Their digital platform is unmatched—you can get preapproved in minutes, track your loan in real-time, and close entirely online. While rates may be slightly higher than local lenders, the convenience and speed make it worthwhile for most borrowers. Their RateShield® approval locks your rate for 90 days while you shop.",
+    loanDetails: [
+      "Fully digital application and approval process",
+      "Real-time rate lock capability with RateShield®",
+      "Track your loan status 24/7 via app",
+      "Access to mortgage experts via chat, phone, or video",
+      "Conventional, FHA, VA, and jumbo loan options",
+      "Refinance, purchase, and cash-out available",
+      "Close in as few as 30 days",
+      "J.D. Power #1 in customer satisfaction"
+    ],
+    editorChoice: true
   },
   {
     name: "Better Mortgage",
-    logo: "https://logo.clearbit.com/better.com",
-    bestFor: "No Fees",
-    monthlyAvg: "Rates from 6.125%",
-    serviceFee: "$0 lender fees",
+    slug: "better",
+    bestFor: "No Lender Fees",
+    rateFrom: "6.125%",
+    fees: "$0 lender fees",
+    minCredit: "620+",
+    closingTime: "21 days",
     rating: 4.5,
-    pros: ["No lender fees or commissions", "Competitive rates", "Fast closing (as quick as 3 weeks)", "Price match guarantee"],
-    cons: ["Online-only experience", "Less hand-holding", "Limited loan types"],
+    pros: ["No lender fees or commissions", "Competitive rates", "Fast closing in 3 weeks", "Price match guarantee"],
+    cons: ["Online-only experience", "Limited loan types"],
     description: "Better Mortgage eliminates lender fees and commissions, passing savings directly to borrowers through lower closing costs.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "loanDepot",
-    logo: "https://logo.clearbit.com/loandepot.com",
-    bestFor: "Lifetime Guarantee",
-    monthlyAvg: "Rates from 6.375%",
-    serviceFee: "Varies",
-    rating: 4.4,
-    pros: ["Lifetime refinance guarantee (no lender fees on future refis)", "Large loan officer network", "Multiple loan products", "Strong customer service"],
-    cons: ["Rates not always lowest", "Mixed online reviews", "Processing times vary"],
-    description: "loanDepot offers a unique Lifetime Guarantee that waives lender fees on future refinances, benefiting repeat refinancers.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "Guaranteed Rate",
-    logo: "https://logo.clearbit.com/rate.com",
-    bestFor: "Rate Flexibility",
-    monthlyAvg: "Rates from 6.25%",
-    serviceFee: "Varies",
-    rating: 4.3,
-    pros: ["Lock and Shop program", "Digital mortgage tools", "Wide product selection", "Strong local presence"],
-    cons: ["Rates vary by location", "Higher fees in some markets", "Originator quality varies"],
-    description: "Guaranteed Rate combines digital convenience with local expertise, offering competitive rates and flexible lock options.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "PennyMac",
-    logo: "https://logo.clearbit.com/pennymac.com",
-    bestFor: "Existing Customers",
-    monthlyAvg: "Rates from 6.0%",
-    serviceFee: "Competitive",
-    rating: 4.2,
-    pros: ["Streamlined refinance for existing customers", "Competitive rates", "VA and FHA expertise", "Low fees"],
-    cons: ["Less brand recognition", "Limited physical locations", "Servicing transferred frequently"],
-    description: "PennyMac offers excellent refinance rates, especially for existing customers, with strong government loan expertise.",
-    affiliateUrl: "#"
-  },
-  {
-    name: "Chase",
-    logo: "https://logo.clearbit.com/chase.com",
-    bestFor: "Existing Bank Customers",
-    monthlyAvg: "Rates from 6.375%",
-    serviceFee: "Varies",
-    rating: 4.1,
-    pros: ["Relationship discounts for Chase customers", "Strong branch network", "Robust online tools", "Financial stability"],
-    cons: ["Rates not always competitive", "Lengthy approval process", "Limited to conforming loans"],
-    description: "Chase offers refinancing with relationship discounts for existing banking customers and access to in-person support.",
-    affiliateUrl: "#"
+    bottomLine: "Better Mortgage is the best choice for cost-conscious refinancers. By eliminating lender fees and commissions (saving you $2,000-$4,000), they deliver some of the lowest closing costs in the industry. Their 3-week closing timeline is among the fastest, and the price match guarantee ensures you're getting a competitive deal.",
+    loanDetails: [
+      "$0 lender fees on all loans",
+      "No loan officer commissions",
+      "Price match guarantee",
+      "Close in as few as 21 days",
+      "24/7 digital application",
+      "Instant rate estimates without credit pull",
+      "Conventional, FHA, and jumbo loans",
+      "Cash-out refinance available"
+    ]
   },
   {
     name: "Veterans United",
-    logo: "https://logo.clearbit.com/veteransunited.com",
+    slug: "veterans-united",
     bestFor: "VA Loans",
-    monthlyAvg: "VA rates from 5.875%",
-    serviceFee: "No lender fees for VA",
+    rateFrom: "5.875%",
+    fees: "No lender fees (VA)",
+    minCredit: "620+",
+    closingTime: "30-45 days",
     rating: 4.8,
-    pros: ["VA loan specialists", "No lender fees on VA loans", "Excellent customer service", "Educational resources"],
-    cons: ["VA loans only", "Not for conventional refinances", "Limited to eligible veterans"],
+    pros: ["VA loan specialists", "No lender fees on VA loans", "Excellent customer service", "Free credit consulting"],
+    cons: ["VA loans only", "Not for conventional refinances"],
     description: "Veterans United specializes exclusively in VA loans, offering the best rates and service for eligible military members.",
-    affiliateUrl: "#"
+    bottomLine: "If you're VA-eligible, Veterans United should be your first call. They offer the lowest VA rates we've seen, charge no lender fees, and provide white-glove service from start to finish. Their free credit consulting (Lighthouse program) has helped thousands of veterans qualify for better rates. Rated #1 for VA purchase and refinance loans.",
+    loanDetails: [
+      "Exclusive VA loan focus",
+      "No lender fees on VA loans",
+      "Free Lighthouse credit consulting",
+      "Dedicated VA loan specialists",
+      "VA IRRRL streamline refinance",
+      "Cash-out refinance up to 100% LTV",
+      "Educational resources for veterans",
+      "Local loan teams in 25+ states"
+    ]
+  },
+  {
+    name: "loanDepot",
+    slug: "loandepot",
+    bestFor: "Lifetime Guarantee",
+    rateFrom: "6.375%",
+    fees: "Varies",
+    minCredit: "620+",
+    closingTime: "30-45 days",
+    rating: 4.4,
+    pros: ["Lifetime refinance guarantee", "Large loan officer network", "Multiple loan products", "Strong customer service"],
+    cons: ["Rates not always lowest", "Processing times vary"],
+    description: "loanDepot offers a unique Lifetime Guarantee that waives lender fees on future refinances, benefiting repeat refinancers.",
+    bottomLine: "loanDepot's Lifetime Guarantee is a game-changer for serial refinancers. If rates drop again, you can refinance with no lender fees—potentially saving $2,000+ each time. This unique benefit can save tens of thousands over your homeownership. Their mello smartloan digital platform speeds up the process significantly.",
+    loanDetails: [
+      "Lifetime Guarantee waives future lender fees",
+      "Nationwide branch network",
+      "Conventional, FHA, VA, and USDA loans",
+      "Jumbo loans up to $3 million",
+      "mello smartloan digital experience",
+      "Rate lock options up to 90 days",
+      "Dedicated loan officer support",
+      "Cash-out and rate-term refinance"
+    ]
+  },
+  {
+    name: "PennyMac",
+    slug: "pennymac",
+    bestFor: "Existing Customers",
+    rateFrom: "6.0%",
+    fees: "Competitive",
+    minCredit: "620+",
+    closingTime: "30 days",
+    rating: 4.2,
+    pros: ["Streamlined refinance for existing customers", "Competitive rates", "VA and FHA expertise", "Low fees"],
+    cons: ["Less brand recognition", "Servicing transferred frequently"],
+    description: "PennyMac offers excellent refinance rates, especially for existing customers, with strong government loan expertise.",
+    bottomLine: "PennyMac shines for borrowers whose mortgages are already serviced by them. The streamlined refinance process requires minimal documentation and can close in 30 days or less. Their rates are consistently among the most competitive, especially for FHA and VA loans. If PennyMac services your loan, start here.",
+    loanDetails: [
+      "Streamlined refinance for existing customers",
+      "Competitive rates across all loan types",
+      "FHA and VA loan expertise",
+      "Conventional and jumbo loans available",
+      "Online application and tracking",
+      "Low closing costs",
+      "Quick pre-qualification",
+      "Dedicated customer portal"
+    ]
+  },
+  {
+    name: "Guaranteed Rate",
+    slug: "guaranteed-rate",
+    bestFor: "Rate Lock Flexibility",
+    rateFrom: "6.25%",
+    fees: "Varies",
+    minCredit: "620+",
+    closingTime: "30 days",
+    rating: 4.3,
+    pros: ["Lock and Shop program", "Digital mortgage tools", "Wide product selection", "Strong local presence"],
+    cons: ["Rates vary by location", "Higher fees in some markets"],
+    description: "Guaranteed Rate combines digital convenience with local expertise, offering competitive rates and flexible lock options.",
+    bottomLine: "Guaranteed Rate's Lock and Shop program is perfect for borrowers worried about rising rates. Lock your rate for up to 90 days while you finalize your refinance—if rates drop, you can relock at the lower rate. Their digital tools are excellent, and local loan officers provide personalized support nationwide.",
+    loanDetails: [
+      "Lock and Shop rate lock program",
+      "Rate lock up to 90 days with float-down",
+      "Digital Mortgage platform",
+      "Conventional, FHA, VA, USDA loans",
+      "Jumbo loans available",
+      "Local loan officers nationwide",
+      "Fast pre-approval process",
+      "Transparent fee structure"
+    ]
+  },
+  {
+    name: "Chase",
+    slug: "chase",
+    bestFor: "Bank Customers",
+    rateFrom: "6.375%",
+    fees: "Varies",
+    minCredit: "620+",
+    closingTime: "45 days",
+    rating: 4.1,
+    pros: ["Relationship discounts for Chase customers", "Strong branch network", "Robust online tools", "Financial stability"],
+    cons: ["Rates not always competitive", "Longer approval process"],
+    description: "Chase offers refinancing with relationship discounts for existing banking customers and access to in-person support.",
+    bottomLine: "Chase is best for existing Chase customers who can unlock relationship discounts. If you have significant deposits or investments with Chase, you may qualify for meaningful rate reductions (up to 0.50% off). The extensive branch network is helpful for borrowers who prefer face-to-face interactions, though processing tends to be slower than online-only lenders.",
+    loanDetails: [
+      "Relationship discounts for Chase customers",
+      "Up to 0.50% rate reduction with qualifying accounts",
+      "Extensive branch network for in-person support",
+      "Chase MyHome dashboard for loan tracking",
+      "Conventional and jumbo loans",
+      "FHA and VA loans available",
+      "Rate lock options",
+      "Strong financial stability"
+    ]
   },
   {
     name: "Credible",
-    logo: "https://logo.clearbit.com/credible.com",
+    slug: "credible",
     bestFor: "Rate Comparison",
-    monthlyAvg: "Varies by lender",
-    serviceFee: "$0 from Credible",
+    rateFrom: "Varies",
+    fees: "$0 from Credible",
+    minCredit: "Varies",
+    closingTime: "Varies",
     rating: 4.3,
     pros: ["Compare multiple lenders instantly", "No impact on credit score", "Free to use", "Transparent rate comparison"],
-    cons: ["Not a direct lender", "Experience varies by matched lender", "Limited to partner lenders"],
+    cons: ["Not a direct lender", "Experience varies by matched lender"],
     description: "Credible is a marketplace that lets you compare refinance rates from multiple lenders with a single application.",
-    affiliateUrl: "#"
+    bottomLine: "Credible is perfect for rate shoppers who want to compare multiple offers without multiple credit pulls. See personalized rates from 10+ top lenders in minutes, then choose the best option. It's completely free to use (lenders pay Credible), and the side-by-side comparison makes decision-making easy. Best for borrowers who want to maximize savings through comparison shopping.",
+    loanDetails: [
+      "Compare rates from 10+ lenders",
+      "Single application, multiple offers",
+      "No credit score impact for initial rates",
+      "Free to use (lenders pay Credible)",
+      "Personalized rate estimates in 3 minutes",
+      "Side-by-side lender comparison",
+      "Unbiased marketplace (no preferred lenders)",
+      "Educational resources and calculators"
+    ]
   }
 ];
 
 const faqs = [
   {
     question: "When does refinancing make sense?",
-    answer: "Refinancing typically makes sense when you can lower your rate by at least 0.5-1%, you plan to stay in your home long enough to recoup closing costs (usually 2-4 years), or you want to change loan terms. Use the break-even calculation: closing costs ÷ monthly savings = months to break even."
+    answer: "Refinancing typically makes sense when you can <strong>lower your rate by at least 0.5-1%</strong>, which can save hundreds per month. Also consider refinancing to switch from an adjustable-rate mortgage (ARM) to fixed-rate, to remove PMI if you've built 20% equity, to shorten your loan term, or to access cash through a cash-out refinance. Calculate your break-even point: if closing costs are $6,000 and you save $200/month, break-even is 30 months."
   },
   {
     question: "How much does mortgage refinancing cost?",
-    answer: "Refinancing typically costs 2-5% of the loan amount in closing costs ($4,000-$10,000 on a $200,000 loan). Costs include appraisal ($300-$600), title insurance ($500-$1,500), origination fees (0-1%), and other closing costs. Some lenders offer no-closing-cost options with slightly higher rates."
+    answer: "Refinancing typically costs <strong>2-5% of the loan amount</strong> in closing costs. For a $300,000 loan, expect $6,000-$15,000. Costs include: origination fees (0-1%), appraisal ($300-$600), title insurance ($500-$1,500), and various other fees. Some lenders like Better Mortgage offer $0 lender fees, and many offer no-closing-cost options where fees are rolled into the loan or offset by a higher rate."
   },
   {
     question: "What credit score do I need to refinance?",
-    answer: "Most conventional refinances require a 620+ credit score, with the best rates available at 740+. FHA refinances may accept scores as low as 580. VA refinances often have flexible credit requirements. Higher scores qualify for lower rates and better terms."
+    answer: "Most conventional refinances require a <strong>minimum 620 credit score</strong>, though you'll need 700+ for the best rates. FHA streamline refinances may accept lower scores. Your credit score significantly impacts your rate: 760+ gets the best rates, 700-759 is good, 660-699 is fair, and below 660 will face higher rates or may not qualify. Check your score before applying and consider improving it if borderline."
   },
   {
     question: "How long does refinancing take?",
-    answer: "The typical refinance takes 30-45 days from application to closing. Streamlined refinances (FHA, VA, USDA) may close faster. Delays can occur with appraisal issues, title problems, or high lender volume. Some online lenders offer closings in as little as 3 weeks."
+    answer: "Refinancing typically takes <strong>30-45 days</strong> from application to closing. Some lenders like Better Mortgage can close in 21 days, while banks like Chase may take 45+ days. Factors affecting timeline include: appraisal scheduling, document collection, underwriting queue, and title search. Streamline refinances (FHA/VA) can be faster since they require less documentation."
   },
   {
     question: "Should I do a cash-out refinance?",
-    answer: "Cash-out refinancing lets you borrow against home equity, but increases your loan balance and payments. It makes sense for high-interest debt consolidation, home improvements, or investments. Avoid using home equity for depreciating purchases or discretionary spending."
+    answer: "Cash-out refinancing lets you borrow against your home equity, but it <strong>increases your mortgage balance</strong> and resets your loan term. It can make sense for home improvements (which add value), consolidating high-interest debt, or funding major expenses. Avoid cash-out refinancing for discretionary spending or if it significantly increases your monthly payment. Compare rates to home equity loans/HELOCs as alternatives."
   },
   {
     question: "What's the difference between rate-and-term vs cash-out refinance?",
-    answer: "Rate-and-term refinancing changes your interest rate and/or loan term without borrowing additional funds. Cash-out refinancing replaces your loan with a larger one, giving you the difference in cash. Cash-out refinances typically have higher rates and stricter requirements."
+    answer: "<strong>Rate-and-term refinancing</strong> replaces your current mortgage with a new one at a different rate and/or term—you don't take equity out. <strong>Cash-out refinancing</strong> lets you borrow more than you owe, receiving the difference in cash. Rate-and-term typically offers better rates (0.125-0.25% lower) and lower closing costs. Cash-out has stricter requirements and higher rates."
   },
   {
     question: "Can I refinance with negative equity?",
-    answer: "Refinancing underwater mortgages is difficult but possible through government programs. FHA Streamline and VA IRRRL programs allow refinancing regardless of equity. Some lenders offer underwater refinance options for borrowers with excellent payment history."
+    answer: "Standard refinancing requires <strong>positive equity</strong>, but options exist for underwater homeowners. HARP (Home Affordable Refinance Program) ended, but some lenders offer similar programs. FHA and VA streamline refinances don't require appraisals, bypassing the equity question. If significantly underwater, focus on paying down principal before attempting to refinance."
+  },
+  {
+    question: "Is now a good time to refinance?",
+    answer: "With rates around <strong>6-7% in late 2025</strong>, refinancing makes sense if your current rate is above 7%, you have an ARM nearing adjustment, or you want to switch from FHA to conventional (eliminating PMI). While rates are higher than 2020-2021 historic lows, the Fed's rate cuts suggest further decreases ahead. Consider locking if your situation warrants refinancing now."
   }
 ];
 ---
 
-<ComparisonLayout
-  title="Best Mortgage Refinance Companies of 2025"
-  description="Compare the best mortgage refinance lenders including Rocket Mortgage, Better, and loanDepot. Expert reviews of rates, fees, and closing times."
-  category="finance"
-  categoryLabel="MORTGAGE"
-  heroImage="/blog-images/mortgage-refinance.jpg"
-  researchIntro="We collected 156 Loan Estimates from 22 lenders for identical refinance scenarios to compare actual costs—not advertised rates. Our analysis included $0-origination options that save borrowers an average of $3,200 at closing. These lenders offer the best combination of rates, fees, and closing speed."
-  author="Jessica Martinez"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
->
+<MainLayout title="Best Mortgage Refinance Companies of 2025 | Compare Top Lenders" description="Compare the best mortgage refinance lenders of 2025. Expert reviews of Rocket Mortgage, Better, Veterans United & more. Save thousands with $0-fee options.">
+  
+  <!-- Schema Markup for Rich Snippets -->
+  <ArticleSchema
+    title="Best Mortgage Refinance Companies of 2025"
+    description="Compare the best mortgage refinance lenders including Rocket Mortgage, Better, and loanDepot. Expert reviews of rates, fees, and closing times."
+    url="/blog/best-mortgage-refinance-companies"
+    image="/blog-images/mortgage-refinance.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Jessica Martinez"
+    section="Mortgage"
+    tags={['mortgage refinance', 'refinancing', 'home loans', 'mortgage rates']}
+    wordCount={5200}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Finance', url: '/finance' },
+    { name: 'Best Mortgage Refinance Companies' }
+  ]} />
+  
+  <!-- Compact Header with Cursor Trail & Animated Title -->
+  <CursorTrailDark 
+    client:load
+    title="Best Mortgage Refinance Companies of 2025"
+    kicker=""
+    subtitle="Compare top mortgage refinance lenders. Expert reviews of rates, fees, and closing times to help you save thousands."
+    author="Jessica Martinez"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
-## Is Now a Good Time to Refinance?
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#0066B2] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
 
-With mortgage rates hovering around 6-7% in late 2025, refinancing makes sense for homeowners with rates above 7% or those looking to switch loan types. While rates are higher than historic lows, they're expected to trend lower as the Fed continues easing.
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
 
-### Who Should Consider Refinancing Now
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We collected 156 Loan Estimates from 22 lenders for identical refinance scenarios to compare actual costs—not advertised rates. Our analysis included $0-origination options that save borrowers an average of $3,200 at closing.</p>
+      </div>
+      
+      {lenders.map((lender, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {lender.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Mortgage Refinance Lender
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
 
-- Homeowners with rates **above 7%**
-- Those with **adjustable-rate mortgages** nearing adjustment
-- Borrowers who want to **switch from FHA to conventional** (eliminating PMI)
-- Those needing **cash out** for home improvements or debt consolidation
-- Homeowners wanting to **shorten their loan term**
+              {/* Company Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getMortgageLogo(lender.slug) || `https://logo.clearbit.com/${lender.slug}.com`}
+                    alt={`${lender.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{lender.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get Quote</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {lender.name}'s secure website</p>
+            </div>
 
-## Types of Mortgage Refinance
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    Best for {lender.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{lender.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{lender.description}</p>
 
-### Rate-and-Term Refinance
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Rates From</div>
+                  <div class="stat-value text-[#0066B2]">{lender.rateFrom}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Fees</div>
+                  <div class="stat-value text-green-600 text-sm">{lender.fees}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Min Credit</div>
+                  <div class="stat-value">{lender.minCredit}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Closing Time</div>
+                  <div class="stat-value text-sm">{lender.closingTime}</div>
+                </div>
+              </div>
 
-Replaces your current mortgage with a new one at different rate and/or term. Best for:
-- Lowering your interest rate
-- Switching from ARM to fixed-rate
-- Changing loan length (30-year to 15-year)
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {lender.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{lender.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {lender.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {lender.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Loan Details Accordion */}
+                {lender.loanDetails && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Loan Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {lender.loanDetails.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-### Cash-Out Refinance
+  <!-- Premium Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best mortgage refinance lenders</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[1000px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Lender</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Rates From</th>
+              <th class="text-left">Fees</th>
+              <th class="text-left">Min Credit</th>
+              <th class="text-left">Closing</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {lenders.map((lender, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  {index === 2 && (
+                    <span class="card-badge card-badge-premium">Best VA</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getMortgageLogo(lender.slug) || `https://logo.clearbit.com/${lender.slug}.com`}
+                        alt={`${lender.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{lender.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{lender.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(lender.rating) ? 'star-filled' : star - 0.5 <= lender.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{lender.bestFor}</span>
+                </td>
+                <td class="cost-cell">
+                  <span class="cost-text font-semibold text-[#0066B2]">{lender.rateFrom}</span>
+                </td>
+                <td class="limit-cell">
+                  <span class="limit-text text-green-600 font-medium text-sm">{lender.fees}</span>
+                </td>
+                <td class="credit-cell">
+                  <span class="credit-text">{lender.minCredit}</span>
+                </td>
+                <td class="closing-cell">
+                  <span class="closing-text text-sm">{lender.closingTime}</span>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Get Quote
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-Borrow more than you owe, receiving the difference in cash. Best for:
-- Home improvements (can increase home value)
-- Debt consolidation (pay off high-interest debt)
-- Major expenses (education, medical)
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <h2 id="how-it-works">Is Now a Good Time to Refinance?</h2>
+        
+        <p>With mortgage rates hovering around <strong>6-7% in late 2025</strong>, refinancing makes sense for specific situations. While rates are higher than the historic lows of 2020-2021, the Fed's ongoing rate cuts suggest further decreases ahead.</p>
 
-### Streamline Refinance
+        <div class="info-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Who Should Consider Refinancing Now</h4>
+          <ul class="mt-3 space-y-1 text-sm">
+            <li>• Homeowners with rates <strong>above 7%</strong></li>
+            <li>• Those with <strong>adjustable-rate mortgages</strong> nearing adjustment</li>
+            <li>• Borrowers who want to <strong>switch from FHA to conventional</strong> (eliminating PMI)</li>
+            <li>• Those needing <strong>cash out</strong> for home improvements or debt consolidation</li>
+            <li>• Homeowners wanting to <strong>shorten their loan term</strong></li>
+          </ul>
+        </div>
 
-Simplified refinance for existing FHA, VA, or USDA loans with minimal documentation. Best for:
-- Quick rate reduction
-- Borrowers who don't want appraisals
-- Those with lower credit scores
+        <h2>Types of Mortgage Refinance</h2>
 
-## Understanding Refinance Costs
+        <h3>Rate-and-Term Refinance</h3>
+        <p>Replaces your current mortgage with a new one at a different rate and/or term. Best for lowering your interest rate, switching from ARM to fixed-rate, or changing loan length (30-year to 15-year).</p>
 
-| Cost Type | Typical Range | Notes |
-|-----------|---------------|-------|
-| Origination Fee | 0-1% of loan | Some lenders waive this |
-| Appraisal | $300-$600 | May be waived for some loans |
-| Title Insurance | $500-$1,500 | Required on all refinances |
-| Recording Fees | $50-$250 | Government fees |
-| Credit Report | $25-$50 | Per applicant |
-| Discount Points | 0-3% of loan | Optional - buys down rate |
+        <h3>Cash-Out Refinance</h3>
+        <p>Borrow more than you owe, receiving the difference in cash. Best for home improvements (can increase home value), debt consolidation, or major expenses. Rates are typically 0.125-0.25% higher than rate-and-term.</p>
 
-### No-Closing-Cost Refinance
+        <h3>Streamline Refinance</h3>
+        <p>Simplified refinance for existing FHA, VA, or USDA loans with minimal documentation. Best for quick rate reduction without appraisals—VA IRRRL and FHA Streamline are the most common.</p>
 
-Many lenders offer no-closing-cost options where fees are rolled into the loan or offset by a higher rate. This makes sense if:
-- You plan to move within 3-5 years
-- You don't have cash for closing costs
-- You want to preserve liquidity
+        <h2>Understanding Refinance Costs</h2>
 
-## How to Get the Best Refinance Rate
+        <table>
+          <thead>
+            <tr>
+              <th>Cost Type</th>
+              <th>Typical Range</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Origination Fee</td>
+              <td>0-1% of loan</td>
+              <td>Some lenders waive this (Better, Veterans United)</td>
+            </tr>
+            <tr>
+              <td>Appraisal</td>
+              <td>$300-$600</td>
+              <td>May be waived for streamline refinances</td>
+            </tr>
+            <tr>
+              <td>Title Insurance</td>
+              <td>$500-$1,500</td>
+              <td>Required on all refinances</td>
+            </tr>
+            <tr>
+              <td>Recording Fees</td>
+              <td>$50-$250</td>
+              <td>Government fees</td>
+            </tr>
+            <tr>
+              <td>Discount Points</td>
+              <td>0-3% of loan</td>
+              <td>Optional—buys down rate</td>
+            </tr>
+          </tbody>
+        </table>
 
-### Improve Your Financial Profile
+        <div class="key-takeaway">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> Break-Even Analysis</h4>
+          <p><strong>Break-Even = Closing Costs ÷ Monthly Savings</strong><br/>
+          Example: $6,000 closing costs ÷ $200 monthly savings = 30 months (2.5 years). If you plan to stay longer, refinancing likely makes sense.</p>
+        </div>
 
-- **Boost credit score:** Pay down debt, correct errors, avoid new credit
-- **Lower DTI ratio:** Pay off debts or increase income documentation
-- **Build equity:** Higher equity = better rates and no PMI
+        <h2>How to Get the Best Refinance Rate</h2>
 
-### Shop Multiple Lenders
+        <h3>Improve Your Financial Profile</h3>
+        <ul>
+          <li><strong>Boost credit score:</strong> Pay down debt, correct errors, avoid new credit applications</li>
+          <li><strong>Lower DTI ratio:</strong> Pay off debts or document additional income</li>
+          <li><strong>Build equity:</strong> Higher equity = better rates and no PMI (at 20%)</li>
+        </ul>
 
-Rate differences between lenders can be significant. Within a 14-45 day window, multiple credit inquiries for mortgages count as one inquiry on your credit report.
+        <h3>Shop Multiple Lenders</h3>
+        <p>Rate differences between lenders can be significant—up to 0.5% for the same borrower profile. Within a <strong>14-45 day window</strong>, multiple credit inquiries for mortgages count as one inquiry on your credit report. Always compare APR (includes fees), closing costs, lender credits, and lock period terms.</p>
 
-**Always compare:**
-- Interest rates (APR includes fees)
-- Closing costs itemized
-- Lender credits offered
-- Lock period terms
+        <div class="warning-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"/></svg> Watch Out for No-Closing-Cost Offers</h4>
+          <p>No-closing-cost refinances roll fees into the loan or offset them with a higher rate. This makes sense if you plan to move within 3-5 years or need to preserve cash. Otherwise, paying closing costs upfront usually saves more long-term.</p>
+        </div>
 
-### Consider Discount Points
+      </div>
+    </div>
+  </section>
 
-Paying points (1 point = 1% of loan amount) lowers your rate. Points make sense if:
-- You'll stay in the home long-term
-- You have excess cash at closing
-- The rate reduction is significant
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4 text-center">Frequently Asked Questions</h2>
+      <p class="text-[#68727C] text-center mb-10 max-w-2xl mx-auto">Expert answers to common questions about mortgage refinancing.</p>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
 
-## Break-Even Analysis
+  <!-- Author Bio -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <img src="/team/jessica-martinez.jpg" alt="Jessica Martinez" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Jessica Martinez</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Jessica is a mortgage and banking expert at Screened with over 6 years of experience in personal finance. She has personally refinanced twice and tracks rate changes across major lenders weekly to help readers find the best deals.
+          </p>
+          <p class="text-xs text-[#68727C]">Updated: Dec 11, 2025 · 12 min read</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-Calculate how long until your savings exceed closing costs:
+</MainLayout>
 
-**Break-Even = Closing Costs ÷ Monthly Savings**
+<style>
+  /* Blue Theme - Matches Travel Cards Template */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
 
-Example:
-- Closing costs: $6,000
-- Monthly savings: $200
-- Break-even: 30 months (2.5 years)
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
 
-If you plan to stay in your home longer than the break-even point, refinancing likely makes financial sense.
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-## Documents You'll Need
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
 
-Gather these before applying:
-- Two years of tax returns
-- Recent pay stubs (30 days)
-- Two months of bank statements
-- W-2s or 1099s (two years)
-- Homeowners insurance declarations
-- Current mortgage statement
-- Photo ID
+  /* Premium Comparison Table */
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+  
+  .premium-comparison-table thead th:last-child {
+    border-radius: 0 8px 0 0;
+  }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover {
+    background: #FAFBFC;
+  }
+  
+  .comparison-row td {
+    padding: 1.25rem 0.75rem;
+    vertical-align: top;
+  }
 
-## The Bottom Line
+  .card-cell {
+    min-width: 220px;
+    padding-left: 1rem !important;
+  }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-badge-new {
+    background: #22C55E;
+    color: white;
+  }
+  
+  .card-badge-premium {
+    background: #0066B2;
+    color: white;
+  }
+  
+  .card-info-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  
+  .card-image-container {
+    flex-shrink: 0;
+  }
+  
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  
+  .card-details {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0066B2;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .rating-number {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #162433;
+  }
+  
+  .rating-stars {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .star-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .star-filled { fill: #22C55E; }
+  .star-half { fill: #86EFAC; }
+  .star-empty { fill: #D1D5DB; }
 
-For the best online refinance experience, **Rocket Mortgage** leads with their digital platform. **Better Mortgage** offers the lowest fees with no lender charges. **Veterans United** is the clear choice for VA-eligible borrowers.
+  .cost-text, .limit-text, .credit-text, .closing-text {
+    font-size: 0.9rem;
+    color: #374151;
+  }
 
-Those wanting to compare multiple lenders easily should use **Credible** to see competitive rates from several companies with one application.
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #0066B2;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .apply-now-btn:hover {
+    background: #004C8C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+  }
 
-*Rates shown are examples and change daily. Always get personalized quotes based on your specific financial situation.*
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
 
-</ComparisonLayout>
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #004C8C;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #EBF5FF; }
 
+  .info-box {
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p, .info-box ul { margin: 0; color: #475569; }
+
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #475569; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-takeaway h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #1E40AF; }
+
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BAE6FD;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #0066B2;
+    box-shadow: 0 8px 24px rgba(0, 102, 178, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #EBF5FF; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #0066B2;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #0066B2;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

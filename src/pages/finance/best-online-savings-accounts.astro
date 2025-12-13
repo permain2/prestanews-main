@@ -6,48 +6,9 @@ import FAQSchema from '../../components/seo/FAQSchema.astro';
 import ArticleSchema from '../../components/seo/ArticleSchema.astro';
 import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 import { getSavingsLogo } from '../../utils/SavingsLogoMap';
-import { getProvidersBySubcategory, getFaqsByArticle, urlFor } from '../../lib/sanity';
 
-// Try to fetch from Sanity, but use fallbacks if empty or error
-let sanityProviders = [];
-let sanityFaqs = [];
-
-try {
-  sanityProviders = await getProvidersBySubcategory('savings');
-  sanityFaqs = await getFaqsByArticle('best-online-savings-accounts');
-} catch (error) {
-  console.error('Failed to fetch from Sanity:', error);
-}
-
-// Transform Sanity data to template format
-const sanityData = sanityProviders.map(provider => ({
-  name: provider.name,
-  slug: provider.slug?.current || provider.name.toLowerCase().replace(/\s+/g, '-'),
-  bestFor: provider.bestFor,
-  apy: provider.apy || '',
-  apyNote: provider.apyNote || '',
-  minDeposit: provider.minBalance || '$0',
-  monthlyFee: '$0',
-  minForAPY: provider.requirements || '',
-  rating: provider.rating,
-  fdic: provider.fdic !== false,
-  pros: provider.pros || [],
-  cons: provider.cons || [],
-  description: provider.description,
-  bottomLine: provider.bottomLine || '',
-  accountDetails: provider.details || [],
-  editorChoice: provider.editorChoice || false,
-  _sanityLogo: provider.logo ? urlFor(provider.logo).width(400).url() : null,
-  _logoPath: provider.logoPath,
-}));
-
-const sanityFaqData = sanityFaqs.map(faq => ({
-  question: faq.question,
-  answer: faq.answer,
-}));
-
-// Legacy data (remove after migration)
-const savingsAccountsLegacy = [
+// Savings accounts data
+const savingsAccountsData = [
   {
     name: "SoFi Checking and Savings",
     slug: "sofi",
@@ -397,7 +358,7 @@ const savingsAccountsLegacy = [
 ];
 
 // FAQ data targeting "People Also Ask"
-const faqsLegacy = [
+const faqsData = [
   {
     question: "What is the best high-yield savings account right now?",
     answer: "<strong>SoFi Checking and Savings</strong> is our top pick for December 2025, offering up to 4.00% APY with direct deposit, no fees, and no minimums. For pure savings with no checking, <strong>Marcus by Goldman Sachs</strong> offers 4.40% APY. If you have larger balances, <strong>Wealthfront</strong> (4.50% APY) and <strong>CIT Bank</strong> (4.65% APY with $5K+) offer even higher rates."
@@ -440,10 +401,9 @@ const faqsLegacy = [
   }
 ];
 
-// Use Sanity data if available, otherwise use fallback
-const savingsAccounts = sanityData && sanityData.length > 0 ? sanityData : savingsAccountsLegacy;
-const faqs = sanityFaqData && sanityFaqData.length > 0 ? sanityFaqData : faqsLegacy;
-const finalFaqs = faqs;
+// Use hardcoded data
+const savingsAccounts = savingsAccountsData;
+const faqs = faqsData;
 ---
 
 <MainLayout title="12 Best Online Savings Accounts of December 2025 | Highest APY" description="Compare the best high-yield savings accounts for 2025. Expert reviews of SoFi, Marcus, Ally, Wealthfront & more. Find accounts with APYs up to 4.65%.">
@@ -461,7 +421,7 @@ const finalFaqs = faqs;
     tags={['savings accounts', 'high-yield savings', 'APY', 'online banking', 'FDIC insured']}
     wordCount={4200}
   />
-  <FAQSchema faqs={finalFaqs} />
+  <FAQSchema faqs={faqs} />
   <BreadcrumbSchema items={[
     { name: 'Finance', url: '/finance' },
     { name: 'Best Online Savings Accounts' }
@@ -954,7 +914,7 @@ const finalFaqs = faqs;
       </div>
       
       <div class="space-y-4">
-        {finalFaqs.map((faq, index) => (
+        {faqs.map((faq, index) => (
           <details class="faq-item group" style={`animation-delay: ${index * 50}ms`}>
             <summary class="faq-question">
               <span class="pr-4" set:html={faq.question}></span>
@@ -1023,7 +983,7 @@ const finalFaqs = faqs;
 </MainLayout>
 
 <style>
-  /* Green theme for finance/savings */
+  /* Blue Theme - Matches Travel Cards Template */
   .apply-btn {
     display: flex;
     align-items: center;
@@ -1215,8 +1175,8 @@ const finalFaqs = faqs;
     height: 14px;
   }
   
-  .star-filled { fill: #0066B2; }
-  .star-half { fill: #6EE7B7; }
+  .star-filled { fill: #22C55E; }
+  .star-half { fill: #86EFAC; }
   .star-empty { fill: #D1D5DB; }
 
   .apy-text {
@@ -1325,14 +1285,14 @@ const finalFaqs = faqs;
   .seo-content tr:hover td { background: #F0F9FF; }
 
   .info-box {
-    background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
-    border: 1px solid #7DD3FC;
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
     border-radius: 16px;
     padding: 1.5rem;
     margin: 2rem 0;
   }
   .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
-  .info-box p { margin: 0; color: #065F46; }
+  .info-box p { margin: 0; color: #475569; }
 
   .warning-box {
     background: #ffffff;

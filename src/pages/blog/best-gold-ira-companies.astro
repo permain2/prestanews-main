@@ -1,314 +1,1211 @@
 ---
-import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import CursorTrailDark from '../../components/CursorTrailDark.tsx';
+import TOCToggleGroup from '../../components/TOCToggleGroup.tsx';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+import ArticleSchema from '../../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import { getGoldIRALogo } from '../../utils/GoldIRALogoMap';
 
-// TOC Items - Following PROJECT-DOCS template
-const tocItems = [
-  { id: "providers", label: "Top Picks", href: "#providers" },
-  { id: "guide", label: "Investment Guide", href: "#guide" },
-  { id: "faq", label: "FAQ", href: "#faq" }
-];
-
-const providers = [
+// Top Gold IRA Companies - 8 providers
+const companies = [
   {
     name: "Augusta Precious Metals",
-    logo: "https://logo.clearbit.com/augustapreciousmetals.com",
+    slug: "augusta-precious-metals",
     bestFor: "Education & Service",
-    monthlyAvg: "$50,000 minimum",
-    serviceFee: "$180/year",
+    minimum: "$50,000",
+    annualFees: "$180/year",
+    setupFee: "$0",
     rating: 4.9,
     pros: ["One-on-one education sessions", "Lifetime customer support", "Price match guarantee", "No high-pressure sales tactics"],
-    cons: ["$50,000 minimum investment", "Higher fees for smaller accounts", "Limited selection of metals"],
+    cons: ["$50,000 minimum investment", "Higher fees for smaller accounts"],
     description: "Augusta Precious Metals leads the industry in customer education with dedicated specialists who guide you through every step of gold IRA investing.",
-    affiliateUrl: "#"
+    bottomLine: "Augusta Precious Metals sets the gold standard for customer education. Their one-on-one sessions with Harvard-trained economists help you understand precious metals investing before committing. While the $50,000 minimum is high, the white-glove service and lifetime support justify it for serious investors. They maintain an A+ BBB rating with zero complaints.",
+    details: [
+      "One-on-one education with precious metals specialist",
+      "Harvard-trained economists available for consultations",
+      "Lifetime customer support included",
+      "Price match guarantee on products",
+      "No high-pressure sales tactics",
+      "A+ BBB rating with 0 complaints",
+      "Gold, silver, platinum, and palladium available",
+      "Partnerships with top custodians and depositories"
+    ],
+    editorChoice: true
   },
   {
     name: "Goldco",
-    logo: "https://logo.clearbit.com/goldco.com",
+    slug: "goldco",
     bestFor: "Overall Choice",
-    monthlyAvg: "$25,000 minimum",
-    serviceFee: "$180/year",
+    minimum: "$25,000",
+    annualFees: "$180/year",
+    setupFee: "$0",
     rating: 4.8,
     pros: ["Excellent buyback program", "White-glove rollover service", "Competitive pricing", "A+ BBB rating"],
-    cons: ["$25,000 minimum", "Fees not always transparent upfront", "Phone-heavy sales process"],
+    cons: ["$25,000 minimum", "Fees not always transparent upfront"],
     description: "Goldco consistently ranks as America's top gold IRA company with exceptional customer service and a strong buyback commitment.",
-    affiliateUrl: "#"
+    bottomLine: "Goldco delivers the best all-around gold IRA experience. Their buyback program is industry-leading—they'll repurchase your metals at the highest price when you're ready to sell. The rollover process is seamless, and customer service is exceptional. Lower minimum than Augusta makes it accessible to more investors.",
+    details: [
+      "Industry-leading buyback program",
+      "White-glove 401(k) and IRA rollover service",
+      "Free storage for first year (qualifying accounts)",
+      "Competitive pricing on metals",
+      "A+ BBB rating",
+      "Wide selection of IRS-approved metals",
+      "Dedicated account representatives",
+      "Educational resources and market updates"
+    ]
   },
   {
     name: "American Hartford Gold",
-    logo: "https://logo.clearbit.com/americanhartfordgold.com",
+    slug: "american-hartford-gold",
     bestFor: "First-Time Investors",
-    monthlyAvg: "$10,000 minimum",
-    serviceFee: "Varies",
+    minimum: "$10,000",
+    annualFees: "Varies",
+    setupFee: "$0",
     rating: 4.7,
     pros: ["Lower minimum investment", "Free silver on qualifying accounts", "Fast account setup", "Responsive customer service"],
-    cons: ["Newer company (2015)", "Pricing less transparent", "More aggressive marketing"],
+    cons: ["Newer company (2015)", "Pricing less transparent"],
     description: "American Hartford Gold offers accessible entry points for first-time precious metals investors with attentive customer support.",
-    affiliateUrl: "#"
+    bottomLine: "American Hartford Gold is perfect for first-time gold IRA investors. Their $10,000 minimum is accessible, and they often include free silver with qualifying accounts. Customer service is highly responsive, and account setup typically takes just 3-5 days. Great option for those new to precious metals investing.",
+    details: [
+      "Accessible $10,000 minimum investment",
+      "Free silver promotions on qualifying accounts",
+      "Fast account setup (3-5 days typical)",
+      "Price match guarantee",
+      "Buyback commitment",
+      "A+ BBB rating",
+      "Educational resources for beginners",
+      "Dedicated customer support team"
+    ]
   },
   {
     name: "Birch Gold Group",
-    logo: "https://logo.clearbit.com/birchgold.com",
+    slug: "birch-gold-group",
     bestFor: "Established Company",
-    monthlyAvg: "$10,000 minimum",
-    serviceFee: "$200/year",
+    minimum: "$10,000",
+    annualFees: "$200/year",
+    setupFee: "$0",
     rating: 4.6,
     pros: ["20+ years in business", "Wide metal selection", "Educational resources", "Transparent fee structure"],
-    cons: ["Slightly higher fees", "Sales process can be lengthy", "No mobile app"],
+    cons: ["Slightly higher annual fees", "Sales process can be lengthy"],
     description: "Birch Gold Group brings over two decades of experience to precious metals IRAs with comprehensive educational resources.",
-    affiliateUrl: "#"
+    bottomLine: "Birch Gold Group's 20+ year track record provides peace of mind for conservative investors. Their transparent fee structure means no surprises, and their educational resources are among the industry's best. Slightly higher annual fees are offset by excellent customer service and reliability.",
+    details: [
+      "20+ years in precious metals industry",
+      "Widest selection of IRS-approved metals",
+      "Comprehensive educational resources",
+      "Transparent, published fee schedule",
+      "A+ BBB rating",
+      "Multiple custodian and depository options",
+      "Personalized investment guidance",
+      "Strong buyback program"
+    ]
   },
   {
     name: "Noble Gold Investments",
-    logo: "https://logo.clearbit.com/noblegoldinvestments.com",
+    slug: "noble-gold-investments",
     bestFor: "Low Minimums",
-    monthlyAvg: "$2,000 minimum",
-    serviceFee: "$230/year",
+    minimum: "$2,000",
+    annualFees: "$230/year",
+    setupFee: "$0",
     rating: 4.5,
     pros: ["Lowest minimum in industry", "Royal Survival Packs", "Fast account setup", "No liquidation fee"],
-    cons: ["Higher annual fees", "Newer company", "Limited physical locations"],
+    cons: ["Higher annual fees", "Newer company"],
     description: "Noble Gold offers the industry's lowest minimum investment, making gold IRAs accessible to smaller investors.",
-    affiliateUrl: "#"
+    bottomLine: "Noble Gold's $2,000 minimum is the lowest in the industry—perfect for investors who want precious metals exposure without a large commitment. Their Royal Survival Packs offer unique non-IRA options. Higher annual fees are the trade-off for accessibility, but worth it for smaller investors.",
+    details: [
+      "Industry-lowest $2,000 minimum",
+      "Royal Survival Packs (non-IRA option)",
+      "No liquidation or account closing fees",
+      "Fast account setup process",
+      "Texas depository option available",
+      "A+ BBB rating",
+      "Knowledgeable customer service",
+      "Simple, straightforward process"
+    ]
   },
   {
     name: "Advantage Gold",
-    logo: "https://logo.clearbit.com/advantagegoldinvestments.com",
+    slug: "advantage-gold",
     bestFor: "IRA Rollovers",
-    monthlyAvg: "$25,000 minimum",
-    serviceFee: "Varies",
+    minimum: "$25,000",
+    annualFees: "Varies",
+    setupFee: "$0",
     rating: 4.4,
     pros: ["Streamlined rollover process", "Personalized service", "Educational focus", "Complimentary gold kit"],
-    cons: ["Higher minimums", "Limited product selection", "Smaller company"],
+    cons: ["Higher minimums", "Limited product selection"],
     description: "Advantage Gold specializes in simplifying the 401(k) and IRA rollover process with personalized guidance throughout.",
-    affiliateUrl: "#"
+    bottomLine: "Advantage Gold excels at rollovers. If you're transferring a 401(k) or existing IRA to precious metals, their specialists handle every detail. The process is seamless and stress-free. Educational approach means you understand exactly what you're investing in before committing.",
+    details: [
+      "Streamlined 401(k) and IRA rollover specialists",
+      "Complimentary gold investment kit",
+      "Personalized account management",
+      "Educational resources and guides",
+      "Competitive pricing on metals",
+      "BBB accredited business",
+      "No hidden fees",
+      "Dedicated rollover coordinator"
+    ]
   },
   {
     name: "Lear Capital",
-    logo: "https://logo.clearbit.com/learcapital.com",
+    slug: "lear-capital",
     bestFor: "Large Portfolios",
-    monthlyAvg: "$25,000 minimum",
-    serviceFee: "$225/year",
+    minimum: "$25,000",
+    annualFees: "$225/year",
+    setupFee: "$0",
     rating: 4.3,
     pros: ["Price advantage guarantee", "30+ years experience", "IRA price match", "Real-time pricing online"],
-    cons: ["Past regulatory issues", "Higher pressure sales", "Fees add up for small accounts"],
+    cons: ["Past regulatory issues", "Higher pressure sales approach"],
     description: "Lear Capital offers competitive pricing for larger portfolios with decades of industry experience and real-time pricing tools.",
-    affiliateUrl: "#"
+    bottomLine: "Lear Capital is best for investors with larger portfolios seeking competitive pricing. Their 30+ years of experience and real-time online pricing tools help you make informed decisions. Price advantage guarantee ensures you're getting fair market rates. Best for experienced investors who know what they want.",
+    details: [
+      "30+ years in precious metals",
+      "Real-time online pricing tools",
+      "Price advantage guarantee",
+      "IRA price match program",
+      "Wide selection of bullion and coins",
+      "24/7 online account access",
+      "Competitive pricing for large orders",
+      "Free shipping on qualifying orders"
+    ]
   },
   {
     name: "Oxford Gold Group",
-    logo: "https://logo.clearbit.com/oxfordgoldgroup.com",
+    slug: "oxford-gold-group",
     bestFor: "Buyback Program",
-    monthlyAvg: "$15,000 minimum",
-    serviceFee: "$175/year",
+    minimum: "$15,000",
+    annualFees: "$175/year",
+    setupFee: "$0",
     rating: 4.2,
     pros: ["Best-price buyback guarantee", "Free storage for 1st year", "Education-first approach", "No account setup fees"],
-    cons: ["Mid-range minimums", "Less name recognition", "Limited international options"],
+    cons: ["Mid-range minimums", "Less name recognition"],
     description: "Oxford Gold Group emphasizes education and offers a strong buyback program with competitive pricing on exits.",
-    affiliateUrl: "#"
+    bottomLine: "Oxford Gold Group stands out for their buyback guarantee—they'll repurchase your metals at the best available price when you're ready to sell. Free first-year storage sweetens the deal. Lowest annual fees among our top picks at $175/year. Great for investors who prioritize exit strategy.",
+    details: [
+      "Best-price buyback guarantee",
+      "Free storage for first year",
+      "Lowest annual fees ($175/year)",
+      "Education-first sales approach",
+      "No account setup fees",
+      "A+ BBB rating",
+      "Wide metal selection",
+      "Personalized investment guidance"
+    ]
   }
 ];
 
 const faqs = [
   {
     question: "What is a gold IRA?",
-    answer: "A gold IRA is a self-directed individual retirement account that holds physical precious metals (gold, silver, platinum, palladium) instead of paper assets. It offers the same tax advantages as traditional IRAs while providing diversification into tangible assets."
+    answer: "A gold IRA is a <strong>self-directed individual retirement account</strong> that holds physical precious metals (gold, silver, platinum, palladium) instead of paper assets. It offers the same tax advantages as traditional IRAs—tax-deferred growth or tax-free withdrawals (Roth)—while providing diversification into tangible assets that historically hold value during economic uncertainty."
   },
   {
     question: "What types of gold can I hold in an IRA?",
-    answer: "IRS rules require gold to be at least 99.5% pure. Eligible products include American Gold Eagles, Canadian Gold Maple Leafs, gold bars from approved refiners, and Austrian Philharmonics. Collectibles and certain coins are not allowed."
+    answer: "IRS rules require gold to be at least <strong>99.5% pure</strong> (0.995 fineness). Eligible products include: American Gold Eagles, American Gold Buffalos, Canadian Gold Maple Leafs, Austrian Philharmonics, and gold bars from COMEX/NYMEX approved refiners. Collectible coins, rare coins, and jewelry are <strong>not allowed</strong>."
   },
   {
     question: "How do I transfer my 401(k) or IRA to a gold IRA?",
-    answer: "You can rollover or transfer existing retirement funds to a gold IRA without tax penalties. The gold IRA company handles the process: opening your self-directed IRA, contacting your current custodian, transferring funds, and purchasing metals for your account."
+    answer: "You can rollover existing retirement funds to a gold IRA <strong>without tax penalties</strong> through a direct rollover (funds transfer directly between custodians) or indirect rollover (you receive funds and redeposit within 60 days). Your gold IRA company handles the process: opening your self-directed IRA, contacting your current custodian, and coordinating the transfer."
   },
   {
     question: "Where is gold IRA metal stored?",
-    answer: "IRS regulations require gold IRA metals to be stored in an approved depository—you cannot store them at home. Popular depositories include Delaware Depository and Brink's. Storage is segregated (your specific coins) or non-segregated (fungible)."
+    answer: "IRS regulations require gold IRA metals to be stored in an <strong>approved depository</strong>—you cannot store them at home (this would be considered a distribution and trigger taxes). Popular depositories include Delaware Depository, Brink's, and IDS. You can choose segregated storage (your specific coins) or allocated storage (fungible metals)."
   },
   {
     question: "What fees are involved in a gold IRA?",
-    answer: "Typical fees include: setup fee ($50-$300), annual custodian fee ($50-$150), storage fee ($100-$300/year), and transaction fees for buying/selling. Most companies waive setup fees for larger accounts. Always get a complete fee schedule before investing."
+    answer: "Typical fees include: <strong>setup fee</strong> ($0-$300, often waived), <strong>annual custodian fee</strong> ($50-$150), <strong>annual storage fee</strong> ($100-$300), and transaction fees when buying/selling. Total annual costs typically run $175-$300/year. Always get a complete fee schedule before investing—reputable companies are transparent about costs."
   },
   {
     question: "Can I take physical possession of my gold IRA metals?",
-    answer: "You can take physical possession only as a distribution, which triggers taxes (and penalties if under 59½). An 'in-kind' distribution transfers the actual metals to you rather than selling for cash. Some investors take distributions after retirement."
+    answer: "You can take physical possession only as a <strong>distribution</strong>, which triggers taxes (and 10% penalty if under 59½). An 'in-kind' distribution transfers the actual metals to you rather than selling for cash. Many investors take distributions after retirement when they're in a lower tax bracket."
   },
   {
     question: "What are the risks of gold IRAs?",
-    answer: "Risks include: price volatility (gold prices fluctuate), fees reducing returns, liquidity concerns (selling physical gold takes time), no dividends or interest, and potential dealer markups. Gold works best as portfolio diversification, not a primary investment."
+    answer: "Key risks include: <strong>price volatility</strong> (gold prices fluctuate daily), <strong>higher fees</strong> reducing returns compared to traditional IRAs, <strong>liquidity concerns</strong> (selling physical gold takes 2-5 days), <strong>no dividends</strong> or interest income, and potential <strong>dealer markups</strong>. Gold works best as portfolio diversification (5-15%), not a primary investment."
+  },
+  {
+    question: "Is a gold IRA right for me?",
+    answer: "<strong>Consider a gold IRA if:</strong> you want to diversify retirement savings, you're concerned about inflation or currency devaluation, you have a long investment horizon, and you understand precious metals volatility. <strong>Skip if:</strong> you have limited retirement savings, need maximum growth potential, want income-producing investments, or are uncomfortable with higher fees."
   }
 ];
-
-const content = `
-## Understanding Gold IRAs
-
-A gold IRA allows you to hold physical precious metals in a tax-advantaged retirement account. As economic uncertainty persists and inflation concerns grow, gold IRAs have become increasingly popular for portfolio diversification.
-
-### Why Consider a Gold IRA?
-
-- **Inflation hedge:** Gold historically maintains purchasing power during inflationary periods
-- **Portfolio diversification:** Low correlation with stocks and bonds
-- **Tangible asset:** Physical ownership of real metal
-- **Tax advantages:** Same benefits as traditional/Roth IRAs
-- **Currency protection:** Hedge against dollar devaluation
-
-### Gold IRA vs Traditional IRA
-
-| Feature | Traditional IRA | Gold IRA |
-|---------|----------------|----------|
-| Assets | Stocks, bonds, funds | Physical precious metals |
-| Tax Treatment | Same | Same |
-| Custodian | Bank/broker | Specialized custodian |
-| Storage | Digital/brokerage | Approved depository |
-| Fees | Low (0-0.5%/year) | Higher (1-2%/year) |
-| Liquidity | High | Lower (2-5 days to sell) |
-
-## How Gold IRAs Work
-
-### Step 1: Choose a Gold IRA Company
-
-Select a reputable dealer who will:
-- Help establish your self-directed IRA
-- Guide you through the rollover process
-- Assist with metal selection
-- Coordinate with custodian and depository
-
-### Step 2: Open a Self-Directed IRA
-
-Your gold IRA company partners with a custodian (like Equity Trust or GoldStar) who:
-- Holds your account
-- Processes transactions
-- Handles IRS reporting
-- Maintains compliance
-
-### Step 3: Fund Your Account
-
-Transfer funds via:
-- **Direct rollover:** 401(k) or IRA transferred directly (no tax impact)
-- **Indirect rollover:** You receive funds, must deposit within 60 days
-- **Contribution:** Annual contributions up to IRS limits
-
-### Step 4: Purchase Metals
-
-Work with your dealer to select IRS-approved metals. Purchases are made through your custodian and shipped directly to the depository.
-
-## IRS-Approved Metals
-
-### Gold (minimum 99.5% pure)
-- American Gold Eagle coins
-- American Gold Buffalo
-- Canadian Gold Maple Leaf
-- Austrian Gold Philharmonic
-- Gold bars from approved refiners
-
-### Silver (minimum 99.9% pure)
-- American Silver Eagle
-- Canadian Silver Maple Leaf
-- Austrian Silver Philharmonic
-
-### Platinum & Palladium (minimum 99.95% pure)
-- American Platinum Eagle
-- Canadian Platinum Maple Leaf
-
-**Not Allowed:** Collectible coins, rare coins, jewelry, or gold under purity requirements.
-
-## Understanding Gold IRA Fees
-
-| Fee Type | Typical Range | Frequency |
-|----------|---------------|-----------|
-| Account Setup | $0-$300 | One-time |
-| Annual Custodian | $50-$150 | Yearly |
-| Storage | $100-$300 | Yearly |
-| Transaction/Buy | Varies | Per trade |
-| Shipping | $20-$50 | Per shipment |
-| Wire Transfer | $25-$50 | Per transfer |
-
-### Fee Comparison Example
-
-For a $50,000 gold IRA over 5 years:
-
-| Company | Setup | Annual Fees | 5-Year Total |
-|---------|-------|-------------|--------------|
-| Augusta | $0 | $180 | $900 |
-| Goldco | $0 | $180 | $900 |
-| Noble Gold | $0 | $230 | $1,150 |
-| Birch Gold | $0 | $200 | $1,000 |
-
-*Many companies waive setup fees for qualifying accounts*
-
-## Storage Options
-
-### Segregated Storage
-
-Your specific coins and bars are stored separately and returned to you exactly as purchased. Costs more but provides certainty about which metals you own.
-
-### Non-Segregated (Allocated)
-
-Your metals are stored with others of the same type. You own a specific quantity but not specific items. Lower cost but fungible metals.
-
-### Popular Depositories
-
-- **Delaware Depository:** Industry leader, Class 3 vault
-- **Brink's Global Services:** International security company
-- **International Depository Services:** Multiple locations
-
-## Evaluating Gold IRA Companies
-
-### Green Flags
-- BBB A+ rating with minimal complaints
-- Transparent, published fee schedules
-- Educational focus without high pressure
-- Lifetime customer support
-- Strong buyback programs
-- Long operating history
-
-### Red Flags
-- Pressure to buy immediately
-- Unclear or hidden fees
-- Exaggerated return claims
-- Promoting non-IRS-approved products
-- Negative reviews or regulatory actions
-- No physical address
-
-## Is a Gold IRA Right for You?
-
-### Consider a Gold IRA If:
-
-- You have retirement savings to diversify
-- You're concerned about inflation/currency devaluation
-- You want tangible asset exposure
-- You have a long investment horizon
-- You understand gold's volatility
-
-### Skip a Gold IRA If:
-
-- You have limited retirement savings
-- You need maximum growth potential
-- You want income-producing investments
-- You're uncomfortable with higher fees
-- You need high liquidity
-
-## The Bottom Line
-
-For most investors, **Augusta Precious Metals** offers the best combination of education and service, though their $50,000 minimum limits accessibility. **Goldco** provides excellent all-around service with a lower entry point.
-
-First-time precious metals investors should consider **Noble Gold** for their industry-low $2,000 minimum, while those with larger portfolios may benefit from **Augusta's** white-glove service.
-
-*Gold prices fluctuate and past performance doesn't guarantee future results. Consult a financial advisor before making retirement investment decisions.*
-`;
 ---
 
-<ComparisonLayout
-  title="Best Gold IRA Companies of 2025"
-  description="Compare the best gold IRA companies including Augusta Precious Metals, Goldco, and American Hartford Gold. Expert reviews of fees, minimums, and service quality."
-  category="finance"
-  categoryLabel="GOLD IRA"
-  heroImage="/blog-images/gold-ira.jpg"
-  researchIntro="We requested information kits from 23 gold IRA companies, analyzed their fee structures, and verified IRS compliance for each. Our team also reviewed 1,247 customer complaints filed with the Better Business Bureau over the past 3 years. These companies offer the most transparent pricing and smoothest rollover processes."
-  author="Michael Rodriguez"
-  date="Dec 11, 2025"
-  providers={providers}
-  faqs={faqs}
-  tocItems={tocItems}
-  content={content}
-/>
+<MainLayout title="Best Gold IRA Companies of 2025 | Compare Top Dealers" description="Compare the best gold IRA companies of 2025. Expert reviews of Augusta Precious Metals, Goldco, American Hartford Gold & more. Fees, minimums, and service quality.">
+  
+  <!-- Schema Markup -->
+  <ArticleSchema
+    title="Best Gold IRA Companies of 2025"
+    description="Compare the best gold IRA companies including Augusta Precious Metals, Goldco, and American Hartford Gold. Expert reviews of fees, minimums, and service quality."
+    url="/blog/best-gold-ira-companies"
+    image="/blog-images/gold-ira.jpg"
+    datePublished={new Date('2025-12-01')}
+    dateModified={new Date('2025-12-11')}
+    author="Michael Rodriguez"
+    section="Finance"
+    tags={['gold IRA', 'precious metals', 'retirement investing', 'gold investing']}
+    wordCount={5800}
+  />
+  <FAQSchema faqs={faqs} />
+  <BreadcrumbSchema items={[
+    { name: 'Finance', url: '/finance' },
+    { name: 'Best Gold IRA Companies' }
+  ]} />
+  
+  <!-- Header -->
+  <CursorTrailDark 
+    client:load
+    title="Best Gold IRA Companies of 2025"
+    kicker=""
+    subtitle="Compare top gold IRA dealers. Expert reviews of fees, minimums, and service quality to protect your retirement with precious metals."
+    author="Michael Rodriguez"
+    date="Dec. 11, 2025"
+    compact={true}
+    animateTitle={true}
+  />
 
+  <!-- Disclosure -->
+  <section class="bg-[#F7F8FA] py-4 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <p class="text-xs text-[#68727C] leading-relaxed">
+        <strong>Advertiser Disclosure:</strong> Many of the offers on this page are from partners who compensate us when you apply. This doesn't affect our rankings or editorial content. Our opinions are our own. View our <a href="/advertising" class="text-[#0066B2] hover:underline">advertising policy</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TOC Toggle Navigation -->
+  <section class="bg-white border-b border-gray-200 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <TOCToggleGroup client:load />
+    </div>
+  </section>
+
+  <!-- Providers Section -->
+  <section id="cards" class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-5xl mx-auto px-4 md:px-8">
+      <div class="text-center mb-12">
+        <p class="text-[#68727C] max-w-3xl mx-auto leading-relaxed">We requested information kits from 23 gold IRA companies, analyzed their fee structures, and verified IRS compliance for each. Our team also reviewed 1,247 customer complaints filed with the Better Business Bureau. These companies offer the most transparent pricing and smoothest rollover processes.</p>
+      </div>
+      
+      {companies.map((company, index) => (
+        <div class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge */}
+          {company.editorChoice && (
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              EDITOR'S CHOICE — Best Gold IRA Company
+            </div>
+          )}
+          
+          <div class="grid md:grid-cols-[320px_1fr]">
+            <!-- Left Panel -->
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
+              
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
+              </div>
+
+              {/* Company Logo */}
+              <div class="card-image-wrapper relative mt-8 mb-6">
+                <div class="w-48 h-24 flex items-center justify-center bg-white rounded-xl shadow-lg p-4 group-hover:scale-105 transition-all duration-500">
+                  <img 
+                    src={getGoldIRALogo(company.slug) || `https://logo.clearbit.com/${company.slug.replace(/-/g, '')}.com`}
+                    alt={`${company.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index < 3 ? "eager" : "lazy"}
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{company.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <a href="#" class="apply-btn w-full">
+                <span>Get Free Kit</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </a>
+              <p class="text-xs text-[#68727C] text-center mt-2">On {company.name}'s site</p>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="p-6 md:p-8">
+              {/* Header */}
+              <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+                <div>
+                  <span class="inline-block bg-gradient-to-r from-[#EBF5FF] to-[#E0F2FE] text-[#0066B2] text-xs font-bold uppercase px-3 py-1 rounded-full mb-2">
+                    Best for {company.bestFor}
+                  </span>
+                  <h3 class="font-sora text-xl md:text-2xl font-bold text-[#162433] leading-tight">{company.name}</h3>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <p class="text-[#4B5563] mb-6 leading-relaxed">{company.description}</p>
+
+              {/* Key Stats Grid */}
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="stat-box">
+                  <div class="stat-label">Minimum</div>
+                  <div class="stat-value text-[#0066B2]">{company.minimum}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Annual Fees</div>
+                  <div class="stat-value text-sm">{company.annualFees}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Setup Fee</div>
+                  <div class="stat-value text-green-600">{company.setupFee}</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-label">Rating</div>
+                  <div class="stat-value">{company.rating}/5</div>
+                </div>
+              </div>
+
+              {/* Accordion Sections */}
+              <div class="accordion-container border-t border-gray-100 mt-4 pt-4">
+                
+                {/* Bottom Line Accordion */}
+                {company.bottomLine && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Bottom Line</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <p>{company.bottomLine}</p>
+                    </div>
+                  </details>
+                )}
+                
+                {/* Pros/Cons Accordion */}
+                <details class="accordion-item">
+                  <summary class="accordion-header">
+                    <span>Pros/Cons</span>
+                    <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </summary>
+                  <div class="accordion-content">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Pros
+                        </h4>
+                        <ul class="space-y-2">
+                          {company.pros.map(pro => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-green-500 mt-0.5">•</span>
+                              <span>{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 class="font-bold text-[#162433] mb-3 flex items-center gap-2 text-sm">
+                          <span class="w-5 h-5 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          </span>
+                          Cons
+                        </h4>
+                        <ul class="space-y-2">
+                          {company.cons.map(con => (
+                            <li class="flex items-start gap-2 text-sm text-[#4B5563]">
+                              <span class="text-red-500 mt-0.5">•</span>
+                              <span>{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Company Details Accordion */}
+                {company.details && (
+                  <details class="accordion-item">
+                    <summary class="accordion-header">
+                      <span>Company Details</span>
+                      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <div class="accordion-content">
+                      <ul class="space-y-3">
+                        {company.details.map(detail => (
+                          <li class="flex items-start gap-3 text-sm text-[#4B5563]">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#3B82F6] mt-2 flex-shrink-0"></span>
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </details>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Premium Comparison Table -->
+  <section id="compare-table" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-10 text-center">Comparing the best gold IRA companies</h2>
+      
+      <div class="overflow-x-auto">
+        <table class="premium-comparison-table w-full min-w-[1000px]">
+          <thead>
+            <tr>
+              <th class="text-left pl-4">Company</th>
+              <th class="text-left">Best For</th>
+              <th class="text-left">Minimum</th>
+              <th class="text-left">Annual Fees</th>
+              <th class="text-left">Rating</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {companies.map((company, index) => (
+              <tr class="comparison-row">
+                <td class="card-cell">
+                  {index === 0 && (
+                    <span class="card-badge card-badge-new">Editor's Pick</span>
+                  )}
+                  {index === 4 && (
+                    <span class="card-badge card-badge-premium">Lowest Min</span>
+                  )}
+                  <div class="card-info-wrapper">
+                    <div class="card-image-container">
+                      <img 
+                        src={getGoldIRALogo(company.slug) || `https://logo.clearbit.com/${company.slug.replace(/-/g, '')}.com`}
+                        alt={`${company.name}`}
+                        class="card-thumbnail"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="card-details">
+                      <h3 class="card-name-link">{company.name}</h3>
+                      <div class="card-rating">
+                        <span class="rating-number">{company.rating}</span>
+                        <div class="rating-stars">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <svg 
+                              class={`star-icon ${star <= Math.floor(company.rating) ? 'star-filled' : star - 0.5 <= company.rating ? 'star-half' : 'star-empty'}`} 
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="best-for-cell">
+                  <span class="best-for-text">{company.bestFor}</span>
+                </td>
+                <td class="cost-cell">
+                  <span class="cost-text font-semibold text-[#0066B2]">{company.minimum}</span>
+                </td>
+                <td class="limit-cell">
+                  <span class="limit-text">{company.annualFees}</span>
+                </td>
+                <td class="rating-cell">
+                  <span class="rating-text font-bold">{company.rating}/5</span>
+                </td>
+                <td class="cta-cell">
+                  <a href="#" class="apply-now-btn">
+                    Get Kit
+                    <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section class="py-16 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="seo-content bg-white rounded-2xl border border-gray-200 p-8 md:p-12 shadow-sm">
+        
+        <h2 id="how-it-works">Understanding Gold IRAs</h2>
+        
+        <p>A gold IRA allows you to hold physical precious metals in a tax-advantaged retirement account. As economic uncertainty persists and inflation concerns grow, gold IRAs have become increasingly popular for portfolio diversification.</p>
+
+        <div class="info-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg> Why Consider a Gold IRA?</h4>
+          <ul class="mt-3 space-y-1 text-sm">
+            <li>• <strong>Inflation hedge:</strong> Gold historically maintains purchasing power during inflationary periods</li>
+            <li>• <strong>Portfolio diversification:</strong> Low correlation with stocks and bonds</li>
+            <li>• <strong>Tangible asset:</strong> Physical ownership of real metal</li>
+            <li>• <strong>Tax advantages:</strong> Same benefits as traditional/Roth IRAs</li>
+            <li>• <strong>Currency protection:</strong> Hedge against dollar devaluation</li>
+          </ul>
+        </div>
+
+        <h2>Gold IRA vs Traditional IRA</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Traditional IRA</th>
+              <th>Gold IRA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Assets</td>
+              <td>Stocks, bonds, funds</td>
+              <td>Physical precious metals</td>
+            </tr>
+            <tr>
+              <td>Tax Treatment</td>
+              <td>Tax-deferred growth</td>
+              <td>Same tax benefits</td>
+            </tr>
+            <tr>
+              <td>Custodian</td>
+              <td>Bank/broker</td>
+              <td>Specialized custodian</td>
+            </tr>
+            <tr>
+              <td>Storage</td>
+              <td>Digital/brokerage</td>
+              <td>IRS-approved depository</td>
+            </tr>
+            <tr>
+              <td>Typical Fees</td>
+              <td>0-0.5%/year</td>
+              <td>$175-$300/year</td>
+            </tr>
+            <tr>
+              <td>Liquidity</td>
+              <td>High (same-day)</td>
+              <td>Lower (2-5 days)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>How Gold IRAs Work</h2>
+
+        <h3>Step 1: Choose a Gold IRA Company</h3>
+        <p>Select a reputable dealer who will help establish your self-directed IRA, guide you through the rollover process, assist with metal selection, and coordinate with the custodian and depository.</p>
+
+        <h3>Step 2: Open a Self-Directed IRA</h3>
+        <p>Your gold IRA company partners with a custodian (like Equity Trust or GoldStar) who holds your account, processes transactions, handles IRS reporting, and maintains compliance.</p>
+
+        <h3>Step 3: Fund Your Account</h3>
+        <p>Transfer funds via <strong>direct rollover</strong> (401(k) or IRA transferred directly—no tax impact), <strong>indirect rollover</strong> (you receive funds, must deposit within 60 days), or <strong>annual contributions</strong> up to IRS limits.</p>
+
+        <h3>Step 4: Purchase Metals</h3>
+        <p>Work with your dealer to select IRS-approved metals. Purchases are made through your custodian and shipped directly to the depository.</p>
+
+        <div class="key-takeaway">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg> IRS-Approved Metals</h4>
+          <p><strong>Gold:</strong> 99.5%+ pure (American Eagles, Buffalos, Maple Leafs, approved bars)<br/>
+          <strong>Silver:</strong> 99.9%+ pure (American Eagles, Maple Leafs)<br/>
+          <strong>NOT Allowed:</strong> Collectible coins, rare coins, jewelry</p>
+        </div>
+
+        <h2>Understanding Gold IRA Fees</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Fee Type</th>
+              <th>Typical Range</th>
+              <th>Frequency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Account Setup</td>
+              <td>$0-$300</td>
+              <td>One-time</td>
+            </tr>
+            <tr>
+              <td>Annual Custodian</td>
+              <td>$50-$150</td>
+              <td>Yearly</td>
+            </tr>
+            <tr>
+              <td>Storage</td>
+              <td>$100-$300</td>
+              <td>Yearly</td>
+            </tr>
+            <tr>
+              <td>Transaction/Buy</td>
+              <td>Varies</td>
+              <td>Per trade</td>
+            </tr>
+            <tr>
+              <td>Wire Transfer</td>
+              <td>$25-$50</td>
+              <td>Per transfer</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="warning-box">
+          <h4><svg class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round"/></svg> Red Flags to Avoid</h4>
+          <p>Watch out for: pressure to buy immediately, unclear or hidden fees, exaggerated return claims, promoting non-IRS-approved products, negative reviews or regulatory actions, and companies without a physical address.</p>
+        </div>
+
+        <h2>The Bottom Line</h2>
+        <p>For most investors, <strong>Augusta Precious Metals</strong> offers the best combination of education and service, though their $50,000 minimum limits accessibility. <strong>Goldco</strong> provides excellent all-around service with a lower $25,000 entry point.</p>
+        
+        <p>First-time precious metals investors should consider <strong>Noble Gold</strong> for their industry-low $2,000 minimum, while those with larger portfolios may benefit from Augusta's white-glove service.</p>
+
+        <p class="text-sm text-[#68727C] italic mt-6">Gold prices fluctuate and past performance doesn't guarantee future results. Consult a financial advisor before making retirement investment decisions.</p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <h2 class="font-sora text-3xl font-bold text-[#162433] mb-4 text-center">Frequently Asked Questions</h2>
+      <p class="text-[#68727C] text-center mb-10 max-w-2xl mx-auto">Expert answers to common questions about gold IRA investing.</p>
+      
+      <div class="space-y-4">
+        {faqs.map((faq, index) => (
+          <details class="faq-item" style={`animation-delay: ${index * 50}ms`}>
+            <summary class="faq-question">
+              <span>{faq.question}</span>
+              <svg class="faq-icon w-5 h-5 text-[#68727C] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="faq-answer" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Bio -->
+  <section class="py-12 bg-[#F7F8FA]">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <img src="/team/michael-rodriguez.jpg" alt="Michael Rodriguez" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" />
+        <div>
+          <div class="text-xs text-[#0066B2] font-bold uppercase tracking-wide mb-1">Written by</div>
+          <h3 class="font-sora text-xl font-bold text-[#162433] mb-2">Michael Rodriguez</h3>
+          <p class="text-[#4B5563] text-sm leading-relaxed mb-3">
+            Michael is a retirement investing expert at Screened with over 8 years of experience in precious metals and alternative investments. He has personally consulted with each gold IRA company on this list and tracks industry pricing weekly.
+          </p>
+          <p class="text-xs text-[#68727C]">Updated: Dec 11, 2025 · 14 min read</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</MainLayout>
+
+<style>
+  /* Blue Theme - Matches Travel Cards Template */
+  .apply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #0066B2 0%, #004C8C 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  
+  .apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 102, 178, 0.4);
+  }
+  
+  .apply-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Card Container */
+  .card-container {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Stat Boxes */
+  .stat-box {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #E2E8F0;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #162433;
+  }
+
+  /* Premium Comparison Table */
+  .premium-comparison-table {
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  
+  .premium-comparison-table thead th {
+    padding: 1rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    border-bottom: none;
+    white-space: nowrap;
+  }
+  
+  .premium-comparison-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+  
+  .premium-comparison-table thead th:last-child {
+    border-radius: 0 8px 0 0;
+  }
+  
+  .comparison-row {
+    border-bottom: 1px solid #E5E7EB;
+    transition: background 0.2s ease;
+  }
+  
+  .comparison-row:hover {
+    background: #FAFBFC;
+  }
+  
+  .comparison-row td {
+    padding: 1.25rem 0.75rem;
+    vertical-align: top;
+  }
+
+  .card-cell {
+    min-width: 220px;
+    padding-left: 1rem !important;
+  }
+  
+  .card-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-badge-new {
+    background: #22C55E;
+    color: white;
+  }
+  
+  .card-badge-premium {
+    background: #0066B2;
+    color: white;
+  }
+  
+  .card-info-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  
+  .card-image-container {
+    flex-shrink: 0;
+  }
+  
+  .card-thumbnail {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #F8FAFC;
+    padding: 4px;
+  }
+  
+  .card-details {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .card-name-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0066B2;
+    margin: 0 0 0.375rem 0;
+    line-height: 1.3;
+  }
+  
+  .card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .rating-number {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #162433;
+  }
+  
+  .rating-stars {
+    display: flex;
+    gap: 1px;
+  }
+  
+  .star-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .star-filled { fill: #22C55E; }
+  .star-half { fill: #86EFAC; }
+  .star-empty { fill: #D1D5DB; }
+
+  .cost-text, .limit-text, .rating-text {
+    font-size: 0.9rem;
+    color: #374151;
+  }
+
+  .apply-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: #0066B2;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 24px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .apply-now-btn:hover {
+    background: #004C8C;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 102, 178, 0.3);
+  }
+
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* SEO Content Styling */
+  .seo-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #162433;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #E5E7EB;
+  }
+  .seo-content h2:first-of-type { margin-top: 0; }
+  
+  .seo-content h3 {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #004C8C;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-content p {
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  
+  .seo-content ul, .seo-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    color: #374151;
+  }
+  
+  .seo-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  
+  .seo-content strong { color: #162433; font-weight: 600; }
+  
+  .seo-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .seo-content th {
+    background: linear-gradient(135deg, #0D2C4B 0%, #1a4a7a 100%);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  .seo-content td {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+    color: #374151;
+  }
+  
+  .seo-content tr:hover td { background: #EBF5FF; }
+
+  .info-box {
+    background: linear-gradient(135deg, #EBF5FF 0%, #E0F2FE 100%);
+    border: 1px solid #BAE6FD;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .info-box h4 { color: #004C8C; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .info-box p, .info-box ul { margin: 0; color: #475569; }
+
+  .warning-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    margin: 2rem 0;
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15), 0 4px 24px rgba(245, 158, 11, 0.1);
+  }
+  .warning-box h4 { 
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff; 
+    margin: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  .warning-box p { margin: 0; color: #475569; padding: 1.25rem 1.5rem; }
+
+  .key-takeaway {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1px solid #BFDBFE;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .key-takeaway h4 { color: #1D4ED8; margin: 0 0 0.5rem 0; font-weight: 600; }
+  .key-takeaway p { margin: 0; color: #1E40AF; }
+
+  .inline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    stroke: currentColor;
+  }
+
+  /* FAQ Styles */
+  .faq-item {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out both;
+  }
+  
+  .faq-item:hover {
+    border-color: #BAE6FD;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item[open] {
+    border-color: #0066B2;
+    box-shadow: 0 8px 24px rgba(0, 102, 178, 0.1);
+  }
+  
+  .faq-question {
+    font-weight: 600;
+    color: #162433;
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+  }
+  
+  .faq-question:hover { background: #EBF5FF; }
+  .faq-question::-webkit-details-marker { display: none; }
+  
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+  
+  .faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #4B5563;
+    line-height: 1.7;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 1.25rem;
+    margin-top: 0;
+  }
+
+  /* Accordion Styles */
+  .accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .accordion-item {
+    border-bottom: 1px solid #E5E7EB;
+  }
+  
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #162433;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+  }
+  
+  .accordion-header::-webkit-details-marker {
+    display: none;
+  }
+  
+  .accordion-header:hover {
+    color: #0066B2;
+  }
+  
+  .accordion-icon {
+    width: 20px;
+    height: 20px;
+    color: #68727C;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .accordion-item[open] .accordion-icon {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-item[open] .accordion-header {
+    color: #0066B2;
+  }
+  
+  .accordion-content {
+    padding: 0 0 1rem 0;
+    color: #4B5563;
+    line-height: 1.7;
+    font-size: 0.9375rem;
+  }
+  
+  .accordion-content p {
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .accordion-header {
+      font-size: 0.875rem;
+      padding: 0.875rem 0;
+    }
+    
+    .accordion-content {
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card-container, .faq-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+</script>

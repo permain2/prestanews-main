@@ -402,37 +402,42 @@ import { getVpnLogo } from '../../utils/VpnLogoMap';
 
       <!-- VPN Cards -->
       {vpnServices.map((vpn, index) => (
-        <div id={`vpn-${index + 1}`} class={`card-wrapper mb-8 ${vpn.editorChoice ? 'editor-choice' : ''}`}>
-          {/* Editor's Choice Badge */}
+        <div id={`vpn-${index + 1}`} class="card-container bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8 hover:shadow-2xl transition-all duration-500 hover:border-gray-300 group" style={`animation-delay: ${index * 50}ms`}>
+          
+          {/* Editor's Choice Badge - matches travel cards style */}
           {vpn.editorChoice && (
-            <div class="editor-badge">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-2 5l9-13h-6l2-5l-9 13h6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white text-center py-2 text-sm font-bold tracking-wide flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               EDITOR'S CHOICE — {vpn.bestFor}
             </div>
           )}
           
-          <div class="card-container">
+          <div class="grid md:grid-cols-[320px_1fr]">
             {/* Left Panel */}
-            <div class="card-left-panel">
-              {/* Rank */}
-              <div class="rank-badge">#{index + 1}</div>
+            <div class="bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-200 relative">
               
-              {/* Logo */}
-              <div class="card-image-wrapper">
-                <img 
-                  src={getVpnLogo(vpn.slug)} 
-                  alt={`${vpn.name} logo`}
-                  class="card-logo"
-                  loading={index === 0 ? "eager" : "lazy"}
-                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(this.alt) + '&background=0066B2&color=fff&size=128';"
-                />
+              {/* Rank Badge */}
+              <div class="absolute top-4 left-4 flex items-center gap-2">
+                <span class="w-10 h-10 rounded-full bg-[#0D2C4B] text-white flex items-center justify-center font-bold shadow-lg">#{index + 1}</span>
               </div>
               
-              {/* Rating */}
-              <div class="rating-container">
-                <div class="rating-score">
-                  <span class="rating-number">{vpn.rating}</span>
-                  <span class="rating-max">/5</span>
+              {/* Logo */}
+              <div class="relative mt-8 mb-6">
+                <div class="w-32 h-32 flex items-center justify-center bg-white rounded-xl shadow-lg border border-gray-100 p-3">
+                  <img 
+                    src={getVpnLogo(vpn.slug)} 
+                    alt={`${vpn.name} logo`}
+                    class="max-w-full max-h-full object-contain"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(this.alt) + '&background=0066B2&color=fff&size=128';"
+                  />
+                </div>
+                
+                {/* Floating Rating */}
+                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-100">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span class="font-bold text-[#162433] text-sm">{vpn.rating}</span>
+                  <span class="text-[#68727C] text-xs">/5</span>
                 </div>
               </div>
               
@@ -939,132 +944,21 @@ import { getVpnLogo } from '../../utils/VpnLogoMap';
     --accent-light: #EBF5FF;
   }
 
-  /* Card Wrapper */
-  .card-wrapper {
-    position: relative;
-  }
-
-  .card-wrapper.editor-choice {
-    margin-top: 1rem;
-  }
-
-  .editor-badge {
-    position: absolute;
-    top: -0.75rem;
-    left: 1.5rem;
-    right: 1.5rem;
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem 0.5rem 0 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    z-index: 10;
-  }
-
+  /* Card Container - matches travel cards */
   .card-container {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    background: white;
-    border-radius: 1rem;
-    border: 1px solid #E5E7EB;
-    overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
   }
 
-  .card-wrapper.editor-choice .card-container {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-color: var(--accent-primary);
-    border-width: 2px;
-    border-top: none;
-  }
-
-  .card-container:hover {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    transform: translateY(-2px);
-  }
-
-  @media (max-width: 768px) {
-    .card-container {
-      grid-template-columns: 1fr;
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
-  }
-
-  /* Left Panel */
-  .card-left-panel {
-    padding: 2rem;
-    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-    border-right: 1px solid #E5E7EB;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    .card-left-panel {
-      border-right: none;
-      border-bottom: 1px solid #E5E7EB;
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
-  }
-
-  .rank-badge {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--accent-primary);
-    background: var(--accent-light);
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-  }
-
-  .card-image-wrapper {
-    width: 120px;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border-radius: 1rem;
-    padding: 0.75rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    border: 1px solid #E5E7EB;
-  }
-
-  .card-logo {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-
-  .rating-container {
-    text-align: center;
-  }
-
-  .rating-score {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.125rem;
-  }
-
-  .rating-number {
-    font-family: 'Sora', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #162433;
-  }
-
-  .rating-max {
-    font-size: 0.875rem;
-    color: #68727C;
   }
 
   /* Apply Button */
