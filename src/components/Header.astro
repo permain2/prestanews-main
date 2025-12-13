@@ -162,31 +162,35 @@ import { SITE_TITLE } from '../consts';
         </form>
       </div>
       <div class="search-results" id="search-results">
-        <div class="search-quick-links">
-          <h4>Quick Links</h4>
+        <!-- Live Search Results (hidden by default) -->
+        <div id="live-results" class="live-results hidden"></div>
+        
+        <!-- Quick Links (shown when no search query) -->
+        <div id="quick-links-section" class="search-quick-links">
+          <h4>Popular</h4>
           <div class="quick-links-grid">
-            <a href="/credit-cards/best-travel-cards">
-              <span class="quick-link-icon">✈️</span>
+            <a href="/credit-cards/best-travel-cards" data-keywords="travel credit card rewards points miles">
+              <span class="quick-link-number">1</span>
               Best Travel Cards
             </a>
-            <a href="/insurance/car">
-              <span class="quick-link-icon">🚗</span>
+            <a href="/insurance/car" data-keywords="car auto vehicle insurance coverage">
+              <span class="quick-link-number">2</span>
               Car Insurance
             </a>
-            <a href="/credit-cards/best-cashback">
-              <span class="quick-link-icon">💰</span>
+            <a href="/credit-cards/best-cashback" data-keywords="cashback cash back rewards credit card">
+              <span class="quick-link-number">3</span>
               Cash Back Cards
             </a>
-            <a href="/insurance/pet">
-              <span class="quick-link-icon">🐾</span>
+            <a href="/insurance/pet" data-keywords="pet dog cat animal insurance vet">
+              <span class="quick-link-number">4</span>
               Pet Insurance
             </a>
-            <a href="/finance/best-online-savings-accounts">
-              <span class="quick-link-icon">🏦</span>
+            <a href="/finance/best-online-savings-accounts" data-keywords="savings bank account interest apy">
+              <span class="quick-link-number">5</span>
               Savings Accounts
             </a>
-            <a href="/blog/best-student-loans">
-              <span class="quick-link-icon">🎓</span>
+            <a href="/blog/best-student-loans" data-keywords="student loan college education tuition">
+              <span class="quick-link-number">6</span>
               Student Loans
             </a>
           </div>
@@ -548,8 +552,97 @@ import { SITE_TITLE } from '../consts';
     color: #0D2C4B !important;
   }
 
-  .quick-link-icon {
-    font-size: 1.25rem;
+  .quick-links-grid a:hover .quick-link-number {
+    background: #0D2C4B;
+    color: white;
+  }
+
+  .quick-link-number {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F3F4F6;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 50%;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #374151;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+  }
+
+  /* Live Search Results */
+  .live-results {
+    padding: 0.5rem 0;
+  }
+
+  .live-results.hidden {
+    display: none;
+  }
+
+  .live-result-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: #374151 !important;
+    text-decoration: none !important;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+  }
+
+  .live-result-item:hover {
+    background: #F3F4F6;
+  }
+
+  .live-result-item:hover .result-number {
+    background: #0D2C4B;
+    color: white;
+  }
+
+  .result-number {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F3F4F6;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 50%;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #374151;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+  }
+
+  .result-text {
+    flex: 1;
+  }
+
+  .result-title {
+    font-weight: 500;
+    color: #1F2937;
+  }
+
+  .result-category {
+    font-size: 0.75rem;
+    color: #6B7280;
+  }
+
+  .no-results {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #6B7280;
+  }
+
+  .no-results-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
   }
 
   /* Keyboard shortcut hint */
@@ -596,6 +689,32 @@ import { SITE_TITLE } from '../consts';
     mobileMenu?.classList.toggle('hidden');
   });
 
+  // Search data - all searchable pages
+  const searchData = [
+    { title: 'Best Travel Cards', href: '/credit-cards/best-travel-cards', category: 'Credit Cards', keywords: 'travel credit card rewards points miles airport lounge' },
+    { title: 'Best Cash Back Cards', href: '/credit-cards/best-cashback', category: 'Credit Cards', keywords: 'cashback cash back rewards money credit card' },
+    { title: 'Business Credit Cards', href: '/credit-cards/business', category: 'Credit Cards', keywords: 'business credit card company corporate small business' },
+    { title: 'No Annual Fee Cards', href: '/credit-cards/no-annual-fee', category: 'Credit Cards', keywords: 'no annual fee free credit card' },
+    { title: 'Balance Transfer Cards', href: '/credit-cards/balance-transfer', category: 'Credit Cards', keywords: 'balance transfer debt 0% apr interest free' },
+    { title: 'Car Insurance', href: '/insurance/car', category: 'Insurance', keywords: 'car auto vehicle insurance coverage driver' },
+    { title: 'Home Insurance', href: '/insurance/home', category: 'Insurance', keywords: 'home house property insurance homeowner' },
+    { title: 'Life Insurance', href: '/insurance/life', category: 'Insurance', keywords: 'life insurance term whole life death benefit' },
+    { title: 'Pet Insurance', href: '/insurance/pet', category: 'Insurance', keywords: 'pet dog cat animal insurance vet veterinary' },
+    { title: 'Renters Insurance', href: '/insurance/renters', category: 'Insurance', keywords: 'renters renter apartment tenant insurance' },
+    { title: 'RV Insurance', href: '/blog/best-rv-insurance', category: 'Insurance', keywords: 'rv recreational vehicle camper motorhome insurance' },
+    { title: 'Small Business Insurance', href: '/blog/best-small-business-insurance', category: 'Insurance', keywords: 'business small business commercial liability insurance' },
+    { title: 'Online Savings Accounts', href: '/finance/best-online-savings-accounts', category: 'Finance', keywords: 'savings bank account interest apy high yield' },
+    { title: 'Student Loans', href: '/blog/best-student-loans', category: 'Finance', keywords: 'student loan college university education tuition' },
+    { title: 'Auto Refinance', href: '/blog/best-auto-refinance-lenders', category: 'Finance', keywords: 'auto car refinance loan rate' },
+    { title: 'Mortgage Refinance', href: '/blog/best-mortgage-refinance-companies', category: 'Finance', keywords: 'mortgage refinance home loan rate lender' },
+    { title: 'Gold IRA', href: '/blog/best-gold-ira-companies', category: 'Finance', keywords: 'gold ira retirement precious metals investment' },
+    { title: 'Home Warranties', href: '/home/best-home-warranties', category: 'Home', keywords: 'home warranty appliance repair coverage protection' },
+    { title: 'Security Cameras', href: '/blog/best-home-security-cameras', category: 'Home', keywords: 'security camera surveillance home security ring nest' },
+    { title: 'Internet Providers', href: '/blog/best-internet-providers', category: 'Home', keywords: 'internet wifi broadband fiber cable provider isp' },
+    { title: 'Car Transport', href: '/blog/best-car-transport-companies', category: 'Home', keywords: 'car transport auto shipping vehicle transport' },
+    { title: 'VPN Services', href: '/software/best-vpn-services', category: 'Software', keywords: 'vpn privacy security virtual private network' },
+  ];
+
   // Search modal functionality
   const searchBtn = document.getElementById('search-btn');
   const searchModal = document.getElementById('search-modal');
@@ -603,6 +722,8 @@ import { SITE_TITLE } from '../consts';
   const searchOverlay = document.querySelector('.search-overlay');
   const searchInput = document.getElementById('search-input') as HTMLInputElement;
   const searchForm = document.getElementById('search-form');
+  const liveResults = document.getElementById('live-results');
+  const quickLinksSection = document.getElementById('quick-links-section');
 
   function openSearch() {
     searchModal?.classList.remove('hidden');
@@ -614,7 +735,78 @@ import { SITE_TITLE } from '../consts';
     searchModal?.classList.add('hidden');
     document.body.style.overflow = '';
     if (searchInput) searchInput.value = '';
+    resetSearch();
   }
+
+  function resetSearch() {
+    if (liveResults) {
+      liveResults.classList.add('hidden');
+      liveResults.innerHTML = '';
+    }
+    quickLinksSection?.classList.remove('hidden');
+  }
+
+  function performSearch(query: string) {
+    if (!query || query.length < 2) {
+      resetSearch();
+      return;
+    }
+
+    const terms = query.toLowerCase().split(/\s+/);
+    const results = searchData
+      .map(item => {
+        let score = 0;
+        const titleLower = item.title.toLowerCase();
+        const categoryLower = item.category.toLowerCase();
+        const keywordsLower = item.keywords.toLowerCase();
+
+        terms.forEach(term => {
+          if (titleLower.includes(term)) score += 10;
+          if (categoryLower.includes(term)) score += 5;
+          if (keywordsLower.includes(term)) score += 3;
+        });
+
+        return { ...item, score };
+      })
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 6);
+
+    if (results.length === 0) {
+      quickLinksSection?.classList.add('hidden');
+      if (liveResults) {
+        liveResults.classList.remove('hidden');
+        liveResults.innerHTML = `
+          <div class="no-results">
+            <div class="no-results-icon">🔍</div>
+            <p>No results for "<strong>${query}</strong>"</p>
+            <p style="font-size: 0.8125rem; margin-top: 0.25rem;">Try searching for credit cards, insurance, or loans</p>
+          </div>
+        `;
+      }
+      return;
+    }
+
+    quickLinksSection?.classList.add('hidden');
+    if (liveResults) {
+      liveResults.classList.remove('hidden');
+      liveResults.innerHTML = results.map((item, index) => `
+        <a href="${item.href}" class="live-result-item">
+          <span class="result-number">${index + 1}</span>
+          <div class="result-text">
+            <div class="result-title">${item.title}</div>
+            <div class="result-category">${item.category}</div>
+          </div>
+        </a>
+      `).join('');
+    }
+  }
+
+  // Live search on input
+  searchInput?.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value.trim();
+    performSearch(query);
+  });
 
   // Open search on button click
   searchBtn?.addEventListener('click', openSearch);
@@ -625,7 +817,7 @@ import { SITE_TITLE } from '../consts';
   // Close on overlay click
   searchOverlay?.addEventListener('click', closeSearch);
 
-  // Close on Escape key
+  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !searchModal?.classList.contains('hidden')) {
       closeSearch();
