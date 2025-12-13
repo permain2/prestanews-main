@@ -128,11 +128,69 @@ import { SITE_TITLE } from '../consts';
             SUBSCRIBE
           </a>
         </div>
-        <button class="p-2" aria-label="Search" type="button">
+        <button id="search-btn" class="p-2" aria-label="Search" type="button">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
           </svg>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Modal -->
+  <div id="search-modal" class="search-modal hidden">
+    <div class="search-overlay"></div>
+    <div class="search-container">
+      <div class="search-header">
+        <form id="search-form" class="search-form" action="/search" method="GET">
+          <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+          <input 
+            type="search" 
+            id="search-input" 
+            name="q"
+            placeholder="Search credit cards, insurance, guides..." 
+            autocomplete="off"
+            autofocus
+          />
+          <button type="button" id="search-close" class="search-close" aria-label="Close search">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </form>
+      </div>
+      <div class="search-results" id="search-results">
+        <div class="search-quick-links">
+          <h4>Quick Links</h4>
+          <div class="quick-links-grid">
+            <a href="/credit-cards/best-travel-cards">
+              <span class="quick-link-icon">✈️</span>
+              Best Travel Cards
+            </a>
+            <a href="/insurance/car">
+              <span class="quick-link-icon">🚗</span>
+              Car Insurance
+            </a>
+            <a href="/credit-cards/best-cashback">
+              <span class="quick-link-icon">💰</span>
+              Cash Back Cards
+            </a>
+            <a href="/insurance/pet">
+              <span class="quick-link-icon">🐾</span>
+              Pet Insurance
+            </a>
+            <a href="/finance/best-online-savings-accounts">
+              <span class="quick-link-icon">🏦</span>
+              Savings Accounts
+            </a>
+            <a href="/blog/best-student-loans">
+              <span class="quick-link-icon">🎓</span>
+              Student Loans
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -329,13 +387,266 @@ import { SITE_TITLE } from '../consts';
   .mobile-dropdown-content a:hover {
     color: #0D2C4B !important;
   }
+
+  /* Search Modal Styles */
+  .search-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search-modal.hidden {
+    display: none;
+  }
+
+  .search-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease;
+  }
+
+  .search-container {
+    position: relative;
+    background: white;
+    max-width: 640px;
+    width: 100%;
+    margin: 80px auto 0;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: slideDown 0.3s ease;
+    max-height: calc(100vh - 120px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideDown {
+    from { 
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .search-header {
+    padding: 1rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+  .search-form {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #F3F4F6;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .search-form:focus-within {
+    background: #E5E7EB;
+    box-shadow: 0 0 0 3px rgba(13, 44, 75, 0.1);
+  }
+
+  .search-icon {
+    width: 20px;
+    height: 20px;
+    color: #6B7280;
+    flex-shrink: 0;
+  }
+
+  #search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    color: #1F2937;
+    outline: none;
+  }
+
+  #search-input::placeholder {
+    color: #9CA3AF;
+  }
+
+  .search-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #6B7280;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .search-close:hover {
+    background: #E5E7EB;
+    color: #1F2937;
+  }
+
+  .search-close svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .search-results {
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  .search-quick-links h4 {
+    font-family: 'Lexend', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6B7280;
+    margin-bottom: 0.75rem;
+  }
+
+  .quick-links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .quick-links-grid a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    color: #374151 !important;
+    text-decoration: none !important;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+
+  .quick-links-grid a:hover {
+    background: #F3F4F6;
+    color: #0D2C4B !important;
+  }
+
+  .quick-link-icon {
+    font-size: 1.25rem;
+  }
+
+  /* Keyboard shortcut hint */
+  #search-btn {
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    #search-btn::after {
+      content: '⌘K';
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      font-size: 0.5625rem;
+      font-weight: 600;
+      color: #9CA3AF;
+      background: #F3F4F6;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .search-container {
+      margin: 0;
+      border-radius: 0;
+      max-height: 100vh;
+      height: 100vh;
+    }
+
+    .quick-links-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 
 <script>
+  // Mobile menu toggle
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   
   menuBtn?.addEventListener('click', () => {
     mobileMenu?.classList.toggle('hidden');
+  });
+
+  // Search modal functionality
+  const searchBtn = document.getElementById('search-btn');
+  const searchModal = document.getElementById('search-modal');
+  const searchClose = document.getElementById('search-close');
+  const searchOverlay = document.querySelector('.search-overlay');
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const searchForm = document.getElementById('search-form');
+
+  function openSearch() {
+    searchModal?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => searchInput?.focus(), 100);
+  }
+
+  function closeSearch() {
+    searchModal?.classList.add('hidden');
+    document.body.style.overflow = '';
+    if (searchInput) searchInput.value = '';
+  }
+
+  // Open search on button click
+  searchBtn?.addEventListener('click', openSearch);
+
+  // Close on X button
+  searchClose?.addEventListener('click', closeSearch);
+
+  // Close on overlay click
+  searchOverlay?.addEventListener('click', closeSearch);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !searchModal?.classList.contains('hidden')) {
+      closeSearch();
+    }
+    // Open on Cmd+K or Ctrl+K
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (searchModal?.classList.contains('hidden')) {
+        openSearch();
+      } else {
+        closeSearch();
+      }
+    }
+  });
+
+  // Handle search form submission
+  searchForm?.addEventListener('submit', (e) => {
+    const query = searchInput?.value.trim();
+    if (!query) {
+      e.preventDefault();
+      return;
+    }
+    // Form will submit to /search?q=query
   });
 </script>

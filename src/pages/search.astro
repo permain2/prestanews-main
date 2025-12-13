@@ -1,0 +1,298 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+// Get search query from URL
+const query = Astro.url.searchParams.get('q')?.toLowerCase() || '';
+
+// Define all searchable pages with keywords
+const allPages = [
+  // Credit Cards
+  { title: 'Best Travel Credit Cards', href: '/credit-cards/best-travel-cards', keywords: ['travel', 'credit card', 'rewards', 'points', 'miles', 'airport', 'lounge'], category: 'Credit Cards' },
+  { title: 'Best Cash Back Cards', href: '/credit-cards/best-cashback', keywords: ['cashback', 'cash back', 'rewards', 'credit card', 'money back'], category: 'Credit Cards' },
+  { title: 'Business Credit Cards', href: '/credit-cards/business', keywords: ['business', 'credit card', 'company', 'corporate', 'small business'], category: 'Credit Cards' },
+  { title: 'No Annual Fee Cards', href: '/credit-cards/no-annual-fee', keywords: ['no annual fee', 'free', 'credit card', 'no fee'], category: 'Credit Cards' },
+  { title: 'Balance Transfer Cards', href: '/credit-cards/balance-transfer', keywords: ['balance transfer', 'debt', '0% apr', 'credit card', 'interest free'], category: 'Credit Cards' },
+  { title: 'Extended Warranty Cards', href: '/credit-cards/best-extended-warranty', keywords: ['extended warranty', 'protection', 'credit card', 'purchase protection'], category: 'Credit Cards' },
+  
+  // Insurance
+  { title: 'Car Insurance', href: '/insurance/car', keywords: ['car', 'auto', 'vehicle', 'insurance', 'coverage', 'driver'], category: 'Insurance' },
+  { title: 'Home Insurance', href: '/insurance/home', keywords: ['home', 'house', 'property', 'insurance', 'homeowner'], category: 'Insurance' },
+  { title: 'Life Insurance', href: '/insurance/life', keywords: ['life', 'insurance', 'term', 'whole life', 'death benefit', 'beneficiary'], category: 'Insurance' },
+  { title: 'Pet Insurance', href: '/insurance/pet', keywords: ['pet', 'dog', 'cat', 'animal', 'insurance', 'vet', 'veterinary'], category: 'Insurance' },
+  { title: 'Renters Insurance', href: '/insurance/renters', keywords: ['renters', 'renter', 'apartment', 'tenant', 'insurance'], category: 'Insurance' },
+  { title: 'RV Insurance', href: '/blog/best-rv-insurance', keywords: ['rv', 'recreational vehicle', 'camper', 'motorhome', 'insurance'], category: 'Insurance' },
+  { title: 'Disability Insurance', href: '/blog/best-disability-insurance', keywords: ['disability', 'income protection', 'insurance'], category: 'Insurance' },
+  { title: 'Small Business Insurance', href: '/blog/best-small-business-insurance', keywords: ['business', 'small business', 'commercial', 'liability', 'insurance'], category: 'Insurance' },
+  
+  // Finance
+  { title: 'Online Savings Accounts', href: '/finance/best-online-savings-accounts', keywords: ['savings', 'bank', 'account', 'interest', 'apy', 'high yield'], category: 'Finance' },
+  { title: 'Student Loans', href: '/blog/best-student-loans', keywords: ['student', 'loan', 'college', 'university', 'education', 'tuition'], category: 'Finance' },
+  { title: 'Auto Refinance Lenders', href: '/blog/best-auto-refinance-lenders', keywords: ['auto', 'car', 'refinance', 'loan', 'rate'], category: 'Finance' },
+  { title: 'Mortgage Refinance', href: '/blog/best-mortgage-refinance-companies', keywords: ['mortgage', 'refinance', 'home loan', 'rate', 'lender'], category: 'Finance' },
+  { title: 'Gold IRA Companies', href: '/blog/best-gold-ira-companies', keywords: ['gold', 'ira', 'retirement', 'precious metals', 'investment'], category: 'Finance' },
+  
+  // Home
+  { title: 'Home Warranties', href: '/home/best-home-warranties', keywords: ['home warranty', 'appliance', 'repair', 'coverage', 'protection'], category: 'Home' },
+  { title: 'Extended Car Warranty', href: '/blog/best-extended-car-warranty', keywords: ['car warranty', 'extended warranty', 'vehicle protection', 'auto'], category: 'Home' },
+  { title: 'Home Security Cameras', href: '/blog/best-home-security-cameras', keywords: ['security', 'camera', 'surveillance', 'home security', 'ring', 'nest'], category: 'Home' },
+  { title: 'Internet Providers', href: '/blog/best-internet-providers', keywords: ['internet', 'wifi', 'broadband', 'fiber', 'cable', 'provider', 'isp'], category: 'Home' },
+  { title: 'Car Transport Companies', href: '/blog/best-car-transport-companies', keywords: ['car transport', 'auto shipping', 'vehicle transport', 'car shipping'], category: 'Home' },
+  
+  // Software
+  { title: 'Best VPN Services', href: '/software/best-vpn-services', keywords: ['vpn', 'privacy', 'security', 'virtual private network', 'online privacy'], category: 'Software' },
+];
+
+// Search and score results
+function searchPages(searchQuery: string) {
+  if (!searchQuery) return [];
+  
+  const terms = searchQuery.split(/\s+/).filter(t => t.length > 1);
+  
+  return allPages
+    .map(page => {
+      let score = 0;
+      const titleLower = page.title.toLowerCase();
+      const categoryLower = page.category.toLowerCase();
+      
+      // Exact title match
+      if (titleLower.includes(searchQuery)) score += 100;
+      
+      // Category match
+      if (categoryLower.includes(searchQuery)) score += 50;
+      
+      // Keyword matches
+      terms.forEach(term => {
+        if (titleLower.includes(term)) score += 30;
+        if (categoryLower.includes(term)) score += 20;
+        page.keywords.forEach(keyword => {
+          if (keyword.includes(term)) score += 10;
+        });
+      });
+      
+      return { ...page, score };
+    })
+    .filter(page => page.score > 0)
+    .sort((a, b) => b.score - a.score);
+}
+
+const results = searchPages(query);
+---
+
+<MainLayout title={query ? `Search: ${query}` : 'Search'} description="Search Screened for credit cards, insurance, and financial guides.">
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-[#0D2C4B] to-[#1A4A7A] py-12">
+    <div class="max-w-4xl mx-auto px-4 md:px-8 text-center">
+      <h1 class="font-sora text-4xl font-bold mb-6" style="color: #FFFFFF !important;">Search</h1>
+      
+      <!-- Search Form -->
+      <form method="GET" action="/search" class="search-form-hero">
+        <input 
+          type="search" 
+          name="q" 
+          value={query}
+          placeholder="Search credit cards, insurance, guides..."
+          class="search-input-hero"
+          autofocus
+        />
+        <button type="submit" class="search-btn-hero">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="py-12 bg-white">
+    <div class="max-w-4xl mx-auto px-4 md:px-8">
+      {query ? (
+        results.length > 0 ? (
+          <>
+            <p class="text-[#68727C] mb-6">Found {results.length} result{results.length !== 1 ? 's' : ''} for "<strong class="text-[#162433]">{query}</strong>"</p>
+            <div class="space-y-4">
+              {results.map((result) => (
+                <a href={result.href} class="search-result-card">
+                  <span class="result-category">{result.category}</span>
+                  <h3 class="result-title">{result.title}</h3>
+                  <span class="result-url">{result.href}</span>
+                </a>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div class="text-center py-12">
+            <div class="text-6xl mb-4">🔍</div>
+            <h2 class="font-sora text-2xl font-bold text-[#162433] mb-2">No results found</h2>
+            <p class="text-[#68727C] mb-8">We couldn't find anything for "<strong>{query}</strong>"</p>
+            
+            <h3 class="font-sora text-lg font-semibold text-[#162433] mb-4">Popular searches</h3>
+            <div class="flex flex-wrap justify-center gap-2">
+              <a href="/search?q=travel+cards" class="popular-search-tag">Travel Cards</a>
+              <a href="/search?q=car+insurance" class="popular-search-tag">Car Insurance</a>
+              <a href="/search?q=savings" class="popular-search-tag">Savings Accounts</a>
+              <a href="/search?q=pet+insurance" class="popular-search-tag">Pet Insurance</a>
+              <a href="/search?q=vpn" class="popular-search-tag">VPN Services</a>
+            </div>
+          </div>
+        )
+      ) : (
+        <div class="text-center py-12">
+          <h2 class="font-sora text-2xl font-bold text-[#162433] mb-4">What are you looking for?</h2>
+          <p class="text-[#68727C] mb-8">Search our guides on credit cards, insurance, and personal finance</p>
+          
+          <div class="grid md:grid-cols-3 gap-4 text-left">
+            <div class="category-box">
+              <h3 class="category-title">💳 Credit Cards</h3>
+              <ul class="category-links">
+                <li><a href="/credit-cards/best-travel-cards">Travel Cards</a></li>
+                <li><a href="/credit-cards/best-cashback">Cash Back Cards</a></li>
+                <li><a href="/credit-cards/business">Business Cards</a></li>
+              </ul>
+            </div>
+            <div class="category-box">
+              <h3 class="category-title">🛡️ Insurance</h3>
+              <ul class="category-links">
+                <li><a href="/insurance/car">Car Insurance</a></li>
+                <li><a href="/insurance/home">Home Insurance</a></li>
+                <li><a href="/insurance/pet">Pet Insurance</a></li>
+              </ul>
+            </div>
+            <div class="category-box">
+              <h3 class="category-title">💰 Finance</h3>
+              <ul class="category-links">
+                <li><a href="/finance/best-online-savings-accounts">Savings Accounts</a></li>
+                <li><a href="/blog/best-student-loans">Student Loans</a></li>
+                <li><a href="/blog/best-gold-ira-companies">Gold IRA</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .search-form-hero {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .search-input-hero {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    border: none;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+  }
+
+  .search-btn-hero {
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, #0D2C4B 0%, #1A4A7A 100%);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .search-btn-hero:hover {
+    opacity: 0.9;
+  }
+
+  .search-result-card {
+    display: block;
+    padding: 1.25rem;
+    background: #F9FAFB;
+    border-radius: 12px;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+
+  .search-result-card:hover {
+    background: white;
+    border-color: #E5E7EB;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .result-category {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0066B2;
+    margin-bottom: 0.25rem;
+  }
+
+  .result-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #162433 !important;
+    margin-bottom: 0.25rem;
+  }
+
+  .result-url {
+    font-size: 0.875rem;
+    color: #6B7280;
+  }
+
+  .popular-search-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #F3F4F6;
+    border-radius: 20px;
+    color: #374151 !important;
+    text-decoration: none !important;
+    font-size: 0.875rem;
+    transition: all 0.15s ease;
+  }
+
+  .popular-search-tag:hover {
+    background: #0D2C4B;
+    color: white !important;
+  }
+
+  .category-box {
+    background: #F9FAFB;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .category-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #162433;
+    margin-bottom: 0.75rem;
+  }
+
+  .category-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .category-links a {
+    color: #4B5563 !important;
+    text-decoration: none !important;
+    font-size: 0.9375rem;
+    transition: color 0.15s ease;
+  }
+
+  .category-links a:hover {
+    color: #0066B2 !important;
+  }
+</style>
+
