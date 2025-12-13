@@ -35,3 +35,4 @@ export function getGoldIRALogo(companyName: string): string | undefined {
 
 export default goldIRALogoMap;
 
+
