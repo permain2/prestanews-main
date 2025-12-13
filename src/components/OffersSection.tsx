@@ -144,9 +144,9 @@ export default function OffersSection() {
             />
             <motion.div 
               className="points-modal"
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
             >
               <button className="modal-close" onClick={closeModal}>
@@ -474,11 +474,16 @@ export default function OffersSection() {
 
         .points-modal {
           position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
           width: 90%;
           max-width: 480px;
+          height: fit-content;
+          max-height: 90vh;
+          overflow-y: auto;
           background: white;
           border-radius: 20px;
           padding: 2rem;
