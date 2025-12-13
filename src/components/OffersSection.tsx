@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+
 const offers = [
   {
     badge: "BEST FOR BEGINNER TRAVELERS",
@@ -7,7 +10,8 @@ const offers = [
     bonus: "75,000 bonus points",
     url: "https://www.chase.com/personal/credit-cards/sapphire/sapphire-preferred",
     expert: { name: "Sarah Chen", title: "Editor-in-Chief", image: "/team/sarah-chen.jpg" },
-    whyLike: "Valuable rewards, a low annual fee and wide-ranging travel protections"
+    whyLike: "Valuable rewards, a low annual fee and wide-ranging travel protections",
+    pointsAdvice: "Transfer to Hyatt for 1.5-2¢ per point value on award nights. Great for booking aspirational properties like Park Hyatt or Andaz at a fraction of the cash price."
   },
   {
     badge: "LIMITED-TIME OFFER",
@@ -17,7 +21,8 @@ const offers = [
     bonus: "Earn 100,000 bonus miles",
     url: "https://www.capitalone.com/credit-cards/venture-x/",
     expert: { name: "Michael Rodriguez", title: "Senior Credit Card Analyst", image: "/team/michael-rodriguez.jpg" },
-    whyLike: "Solid earning rates, extensive travel protections and terrific airport lounge access"
+    whyLike: "Solid earning rates, extensive travel protections and terrific airport lounge access",
+    pointsAdvice: "Transfer to Air Canada Aeroplan for premium cabin redemptions. You can book business class to Europe for just 70,000 miles one-way."
   },
   {
     badge: "LIMITED-TIME OFFER",
@@ -27,7 +32,8 @@ const offers = [
     bonus: "Earn up to 400K bonus miles",
     url: "https://www.capitalone.com/small-business/credit-cards/venture-x-business/",
     expert: { name: "Emily Johnson", title: "Insurance Editor", image: "/team/emily-johnson.jpg" },
-    whyLike: "Unlimited access to Capital One's awesome airport lounges"
+    whyLike: "Unlimited access to Capital One's awesome airport lounges",
+    pointsAdvice: "Stack with the personal Venture X for double lounge access. Use miles for statement credits at 1¢/mile or transfer to partners for 1.5¢+ value."
   },
   {
     badge: "$2500+ IN ANNUAL VALUE",
@@ -37,11 +43,22 @@ const offers = [
     bonus: "Earn 200,000 bonus points",
     url: "https://www.chase.com/business/credit-cards/ink-business-preferred",
     expert: { name: "Sarah Chen", title: "Editor-in-Chief", image: "/team/sarah-chen.jpg" },
-    whyLike: "Unlock more than $2,500 in travel and business credits each year"
+    whyLike: "Unlock more than $2,500 in travel and business credits each year",
+    pointsAdvice: "Combine with personal Chase cards for a mega points pool. Transfer to United for 60K saver awards to Europe in business class."
   }
 ];
 
 export default function OffersSection() {
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
+  const toggleCard = (cardName: string) => {
+    setExpandedCard(expandedCard === cardName ? null : cardName);
+  };
+
+  const closeModal = () => setExpandedCard(null);
+
+  const expandedOffer = offers.find(o => o.name === expandedCard);
+
   return (
     <section className="offers-section">
       <div className="offers-container">
@@ -91,7 +108,11 @@ export default function OffersSection() {
                         <span className="expert-title">{offer.expert.title}</span>
                       </div>
                     </div>
-                    <button className="expand-btn" aria-label="Expand">
+                    <button 
+                      className="expand-btn" 
+                      aria-label="Expand"
+                      onClick={() => toggleCard(offer.name)}
+                    >
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <circle cx="12" cy="12" r="10" />
                         <path d="M12 8v8M8 12h8" />
@@ -110,7 +131,72 @@ export default function OffersSection() {
         </div>
       </div>
 
-      {/* Newsletter Bar - Matching footer style */}
+      {/* Expert Points Modal */}
+      <AnimatePresence>
+        {expandedOffer && (
+          <>
+            <motion.div 
+              className="modal-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+            />
+            <motion.div 
+              className="points-modal"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            >
+              <button className="modal-close" onClick={closeModal}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+
+              <div className="modal-header">
+                <span className="modal-label">HOW WE'D USE THESE POINTS</span>
+                <h3 className="modal-card-name">{expandedOffer.name}</h3>
+              </div>
+
+              <div className="modal-content">
+                <div className="advice-box">
+                  <p className="advice-text">"{expandedOffer.pointsAdvice}"</p>
+                </div>
+
+                <div className="modal-expert">
+                  <img 
+                    src={expandedOffer.expert.image} 
+                    alt={expandedOffer.expert.name} 
+                    className="modal-expert-avatar"
+                  />
+                  <div className="modal-expert-info">
+                    <span className="modal-expert-name">{expandedOffer.expert.name}</span>
+                    <span className="modal-expert-title">{expandedOffer.expert.title}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="modal-footer">
+                <div className="modal-card-preview">
+                  <img src={expandedOffer.image} alt={expandedOffer.name} />
+                </div>
+                <div className="modal-cta">
+                  <span className="modal-bonus">{expandedOffer.bonus}</span>
+                  <a href={expandedOffer.url} className="modal-apply-btn" target="_blank" rel="noopener noreferrer">
+                    Apply now
+                  </a>
+                </div>
+              </div>
+
+              <p className="modal-terms">Terms & restrictions apply. <a href={expandedOffer.url} target="_blank" rel="noopener noreferrer">See rates & fees.</a></p>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Newsletter Bar */}
       <div className="newsletter-bar">
         <div className="newsletter-container">
           <div className="newsletter-content">
@@ -356,12 +442,17 @@ export default function OffersSection() {
 
         .expand-btn:hover {
           border-color: #146aff;
+          background: #F0F7FF;
         }
 
         .expand-btn svg {
           width: 1rem;
           height: 1rem;
           stroke: #146aff;
+        }
+
+        .why-section {
+          margin-top: 1rem;
         }
 
         .why-text {
@@ -372,7 +463,207 @@ export default function OffersSection() {
           margin: 0;
         }
 
-        /* Newsletter Bar - Screened branded */
+        /* Modal Styles */
+        .modal-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(4px);
+          z-index: 9998;
+        }
+
+        .points-modal {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          max-width: 480px;
+          background: white;
+          border-radius: 20px;
+          padding: 2rem;
+          z-index: 9999;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-close {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          width: 2.5rem;
+          height: 2.5rem;
+          border-radius: 50%;
+          border: none;
+          background: #F3F4F6;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+          background: #E5E7EB;
+        }
+
+        .modal-close svg {
+          width: 1.25rem;
+          height: 1.25rem;
+          stroke: #6B7280;
+        }
+
+        .modal-header {
+          text-align: center;
+          margin-bottom: 1.5rem;
+        }
+
+        .modal-label {
+          display: block;
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.6875rem;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          color: #0D2C4B;
+          margin-bottom: 0.5rem;
+        }
+
+        .modal-card-name {
+          font-family: 'Lexend', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #0D2C4B;
+          margin: 0;
+        }
+
+        .modal-content {
+          margin-bottom: 1.5rem;
+        }
+
+        .advice-box {
+          background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+          border-radius: 12px;
+          padding: 1.25rem;
+          margin-bottom: 1.25rem;
+        }
+
+        .advice-text {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.9375rem;
+          line-height: 1.6;
+          color: #1F2937;
+          margin: 0;
+          font-style: italic;
+        }
+
+        .modal-expert {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.75rem 1rem;
+          background: white;
+          border: 1px solid #E5E7EB;
+          border-radius: 50px;
+          width: fit-content;
+        }
+
+        .modal-expert-avatar {
+          width: 2.5rem;
+          height: 2.5rem;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        .modal-expert-info {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .modal-expert-name {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: #0D2C4B;
+        }
+
+        .modal-expert-title {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.75rem;
+          color: #6B7280;
+        }
+
+        .modal-footer {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1.25rem;
+          background: linear-gradient(135deg, #0D2C4B 0%, #1A4A7A 100%);
+          border-radius: 16px;
+          margin-bottom: 1rem;
+        }
+
+        .modal-card-preview {
+          width: 80px;
+          height: 50px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        .modal-card-preview img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .modal-cta {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 0.5rem;
+        }
+
+        .modal-bonus {
+          font-family: 'Lexend', sans-serif;
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: white;
+        }
+
+        .modal-apply-btn {
+          background: white;
+          color: #0D2C4B;
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.875rem;
+          font-weight: 600;
+          padding: 0.625rem 1.25rem;
+          border-radius: 8px;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+
+        .modal-apply-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-terms {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.6875rem;
+          color: #9CA3AF;
+          text-align: center;
+          margin: 0;
+        }
+
+        .modal-terms a {
+          color: #146aff;
+          text-decoration: none;
+        }
+
+        .modal-terms a:hover {
+          text-decoration: underline;
+        }
+
+        /* Newsletter Bar */
         .newsletter-bar {
           background: rgba(0, 0, 0, 0.2);
           border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -475,6 +766,21 @@ export default function OffersSection() {
             gap: 1rem;
             max-width: 22rem;
             margin: 0 auto;
+          }
+
+          .points-modal {
+            width: 95%;
+            padding: 1.5rem;
+          }
+
+          .modal-footer {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+          }
+
+          .modal-cta {
+            align-items: center;
           }
 
           .newsletter-container {
