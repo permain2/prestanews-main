@@ -11,6 +11,8 @@ const vpnServices = [
   {
     name: "Bamboo VPN",
     slug: "bamboo-vpn",
+    affiliateUrl: "https://app.adjust.com/1vpn65de?campaign=screened_vpn_article&adgroup=bamboo_vpn&creative=card_cta",
+    affiliateUrlTable: "https://app.adjust.com/1vpn65de?campaign=screened_vpn_article&adgroup=bamboo_vpn&creative=table_cta",
     bestFor: "Best Overall",
     monthlyPrice: "$2.99/mo",
     freeTrial: "30-day guarantee",
@@ -39,6 +41,7 @@ const vpnServices = [
   {
     name: "NordVPN",
     slug: "nordvpn",
+    affiliateUrl: "https://www.jdoqocy.com/click-101613812-13999888?url=https%3A%2F%2Fnordcheckout.com%2F%3Fproduct_group%3Dnordvpn%26product%3D1-year&cjsku=nordvpn-1y",
     bestFor: "Security Features",
     monthlyPrice: "$3.99/mo",
     freeTrial: "30-day guarantee",
@@ -442,7 +445,7 @@ import { getVpnLogo } from '../../utils/VpnLogoMap';
               </div>
               
               {/* CTA Button */}
-              <a href="#" class="apply-btn w-full">
+              <a href={vpn.affiliateUrl || "#"} class="apply-btn w-full" target="_blank" rel="noopener noreferrer sponsored">
                 <span>Get VPN</span>
                 <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
@@ -646,7 +649,7 @@ import { getVpnLogo } from '../../utils/VpnLogoMap';
                 </td>
                 
                 <td class="cta-cell">
-                  <a href="#" class="apply-now-btn">
+                  <a href={vpn.affiliateUrlTable || vpn.affiliateUrl || "#"} class="apply-now-btn" target="_blank" rel="noopener noreferrer sponsored">
                     Get VPN
                     <svg class="lock-icon" viewBox="0 0 20 20" fill="currentColor">
                       <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
